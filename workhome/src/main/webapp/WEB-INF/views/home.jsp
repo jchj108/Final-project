@@ -1,245 +1,210 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AdminLTE 3 | Calendar</title>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AdminLTE 3 | Calendar</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
-    />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
-    <!-- fullCalendar -->
-    <link rel="stylesheet" href="plugins/fullcalendar/main.css" />
-    <link
-      href="plugins/fullcalendar-4.4.0/packages/core/main.css"
-      rel="stylesheet"
-    />
-    <link
-      href="plugins/fullcalendar-4.4.0/packages/daygrid/main.css"
-      rel="stylesheet"
-    />
-    <script src="plugins/fullcalendar-4.4.0/packages/core/main.js"></script>
-    <script src="plugins/fullcalendar-4.4.0/packages/interaction/main.js"></script>
-    <script src="plugins/fullcalendar-4.4.0/packages/daygrid/main.js"></script>
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="${contextPath }/resources/plugins/fontawesome-free/css/all.min.css" />
+<!-- fullCalendar -->
+<link rel="stylesheet"
+	href="${contextPath}/resources/plugins/fullcalendar/main.css" />
+<link
+	href="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/core/main.css"
+	rel="stylesheet" />
+<link
+	href="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/daygrid/main.css"
+	rel="stylesheet" />
+<script
+	src="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/core/main.js"></script>
+<script
+	src="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/interaction/main.js"></script>
+<script
+	src="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/daygrid/main.js"></script>
 
-    <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/adminlte.min.css" />
-  </head>
-  <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-	  <!-- header -->
-	  <jsp:include page="../../header.jsp"></jsp:include>
-	  <!-- /header -->
-	  
-	  <!-- sidebar -->
-	  <jsp:include page="../../sidebar.jsp"></jsp:include>
-	  <!-- /sidebar -->
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div id="wrapper">
-          <div class="container-fluid">
-            <div
-              class="d-sm-flex align-items-center justify-content-between mb-4"
-            >
-              <h1 class="h3 mb-0 text-gray-800">Home</h1>
-            </div>
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="card shadow mb-4">
-                  <div class="card-body">
-                    <div id="calendar"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="card shadow mb-4">
-                  <div class="card-body">
-                    <h4 style="margin-bottom: 1rem">ÃâÅğ±Ù</h4>
-                    <div style="padding: 1.5rem; font-size: 1.3rem">
-                      <p id="pClock"></p>
-                      <p class="chulgun">
-                        Ãâ±Ù : ¾ÆÁ÷ Ãâ±Ù ½Ã°£ÀÌ ±â·ÏµÇÁö ¾Ê¾Ò¾î¿ä!
-                      </p>
-                      <p class="zipgalle">
-                        Åğ±Ù : ¾ÆÁ÷ Åğ±Ù ½Ã°£ÀÌ ±â·ÏµÇÁö ¾Ê¾Ò¾î¿ä!
-                      </p>
-                      <p id="resultArea"></p>
-                    </div>
-                    <a
-                      id="commute"
-                      class="btn btn-primary btn-user btn-block"
-                      style="color: white"
-                    >
-                      Ãâ±ÙÇÏ±â!
-                    </a>
-                    <a
-                      class="btn btn-success btn-user btn-block goHome"
-                      style="color: white"
-                    >
-                      Åğ±ÙÇÏ±â
-                    </a>
-                    <a
-                      class="btn btn-success btn-user btn-block goHome"
-                      style="color: white; display: none"
-                    >
-                      Åğ±ÙÇÏ±â
-                    </a>
-                  </div>
-                </div>
+<!-- Theme style -->
+<link rel="stylesheet"
+	href="${contextPath }/resources/dist/css/adminlte.min.css" />
+</head>
+<body class="hold-transition sidebar-mini">
+	<div class="wrapper">
+		<!-- header -->
+		<jsp:include page="../../header.jsp"></jsp:include>
+		<!-- /header -->
 
-                <div class="card shadow mb-4">
-                  <div class="card-body">
-                    <h4 id="board" style="margin-bottom: 1rem; cursor: pointer">
-                      ÃÖ½Å °øÁö
-                    </h4>
-                    <div class="table-responsive">
-                      <table class="table table-bordered">
-                        <thead>
-                          <tr style="text-align: center">
-                            <th>Á¦¸ñ</th>
-                            <th>°Ô½Ã</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <i class="fa fa-picture-o" aria-hidden="true"></i>
-                              <i
-                                class="fa fa-video-camera"
-                                aria-hidden="true"
-                              ></i>
-                            </td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div class="card shadow mb-4">
-                  <div class="card-body">
-                    <h4
-                      style="margin-bottom: 1rem; cursor: pointer"
-                      id="go_todo"
-                    >
-                      ÇÒÀÏ
-                    </h4>
-                    <div class="table-responsive">
-                      <table class="table table-bordered">
-                        <tr class="todo_tr">
-                          <td>
-                            <i
-                              class="fa fa-check todo_check"
-                              aria-hidden="true"
-                              style="float: right; margin-right: 1rem"
-                            ></i>
-                          </td>
-                        </tr>
-                        <tr id="hideTr">
-                          <td
-                            class="empty_todo"
-                            style="text-align: center; cursor: pointer"
-                          >
-                            ¾ÆÁ÷ µî·ÏµÈ ÇÒ ÀÏÀÌ ¾ø½À´Ï´Ù!
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            class="empty_todo"
-                            style="text-align: center; cursor: pointer"
-                          >
-                            ¾ÆÁ÷ µî·ÏµÈ ÇÒ ÀÏÀÌ ¾ø½À´Ï´Ù!
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.content -->
-      </div>
-      <!-- /.content-wrapper -->
+		<!-- sidebar -->
+		<jsp:include page="../../sidebar.jsp"></jsp:include>
+		<!-- /sidebar -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div id="wrapper">
+				<div class="container-fluid">
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Home</h1>
+					</div>
+					<div class="row">
+						<div class="col-lg-7">
+							<div class="card shadow mb-4">
+								<div class="card-body">
+									<div id="calendar"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-5">
+							<div class="card shadow mb-4">
+								<div class="card-body">
+									<h4 style="margin-bottom: 1rem">ì¶œí‡´ê·¼</h4>
+									<div style="padding: 1.5rem; font-size: 1.3rem">
+										<p id="pClock"></p>
+										<p class="workstart">ì¶œê·¼ : ì•„ì§ ì¶œê·¼ ì‹œê°„ì´ ê¸°ë¡ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.</p>
+										<p class="workend">í‡´ê·¼ : ì•„ì§ í‡´ê·¼ ì‹œê°„ì´ ê¸°ë¡ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.</p>
+										<p id="resultArea"></p>
+									</div>
+									<a id="commute" class="btn btn-primary btn-user btn-block"
+										style="color: white"> ì¶œê·¼í•˜ê¸° </a> <a
+										class="btn btn-success btn-user btn-block goHome"
+										style="color: white"> í‡´ê·¼í•˜ê¸° </a> <a
+										class="btn btn-success btn-user btn-block goHome"
+										style="color: white; display: none"> í‡´ê·¼í•˜ê¸° </a>
+								</div>
+							</div>
 
-<!--       <footer class="main-footer"> -->
-<!--         <div class="float-right d-none d-sm-block"><b>Version</b> 3.1.0</div> -->
-<!--         <strong -->
-<!--           >Copyright &copy; 2014-2021 -->
-<!--           <a href="https://adminlte.io">AdminLTE.io</a>.</strong -->
-<!--         > -->
-<!--         All rights reserved. -->
-<!--       </footer> -->
- 	  <jsp:include page="../../footer.jsp"></jsp:include>
+							<div class="card shadow mb-4">
+								<div class="card-body">
+									<h4 id="board" style="margin-bottom: 1rem; cursor: pointer">
+										ìµœì‹  ê³µì§€</h4>
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr style="text-align: center">
+													<th>ì œëª©</th>
+													<th>ê²Œì‹œ</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><i class="fa fa-picture-o" aria-hidden="true"></i>
+														<i class="fa fa-video-camera" aria-hidden="true"></i></td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="card shadow mb-4">
+								<div class="card-body">
+									<h4 style="margin-bottom: 1rem; cursor: pointer" id="go_todo">
+										í• ì¼</h4>
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<tr class="todo_tr">
+												<td><i class="fa fa-check todo_check"
+													aria-hidden="true" style="float: right; margin-right: 1rem"></i>
+												</td>
+											</tr>
+											<tr id="hideTr">
+												<td class="empty_todo"
+													style="text-align: center; cursor: pointer">ì•„ì§ ë“±ë¡ëœ í• 
+													ì¼ì´ ì—†ìŠµë‹ˆë‹¤!</td>
+											</tr>
+											<tr>
+												<td class="empty_todo"
+													style="text-align: center; cursor: pointer">ì•„ì§ ë“±ë¡ëœ í• 
+													ì¼ì´ ì—†ìŠµë‹ˆë‹¤!</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+			<!--       <footer class="main-footer"> -->
+			<!--         <div class="float-right d-none d-sm-block"><b>Version</b> 3.1.0</div> -->
+			<!--         <strong -->
+			<!--           >Copyright &copy; 2014-2021 -->
+			<!--           <a href="https://adminlte.io">AdminLTE.io</a>.</strong -->
+			<!--         > -->
+			<!--         All rights reserved. -->
+			<!--       </footer> -->
+			<jsp:include page="../../footer.jsp"></jsp:include>
 
 
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-      <!-- /.control-sidebar -->
-    </div>
-    <!-- ./wrapper -->
+			<!-- Control Sidebar -->
+			<aside class="control-sidebar control-sidebar-dark">
+				<!-- Control sidebar content goes here -->
+			</aside>
+			<!-- /.control-sidebar -->
+		</div>
+		<!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery UI -->
-    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
-    <!-- Page specific script -->
-  </body>
-  <script type="text/javascript">
-    function showClock() {
-      var currentDate = new Date()
-      var pClock = document.getElementById('pClock')
-      var apm = currentDate.getHours()
-      if (apm < 12) {
-        apm = '¿ÀÀü '
-      } else {
-        apm = '¿ÀÈÄ '
-      }
+		<!-- jQuery -->
+		<script src="${contextPath }/resources/plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap -->
+		<script
+			src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- jQuery UI -->
+		<script
+			src="${contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
+		<!-- AdminLTE App -->
+		<script src="${contextPath }/resources/dist/js/adminlte.min.js"></script>
+		<!-- Page specific script -->
+</body>
+<script type="text/javascript">
+	function showClock() {
+		var currentDate = new Date()
+		var pClock = document.getElementById('pClock')
+		var apm = currentDate.getHours()
+		if (apm < 12) {
+			apm = 'ì˜¤ì „ '
+		} else {
+			apm = 'ì˜¤í›„ '
+		}
 
-      var msg = 'ÇöÀç½Ã°£  : ' + apm + currentDate.getHours() + ' ½Ã '
-      msg += currentDate.getMinutes() + ' ºĞ  '
-      msg += currentDate.getSeconds() + ' ÃÊ  '
+		var msg = 'í˜„ì¬ì‹œê°„  : ' + apm + currentDate.getHours() + ' ì‹œ '
+		msg += currentDate.getMinutes() + ' ë¶„  '
+		msg += currentDate.getSeconds() + ' ì´ˆ  '
 
-      pClock.innerText = msg
+		pClock.innerText = msg
 
-      setTimeout(showClock, 1000)
-    }
+		setTimeout(showClock, 1000)
+	}
 
-    $(document).ready(function () {
-      showClock()
-    })
-  </script>
-  <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-      var calendarEl = document.getElementById('calendar')
-      var today = new Date()
+	$(document).ready(function() {
+		showClock()
+	})
+</script>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar')
+		var today = new Date()
 
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['interaction', 'dayGrid'],
-        defaultDate: today,
-        editable: false,
-        eventLimit: true,
-        views: {
-          dayGrid: {
-            eventLimit: 3,
-          },
-        },
-      })
-      calendar.render()
-    })
-  </script>
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			plugins : [ 'interaction', 'dayGrid' ],
+			defaultDate : today,
+			editable : false,
+			eventLimit : true,
+			views : {
+				dayGrid : {
+					eventLimit : 3,
+				},
+			},
+		})
+		calendar.render()
+	})
+</script>
 </html>
