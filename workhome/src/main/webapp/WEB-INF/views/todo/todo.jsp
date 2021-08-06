@@ -64,7 +64,7 @@ a:hover {
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>Calendar</h1>
+							<h1>일정 관리</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -85,7 +85,7 @@ a:hover {
 							<div class="sticky-top mb-3">
 								<div class="card">
 									<div class="card-header">
-										<h4 class="card-title">Draggable Events</h4>
+										<h4 class="card-title">일정 추가</h4>
 									</div>
 									<div class="card-body">
 										<!-- the events -->
@@ -108,7 +108,7 @@ a:hover {
 								<!-- /.card -->
 								<div class="card">
 									<div class="card-header">
-										<h3 class="card-title">Create Event</h3>
+										<h3 class="card-title">일정 만들기</h3>
 									</div>
 									<div class="card-body">
 										<div class="btn-group"
@@ -259,6 +259,7 @@ a:hover {
             right: 'dayGridMonth,timeGridWeek,timeGridDay',
           },
           themeSystem: 'bootstrap',
+          locale: 'ko',
           //Random default events
           events: [
             {
