@@ -218,15 +218,15 @@
 								<label for="calendar_view">등록자별</label>
 								<div class="input-group">
 									<label class="checkbox-inline"><input class='filter'
-										type="checkbox" value="정연" checked>정연</label> <label
+										type="checkbox" value="정연" checked>1</label> <label
 										class="checkbox-inline"><input class='filter'
-										type="checkbox" value="다현" checked>다현</label> <label
+										type="checkbox" value="다현" checked>2</label> <label
 										class="checkbox-inline"><input class='filter'
-										type="checkbox" value="사나" checked>사나</label> <label
+										type="checkbox" value="사나" checked>3</label> <label
 										class="checkbox-inline"><input class='filter'
-										type="checkbox" value="나연" checked>나연</label> <label
+										type="checkbox" value="나연" checked>4</label> <label
 										class="checkbox-inline"><input class='filter'
-										type="checkbox" value="지효" checked>지효</label>
+										type="checkbox" value="지효" checked>5</label>
 								</div>
 							</div>
 						</div>

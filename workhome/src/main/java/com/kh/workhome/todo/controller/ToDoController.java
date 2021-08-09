@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ToDoController {
 	
 	@RequestMapping("todo.to")
-	public String signUpForm() {
+	public String todoForm() {
 		return "todo";
 	}
 }
