@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AdminLTE 3 | Calendar</title>
 
 <!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+<!-- <link rel="stylesheet" -->
+<!-- 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" /> -->
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="${contextPath }/resources/plugins/fontawesome-free/css/all.min.css" />
@@ -155,8 +155,8 @@
 		<!-- jQuery -->
 		<script src="${contextPath }/resources/plugins/jquery/jquery.min.js"></script>
 		<!-- Bootstrap -->
-		<script
-			src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- 		<script -->
+<%-- 			src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --%>
 		<!-- jQuery UI -->
 		<script
 			src="${contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>

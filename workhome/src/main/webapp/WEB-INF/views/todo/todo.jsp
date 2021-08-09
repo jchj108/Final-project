@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
@@ -11,43 +11,41 @@
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="${contextPath }/resources//plugins/fontawesome-free/css/all.min.css" />
-<!-- fullCalendar -->
+	href="${contextPath }/resources/plugins/fontawesome-free/css/all.min.css" />
+	
+<!-- myFullCalendar -->
 <link rel="stylesheet"
-	href="${contextPath }/resources//plugins/fullcalendar/main.css" />
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/fullcalendar.min.css" />
+<link rel="stylesheet"
+	href='${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/select2.min.css' />
+<link rel="stylesheet"
+	href='${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/bootstrap-datetimepicker.min.css' />
+<link rel=" shortcut icon"
+	href="${contextPath }/resources/plugins/FullCalendar-Example-master/image/favicon.ico">
+<!-- myFullCalendar end -->
+
 <!-- Theme style -->
 <link rel="stylesheet"
 	href="${contextPath }/resources/dist/css/adminlte.min.css" />
-<style type="text/css">
-a:link {
-	text-decoration: none;
-}
-
-a:visited {
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-.todo_check {
-	display: none;
-}
-
-.todo_tr:hover {
-	background: rgba(225, 225, 225, 0.8);
-	cursor: pointer;
-}
-
-#hideTr {
-	display: none;
-}
-
-.chulgun {
-	transition: .8s;
-}
-</style>
+<link rel="stylesheet"
+	href="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${contextPath }/resources/plugins/FullCalendar-Example-master/css/main.css">
+	
+	<style>
+		.modal-header {
+			display: unset;
+		}
+		
+		body {
+			padding : 0px;
+		}
+	</style>
+	
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -79,93 +77,168 @@ a:hover {
 
 			<!-- Main content -->
 			<section class="content">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-3">
-							<div class="sticky-top mb-3">
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">일정 추가</h4>
-									</div>
-									<div class="card-body">
-										<!-- the events -->
-										<div id="external-events">
-											<div class="external-event bg-success">Lunch</div>
-											<div class="external-event bg-warning">Go home</div>
-											<div class="external-event bg-info">Do homework</div>
-											<div class="external-event bg-primary">Work on UI
-												design</div>
-											<div class="external-event bg-danger">Sleep tight</div>
-											<div class="checkbox">
-												<label for="drop-remove"> <input type="checkbox"
-													id="drop-remove" /> remove after drop
-												</label>
-											</div>
-										</div>
-									</div>
-									<!-- /.card-body -->
-								</div>
-								<!-- /.card -->
-								<div class="card">
-									<div class="card-header">
-										<h3 class="card-title">일정 만들기</h3>
-									</div>
-									<div class="card-body">
-										<div class="btn-group"
-											style="width: 100%; margin-bottom: 10px">
-											<ul class="fc-color-picker" id="color-chooser">
-												<li><a class="text-primary" href="#"><i
-														class="fas fa-square"></i></a></li>
-												<li><a class="text-warning" href="#"><i
-														class="fas fa-square"></i></a></li>
-												<li><a class="text-success" href="#"><i
-														class="fas fa-square"></i></a></li>
-												<li><a class="text-danger" href="#"><i
-														class="fas fa-square"></i></a></li>
-												<li><a class="text-muted" href="#"><i
-														class="fas fa-square"></i></a></li>
-											</ul>
-										</div>
-										<!-- /btn-group -->
-										<div class="input-group">
-											<input id="new-event" type="text" class="form-control"
-												placeholder="Event Title" />
-
-											<div class="input-group-append">
-												<button id="add-new-event" type="button"
-													class="btn btn-primary">
-													Add</button>
-											</div>
-											<!-- /btn-group -->
-										</div>
-										<!-- /input-group -->
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /.col -->
-						<div class="col-md-9">
-							<div class="card card-primary">
-								<div class="card-body p-0">
-									<!-- THE CALENDAR -->
-									<div id="calendar"></div>
-								</div>
-								<!-- /.card-body -->
-							</div>
-							<!-- /.card -->
-						</div>
-
-						<!-- /.col -->
+				<div class="container">
+					<!-- 일자 클릭시 메뉴오픈 -->
+					<div id="contextMenu" class="dropdown clearfix">
+						<ul class="dropdown-menu dropNewEvent" role="menu"
+							aria-labelledby="dropdownMenu"
+							style="display: block; position: static; margin-bottom: 5px;">
+							<li><a tabindex="-1" href="#">카테고리1</a></li>
+							<li><a tabindex="-1" href="#">카테고리2</a></li>
+							<li><a tabindex="-1" href="#">카테고리3</a></li>
+							<li><a tabindex="-1" href="#">카테고리4</a></li>
+							<li class="divider"></li>
+							<li><a tabindex="-1" href="#" data-role="close">Close</a></li>
+						</ul>
 					</div>
-					<!-- /.row -->
+
+					<!-- 					<div id="wrapper"> -->
+					<!-- 						<div id="loading"></div> -->
+					<div class="card shadow mb-5">
+						<div id="calendar"></div>
+					</div>
+					<!-- 					</div> -->
+
+
+					<!-- 일정 추가 MODAL -->
+					<div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title"></h4>
+								</div>
+								<div class="modal-body">
+
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-allDay">하루종일</label> <input
+												class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-title">일정명</label> <input
+												class="inputModal" type="text" name="edit-title"
+												id="edit-title" required="required" />
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-start">시작</label> <input
+												class="inputModal" type="text" name="edit-start"
+												id="edit-start" />
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-end">끝</label> <input
+												class="inputModal" type="text" name="edit-end" id="edit-end" />
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-type">구분</label> <select
+												class="inputModal" type="text" name="edit-type"
+												id="edit-type">
+												<option value="카테고리1">카테고리1</option>
+												<option value="카테고리2">카테고리2</option>
+												<option value="카테고리3">카테고리3</option>
+												<option value="카테고리4">카테고리4</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-color">색상</label> <select
+												class="inputModal" name="color" id="edit-color">
+												<option value="#D25565" style="color: #D25565;">빨간색</option>
+												<option value="#9775fa" style="color: #9775fa;">보라색</option>
+												<option value="#ffa94d" style="color: #ffa94d;">주황색</option>
+												<option value="#74c0fc" style="color: #74c0fc;">파란색</option>
+												<option value="#f06595" style="color: #f06595;">핑크색</option>
+												<option value="#63e6be" style="color: #63e6be;">연두색</option>
+												<option value="#a9e34b" style="color: #a9e34b;">초록색</option>
+												<option value="#4d638c" style="color: #4d638c;">남색</option>
+												<option value="#495057" style="color: #495057;">검정색</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-desc">설명</label>
+											<textarea rows="4" cols="50" class="inputModal"
+												name="edit-desc" id="edit-desc"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer modalBtnContainer-addEvent">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-primary" id="save-event">저장</button>
+								</div>
+								<div class="modal-footer modalBtnContainer-modifyEvent">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">닫기</button>
+									<button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+									<button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.modal -->
+
+					<div class="panel panel-default">
+
+						<div class="panel-heading">
+							<h3 class="panel-title">필터</h3>
+						</div>
+
+						<div class="panel-body">
+
+							<div class="col-lg-6">
+								<label for="calendar_view">구분별</label>
+								<div class="input-group">
+									<select class="filter" id="type_filter" multiple="multiple">
+										<option value="카테고리1">카테고리1</option>
+										<option value="카테고리2">카테고리2</option>
+										<option value="카테고리3">카테고리3</option>
+										<option value="카테고리4">카테고리4</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-lg-6">
+								<label for="calendar_view">등록자별</label>
+								<div class="input-group">
+									<label class="checkbox-inline"><input class='filter'
+										type="checkbox" value="정연" checked>정연</label> <label
+										class="checkbox-inline"><input class='filter'
+										type="checkbox" value="다현" checked>다현</label> <label
+										class="checkbox-inline"><input class='filter'
+										type="checkbox" value="사나" checked>사나</label> <label
+										class="checkbox-inline"><input class='filter'
+										type="checkbox" value="나연" checked>나연</label> <label
+										class="checkbox-inline"><input class='filter'
+										type="checkbox" value="지효" checked>지효</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.filter panel -->
 				</div>
 			</section>
 			<!-- /.content -->
 		</div>
-		<!-- /.content-wrapper -->
 
 		<!--       </footer> -->
-		<jsp:include page="../../../footer.jsp"></jsp:include>
+<%-- 		<jsp:include page="../../../footer.jsp"></jsp:include> --%>
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
@@ -185,183 +258,31 @@ a:hover {
 	<!-- AdminLTE App -->
 	<script src="${contextPath }/resources/dist/js/adminlte.min.js"></script>
 	<!-- fullCalendar 2.2.5 -->
-	<script src="${contextPath }/resources/plugins/moment/moment.min.js"></script>
-	<script src="${contextPath }/resources/plugins/fullcalendar/main.js"></script>
+	<%-- 	<script src="${contextPath }/resources/plugins/moment/moment.min.js"></script> --%>
+	<%-- 	<script src="${contextPath }/resources/plugins/fullcalendar/main.js"></script> --%>
 	<!-- AdminLTE for demo purposes -->
-	<script src="${contextPath }/resources/dist/js/demo.js"></script>
+		<script src="${contextPath }/resources/dist/js/demo.js"></script>
 	<!-- Page specific script -->
-	<script>
-      $(function () {
-        /* initialize the external events
-     -----------------------------------------------------------------*/
-        function ini_events(ele) {
-          ele.each(function () {
-            // create an Event Object (https://fullcalendar.io/docs/event-object)
-            // it doesn't need to have a start or end
-            var eventObject = {
-              title: $.trim($(this).text()), // use the element's text as the event title
-            }
-
-            // store the Event Object in the DOM element so we can get to it later
-            $(this).data('eventObject', eventObject)
-
-            // make the event draggable using jQuery UI
-            $(this).draggable({
-              zIndex: 1070,
-              revert: true, // will cause the event to go back to its
-              revertDuration: 0, //  original position after the drag
-            })
-          })
-        }
-
-        ini_events($('#external-events div.external-event'))
-
-        /* initialize the calendar
-     -----------------------------------------------------------------*/
-        //Date for the calendar events (dummy data)
-        var date = new Date()
-        var d = date.getDate(),
-          m = date.getMonth(),
-          y = date.getFullYear()
-
-        var Calendar = FullCalendar.Calendar
-        var Draggable = FullCalendar.Draggable
-
-        var containerEl = document.getElementById('external-events')
-        var checkbox = document.getElementById('drop-remove')
-        var calendarEl = document.getElementById('calendar')
-
-        // initialize the external events
-        // -----------------------------------------------------------------
-
-        new Draggable(containerEl, {
-          itemSelector: '.external-event',
-          eventData: function (eventEl) {
-            return {
-              title: eventEl.innerText,
-              backgroundColor: window
-                .getComputedStyle(eventEl, null)
-                .getPropertyValue('background-color'),
-              borderColor: window
-                .getComputedStyle(eventEl, null)
-                .getPropertyValue('background-color'),
-              textColor: window
-                .getComputedStyle(eventEl, null)
-                .getPropertyValue('color'),
-            }
-          },
-        })
-
-        var calendar = new Calendar(calendarEl, {
-          headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay',
-          },
-          themeSystem: 'bootstrap',
-          locale: 'ko',
-          //Random default events
-          events: [
-            {
-              title: 'All Day Event',
-              start: new Date(y, m, 1),
-              backgroundColor: '#f56954', //red
-              borderColor: '#f56954', //red
-              allDay: true,
-            },
-            {
-              title: 'Long Event',
-              start: new Date(y, m, d - 5),
-              end: new Date(y, m, d - 2),
-              backgroundColor: '#f39c12', //yellow
-              borderColor: '#f39c12', //yellow
-            },
-            {
-              title: 'Meeting',
-              start: new Date(y, m, d, 10, 30),
-              allDay: false,
-              backgroundColor: '#0073b7', //Blue
-              borderColor: '#0073b7', //Blue
-            },
-            {
-              title: 'Lunch',
-              start: new Date(y, m, d, 12, 0),
-              end: new Date(y, m, d, 14, 0),
-              allDay: false,
-              backgroundColor: '#00c0ef', //Info (aqua)
-              borderColor: '#00c0ef', //Info (aqua)
-            },
-            {
-              title: 'Birthday Party',
-              start: new Date(y, m, d + 1, 19, 0),
-              end: new Date(y, m, d + 1, 22, 30),
-              allDay: false,
-              backgroundColor: '#00a65a', //Success (green)
-              borderColor: '#00a65a', //Success (green)
-            },
-            {
-              title: 'Click for Google',
-              start: new Date(y, m, 28),
-              end: new Date(y, m, 29),
-              url: 'https://www.google.com/',
-              backgroundColor: '#3c8dbc', //Primary (light-blue)
-              borderColor: '#3c8dbc', //Primary (light-blue)
-            },
-          ],
-          editable: true,
-          droppable: true, // this allows things to be dropped onto the calendar !!!
-          drop: function (info) {
-            // is the "remove after drop" checkbox checked?
-            if (checkbox.checked) {
-              // if so, remove the element from the "Draggable Events" list
-              info.draggedEl.parentNode.removeChild(info.draggedEl)
-            }
-          },
-        })
-
-        calendar.render()
-        // $('#calendar').fullCalendar()
-
-        /* ADDING EVENTS */
-        var currColor = '#3c8dbc' //Red by default
-        // Color chooser button
-        $('#color-chooser > li > a').click(function (e) {
-          e.preventDefault()
-          // Save color
-          currColor = $(this).css('color')
-          // Add color effect to button
-          $('#add-new-event').css({
-            'background-color': currColor,
-            'border-color': currColor,
-          })
-        })
-        $('#add-new-event').click(function (e) {
-          e.preventDefault()
-          // Get value and make sure it is not null
-          var val = $('#new-event').val()
-          if (val.length == 0) {
-            return
-          }
-
-          // Create events
-          var event = $('<div />')
-          event
-            .css({
-              'background-color': currColor,
-              'border-color': currColor,
-              color: '#fff',
-            })
-            .addClass('external-event')
-          event.text(val)
-          $('#external-events').prepend(event)
-
-          // Add draggable funtionality
-          ini_events(event)
-
-          // Remove event from text input
-          $('#new-event').val('')
-        })
-      })
-    </script>
+    <script src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/jquery.min.js"></script>
+<!--  -->	<script
+		src="${contextPath}/resources/plugins/FullCalendar-Example-master/vendor/js/bootstrap.min.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/moment.min.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/fullcalendar.min.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/ko.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/select2.min.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/bootstrap-datetimepicker.min.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/main.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/addEvent.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/editEvent.js"></script>
+	<script
+		src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/etcSetting.js"></script>
 </body>
 </html>
