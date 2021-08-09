@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="employeeMapper">
+	<select id="dupEmail" resultType="_int">
+		select count(*)
+		from employee
+		where email=#{email}
+	</select>
+	
 	<insert id="insertEmp">
 		insert into employee 
 		values (seq_eno.nextval, #{empName}, #{empPosition}, sysdate, #{phone}, 
 				#{empPhone}, #{email}, #{address}, default, #{empAuto},
 				#{password}, #{deptNo})		
 	</insert>
+	
+	<resultMap type="Employee" id="employeeResultSet">
+		<id column="EMPNO" property="empNo"/>
+		<result column="EMPNAME" property="empName"/>
+		<result column="EMPPOSITION" property="empPosition"/>
+		<result column="JOINDATE" property="joinDate"/>
+		<result column="PHONE" property="phone"/>
+		<result column="EMPPHONE" property="empPhone"/>
+		<result column="EMAIL" property="email"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="EMPSTATUS" property="empStatus"/>
+		<result column="EMPAUTO" property="empAuto"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="DEPTNO" property="deptNo"/>
+	</resultMap>
+	
+	<select id="login" resultMap="employeeResultSet">
+		select *
+		from employee
+		where email = #{email}
+	</select>
+	
+	<update id="updatePwd" parameterType="hashmap">
+		update employee
+ 		set password=#{password}
+ 		where email=#{email}
+	</update>
 </mapper>
