@@ -6,15 +6,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WorkHome</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="resources/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="resources/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="resources/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -41,21 +41,11 @@
         <!-- 이메일 -->
         <div class="input-group mb-3">
           <input type="email" id="email" name="email" class="form-control" placeholder="이메일">
-          <input type="hidden" name="emailDuplicateCheck" id="emailDuplicateCheck" value="0">
           <div class="input-group-append">
-            <div class="input-group-text" id="sendEmail" style="cursor: pointer;">
+            <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
-        </div>
-        
-        <!-- 이메일 인증 코드  -->
-        <div class="input-group mb-3">
-          <input type="text" id="checkCode" name="checkCode" class="form-control" placeholder="인증코드" onkeyup="checkEmail();">
-          <input type="hidden" name="emailCodeCheck" id="emailCodeCheck" value="0">
-            <div class="input-group-text" id="sendEmail">
-              <span class="fas fa-check"></span>
-            </div>
         </div>
         
 		<!-- 비밀번호 -->
@@ -78,8 +68,8 @@
           </div>
         </div>
         
-        <!-- 확인 문구 -->
-		<span id="check" style="font-size: 15px; font-weight: normal;">&nbsp;</span><br><br>
+        <!-- 비밀번호 일치/불일치 확인 문구 -->
+		<span id="check" style="font-size: 15px; font-weight: normal;">&nbsp;</span><br>
 		
 		<!-- 약관동의  -->
         <div class="row">
@@ -108,69 +98,8 @@
 <!-- /.register-box -->
 
 <script>
-	// 이메일 중복 확인 메소드
-	$('#email').on('keyup', function(){
-		var email = $(this).val().trim();
-		
-		$.ajax({
-			url: 'dupEmail.emp',
-			data: {email: email},
-			success: function(data){
-				if(data.trim() == 'true'){
-					$('#check').text('사용 가능한 이메일입니다.').css('color', 'green');
-					$('#emailDuplicateCheck').val(1);
-				} else {
-					$('#check').text('이미 사용 중인 이메일입니다.').css('color', 'red');
-					$('#emailDuplicateCheck').val(0);
-				}
-			},
-			error: function(data){
-				console.log('fail');
-			}
-		});
-	});	
-	
-	// 이메일 인증 코드 전송 메소드
-	$('#sendEmail').on('click', function(){
-		var email = $('#email').val().trim();
-		
-		$.ajax({
-			url: 'authEmail.emp',
-			data: {email: email},
-			success: function(data){
-				console.log('success');
-			},
-			error: function(data){
-				console.log('fail');
-				$('#check').text('인증번호를 발송했습니다.').css('color', 'green');
-			}
-		});
-	});	
 
-	// 인증 코드 확인 메소드
-	$('#checkCode').on('keyup', function(){
-		var checkCode = $(this).val().trim();
-		
-		$.ajax({
-			url: 'checkCode.emp',
-			data: {checkCode: checkCode},
-			success: function(data){
-				if(data.trim() == 'true'){
-					console.log('최종!!');
-					$('#check').text('이메일 인증이 완료되었습니다.').css('color', 'green');
-					$('#emailCodeCheck').val(1);
-				} else {
-					$('#check').text('인증번호를 다시 확인해주세요.').css('color', 'red');
-					$('#emailCodeCheck').val(0);
-				}
-			},
-			error: function(data){
-				console.log('인증 실패');
-			}
-		});
-	});	
-
-	// 비밀번호 일치/불일치 확인 메소드
+	/* 비밀번호 일치/불일치 확인 메소드 */
 	function checkPwd() {
 		var pwd1 = document.getElementById('pwd1').value;
 		var pwd2 = document.getElementById('pwd2').value;
@@ -187,12 +116,22 @@
 		}
 	}
 	
-	// 회원가입시 미입력 항목 확인 메소드
+	/* 약관동의 확인 메소드 */
+	function agree() {
+		var agree = document.getElementsByName("agree");
+
+		for (var i = 1; i < (agree.length) - 1; i++) {
+			if (agree[i].checked == false) {
+				return 1;
+			}
+		}
+		return 2;
+	}
+	
+	/* 회원가입시 빠진 항목 확인 메소드 */
 	function signUp() {
 		var name = document.getElementById('name').value;
 		var email = document.getElementById('email').value;
-		var emailDuplicateCheck = document.getElementById('emailDuplicateCheck').value;
-		var checkCode = document.getElementById('checkCode').value;
 		var pwd1 = document.getElementById('pwd1').value;
 		var pwd2 = document.getElementById('pwd2').value;
 		var agreeTerms = document.getElementById('agreeTerms');
@@ -206,14 +145,6 @@
 		} else if (email == '' || email.length == 0) {
 			alert('이메일을 입력해주세요.');
 			document.getElementById('email').focus();
-			return false;
-		} else if (emailDuplicateCheck == 0) {
-			alert('이미 사용 중인 이메일 입니다.');
-			document.getElementById('email').focus();
-			return false;
-		} else if (checkCode == 0) {
-			alert('인증번호가 일치하지 않습니다.');
-			document.getElementById('checkCode').focus();
 			return false;
 		} else if (pwd1 == '' || pwd1.length == 0) {
 			alert('비밀번호를 입력해주세요.');
@@ -244,11 +175,12 @@
 	}
 </script>
 
+
 <!-- jQuery -->
-<script src="resources/plugins/jquery/jquery.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="resources/dist/js/adminlte.min.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 </body>
 </html>
