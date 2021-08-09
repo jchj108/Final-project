@@ -5,15 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WorkHome</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="resources/plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="resources/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="resources/dist/css/adminlte.min.css">  
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -24,7 +15,8 @@
     </div>
     <div class="card-body">
       <p class="login-box-msg"></p>
-      <form action="login.emp" method="post" onsubmit="return login();">
+
+      <form action="login.emp" method="post">
         <div class="input-group mb-3">
           <input type="email" id="email" name="email" class="form-control" placeholder="이메일">
           <div class="input-group-append">
@@ -44,7 +36,7 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember" name="remember">
+              <input type="checkbox" id="remember">
               <label for="remember">
                  로그인 상태 유지
               </label>
@@ -59,7 +51,7 @@
       </form>
    
       <p class="mb-1">
-        <a href="findPwdForm.emp">비밀번호 찾기</a>
+        <a href="forgot-password.html">비밀번호 찾기</a>
       </p>
       <p class="mb-0">
         <a href="signUpForm.emp" class="text-center">회원가입</a>
@@ -71,33 +63,5 @@
 </div>
 <!-- /.login-box -->
 
-<script>
-	// 로그인 실패 시 나타나는 팝업창
-	if('${ msg }' != ''){ 
-		alert('${ msg }');
-	}	
-	
-	// 로그인 시 미입력 항목 확인 메소드 
-	function login(){
-		if($('#email').val().trim() == ''){
-			alert('이메일을 입력해주세요.');
-			$('#email').focus();
-			return false;
-		} else if($('#password').val().trim() == '') {
-			alert('비밀번호를 입력해주세요.');
-			$('#password').focus();
-			return false;
-		} else {
-			return true;
-		}
-	}
-</script>
-
-<!-- jQuery -->
-<script src="resources/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE -->
-<script src="resources/dist/js/adminlte.min.js"></script>	
 </body>
 </html>
