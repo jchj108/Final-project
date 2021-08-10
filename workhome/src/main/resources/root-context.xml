@@ -6,14 +6,25 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+<!-- 	<bean id="dataSource" -->
+<!-- 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> -->
+<!-- 		<property name="driverClassName" -->
+<!-- 			value="oracle.jdbc.driver.OracleDriver" /> -->
+<!-- 		<property name="url" -->
+<!-- 			value="jdbc:oracle:thin:@localhost:1521:xe" /> -->
+<!-- 		<property name="username" value="workhome" /> -->
+<!-- 		<property name="password" value="workhome" /> -->
+<!-- 	</bean> -->
+	
+	<!-- ec2 Dababase -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url"
-			value="jdbc:oracle:thin:@localhost:1521:xe" />
+			value="jdbc:oracle:thin:@13.125.235.99:1521:xe" />
 		<property name="username" value="workhome" />
-		<property name="password" value="workhome" />
+		<property name="password" value="dkssuddkssud" />
 	</bean>
 
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
