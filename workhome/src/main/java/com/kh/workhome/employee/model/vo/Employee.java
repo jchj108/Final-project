@@ -16,6 +16,7 @@ public class Employee {
 	private String empAuto;
 	private String password;
 	private String deptNo;
+	private String empId;
 	
 	public Employee() {}
 	

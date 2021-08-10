@@ -9,9 +9,9 @@
 	
 	<insert id="insertEmp">
 		insert into employee 
-		values (seq_eno.nextval, #{empName}, #{empPosition}, sysdate, #{phone}, 
+		values (#{empNo}, #{empName}, #{empPosition}, sysdate, #{phone}, 
 				#{empPhone}, #{email}, #{address}, default, #{empAuto},
-				#{password}, #{deptNo})		
+				#{password}, #{deptNo}, seq_eid.nextval)		
 	</insert>
 	
 	<resultMap type="Employee" id="employeeResultSet">
@@ -27,6 +27,7 @@
 		<result column="EMPAUTO" property="empAuto"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="DEPTNO" property="deptNo"/>
+		<result column="EMPID" property="empId"/>
 	</resultMap>
 	
 	<select id="login" resultMap="employeeResultSet">
