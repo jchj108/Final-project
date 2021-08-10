@@ -21,9 +21,23 @@
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
-	.mail-icon {
-		width : 20px;
-	}
+.mail-icon {
+	width: 20px;
+}
+
+.table td, .table th {
+	padding: .25rem;
+	vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+	background-color: unset;
+}
+
+td:nth-child(1), td:nth-child(2), td:nth-child(3){
+	width: 20px;
+}
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
