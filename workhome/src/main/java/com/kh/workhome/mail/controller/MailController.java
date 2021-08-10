@@ -24,4 +24,8 @@ public class MailController {
 	public String mailReadForm() {
 		return "mailread";
 	}
+	@RequestMapping("templist.mail")
+	public String tempList() {
+		return "tempmaillist";
+	}
 }

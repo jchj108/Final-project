@@ -47,12 +47,11 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">Back
-								to Inbox</a>
+							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">메일함으로 돌아가기</a>
 
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">Folders</h3>
+									<h3 class="card-title">폴더</h3>
 
 									<div class="card-tools">
 										<button type="button" class="btn btn-tool"
@@ -64,21 +63,21 @@
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
 										<li class="nav-item active"><a href="#" class="nav-link">
-												<i class="fas fa-inbox"></i> Inbox <span
+												<i class="fas fa-inbox"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-envelope"></i> Sent
+												class="far fa-envelope"></i> 보낸메일함
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-file-alt"></i> Drafts
+												class="far fa-file-alt"></i> 임시보관함
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="fas fa-filter"></i> Junk <span
+												class="fas fa-filter"></i> 스팸메일함 <span
 												class="badge bg-warning float-right">65</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-trash-alt"></i> Trash
+												class="far fa-trash-alt"></i> 휴지통
 										</a></li>
 									</ul>
 								</div>
@@ -87,7 +86,7 @@
 							<!-- /.card -->
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">Labels</h3>
+									<h3 class="card-title">긴급도</h3>
 
 									<div class="card-tools">
 										<button type="button" class="btn btn-tool"

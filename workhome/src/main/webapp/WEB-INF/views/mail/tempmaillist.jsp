@@ -24,13 +24,6 @@
 	.mail-icon {
 		width : 20px;
 	}
-	.table td, .table th {
-		padding: .25rem;
-		vertical-align: middle;
-	}
-	.table-striped tbody tr:nth-of-type(odd) {
-		background-color: unset;
-	}
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -46,7 +39,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>메일함</h1>
+							<h1>임시보관함</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -86,7 +79,7 @@
 									<li class="nav-item"><a href="#" class="nav-link"> <i
 											class="far fa-envelope mail-icon"></i> 보낸메일함
 									</a></li>
-									<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link"> <i
+									<li class="nav-item"><a href="#" class="nav-link"> <i
 											class="far fa-file-alt mail-icon"></i> 임시보관함
 									</a></li>
 									<li class="nav-item"><a href="#" class="nav-link"> <i
@@ -557,4 +550,3 @@
 	</script>
 </body>
 </html>
-

@@ -51,12 +51,11 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">Back
-								to Inbox</a>
+							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">돌아가기</a>
 
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">Folders</h3>
+									<h3 class="card-title">폴더</h3>
 
 									<div class="card-tools">
 										<button type="button" class="btn btn-tool"
@@ -68,21 +67,21 @@
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
 										<li class="nav-item active"><a href="#" class="nav-link">
-												<i class="fas fa-inbox"></i> Inbox <span
+												<i class="fas fa-inbox"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-envelope"></i> Sent
+												class="far fa-envelope"></i> 보낸메일함
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-file-alt"></i> Drafts
+												class="far fa-file-alt"></i> 임시보관함
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="fas fa-filter"></i> Junk <span
+												class="fas fa-filter"></i> 스팸메일함 <span
 												class="badge bg-warning float-right">65</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-trash-alt"></i> Trash
+												class="far fa-trash-alt"></i> 휴지통
 										</a></li>
 									</ul>
 								</div>
@@ -91,7 +90,7 @@
 							<!-- /.card -->
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">Labels</h3>
+									<h3 class="card-title">분류</h3>
 
 									<div class="card-tools">
 										<button type="button" class="btn btn-tool"
@@ -104,11 +103,11 @@
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
 										<li class="nav-item"><a class="nav-link" href="#"><i
-												class="far fa-circle text-danger"></i> Important</a></li>
+												class="far fa-circle text-danger"></i> 긴급</a></li>
 										<li class="nav-item"><a class="nav-link" href="#"><i
-												class="far fa-circle text-warning"></i> Promotions</a></li>
+												class="far fa-circle text-warning"></i> 보통</a></li>
 										<li class="nav-item"><a class="nav-link" href="#"><i
-												class="far fa-circle text-primary"></i> Social</a></li>
+												class="far fa-circle text-primary"></i> 낮음</a></li>
 									</ul>
 								</div>
 								<!-- /.card-body -->
@@ -119,15 +118,15 @@
 						<div class="col-md-9">
 							<div class="card card-primary card-outline">
 								<div class="card-header">
-									<h3 class="card-title">Compose New Message</h3>
+									<h3 class="card-title">새 메일 쓰기</h3>
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body">
 									<div class="form-group">
-										<input class="form-control" placeholder="To:">
+										<input class="form-control" placeholder="받는 이">
 									</div>
 									<div class="form-group">
-										<input class="form-control" placeholder="Subject:">
+										<input class="form-control" placeholder="제목">
 									</div>
 									<div class="form-group">
 										<textarea id="compose-textarea" class="form-control"
@@ -161,7 +160,7 @@
 									</div>
 									<div class="form-group">
 										<div class="btn btn-default btn-file">
-											<i class="fas fa-paperclip"></i> Attachment <input
+											<i class="fas fa-paperclip"></i> 파일 첨부 <input
 												type="file" name="attachment">
 										</div>
 										<p class="help-block">Max. 32MB</p>
@@ -171,14 +170,14 @@
 								<div class="card-footer">
 									<div class="float-right">
 										<button type="button" class="btn btn-default">
-											<i class="fas fa-pencil-alt"></i> Draft
+											<i class="fas fa-pencil-alt"></i> 임시 저장
 										</button>
 										<button type="submit" class="btn btn-primary">
-											<i class="far fa-envelope"></i> Send
+											<i class="far fa-envelope"></i> 보내기
 										</button>
 									</div>
 									<button type="reset" class="btn btn-default">
-										<i class="fas fa-times"></i> Discard
+										<i class="fas fa-times"></i> 취소
 									</button>
 								</div>
 								<!-- /.card-footer -->
@@ -221,14 +220,18 @@
 	<!-- Summernote -->
 	<script
 		src="${contextPath}/resources/plugins/summernote/summernote-bs4.min.js"></script>
+	<script
+		src="${contextPath}/resources/plugins/summernote/lang/summernote-ko-KR.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="${contextPath}/resources/dist/js/demo.js"></script>
 	<!-- Page specific script -->
 	<script>
 		$(function() {
 			//Add text editor
-			$('#compose-textarea').summernote()
-		})
+			$('#compose-textarea').summernote({
+				lang: "ko-KR"	
+			});
+		});
 	</script>
 </body>
 </html>
