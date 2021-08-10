@@ -8,7 +8,7 @@ import com.kh.workhome.mail.model.service.MailService;
 
 @Controller
 public class MailController {
-	
+	// 테스트입니다.
 	@Autowired
 	private MailService service;
 	
