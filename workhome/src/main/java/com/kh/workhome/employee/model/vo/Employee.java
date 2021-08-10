@@ -21,7 +21,7 @@ public class Employee {
 	public Employee() {}
 	
 	public Employee(String empNo, String empName, String empPosition, Date joinDate, String phone, String empPhone,
-			String email, String address, String empStatus, String empAuto, String password, String deptNo) {
+			String email, String address, String empStatus, String empAuto, String password, String deptNo, String empId) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -35,6 +35,7 @@ public class Employee {
 		this.empAuto = empAuto;
 		this.password = password;
 		this.deptNo = deptNo;
+		this.empId = empId;
 	}
 	public String getEmpNo() {
 		return empNo;
@@ -108,12 +109,18 @@ public class Employee {
 	public void setDeptNo(String deptNo) {
 		this.deptNo = deptNo;
 	}
+	public String getEmpId() {
+		return empId;
+	}
+	public void setEmpId(String empId) {
+		this.empId = empId;
+	}
 	@Override
 	public String toString() {
 		return "Employee [empNo=" + empNo + ", empName=" + empName + ", empPosition=" + empPosition + ", joinDate="
 				+ joinDate + ", phone=" + phone + ", empPhone=" + empPhone + ", email=" + email + ", address=" + address
 				+ ", empStatus=" + empStatus + ", empAuto=" + empAuto + ", password=" + password + ", deptNo=" + deptNo
-				+ "]";
+				+ ", empId=" + empId + "]";
 	}
 	
 }
