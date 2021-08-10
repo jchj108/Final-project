@@ -9,7 +9,7 @@
 	
 	<insert id="insertEmp">
 		insert into employee 
-		values (seq_eno.nextval, #{empName}, #{empPosition}, sysdate, #{phone}, 
+		values (#{empNo}, #{empName}, #{empPosition}, sysdate, #{phone}, 
 				#{empPhone}, #{email}, #{address}, default, #{empAuto},
 				#{password}, #{deptNo})		
 	</insert>
@@ -32,7 +32,7 @@
 	<select id="login" resultMap="employeeResultSet">
 		select *
 		from employee
-		where email = #{email}
+		where empNo = #{empNo}
 	</select>
 	
 	<update id="updatePwd" parameterType="hashmap">

@@ -26,10 +26,10 @@
       <p class="login-box-msg"></p>
       <form action="login.emp" method="post" onsubmit="return login();">
         <div class="input-group mb-3">
-          <input type="email" id="email" name="email" class="form-control" placeholder="이메일">
+          <input type="text" id="empNo" name="empNo" class="form-control" placeholder="사원번호">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-address-card""></span>
             </div>
           </div>
         </div>
@@ -79,9 +79,9 @@
 	
 	// 로그인 시 미입력 항목 확인 메소드 
 	function login(){
-		if($('#email').val().trim() == ''){
-			alert('이메일을 입력해주세요.');
-			$('#email').focus();
+		if($('#empNo').val().trim() == ''){
+			alert('사원번호를 입력해주세요.');
+			$('#id').focus();
 			return false;
 		} else if($('#password').val().trim() == '') {
 			alert('비밀번호를 입력해주세요.');
