@@ -28,4 +28,12 @@ public class MailController {
 	public String tempList() {
 		return "tempmaillist";
 	}
+	
+	@RequestMapping("tmpInsert.mail")
+	public String tmpInsert() {
+		
+		
+		
+		return null;
+	}
 }
