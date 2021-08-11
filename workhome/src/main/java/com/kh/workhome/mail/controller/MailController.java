@@ -61,19 +61,19 @@ public class MailController {
 //
 ////		return "redirect:blist.bo";
 //	}
-//	
-//	@RequestMapping("tmpInsert.mail")
-//	public String tmpInsert(@ModelAttribute Mail m, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
-//		
+	
+	@RequestMapping("tmpInsert.mail")
+	public String tmpInsert(@ModelAttribute Mail m, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
+		
 //		if(uploadFile != null && !uploadFile.isEmpty()) {
-//			String renameFileName = saveFile(uploadFile, request);
-//			
-//			if(renameFileName != null) {
+////			String renameFileName = saveFile(uploadFile, request);
+//				
+////			if(renameFileName != null) {
 //				
 //			}
 //		}
-//		
-//		
-//		return null;
-//	}
+		
+		
+		return null;
+	}
 }
