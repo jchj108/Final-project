@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +20,6 @@
 <!-- Theme style -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
-
 </head>
 <!--
    `body` tag options:
@@ -42,86 +42,38 @@
 
 		<!-- 메인 컨텐츠 -->
 		<div class="content-wrapper" align="center">
-			<br> <br>
-			<!-- 공지사항 -->
+			<br>
+			<br>
+			<!-- 공지사항 등록 -->
 			<div class="container"
-				style="background: white; padding: 30px 30px 30px; margin: 30px">
-				<h3 align="left">공지사항</h3>
+				style="background: white; padding: 10px 10px 10px 10px; margin: auto">
+				<h3 align="left">공지사항 글 등록</h3>
 				<table class="table table-bordered">
-					<thead>
-						<tr class="">
-							<th>번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>날짜</th>
-							<th>조회수</th>
-							<th>첨부파일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>코로나 방역지침 안내</td>
-							<td>도대담</td>
-							<td>2021-08-01</td>
-							<td>11</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>강건강 대리의 결혼을 축하합니다</td>
-							<td>류라라</td>
-							<td>2021-07-30</td>
-							<td>0</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-					</tbody>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" size="127" name="noticeTitle">
+						</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td><input type="hidden" name="noticeWriter" readonly
+							value="" style="background: lightgrey;"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea rows="10" cols="130" name="noticeContent"
+								style="resize: none;"></textarea></td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td><input type="file" name="uploadFile"></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><input type="submit"
+							value="등록 하기"> &nbsp;
+							<button onclick="location.href='nlist.no'">목록으로</button></td>
+					</tr>
 				</table>
-				<div align="right">
-					<a><button>글쓰기</button></a>
-				</div>
-
-				<!-- 페이징 -->
-				<ul class="pagination justify-content-center">
-					<li class="page-item"><a class="page-link" href="#">이전</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">다음</a></li>
-				</ul>
-
 			</div>
 		</div>
 		<!-- /메인 컨텐츠 -->
