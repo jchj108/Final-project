@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.board.model.exception.BoardException;
-import com.kh.spring.board.model.vo.Board;
 import com.kh.workhome.mail.model.service.MailService;
 import com.kh.workhome.mail.model.vo.Mail;
 
