@@ -42,86 +42,45 @@
 
 		<!-- 메인 컨텐츠 -->
 		<div class="content-wrapper" align="center">
-			<br> <br>
+			<br>
+			<br>
 			<!-- 공지사항 -->
 			<div class="container"
 				style="background: white; padding: 30px 30px 30px; margin: 30px">
-				<h3 align="left">공지사항</h3>
+				<h3 align="left">공지사항 상세보기</h3>
 				<table class="table table-bordered">
-					<thead>
-						<tr class="">
-							<th>번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>날짜</th>
-							<th>조회수</th>
-							<th>첨부파일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>코로나 방역지침 안내</td>
-							<td>도대담</td>
-							<td>2021-08-01</td>
-							<td>11</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>강건강 대리의 결혼을 축하합니다</td>
-							<td>류라라</td>
-							<td>2021-07-30</td>
-							<td>0</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-					</tbody>
+					<tr>
+						<th width="15%">번호</th>
+						<td>1</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td>안녕하세요</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>도대담</td>
+					</tr>
+					<tr>
+						<th>작성날짜</th>
+						<td>2021-08-10</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>ㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td><a>20210810447775.png</a></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button>수정하기</button>
+							<button>삭제하기</button>
+							<button>목록보기</button>
+						</td>
+					</tr>
 				</table>
-				<div align="right">
-					<a><button>글쓰기</button></a>
-				</div>
-
-				<!-- 페이징 -->
-				<ul class="pagination justify-content-center">
-					<li class="page-item"><a class="page-link" href="#">이전</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">다음</a></li>
-				</ul>
-
 			</div>
 		</div>
 		<!-- /메인 컨텐츠 -->
