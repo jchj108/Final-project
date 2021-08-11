@@ -9,29 +9,29 @@ import org.springframework.stereotype.Service;
 import com.kh.workhome.employee.model.dao.EmployeeDAO;
 import com.kh.workhome.employee.model.vo.Employee;
 
-@Service("service")
+@Service("eService")
 public class EmployeeService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
 	@Autowired
-	private EmployeeDAO dao;
+	private EmployeeDAO eDao;
 
 	public int dupEmail(String email) {
-		return dao.dupEmail(sqlSession, email);
+		return eDao.dupEmail(sqlSession, email);
 	}
 	
 	public int insertEmp(Employee e) {
-		return dao.insertEmp(sqlSession, e);
+		return eDao.insertEmp(sqlSession, e);
 	}
 
 	public Employee login(Employee e) {
-		return dao.login(sqlSession, e);
+		return eDao.login(sqlSession, e);
 	}
 
 	public int updatePwd(HashMap<String, String> map) {
-		return dao.updatePwd(sqlSession, map);
+		return eDao.updatePwd(sqlSession, map);
 	}
 
 }

@@ -26,7 +26,7 @@ import com.kh.workhome.employee.model.vo.Employee;
 public class EmployeeController {
 	
 	@Autowired
-	private EmployeeService service;
+	private EmployeeService eService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
@@ -43,7 +43,7 @@ public class EmployeeController {
 	// 이메일 중복 체크
 	@RequestMapping("dupEmail.emp")
 	public void dupEmail(@RequestParam("email") String email, HttpServletResponse response) {
-		int result = service.dupEmail(email);
+		int result = eService.dupEmail(email);
 		boolean bool = result == 0 ? true : false;
 		try {
 			response.getWriter().println(bool);
@@ -91,7 +91,7 @@ public class EmployeeController {
 	public String insertEmp(@ModelAttribute Employee e) {
 		e.setPassword(bcrypt.encode(e.getPassword()));
 		
-		int result = service.insertEmp(e);
+		int result = eService.insertEmp(e);
 		if(result > 0) {
 			return "redirect:loginForm.emp";  
 		} else {
@@ -110,7 +110,7 @@ public class EmployeeController {
 	public String login(@ModelAttribute Employee e, @RequestParam(value="remember", required=false) String remember, 
 						Model model, HttpSession session) {
 
-		Employee loginUser = service.login(e);
+		Employee loginUser = eService.login(e);
 
 		boolean match = false;
 		if(loginUser != null) {	// 존재하는 이메일이라면 비밀번호가 일치하는지 확인
@@ -150,7 +150,7 @@ public class EmployeeController {
 	// 비밀번호 찾기
 	@RequestMapping("findPwd.emp")
 	public String findPwd(@RequestParam String email, Model model) {
-		int result = service.dupEmail(email);
+		int result = eService.dupEmail(email);
 		
 		boolean bool = false;
 		if(result > 0) {
@@ -162,7 +162,7 @@ public class EmployeeController {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("email", email);
 			map.put("password", password);
-			service.updatePwd(map);
+			eService.updatePwd(map);
 			
 			// ******* 메일 전송  *******  
 			String from = "workhome0215@gmail.com";
