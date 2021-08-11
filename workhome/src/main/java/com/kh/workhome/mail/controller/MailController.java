@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.board.model.exception.BoardException;
-import com.kh.spring.board.model.vo.Board;
 import com.kh.workhome.mail.model.service.MailService;
 import com.kh.workhome.mail.model.vo.Mail;
 
@@ -18,7 +16,7 @@ import com.kh.workhome.mail.model.vo.Mail;
 public class MailController {
 	// 테스트입니다.
 	@Autowired
-	private MailService service;
+	private MailService mService;
 	
 	@RequestMapping("mail.mail")
 	public String mailBoxForm() {
@@ -37,43 +35,43 @@ public class MailController {
 		return "tempmaillist";
 	}
 	
-	@RequestMapping("binsert.bo")
-	public String insertBoard(@ModelAttribute Board b, @RequestParam("uploadFile") MultipartFile uploadFile,
-			HttpServletRequest request) {
-
-		// 파일 안 넣었을 때 => ""
-		// 파일 넣었을 때 => 파일 이름
-
-		// if(!uploadFile.getOriginalFilename().equals("")) {
-		if (uploadFile != null && !uploadFile.isEmpty()) { // 파일이 들어왔을 때
-			// 파일의 이름을 바꿔줘야 한다.
-			String renameFileName = saveFile(uploadFile, request);
-
-			if (renameFileName != null) {
-				b.setOriginalFileName(uploadFile.getOriginalFilename());
-				b.setRenameFileName(renameFileName);
-			}
-		}
-		int result = bService.insertBoard(b);
-		if (result > 0) {
-			return "redirect:blist.bo";
-		} else {
-			throw new BoardException("게시글 등록에 실패했습니다");
-		}
-
-//		return "redirect:blist.bo";
-	}
+//	@RequestMapping("binsert.bo")
+//	public String insertBoard(@ModelAttribute Board b, @RequestParam("uploadFile") MultipartFile uploadFile,
+//			HttpServletRequest request) {
+//
+//		// 파일 안 넣었을 때 => ""
+//		// 파일 넣었을 때 => 파일 이름
+//
+//		// if(!uploadFile.getOriginalFilename().equals("")) {
+//		if (uploadFile != null && !uploadFile.isEmpty()) { // 파일이 들어왔을 때
+//			// 파일의 이름을 바꿔줘야 한다.
+//			String renameFileName = saveFile(uploadFile, request);
+//
+//			if (renameFileName != null) {
+//				b.setOriginalFileName(uploadFile.getOriginalFilename());
+//				b.setRenameFileName(renameFileName);
+//			}
+//		}
+//		int result = bService.insertBoard(b);
+//		if (result > 0) {
+//			return "redirect:blist.bo";
+//		} else {
+//			throw new BoardException("게시글 등록에 실패했습니다");
+//		}
+//
+////		return "redirect:blist.bo";
+//	}
 	
 	@RequestMapping("tmpInsert.mail")
 	public String tmpInsert(@ModelAttribute Mail m, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
 		
-		if(uploadFile != null && !uploadFile.isEmpty()) {
-			String renameFileName = saveFile(uploadFile, request);
-			
-			if(renameFileName != null) {
-				
-			}
-		}
+//		if(uploadFile != null && !uploadFile.isEmpty()) {
+////			String renameFileName = saveFile(uploadFile, request);
+//				
+////			if(renameFileName != null) {
+//				
+//			}
+//		}
 		
 		
 		return null;

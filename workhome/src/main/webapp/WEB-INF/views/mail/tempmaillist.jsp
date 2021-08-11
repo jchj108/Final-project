@@ -43,9 +43,9 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3){
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 		<!-- Navbar -->
-		<jsp:include page="../../../header.jsp"></jsp:include>
+		<jsp:include page="../common/header.jsp"></jsp:include>
 		<!-- Main Sidebar Container -->
-		<jsp:include page="../../../sidebar.jsp"></jsp:include>
+		<jsp:include page="../common/sidebar.jsp"></jsp:include>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->

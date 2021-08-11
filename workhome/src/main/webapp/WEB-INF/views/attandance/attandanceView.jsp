@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,14 +23,14 @@
 
 </head>
 <!--
-   `body` tag options:
-   
-     Apply one or more of the following classes to to the body tag
-     to get the desired effect
-   
-     * sidebar-collapse
-     * sidebar-mini
-   -->
+	`body` tag options:
+	
+	  Apply one or more of the following classes to to the body tag
+	  to get the desired effect
+	
+	  * sidebar-collapse
+	  * sidebar-mini
+	-->
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 		<!-- header -->
@@ -43,85 +44,83 @@
 		<!-- 메인 컨텐츠 -->
 		<div class="content-wrapper" align="center">
 			<br> <br>
-			<!-- 공지사항 -->
+			<!-- 근태관리 -->
 			<div class="container"
 				style="background: white; padding: 30px 30px 30px; margin: 30px">
-				<h3 align="left">공지사항</h3>
-				<table class="table table-bordered">
+				<h3 align="left">출퇴근 기록</h3>
+				<table class="table table-bordered" style="text-align: center">
 					<thead>
-						<tr class="">
-							<th>번호</th>
-							<th>제목</th>
-							<th>작성자</th>
+						<tr>
+							<th>이름</th>
 							<th>날짜</th>
-							<th>조회수</th>
-							<th>첨부파일</th>
+							<th>출근시간</th>
+							<th>퇴근시간</th>
+							<th>총 근무시간</th>
+							<th>근무시간 상세</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>1</td>
-							<td>코로나 방역지침 안내</td>
-							<td>도대담</td>
-							<td>2021-08-01</td>
-							<td>11</td>
-							<td>O</td>
+							<td>강건강</td>
+							<td>2021-08-10</td>
+							<td>08:59:01</td>
+							<td>18:00:15</td>
+							<td>07:38:44</td>
+							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
 						</tr>
 						<tr>
-							<td>2</td>
-							<td>강건강 대리의 결혼을 축하합니다</td>
-							<td>류라라</td>
-							<td>2021-07-30</td>
-							<td>0</td>
-							<td></td>
+							<td>강건강</td>
+							<td>2021-08-10</td>
+							<td>08:59:01</td>
+							<td>18:00:15</td>
+							<td>07:38:44</td>
+							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
 						</tr>
 						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
+							<td>강건강</td>
+							<td>2021-08-10</td>
+							<td>08:59:01</td>
+							<td>18:00:15</td>
+							<td>07:38:44</td>
+							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
 						</tr>
 						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
+							<td>강건강</td>
+							<td>2021-08-10</td>
+							<td>08:59:01</td>
+							<td>18:00:15</td>
+							<td>07:38:44</td>
+							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
 						</tr>
 						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
+							<td>강건강</td>
+							<td>2021-08-10</td>
+							<td>08:59:01</td>
+							<td>18:00:15</td>
+							<td>07:38:44</td>
+							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
 						</tr>
 						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
+							<td>강건강</td>
+							<td>2021-08-10</td>
+							<td>08:59:01</td>
+							<td>18:00:15</td>
+							<td>07:38:44</td>
+							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
 						</tr>
 					</tbody>
+					<tr>
+						<td colspan="6" align="center">
+							<ul class="pagination justify-content-center">
+								<li class="page-item"><a class="page-link" href="#">이전</a></li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">다음</a></li>
+							</ul>
+						</td>
+					</tr>
 				</table>
-				<div align="right">
-					<a><button>글쓰기</button></a>
-				</div>
-
-				<!-- 페이징 -->
-				<ul class="pagination justify-content-center">
-					<li class="page-item"><a class="page-link" href="#">이전</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">다음</a></li>
-				</ul>
-
 			</div>
 		</div>
 		<!-- /메인 컨텐츠 -->
