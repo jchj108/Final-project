@@ -121,8 +121,12 @@
 									<h3 class="card-title">새 메일 쓰기</h3>
 								</div>
 								<!-- /.card-header -->
-								<form method="post" id="form-mailsend">
+								<form action="tmpInsert.mail" method="post" id="form-mailsend"
+									enctype="Multipart/form-data">
 									<div class="card-body">
+										<!-- 										<div class="form-group"> -->
+										<%-- 											<input class="form-control" value="받는 이 : ${loginUser.empName }"> --%>
+										<!-- 										</div> -->
 										<div class="form-group">
 											<input class="form-control" placeholder="받는 이">
 										</div>
@@ -162,27 +166,27 @@
 										<div class="form-group">
 											<div class="btn btn-default btn-file">
 												<i class="fas fa-paperclip"></i> 파일 첨부 <input type="file"
-													name="attachment">
+													name="uploadFile">
 											</div>
 											<p class="help-block">Max. 32MB</p>
 										</div>
 									</div>
-								</form>
-								<!-- /.card-body -->
-								<div class="card-footer">
-									<div class="float-right">
-										<button type="button" id="tmpInsert-btn"
-											class="btn btn-default">
-											<i class="fas fa-pencil-alt"></i> 임시 저장
-										</button>
-										<button type="submit" class="btn btn-primary">
-											<i class="far fa-envelope"></i> 보내기
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<div class="float-right">
+											<button type="submit" id="tmpInsert-btn"
+												class="btn btn-default">
+												<i class="fas fa-pencil-alt"></i> 임시 저장
+											</button>
+											<button type="submit" class="btn btn-primary">
+												<i class="far fa-envelope"></i> 보내기
+											</button>
+										</div>
+										<button type="reset" class="btn btn-default">
+											<i class="fas fa-times"></i> 취소
 										</button>
 									</div>
-									<button type="reset" class="btn btn-default">
-										<i class="fas fa-times"></i> 취소
-									</button>
-								</div>
+								</form>
 								<!-- /.card-footer -->
 							</div>
 							<!-- /.card -->
@@ -238,35 +242,35 @@
 						uploadImage(image[0]);
 						console.log("이미지");
 					}
-				},
+				}
 			});
 		});
-		
-	    function uploadImage(image) {
-	        var data = new FormData();
-	        data.append("image", image);
-	        $.ajax({
-	            type: "post",
-	            cache: false,
-	            contentType:false,
-	            processData: false,
-	            dataType :'jsonp',
-	            url: '/cop/bbs/insertSummberNoteFile.do',
-	            data: data,
-	            success: function(data) {
-	//이미지 경로
-	                var image = $('<img>').attr('src', '/cmm/fms/getImage.do?atchFileId='+data[0].atchFileId+'&fileSn=0');
-	                $('#nttCn').summernote("insertNode", image[0]);
-	            },
-	            error: function(data) {
-	                alert('error : ' +data);
-	            }
-	        });
-	    }
 
-		$('#tmpInsert-btn').on("click", function() {
-			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
-		});
+		// 	    function uploadImage(image) {
+		// 	        var data = new FormData();
+		// 	        data.append("image", image);
+		// 	        $.ajax({
+		// 	            type: "post",
+		// 	            cache: false,
+		// 	            contentType:false,
+		// 	            processData: false,
+		// 	            dataType :'jsonp',
+		// 	            url: '/cop/bbs/insertSummberNoteFile.do',
+		// 	            data: data,
+		// 	            success: function(data) {
+		// 	//이미지 경로
+		// 	                var image = $('<img>').attr('src', '/cmm/fms/getImage.do?atchFileId='+data[0].atchFileId+'&fileSn=0');
+		// 	                $('#nttCn').summernote("insertNode", image[0]);
+		// 	            },
+		// 	            error: function(data) {
+		// 	                alert('error : ' +data);
+		// 	            }
+		// 	        });
+		// 	    }
+
+		// 		$('#tmpInsert-btn').on("click", function() {
+		// 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
+		// 		});
 	</script>
 </body>
 </html>

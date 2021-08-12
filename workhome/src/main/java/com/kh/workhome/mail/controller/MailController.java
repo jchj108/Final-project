@@ -63,8 +63,8 @@ public class MailController {
 //	}
 	
 	@RequestMapping("tmpInsert.mail")
-	public String tmpInsert(@ModelAttribute Mail m, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
-		
+	public String tmpInsert(@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
+		System.out.println(uploadFile);
 //		if(uploadFile != null && !uploadFile.isEmpty()) {
 ////			String renameFileName = saveFile(uploadFile, request);
 //				
