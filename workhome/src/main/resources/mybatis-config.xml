@@ -9,11 +9,13 @@
 		<typeAlias type="com.kh.workhome.employee.model.vo.Employee" alias="Employee"/>
 		<typeAlias type="com.kh.workhome.mail.model.vo.Mail" alias="Mail"/>
 		<typeAlias type="com.kh.workhome.todo.model.vo.ToDo" alias="Todo"/>
+		<typeAlias type="com.kh.workhome.approval.model.vo.Approval" alias="Approval"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mapper/employee-mapper.xml"/>
 		<mapper resource="mapper/mail-mapper.xml"/>
 		<mapper resource="mapper/todo-mapper.xml"/>
+		<mapper resource="mapper/approval-mapper.xml"/>
 	</mappers>
 </configuration>

@@ -63,6 +63,7 @@
 		<url-pattern>*.mail</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 사용자 관련  -->
 	<servlet>
 		<servlet-name>employeeServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -72,12 +73,27 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-		
 	<servlet-mapping>
 		<servlet-name>employeeServlet</servlet-name>
 		<url-pattern>*.emp</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 결재 관련  -->
+	<servlet>
+		<servlet-name>approvalServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/approval-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>approvalServlet</servlet-name>
+		<url-pattern>*.ap</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 인코딩 필터 등록  -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
