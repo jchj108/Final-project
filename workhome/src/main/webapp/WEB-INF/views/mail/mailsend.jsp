@@ -121,7 +121,7 @@
 									<h3 class="card-title">새 메일 쓰기</h3>
 								</div>
 								<!-- /.card-header -->
-								<form action="tmpInsert.mail" method="post" id="form-mailsend"
+								<form method="post" id="form-mailsend"
 									enctype="Multipart/form-data">
 									<div class="card-body">
 										<!-- 										<div class="form-group"> -->
@@ -165,7 +165,7 @@
 										</div>
 										<div class="form-group">
 											<div class="btn btn-default btn-file">
-												<i class="fas fa-paperclip"></i> 파일 첨부 <input type="file"
+												<i class="fas fa-paperclip"></i> 파일 첨부 <input multiple="multiple" type="file"
 													name="uploadFile">
 											</div>
 											<p class="help-block">Max. 32MB</p>
@@ -268,9 +268,9 @@
 		// 	        });
 		// 	    }
 
-		// 		$('#tmpInsert-btn').on("click", function() {
-		// 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
-		// 		});
+		$('#tmpInsert-btn').on("click", function() {
+			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
+		});
 	</script>
 </body>
 </html>
