@@ -19,6 +19,21 @@
 <!-- summernote -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/plugins/summernote/summernote-bs4.min.css">
+
+<style>
+.mailsubtitle-flex-container {
+	display: flex;
+	justify-content: space-between;
+}
+.mailsubtitle-right {
+	width: 88%;
+}
+.mailsubtitle-left {
+    height: calc(2.25rem + 2px);
+    align-self: center;
+}
+</style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -124,18 +139,22 @@
 								<form method="post" id="form-mailsend"
 									enctype="Multipart/form-data">
 									<div class="card-body">
-										<!-- 										<div class="form-group"> -->
-										<%-- 											<input class="form-control" value="받는 이 : ${loginUser.empName }"> --%>
-										<!-- 										</div> -->
-										<div class="form-group">
-											<input class="form-control" placeholder="받는 이">
+										<input type="hidden" value="${loginUser.empNo}" />
+										<div class="mailsubtitle-flex-container">
+											<div class="mailsubtitle-left"><b>받는 사람</b></div>
+											<div class="form-group mailsubtitle-right">
+												<input class="form-control mail-subtitle" placeholder="받는 이">
+											</div>
+										</div>
+										<div class="mailsubtitle-flex-container">
+											<div class="mailsubtitle-left"><b>제목</b></div>
+											<div class="form-group mailsubtitle-right" >
+												<input class="form-control" placeholder="제목">
+											</div>
 										</div>
 										<div class="form-group">
-											<input class="form-control" placeholder="제목">
-										</div>
-										<div class="form-group">
-											<textarea id="compose-textarea" class="form-control"
-												style="height: 300px">
+											<textarea id="compose-textarea"
+												class="form-control mail-subtitle" style="height: 300px">
 					                      <h1>
 																	<u>Heading Of Message</u>
 																</h1>
@@ -165,8 +184,8 @@
 										</div>
 										<div class="form-group">
 											<div class="btn btn-default btn-file">
-												<i class="fas fa-paperclip"></i> 파일 첨부 <input multiple="multiple" type="file"
-													name="uploadFile">
+												<i class="fas fa-paperclip"> 파일 첨부 <input
+													multiple="multiple" type="file" name="uploadFile"></i>
 											</div>
 											<p class="help-block">Max. 32MB</p>
 										</div>

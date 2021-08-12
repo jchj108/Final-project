@@ -159,6 +159,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="send.mail" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>메일 쓰기</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="pages/mailbox/compose.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>받은메일함</p>
