@@ -35,7 +35,7 @@ public class EmployeeController {
 	private JavaMailSenderImpl mailSender;
 
 	// 회원가입 페이지 이동
-	@RequestMapping("signUpForm.ap")
+	@RequestMapping("signUpForm.emp")
 	public String signUpForm() {
 		return "signUp";
 	}

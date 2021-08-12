@@ -9,9 +9,9 @@
 	
 	<insert id="insertEmp">
 		insert into employee 
-		values (#{empNo}, #{empName}, #{empPosition}, sysdate, #{phone}, 
+		values (seq_eNo.nextval, #{empName}, #{empPosition}, sysdate, #{phone}, 
 				#{empPhone}, #{email}, #{address}, default, #{empAuto},
-				#{password}, #{deptNo}, seq_eid.nextval)		
+				#{password}, #{deptNo}, #{empId})		
 	</insert>
 	
 	<resultMap type="Employee" id="employeeResultSet">
