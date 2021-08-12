@@ -35,7 +35,7 @@ public class EmployeeController {
 	private JavaMailSenderImpl mailSender;
 
 	// 회원가입 페이지 이동
-	@RequestMapping("signUpForm.emp")
+	@RequestMapping("signUpForm.ap")
 	public String signUpForm() {
 		return "signUp";
 	}
@@ -126,7 +126,7 @@ public class EmployeeController {
 				// 로그인 유지 X (1시간)
 				session.setMaxInactiveInterval(3600);
 			}
-			return "redirect: home.do";			//--> login.emp로 뜸. 파일 경로말고 url로 바꾸기
+			return "redirect: home.do";			 
 		} else {
 			model.addAttribute("msg", "로그인 실패");
 			return "../../../index";				
@@ -217,5 +217,6 @@ public class EmployeeController {
 			e.printStackTrace();
 		}
 	}
+	
 	
 }

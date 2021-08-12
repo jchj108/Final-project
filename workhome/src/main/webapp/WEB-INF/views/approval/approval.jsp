@@ -41,6 +41,7 @@
 	<section class="content">
 		<div class="container-fluid">
 			 <!-- 타이틀 영역 -->
+			 <br>
 			<div class="d-sm-flex align-items-center justify-content-between mb-4 col-lg-9" style="margin-left: auto; margin-right: auto;" >
 				<h1 class="h3 mb-0 text-gray-800">전자결재</h1>
 			</div>
@@ -61,7 +62,7 @@
 				                  <i class="fas fa fa-user-o fa-sm fa-fw mr-2 text-gray-400 fa-fw"></i>근태신청
 				                </a>
 				              </div>
-							<h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">진행사항</h6>
+							<h6 class="m-0 font-weight-bold text-primary" style="display: inline-block; ">진행사항</h6>
 				            </div>
 						</div>
 						<div class="card-body" style="clear: both;">
@@ -288,7 +289,7 @@
 							<div class="table-responsive">
 								<table class="table table-bordered" style="text-align: center;">
 									<caption>● 결재 진행 > 미결재 문서</caption>
-									<table class="table table-bordered" style="text-align: center;">
+									<thead>
 										<tr>
 											<th>품의 번호</th>
 											<th>문서 분류</th>
@@ -475,11 +476,10 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
-	</div>
-			
+	</section>	
+</div>
   <!-- /메인 컨텐츠 -->
   
   <!-- footer -->
