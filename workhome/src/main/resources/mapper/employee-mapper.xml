@@ -41,4 +41,11 @@
  		set password=#{password}
  		where email=#{email}
 	</update>
+	
+	<select id="selectEmp" parameterType="Employee" resultMap="employeeResultSet">
+        select *
+		from EMPLOYEE
+			 JOIN DEPARTMENT USING (DEPTNO)
+		where EMPNO=#{empNo} AND EMPSTATUS !='N'
+	</select>
 </mapper>

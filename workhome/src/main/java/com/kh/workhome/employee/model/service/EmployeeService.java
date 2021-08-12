@@ -33,5 +33,8 @@ public class EmployeeService {
 	public int updatePwd(HashMap<String, String> map) {
 		return eDao.updatePwd(sqlSession, map);
 	}
-
+	
+	public Employee selectEmp(Employee e) {
+		return eDao.selectEmp(sqlSession, e);
+	}
 }

@@ -25,6 +25,8 @@ public class EmployeeDAO {
 	public int updatePwd(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("employeeMapper.updatePwd", map);
 	}
-
-
+	
+	public Employee selectEmp(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.selectOne("employeeMapper.selectEmp", e);
+	}
 }
