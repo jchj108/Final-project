@@ -33,11 +33,11 @@
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 		<!-- header -->
-		<jsp:include page="../../../header.jsp"></jsp:include>
+		<jsp:include page="../common/header.jsp"></jsp:include>
 		<!-- /header -->
 
 		<!-- sidebar -->
-		<jsp:include page="../../../sidebar.jsp"></jsp:include>
+		<jsp:include page="../common/sidebar.jsp"></jsp:include>
 		<!-- /sidebar -->
 
 		<!-- 메인 컨텐츠 -->
@@ -127,7 +127,7 @@
 		<!-- /메인 컨텐츠 -->
 
 		<!-- footer -->
-		<jsp:include page="../../../footer.jsp"></jsp:include>
+		<jsp:include page="../common/footer.jsp"></jsp:include>
 		<!-- /footer -->
 
 	</div>
