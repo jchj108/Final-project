@@ -153,7 +153,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link">
+                <a href="mail.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>전체메일</p>
                 </a>
@@ -177,7 +177,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/read-mail.html" class="nav-link">
+                <a href="templist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>임시보관함</p>
                 </a>
