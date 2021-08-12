@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.workhome.employee.model.vo.Employee;
 
-@Repository("dao")
+@Repository("eDao")
 public class EmployeeDAO {
 
 	public int dupEmail(SqlSessionTemplate sqlSession, String email) {
