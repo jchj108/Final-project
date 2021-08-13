@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/todo-context.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/mail-context.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/notice-context.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/resources/root-context.xml</config>

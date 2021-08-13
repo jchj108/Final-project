@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,9 @@
 <!-- Theme style -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
-
+<style>
+#buttonTab{border-left: hidden; border-right: hidden;}
+</style>
 </head>
 <!--
    `body` tag options:
@@ -47,6 +50,7 @@
 			<div class="container"
 				style="background: white; padding: 30px 30px 30px; margin: 30px">
 				<h3 align="left">공지사항</h3>
+				<p>공지사항 게시글 총 갯수:${ pi.listCount }</p>
 				<table class="table table-bordered">
 					<thead>
 						<tr class="">
@@ -59,59 +63,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>코로나 방역지침 안내</td>
-							<td>도대담</td>
-							<td>2021-08-01</td>
-							<td>11</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>강건강 대리의 결혼을 축하합니다</td>
-							<td>류라라</td>
-							<td>2021-07-30</td>
-							<td>0</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>2021 월급 인상 안내</td>
-							<td>남나눔</td>
-							<td>2021-01-01</td>
-							<td>102</td>
-							<td>O</td>
-						</tr>
+						<c:forEach var="n" items="${ list }">
+							<tr>
+								<td align="center">${ n.noticeNo }</td>
+								<td align="center">${ n.noticeTitle }</td>
+								<td align="center">${ n.noticeWriter }</td>
+								<td align="center">${ n.noticeCreateDate }</td>
+								<td align="center">${ n.noticeCount }</td>
+								<td align="center">○</td>
+							</tr>
+						</c:forEach>
 					</tbody>
+
+					<tr>
+						<td colspan="6" align="right" id="buttonTab"><c:if
+								test="${ !empty loginUser }">
+			               &nbsp; &nbsp; &nbsp;
+			               <button onclick="location.href='ninsertView.no';">글쓰기</button>
+							</c:if></td>
+					</tr>
 				</table>
-				<div align="right">
-					<a><button>글쓰기</button></a>
-				</div>
 
 				<!-- 페이징 -->
 				<ul class="pagination justify-content-center">
@@ -121,7 +92,6 @@
 					<li class="page-item"><a class="page-link" href="#">3</a></li>
 					<li class="page-item"><a class="page-link" href="#">다음</a></li>
 				</ul>
-
 			</div>
 		</div>
 		<!-- /메인 컨텐츠 -->
