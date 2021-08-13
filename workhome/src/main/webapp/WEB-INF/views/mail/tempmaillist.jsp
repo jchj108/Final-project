@@ -21,23 +21,16 @@
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
-.mail-icon {
-	width: 20px;
-}
-
-.table td, .table th {
-	padding: .25rem;
-	vertical-align: middle;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-	background-color: unset;
-}
-
-td:nth-child(1), td:nth-child(2), td:nth-child(3){
-	width: 20px;
-}
-
+	.mail-icon {
+		width : 20px;
+	}
+	.table td, .table th {
+		padding: .25rem;
+		vertical-align: middle;
+	}
+	.table-striped tbody tr:nth-of-type(odd) {
+		background-color: unset;
+	}
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -68,14 +61,16 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3){
 
 			<!-- Main content -->
 			<section class="content">
+							<div class="container-fluid">
+			
 				<div class="row">
 					<div class="col-md-3">
-						<a href="compose.html" class="btn btn-primary btn-block mb-3">메일
+						<a href="send.mail" class="btn btn-primary btn-block mb-3">메일
 							쓰기</a>
 
 						<div class="card">
 							<div class="card-header">
-								<h3 class="card-title">폴더</h3>
+								<h3 class="card-title">보관함</h3>
 
 								<div class="card-tools">
 									<button type="button" class="btn btn-tool"
@@ -93,7 +88,7 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3){
 									<li class="nav-item"><a href="#" class="nav-link"> <i
 											class="far fa-envelope mail-icon"></i> 보낸메일함
 									</a></li>
-									<li class="nav-item"><a href="#" class="nav-link"> <i
+									<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link"> <i
 											class="far fa-file-alt mail-icon"></i> 임시보관함
 									</a></li>
 									<li class="nav-item"><a href="#" class="nav-link"> <i
@@ -493,6 +488,7 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3){
 					<!-- /.col -->
 				</div>
 				<!-- /.row -->
+				</div>
 			</section>
 			<!-- /.content -->
 		</div>
@@ -564,3 +560,4 @@ td:nth-child(1), td:nth-child(2), td:nth-child(3){
 	</script>
 </body>
 </html>
+

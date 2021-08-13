@@ -4,17 +4,16 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
 public class Mail {
 
 	private int number;
-	private String recieveemp;
-	private String etype;
+	private String recieveemp; // 받는 사람
+	private String etype; // 외부, 내부
 	private String etitle;
 	private String econtent;
 	private String estatus;
-	private Date eRTime;
-	private Date sDate;
+	private Date eRTime; // 읽은 시간
+	private Date sDate; // 보낸 시간
 
 	public int getNumber() {
 		return number;
