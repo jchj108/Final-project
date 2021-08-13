@@ -1,5 +1,6 @@
 package com.kh.workhome.employee.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.workhome.employee.model.dao.EmployeeDAO;
+import com.kh.workhome.employee.model.vo.Department;
 import com.kh.workhome.employee.model.vo.Employee;
 
 @Service("eService")
@@ -36,5 +38,9 @@ public class EmployeeService {
 	
 	public Employee selectEmp(Employee e) {
 		return eDao.selectEmp(sqlSession, e);
+	}
+	
+	public ArrayList<Department> selectDeptList() {
+		return eDao.selectDeptList(sqlSession);
 	}
 }

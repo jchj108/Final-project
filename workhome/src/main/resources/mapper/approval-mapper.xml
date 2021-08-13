@@ -3,7 +3,7 @@
 <mapper namespace="approvalMapper">
 	<insert id="insertApproval" parameterType="Approval">
 		insert into APPROVAL 
-		values(#{empNo}||SEQ_APPROVAL.nextval,
+		values(#{empNo}||SEQ_APNO.nextval,
 				#{empNo}, 
 				#{apTitle}, 
 				#{apContent}, 
@@ -21,7 +21,26 @@
 				#{renameFile})
 	</insert>
 	
-	<select id="selectApprovalList" parameterType="string" resultType="Approval">
+	<resultMap type="Approval" id="approvalResultSet">
+		<id column="APNO" property="apNo"/>
+		<id column="EMPNO" property="empNo"/>
+		<result column="APTITLE" property="apTitle"/>
+		<result column="APCONTENT" property="apContent"/>
+		<result column="APPROVALEMP" property="approvalEmp"/>
+		<result column="RUNEMP" property="runEmp"/>
+		<result column="REFEMP" property="refEmp"/>
+		<result column="HEMP" property="hEmp"/>
+		<result column="APDATE" property="apDate"/>
+		<result column="FIDATE" property="fiDate"/>
+		<result column="DDATE" property="dDate"/>
+		<result column="APSTATUS" property="apStatus"/>
+		<result column="A_V_FIRST" property="a_v_first"/>
+		<result column="A_V_LAST" property="a_v_last"/>
+		<result column="ORIGINALFILE" property="originalFile"/>
+		<result column="RENAMEFILE" property="renameFile"/>
+	</resultMap>
+	
+	<select id="selectApprovalList" parameterType="string" resultMap="approvalResultSet">
 		select *
 		from APPROVAL
 		where (EMPNO like #{empno}
@@ -32,5 +51,5 @@
 		)and APSTATUS!='N'
 	</select>
 	
-	
+	 
 </mapper>

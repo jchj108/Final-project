@@ -26,5 +26,5 @@ public class ApprovalService {
 		return aDAO.selectApprovalList(sqlSession, empNo);
 	}
 
-	
+	 
 }

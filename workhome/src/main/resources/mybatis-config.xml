@@ -7,6 +7,7 @@
 
 	<typeAliases>
 		<typeAlias type="com.kh.workhome.employee.model.vo.Employee" alias="Employee"/>
+		<typeAlias type="com.kh.workhome.employee.model.vo.Department" alias="Department"/>
 		<typeAlias type="com.kh.workhome.mail.model.vo.Mail" alias="Mail"/>
 		<typeAlias type="com.kh.workhome.todo.model.vo.ToDo" alias="Todo"/>
 		<typeAlias type="com.kh.workhome.approval.model.vo.Approval" alias="Approval"/>
