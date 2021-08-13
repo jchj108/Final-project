@@ -43,7 +43,7 @@
 			 <!-- 타이틀 영역 -->
 			 <br>
 			<div class="d-sm-flex align-items-center justify-content-between mb-4 col-lg-9" style="margin-left: auto; margin-right: auto;" >
-				<h1 class="h3 mb-0 text-gray-800">전자결재</h1>
+				<h1 class="h3 mb-0 text-gray-800" style="font-weight: bold;">전자결재</h1>
 			</div>
 			<div class="row">
 				<div class="col-lg-9" style="margin-left: auto; margin-right: auto;">
@@ -54,11 +54,11 @@
 				              	<i class="fa fa-plus-square-o text-gray-800 "></i>
 				              </a>
 				              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-				                <a class="dropdown-item" href="apporvalinsertView.do">
+				                <a class="dropdown-item" href="apporvalInsertView.ap">
 				                  <i class="fas fa fa-file-text-o fa-sm fa-fw mr-2 text-gray-400 fa-fw"></i>기안하기
 				                </a>
 				                <div class="dropdown-divider"></div>
-				                <a class="dropdown-item" href="apporvalinsertView.do?tag=T">
+				                <a class="dropdown-item" href="apporvalinsertView.ap?tag=T">
 				                  <i class="fas fa fa-user-o fa-sm fa-fw mr-2 text-gray-400 fa-fw"></i>근태신청
 				                </a>
 				              </div>

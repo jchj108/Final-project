@@ -21,9 +21,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">WorkHome</span>
+    <a href="index3.html" class="brand-link" style="margin-left:20px;">
+	  <i class="fas fa-laptop-house"></i>
+      <span class="brand-text font-weight-bold" style="margin-left:5px;">WorkHome</span>
     </a>
 
     <!-- Sidebar -->

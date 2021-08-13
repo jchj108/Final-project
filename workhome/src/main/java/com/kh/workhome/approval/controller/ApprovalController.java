@@ -36,8 +36,23 @@ public class ApprovalController {
 	
 	@RequestMapping("approvalView.ap")
 	public ModelAndView approvalView(HttpSession session,ModelAndView mv) {
+		Employee loginUser = (Employee) session.getAttribute("loginUser");
+		//로그인유저 사번
+		String loginUserNo = loginUser.getEmpNo();
+		ArrayList<Approval> list = aService.selectApprovalList("%"+loginUserNo+"%");
 		
+		
+		mv.setViewName("approval");
 		return mv;
 	}
+
+	// insert 1 - 결재선 지정 페이지
+	@RequestMapping("apporvalInsertView.ap")
+	public ModelAndView apporvalinsertView(ModelAndView mv, @RequestParam(value = "tag", required = false) String tag) {
+//			
+		mv.setViewName("approvalInsertView");
+		return mv;
+	}
+
 	
 }

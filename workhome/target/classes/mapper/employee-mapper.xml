@@ -48,4 +48,10 @@
 			 JOIN DEPARTMENT USING (DEPTNO)
 		where EMPNO=#{empNo} AND EMPSTATUS !='N'
 	</select>
+	
+	<select id="selectDeptList" resultType="Department">
+        select *
+		from DEPARTMENT 
+	</select>
+	
 </mapper>
