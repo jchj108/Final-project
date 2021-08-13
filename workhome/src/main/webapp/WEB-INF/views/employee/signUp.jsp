@@ -28,16 +28,6 @@
 	<!-- 회원가입 폼 -->
       <form action="insert.emp" method="post" onsubmit="return signUp();">
       
-      <!-- 사원번호  -->
-        <div class="input-group mb-3">
-          <input type="text" id="empId" name="empId" class="form-control" placeholder="사원아이디">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-id-card"></span>
-            </div>
-          </div>
-        </div>
-        
       <!-- 이름  -->
         <div class="input-group mb-3">
           <input type="text" id="name" name="empName" class="form-control" placeholder="이름">
@@ -199,7 +189,6 @@
 	
 	// 회원가입시 미입력 항목 확인 메소드
 	function signUp() {
-		var empId = document.getElementById('empId').value;
 		var name = document.getElementById('name').value;
 		var email = document.getElementById('email').value;
 		var emailDuplicateCheck = document.getElementById('emailDuplicateCheck').value;
@@ -210,11 +199,7 @@
 		
 		var regExp = /^[A-Za-z0-9]{8,15}$/;
 		
-		if (empId == '' || empId.length == 0) {
-			alert('사원번호를 입력해주세요.');
-			document.getElementById('empId').focus();
-			return false;
-		} else if (name == '' || name.length == 0) {
+		if (name == '' || name.length == 0) {
 			alert('이름을 입력해주세요.');
 			document.getElementById('name').focus();
 			return false;

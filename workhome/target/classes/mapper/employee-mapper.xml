@@ -11,7 +11,7 @@
 		insert into employee 
 		values (seq_eNo.nextval, #{empName}, #{empPosition}, sysdate, #{phone}, 
 				#{empPhone}, #{email}, #{address}, default, #{empAuto},
-				#{password}, #{deptNo}, #{empId})		
+				#{password}, #{deptNo})		
 	</insert>
 	
 	<resultMap type="Employee" id="employeeResultSet">
@@ -33,7 +33,7 @@
 	<select id="login" resultMap="employeeResultSet">
 		select *
 		from employee
-		where email = #{email}
+		where EMPNO = #{empNo}
 	</select>
 	
 	<update id="updatePwd" parameterType="hashmap">
@@ -52,6 +52,7 @@
 	<select id="selectDeptList" resultType="Department">
         select *
 		from DEPARTMENT 
+		order by deptno
 	</select>
 	
 </mapper>
