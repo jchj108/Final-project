@@ -17,13 +17,12 @@ public class Employee {
 	private String password; // 비밀번호
 	private String deptNo; // 부서번호
 	private String deptName; // 부서명
-	private String empId; // 사원아이디
 	
 	public Employee() {}
 
 	public Employee(String empNo, String empName, String empPosition, Date joinDate, String phone, String empPhone,
 			String email, String address, String empStatus, String empAuto, String password, String deptNo,
-			String deptName, String empId) {
+			String deptName) {
 		super();
 		this.empNo = empNo;
 		this.empName = empName;
@@ -38,7 +37,6 @@ public class Employee {
 		this.password = password;
 		this.deptNo = deptNo;
 		this.deptName = deptName;
-		this.empId = empId;
 	}
 
 	public String getEmpNo() {
@@ -145,20 +143,12 @@ public class Employee {
 		this.deptName = deptName;
 	}
 
-	public String getEmpId() {
-		return empId;
-	}
-
-	public void setEmpId(String empId) {
-		this.empId = empId;
-	}
-
 	@Override
 	public String toString() {
 		return "Employee [empNo=" + empNo + ", empName=" + empName + ", empPosition=" + empPosition + ", joinDate="
 				+ joinDate + ", phone=" + phone + ", empPhone=" + empPhone + ", email=" + email + ", address=" + address
 				+ ", empStatus=" + empStatus + ", empAuto=" + empAuto + ", password=" + password + ", deptNo=" + deptNo
-				+ ", deptName=" + deptName + ", empId=" + empId + "]";
+				+ ", deptName=" + deptName + "]";
 	}
 	
 }
