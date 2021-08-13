@@ -291,27 +291,27 @@
 			});
 		});
 
-		// 	    function uploadImage(image) {
-		// 	        var data = new FormData();
-		// 	        data.append("image", image);
-		// 	        $.ajax({
-		// 	            type: "post",
-		// 	            cache: false,
-		// 	            contentType:false,
-		// 	            processData: false,
-		// 	            dataType :'jsonp',
-		// 	            url: '/cop/bbs/insertSummberNoteFile.do',
-		// 	            data: data,
-		// 	            success: function(data) {
-		// 	//이미지 경로
-		// 	                var image = $('<img>').attr('src', '/cmm/fms/getImage.do?atchFileId='+data[0].atchFileId+'&fileSn=0');
-		// 	                $('#nttCn').summernote("insertNode", image[0]);
-		// 	            },
-		// 	            error: function(data) {
-		// 	                alert('error : ' +data);
-		// 	            }
-		// 	        });
-		// 	    }
+// 			    function uploadImage(image) {
+// 			        var data = new FormData();
+// 			        data.append("image", image);
+// 			        $.ajax({
+// 			            type: "post",
+// 			            cache: false,
+// 			            contentType:false,
+// 			            processData: false,
+// 			            dataType :'jsonp',
+// 			            url: '/cop/bbs/insertSummberNoteFile.do',
+// 			            data: data,
+// 			            success: function(data) {
+// // 			이미지 경로
+// 			                var image = $('<img>').attr('src', '/cmm/fms/getImage.do?atchFileId='+data[0].atchFileId+'&fileSn=0');
+// 			                $('#nttCn').summernote("insertNode", image[0]);
+// 			            },
+// 			            error: function(data) {
+// 			                alert('error : ' +data);
+// 			            }
+// 			        });
+// 			    }
 
 		$('#tmpInsert-btn').on("click", function() {
 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();

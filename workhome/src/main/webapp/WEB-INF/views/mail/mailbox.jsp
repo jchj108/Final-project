@@ -31,6 +31,12 @@
 	.table-striped tbody tr:nth-of-type(odd) {
 		background-color: unset;
 	}
+	.table td:nth-child(1) {
+		width: 10px;
+	}
+	.fa-star {
+		margin-right : 7px;
+	}
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -200,7 +206,9 @@
 													</div>
 												</td>
 												<td class="mailbox-star"><a href="#"><i
-														class="far fa-star text-warning"></i></a></td>
+														class="far fa-star text-warning"></i></a>
+													<i id="readmail" class="fas fa-envelope text-primary"></i>
+														</td>
 												<td class="mailbox-name"><a href="read-mail.html">Alexander
 														Pierce</a></td>
 												<td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> -
@@ -283,7 +291,7 @@
 													</div>
 												</td>
 												<td class="mailbox-star"><a href="#"><i
-														class="fas fa-star-o text-warning"></i></a></td>
+														class="fas fa-star-o"></i></a></td>
 												<td class="mailbox-name"><a href="read-mail.html">Alexander
 														Pierce</a></td>
 												<td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> -
