@@ -93,6 +93,21 @@
 		<url-pattern>*.ap</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 회의 관련  -->
+	<servlet>
+		<servlet-name>approvalServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/meeting-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>meetingServlet</servlet-name>
+		<url-pattern>*.meet</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 인코딩 필터 등록  -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
