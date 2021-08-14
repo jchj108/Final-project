@@ -10,7 +10,8 @@ public class MailFile {
 	private String mFilePath;
 	private Date mUploadDate;
 	private String mStatus;
-	private int empNo;
+	private String mailNo;
+	
 	public int getmFileNo() {
 		return mFileNo;
 	}
@@ -47,22 +48,22 @@ public class MailFile {
 	public void setmStatus(String mStatus) {
 		this.mStatus = mStatus;
 	}
-	public int getEmpNo() {
-		return empNo;
+	public String getmailNo() {
+		return mailNo;
 	}
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
+	public void setmailNo(String mailNo) {
+		this.mailNo = mailNo;
 	}
 	public MailFile() {}
 	
 	@Override
 	public String toString() {
 		return "MailFile [mFileNo=" + mFileNo + ", mOriginalName=" + mOriginalName + ", mChangeName=" + mChangeName
-				+ ", mFilePath=" + mFilePath + ", mUploadDate=" + mUploadDate + ", mStatus=" + mStatus + ", empNo="
-				+ empNo + "]";
+				+ ", mFilePath=" + mFilePath + ", mUploadDate=" + mUploadDate + ", mStatus=" + mStatus + ", mailNo="
+				+ mailNo + "]";
 	}
 	public MailFile(int mFileNo, String mOriginalName, String mChangeName, String mFilePath, Date mUploadDate,
-			String mStatus, int empNo) {
+			String mStatus, String mailNo) {
 		super();
 		this.mFileNo = mFileNo;
 		this.mOriginalName = mOriginalName;
@@ -70,7 +71,13 @@ public class MailFile {
 		this.mFilePath = mFilePath;
 		this.mUploadDate = mUploadDate;
 		this.mStatus = mStatus;
-		this.empNo = empNo;
+		this.mailNo = mailNo;
 	}
-	
+	public MailFile(String mOriginalName, String mChangeName, String mFilePath, String mailNo) {
+		super();
+		this.mOriginalName = mOriginalName;
+		this.mChangeName = mChangeName;
+		this.mFilePath = mFilePath;
+		this.mailNo = mailNo;
+	}
 }

@@ -154,7 +154,8 @@
 								<form method="post" id="form-mailsend"
 									enctype="Multipart/form-data">
 									<div class="card-body">
-										<input type="hidden" value="${loginUser.empNo}" />
+										<input type="hidden" value="${loginUser.empNo}"
+											name="senderMailId" />
 										<div class="mailsubtitle-flex-container">
 											<div class="mailsubtitle-left">
 												<b>받는 사람</b>
@@ -164,7 +165,8 @@
 													id="chart">조직도</button>
 											</div>
 											<div class="form-group mailsubtitle-right">
-												<input class="form-control mail-subtitle" placeholder="받는 이">
+												<input class="form-control mail-subtitle" placeholder="받는 이"
+													name="receiveEmp">
 											</div>
 										</div>
 										<div class="mailsubtitle-flex-container">
@@ -172,45 +174,22 @@
 												<b>제목</b>
 											</div>
 											<div class="form-group mailsubtitle-right">
-												<input class="form-control" placeholder="제목">
+												<input class="form-control" placeholder="제목" name="etitle">
 											</div>
 										</div>
 										<div class="form-group">
 											<textarea id="compose-textarea"
-												class="form-control mail-subtitle">
-<!-- 					                      <h1> -->
-<!-- 																	<u>Heading Of Message</u> -->
-<!-- 																</h1> -->
-<!-- 					                      <h4>Subheading</h4> -->
-<!-- 					                      <p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain -->
-<!-- 					                        was born and I will give you a complete account of the system, and expound the actual teachings -->
-<!-- 					                        of the great explorer of the truth, the master-builder of human happiness. No one rejects, -->
-<!-- 					                        dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know -->
-<!-- 					                        how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again -->
-<!-- 					                        is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, -->
-<!-- 					                        but because occasionally circumstances occur in which toil and pain can procure him some great -->
-<!-- 					                        pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, -->
-<!-- 					                        except to obtain some advantage from it? But who has any right to find fault with a man who -->
-<!-- 					                        chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that -->
-<!-- 					                        produces no resultant pleasure? On the other hand, we denounce with righteous indignation and -->
-<!-- 					                        dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so -->
-<!-- 					                        blinded by desire, that they cannot foresee</p> -->
-<!-- 					                      <ul> -->
-<!-- 					                        <li>List item one</li> -->
-<!-- 					                        <li>List item two</li> -->
-<!-- 					                        <li>List item three</li> -->
-<!-- 					                        <li>List item four</li> -->
-<!-- 					                      </ul> -->
-<!-- 					                      <p>Thank you,</p> -->
-<!-- 					                      <p>John Doe</p> -->
+												class="form-control mail-subtitle" name="econtent">
 					                 	   </textarea>
 										</div>
 										<div class="form-group">
 											<div class="btn btn-default btn-file">
 												<i class="fas fa-paperclip"> 파일 첨부 <input
-													multiple="multiple" type="file" name="uploadFile"></i>
+													multiple="multiple" id="uploadfileinput" type="file"
+													name="uploadFile"></i>
 											</div>
 											<p class="help-block">Max. 32MB</p>
+											<table></table>
 										</div>
 									</div>
 									<!-- /.card-body -->
@@ -279,43 +258,14 @@
 			//Add text editor
 			$('#compose-textarea').summernote({
 				lang : "ko-KR",
-// 				minHeight : 600,
-// 				maxHeight : 600,
 				height : 600,
-				callbacks : {
-					onImageUpload : function(image) {
-						uploadImage(image[0]);
-						console.log("이미지");
-					}
-				}
 			});
 		});
-
-// 			    function uploadImage(image) {
-// 			        var data = new FormData();
-// 			        data.append("image", image);
-// 			        $.ajax({
-// 			            type: "post",
-// 			            cache: false,
-// 			            contentType:false,
-// 			            processData: false,
-// 			            dataType :'jsonp',
-// 			            url: '/cop/bbs/insertSummberNoteFile.do',
-// 			            data: data,
-// 			            success: function(data) {
-// // 			이미지 경로
-// 			                var image = $('<img>').attr('src', '/cmm/fms/getImage.do?atchFileId='+data[0].atchFileId+'&fileSn=0');
-// 			                $('#nttCn').summernote("insertNode", image[0]);
-// 			            },
-// 			            error: function(data) {
-// 			                alert('error : ' +data);
-// 			            }
-// 			        });
-// 			    }
 
 		$('#tmpInsert-btn').on("click", function() {
 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
 		});
+
 	</script>
 </body>
 </html>
