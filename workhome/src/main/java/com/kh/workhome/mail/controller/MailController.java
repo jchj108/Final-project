@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.workhome.employee.model.vo.Employee;
+import com.kh.workhome.mail.model.exception.MailException;
 import com.kh.workhome.mail.model.service.MailService;
 import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
@@ -74,20 +75,16 @@ public class MailController {
 //	}
 
 	@RequestMapping(value = "tmpInsert.mail")
-	public String requestupload2(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest) {
+	public String requestupload2(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest) throws MailException {
 		String root = mtpRequest.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "/mailUploadFiles";
 		List<MultipartFile> fileList = mtpRequest.getFiles("uploadFile");
         MultipartFile uploadFile = mtpRequest.getFile("uploadFile");
-
 		List<MailFile> mailFileList = new ArrayList<MailFile>();
-		
 		
 		Employee e = (Employee)mtpRequest.getSession().getAttribute("loginUser");
 		String empNo = e.getEmpNo();
 		
-		System.out.println("fileList size : " + fileList.size());
-		System.out.println(m);
 		m.setSenderMailId(m.getSenderMailId() + "@workhome.com");
 		
 		System.out.println(m);
@@ -95,17 +92,17 @@ public class MailController {
 		int result = mService.insertMail(m);
 
 		if(result <= 0) { // 메일 등록 취소 시 예외처리
-			throw new MailException("메일 저장에 실패했습니다");
+			throw new MailException("메일 저장에 실패했습니다.");
 		}
+		boolean flag = false;
+		
 		if(!uploadFile.isEmpty()) {
 			// 받아온 파일이 있을 때만 MAIL과 MAIL_FILE CURRVAL로 연결
 			System.out.println("업로드된 파일 수 : " + fileList.size());
+			flag = true;
 			for (MultipartFile mf : fileList) {
 				String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 				long fileSize = mf.getSize(); // 파일 사이즈
-				
-				System.out.println("originFileName : " + originFileName);
-				System.out.println("fileSize : " + fileSize);
 				
 				String mChangeName = saveFile(mtpRequest, mf);
 
@@ -114,11 +111,11 @@ public class MailController {
 				mailFileList.add(mailfile);
 			}
 		}
-		
-		for(MailFile mf : mailFileList) {
-			System.out.println(mf);
-		}
 		int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
+		
+		if(result2 <= 0 && flag) {
+			throw new MailException("파일 저장에 실패했습니다.");
+		}
 		
 		return "redirect:mail.mail";
 	}
