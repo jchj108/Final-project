@@ -5,6 +5,11 @@
 	<insert id="insertMailFile">
 		insert into mail_file 
 		values (mail_file_seq.nextval, #{mOriginalName}, #{mChangeName}, 
-				#{mFilePath}, sysdate, Y, #{mailNo})		
+				#{mFilePath}, sysdate, 'Y', MAIL_TEMP_SEQ.CURRVAL)		
+	</insert>
+	<insert id="insertMail">
+		insert into mail
+		values (MAIL_TEMP_SEQ.NEXTVAL, #{receiveEmp}, null, #{etitle}, 
+				#{econtent}, 'Y', null, #{empNo}, sysdate)
 	</insert>
 </mapper>

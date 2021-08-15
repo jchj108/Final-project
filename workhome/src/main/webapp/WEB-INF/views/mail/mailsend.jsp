@@ -156,6 +156,8 @@
 									<div class="card-body">
 										<input type="hidden" value="${loginUser.empNo}"
 											name="senderMailId" />
+										<input type="hidden" value="${loginUser.empName}"
+											name=senderName />
 										<div class="mailsubtitle-flex-container">
 											<div class="mailsubtitle-left">
 												<b>받는 사람</b>

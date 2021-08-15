@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.workhome.mail.model.dao.MailDAO;
+import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
 
 @Service("mService")
@@ -22,6 +23,11 @@ public class MailServiceImpl implements MailService {
 	public int insertMailFile(List<MailFile> mailFileList) {
 		
 		return mDAO.insertMailFile(sqlSession, mailFileList);
+	}
+
+	@Override
+	public int insertMail(Mail m) {
+		return mDAO.insertMail(sqlSession, m);
 	}
 	
 }

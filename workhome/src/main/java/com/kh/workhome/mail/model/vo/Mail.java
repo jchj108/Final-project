@@ -15,8 +15,8 @@ public class Mail {
 	private Date eRTime; // 읽은 시간
 	private Date sDate; // 보낸 시간
 	private String senderMailId; // 보낸 사람 메일 주소
-	private String senderName; // 보낸 사람 이름
-
+	private String empNo; // FK
+	
 	public Mail() {
 	}
 
@@ -92,16 +92,10 @@ public class Mail {
 		this.senderMailId = senderMailId;
 	}
 
-	public String getSenderName() {
-		return senderName;
-	}
 
-	public void setSenderName(String senderName) {
-		this.senderName = senderName;
-	}
 
 	public Mail(int number, String receiveEmp, String etype, String etitle, String econtent, String estatus,
-			Date eRTime, Date sDate, String senderMailId, String senderName) {
+			Date eRTime, Date sDate, String senderMailId, String empNo) {
 		super();
 		this.number = number;
 		this.receiveEmp = receiveEmp;
@@ -112,14 +106,22 @@ public class Mail {
 		this.eRTime = eRTime;
 		this.sDate = sDate;
 		this.senderMailId = senderMailId;
-		this.senderName = senderName;
+		this.empNo = empNo;
+	}
+
+	public String getEmpNo() {
+		return empNo;
+	}
+
+	public void setEmpNo(String empNo) {
+		this.empNo = empNo;
 	}
 
 	@Override
 	public String toString() {
 		return "Mail [number=" + number + ", receiveEmp=" + receiveEmp + ", etype=" + etype + ", etitle=" + etitle
 				+ ", econtent=" + econtent + ", estatus=" + estatus + ", eRTime=" + eRTime + ", sDate=" + sDate
-				+ ", senderMailId=" + senderMailId + ", senderName=" + senderName + "]";
+				+ ", senderMailId=" + senderMailId + ", empNo=" + empNo + "]";
 	}
 
 

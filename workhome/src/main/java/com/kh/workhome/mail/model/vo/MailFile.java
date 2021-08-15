@@ -73,11 +73,10 @@ public class MailFile {
 		this.mStatus = mStatus;
 		this.mailNo = mailNo;
 	}
-	public MailFile(String mOriginalName, String mChangeName, String mFilePath, String mailNo) {
+	public MailFile(String mOriginalName, String mChangeName, String mFilePath) {
 		super();
 		this.mOriginalName = mOriginalName;
 		this.mChangeName = mChangeName;
 		this.mFilePath = mFilePath;
-		this.mailNo = mailNo;
 	}
 }

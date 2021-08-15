@@ -78,16 +78,27 @@ public class MailController {
 		String root = mtpRequest.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "/mailUploadFiles";
 		List<MultipartFile> fileList = mtpRequest.getFiles("uploadFile");
-//		String uploadFile = mtpRequest.getParameter("uploadFile");
+        MultipartFile uploadFile = mtpRequest.getFile("uploadFile");
+
 		List<MailFile> mailFileList = new ArrayList<MailFile>();
+		
 		
 		Employee e = (Employee)mtpRequest.getSession().getAttribute("loginUser");
 		String empNo = e.getEmpNo();
 		
 		System.out.println("fileList size : " + fileList.size());
 		System.out.println(m);
+		m.setSenderMailId(m.getSenderMailId() + "@workhome.com");
 		
-		if(fileList.size() != 0) {
+		System.out.println(m);
+		m.setEmpNo(empNo);
+		int result = mService.insertMail(m);
+
+		if(result <= 0) { // 메일 등록 취소 시 예외처리
+			throw new MailException("메일 저장에 실패했습니다");
+		}
+		if(!uploadFile.isEmpty()) {
+			// 받아온 파일이 있을 때만 MAIL과 MAIL_FILE CURRVAL로 연결
 			System.out.println("업로드된 파일 수 : " + fileList.size());
 			for (MultipartFile mf : fileList) {
 				String originFileName = mf.getOriginalFilename(); // 원본 파일 명
@@ -98,7 +109,7 @@ public class MailController {
 				
 				String mChangeName = saveFile(mtpRequest, mf);
 
-				MailFile mailfile = new MailFile(mf.getOriginalFilename(), mChangeName, filePath, empNo);
+				MailFile mailfile = new MailFile(mf.getOriginalFilename(), mChangeName, filePath);
 				
 				mailFileList.add(mailfile);
 			}
@@ -107,25 +118,9 @@ public class MailController {
 		for(MailFile mf : mailFileList) {
 			System.out.println(mf);
 		}
+		int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
 		
-		int result = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
-		System.out.println(result);
-		
-		
-//			STRING SAFEFILE = PATH + SYSTEM.CURRENTTIMEMILLIS() + ORIGINFILENAME;
-//			TRY {
-//				MF.TRANSFERTO(NEW FILE(SAFEFILE));
-//			} CATCH (ILLEGALSTATEEXCEPTION E) {
-//				// TODO AUTO-GENERATED CATCH BLOCK
-//				E.PRINTSTACKTRACE();
-//			} CATCH (IOEXCEPTION E) {
-//				// TODO AUTO-GENERATED CATCH BLOCK
-//				E.PRINTSTACKTRACE();
-//			}
-//
-//		}
-
-		return null;
+		return "redirect:mail.mail";
 	}
 
 	// 파일 저장용 메소드
