@@ -12,4 +12,44 @@
 		values (MAIL_TEMP_SEQ.NEXTVAL, #{receiveEmp}, null, #{etitle}, 
 				#{econtent}, 'Y', null, #{empNo}, sysdate)
 	</insert>
+	
+	<select id="getTempListCount" resultType="_int">
+		select count(*)
+		from mail
+		where estatus='Y'
+	</select>
+	
+	<select id="selectTempList" resultType="arraylist">
+   	SELECT MAIL.MAILNO, RECEIVEEMP, ETYPE, ETITLE, ECONTENT, ESTATUS
+    	E_R_TIME, MAIL.EMPNO, S_DATE, EMPNAME, 
+       	MAIL_FILE.M_STATUS, mail_file.m_change_name
+	FROM MAIL
+    	JOIN EMPLOYEE ON (MAIL.EMPNO = EMPLOYEE.EMPNO)
+    	LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+    WHERE ESTATUS='Y'
+	</select>
+	
+	<resultMap type="Mail" id="mailResultSet">
+		<id column="MAILNO" property="mailNo"/>
+		<result column="RECEIVEEMP" property="receiveEmp"/>
+		<result column="ETYPE" property="etype"/>
+		<result column="ETITLE" property="etitle"/>
+		<result column="ECONTENT" property="econtent"/>
+		<result column="ESTATUS" property="estatus"/>
+		<result column="E_R_TIME" property="eRTime"/>
+		<result column="EMPNO" property="empNo"/>
+		<result column="S_DATE" property="sDate"/>
+		<result column="EMPNAME" property="senderName"/>
+		<collection property="mailFileList" javaType="arraylist" resultMap="mailFileResultSet"/>
+	</resultMap>
+	
+	<resultMap type="MailFile" id="mailFileResultSet">
+		<id column="M_FILE_NO" property="mFileNo"/>
+		<result column="M_ORIGINAL_NAME" property="mOriginalName"/>
+		<result column="M_CHANGE_NAME" property="mChangeName"/>
+		<result column="M_FILE_PATH" property="mFilePath"/>
+		<result column="M_UPLOAD_DATE" property="mUploadDate"/>
+		<result column="M_STATUS" property="mStatus"/>
+		<result column="MAILNO" property="mailNo"/>
+	</resultMap>
 </mapper>
