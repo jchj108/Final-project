@@ -11,14 +11,11 @@ public class Notice {
 	private Date noticeModifyDate;
 	private String noticeStatus;
 	private String noticeWriter;
-	private String originFileName;
-	private String renameFileName;
 	
 	public Notice() {}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent, int noticeCount, Date noticeCreateDate,
-			Date noticeModifyDate, String noticeStatus, String noticeWriter, String originFileName,
-			String renameFileName) {
+			Date noticeModifyDate, String noticeStatus, String noticeWriter) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
@@ -28,8 +25,6 @@ public class Notice {
 		this.noticeModifyDate = noticeModifyDate;
 		this.noticeStatus = noticeStatus;
 		this.noticeWriter = noticeWriter;
-		this.originFileName = originFileName;
-		this.renameFileName = renameFileName;
 	}
 
 	public int getNoticeNo() {
@@ -96,28 +91,11 @@ public class Notice {
 		this.noticeWriter = noticeWriter;
 	}
 
-	public String getOriginFileName() {
-		return originFileName;
-	}
-
-	public void setOriginFileName(String originFileName) {
-		this.originFileName = originFileName;
-	}
-
-	public String getRenameFileName() {
-		return renameFileName;
-	}
-
-	public void setRenameFileName(String renameFileName) {
-		this.renameFileName = renameFileName;
-	}
-
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
 				+ ", noticeCount=" + noticeCount + ", noticeCreateDate=" + noticeCreateDate + ", noticeModifyDate="
-				+ noticeModifyDate + ", noticeStatus=" + noticeStatus + ", noticeWriter=" + noticeWriter
-				+ ", originFileName=" + originFileName + ", renameFileName=" + renameFileName + "]";
+				+ noticeModifyDate + ", noticeStatus=" + noticeStatus + ", noticeWriter=" + noticeWriter + "]";
 	}
 	
 	

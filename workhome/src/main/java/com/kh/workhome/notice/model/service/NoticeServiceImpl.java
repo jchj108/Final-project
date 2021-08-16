@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.kh.workhome.common.PageInfo;
 import com.kh.workhome.notice.model.dao.NoticeDAO;
 import com.kh.workhome.notice.model.vo.Notice;
-import com.kh.workhome.notice.model.vo.NoticeFile;
 
 @Service("nService")
 public class NoticeServiceImpl implements NoticeService {
@@ -28,11 +27,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<Notice> selectList(PageInfo pi) {
 		return nDAO.selectList(sqlSession, pi);
-	}
-
-	@Override
-	public int insertNotice(Notice n) {
-		return nDAO.insertNotice(sqlSession,n);
 	}
 
 }

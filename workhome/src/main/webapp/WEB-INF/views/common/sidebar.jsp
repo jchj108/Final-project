@@ -193,8 +193,7 @@
          
           <li class="nav-header">업무</li>
           <li class="nav-item">
-<!--             <a href="pages/widgets.html" class="nav-link"> -->
-            <a href="nlist.no" class="nav-link">
+            <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fas fa-flag"></i>
               <p>
                 공지사항

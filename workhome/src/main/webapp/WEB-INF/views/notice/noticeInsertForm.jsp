@@ -48,7 +48,6 @@
 			<div class="container"
 				style="background: white; padding: 10px 10px 10px 10px; margin: auto">
 				<h3 align="left">공지사항 글 등록</h3>
-				<form action="ninsert.no" method="post" enctype="Multipart/form-data">
 				<table class="table table-bordered">
 					<tr>
 						<th>제목</th>
@@ -57,10 +56,8 @@
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<td>
-						${ loginUser.empName }
-						<input type="hidden" name="noticeWriter" readonly
-							value="${ loginUser.empName }" style="background: lightgrey;"></td>
+						<td><input type="hidden" name="noticeWriter" readonly
+							value="" style="background: lightgrey;"></td>
 					</tr>
 					<tr>
 						<th>내용</th>
@@ -77,7 +74,6 @@
 							<button onclick="location.href='nlist.no'">목록으로</button></td>
 					</tr>
 				</table>
-				</form>
 			</div>
 		</div>
 		<!-- /메인 컨텐츠 -->
