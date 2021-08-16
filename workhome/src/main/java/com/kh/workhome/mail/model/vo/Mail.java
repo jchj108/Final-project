@@ -7,13 +7,18 @@ import org.springframework.stereotype.Repository;
 public class Mail {
 
 	private int number;
-	private String recieveemp; // 받는 사람
+	private String receiveEmp; // 받는 사람
 	private String etype; // 외부, 내부
 	private String etitle;
 	private String econtent;
 	private String estatus;
 	private Date eRTime; // 읽은 시간
 	private Date sDate; // 보낸 시간
+	private String senderMailId; // 보낸 사람 메일 주소
+	private String empNo; // FK
+	
+	public Mail() {
+	}
 
 	public int getNumber() {
 		return number;
@@ -23,12 +28,12 @@ public class Mail {
 		this.number = number;
 	}
 
-	public String getRecieveemp() {
-		return recieveemp;
+	public String getReceiveEmp() {
+		return receiveEmp;
 	}
 
-	public void setRecieveemp(String recieveemp) {
-		this.recieveemp = recieveemp;
+	public void setReceiveEmp(String receiveEmp) {
+		this.receiveEmp = receiveEmp;
 	}
 
 	public String getEtype() {
@@ -79,27 +84,45 @@ public class Mail {
 		this.sDate = sDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Mail [number=" + number + ", recieveemp=" + recieveemp + ", etype=" + etype + ", etitle=" + etitle
-				+ ", econtent=" + econtent + ", estatus=" + estatus + ", eRTime=" + eRTime + ", sDate=" + sDate + "]";
+	public String getSenderMailId() {
+		return senderMailId;
 	}
 
-	public Mail() {
-
+	public void setSenderMailId(String senderMailId) {
+		this.senderMailId = senderMailId;
 	}
 
-	public Mail(int number, String recieveemp, String etype, String etitle, String econtent, String estatus,
-			Date eRTime, Date sDate) {
+
+
+	public Mail(int number, String receiveEmp, String etype, String etitle, String econtent, String estatus,
+			Date eRTime, Date sDate, String senderMailId, String empNo) {
 		super();
 		this.number = number;
-		this.recieveemp = recieveemp;
+		this.receiveEmp = receiveEmp;
 		this.etype = etype;
 		this.etitle = etitle;
 		this.econtent = econtent;
 		this.estatus = estatus;
 		this.eRTime = eRTime;
 		this.sDate = sDate;
+		this.senderMailId = senderMailId;
+		this.empNo = empNo;
 	}
+
+	public String getEmpNo() {
+		return empNo;
+	}
+
+	public void setEmpNo(String empNo) {
+		this.empNo = empNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Mail [number=" + number + ", receiveEmp=" + receiveEmp + ", etype=" + etype + ", etitle=" + etitle
+				+ ", econtent=" + econtent + ", estatus=" + estatus + ", eRTime=" + eRTime + ", sDate=" + sDate
+				+ ", senderMailId=" + senderMailId + ", empNo=" + empNo + "]";
+	}
+
 
 }
