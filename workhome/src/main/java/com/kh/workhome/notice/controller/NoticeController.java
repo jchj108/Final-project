@@ -102,5 +102,19 @@ public class NoticeController {
 		return renameFileName;
 	}
 	
+	@RequestMapping("ndetail.no")
+	public ModelAndView selectNotice(@RequestParam("nId") int nId, @RequestParam("page") int page, ModelAndView mv) {
+		Notice notice = nService.selectNotice(nId,true);
+		
+		if(notice != null) {
+			mv.addObject("notice",notice);
+			mv.addObject("page",page);
+			mv.setViewName("noticeDetailView");
+		} else {
+			throw new NoticeException("공지사항 상세보기 실패");
+		}
+		return mv;
+	}
+	
 	
 }
