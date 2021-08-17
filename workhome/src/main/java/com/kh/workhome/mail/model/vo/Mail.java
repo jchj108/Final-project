@@ -121,6 +121,14 @@ public class Mail {
 	public String getSenderName() {
 		return senderName;
 	}
+	@Override
+	public String toString() {
+		return "Mail [mailNo=" + mailNo + ", receiveEmp=" + receiveEmp + ", etype=" + etype + ", etitle=" + etitle
+				+ ", econtent=" + econtent + ", estatus=" + estatus + ", eRTime=" + eRTime + ", sDate=" + sDate
+				+ ", empNo=" + empNo + ", senderMailId=" + senderMailId + ", senderName=" + senderName
+				+ ", mailFileList=" + mailFileList + "]";
+	}
+
 	public void setSenderName(String senderName) {
 		this.senderName = senderName;
 	}

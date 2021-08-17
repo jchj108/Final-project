@@ -59,8 +59,8 @@ public class MailController {
 		pi.setBoardLimit(15);
 		ArrayList<Mail> list = mService.selectTempList(pi);
 		
-		for(Mail m : list) {
-			System.out.println(m);
+		for(int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
 		}
 		
 		if(list != null) {

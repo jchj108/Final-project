@@ -19,14 +19,14 @@
 		where estatus='Y'
 	</select>
 	
-	<select id="selectTempList" resultType="arraylist">
-   	SELECT MAIL.MAILNO, RECEIVEEMP, ETYPE, ETITLE, ECONTENT, ESTATUS
-    	E_R_TIME, MAIL.EMPNO, S_DATE, EMPNAME, 
-       	MAIL_FILE.M_STATUS, mail_file.m_change_name
-	FROM MAIL
-    	JOIN EMPLOYEE ON (MAIL.EMPNO = EMPLOYEE.EMPNO)
-    	LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
-    WHERE ESTATUS='Y'
+	<select id="selectTempList" resultMap="mailResultSet">
+    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS
+    from mail
+        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+    where estatus='Y'
 	</select>
 	
 	<resultMap type="Mail" id="mailResultSet">
@@ -40,7 +40,7 @@
 		<result column="EMPNO" property="empNo"/>
 		<result column="S_DATE" property="sDate"/>
 		<result column="EMPNAME" property="senderName"/>
-		<collection property="mailFileList" javaType="arraylist" resultMap="mailFileResultSet"/>
+		<collection property="mailFileList" javaType="arraylist" resultMap="mailFileResultSet"></collection>
 	</resultMap>
 	
 	<resultMap type="MailFile" id="mailFileResultSet">
