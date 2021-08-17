@@ -51,17 +51,13 @@ public class MailController {
 		if(page != null) {
 			currentPage = page;
 		}
-		int listCount = mService.getTempListCount();
 		int boardLimit = 15;
+		int listCount = mService.getTempListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
 		
-		pi.setBoardLimit(15);
 		ArrayList<Mail> list = mService.selectTempList(pi);
-		
-		for(int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i));
-		}
 		
 		if(list != null) {
 			mv.addObject("tempList", list).addObject("pi", pi);
@@ -116,7 +112,7 @@ public class MailController {
 			throw new MailException("파일 저장에 실패했습니다.");
 		}
 		
-		return "templist.mail";
+		return "tempmaillist";
 	}
 
 	// 파일 저장용 메소드
