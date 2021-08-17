@@ -1,6 +1,8 @@
 package com.kh.workhome.employee.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.workhome.employee.model.service.EmployeeService;
 import com.kh.workhome.employee.model.vo.Employee;
 
@@ -218,5 +222,15 @@ public class EmployeeController {
 		}
 	}
 	
-	
+	@RequestMapping("getEmployee.emp")
+	public void selectEmp(HttpServletResponse response, @RequestParam("deptNo") String deptNo) throws IOException {
+		ArrayList<Employee> eList = eService.getEmployee(deptNo);
+		for (Employee e : eList) {
+			e.setEmpName(URLEncoder.encode(e.getEmpName(), "utf-8"));
+			e.setDeptName(URLEncoder.encode(e.getDeptName(), "utf-8"));
+		}
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		response.setContentType("application/json; charset=UTF-8");
+		gson.toJson(eList, response.getWriter());
+	}
 }
