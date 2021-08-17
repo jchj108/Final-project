@@ -66,11 +66,27 @@
 						<c:forEach var="n" items="${ list }">
 							<tr>
 								<td align="center">${ n.noticeNo }</td>
-								<td align="center">${ n.noticeTitle }</td>
+								
+								<td align="left">
+					            <c:if test="${ !empty loginUser }">
+					               <c:url var="ndetail" value="ndetail.no">
+					                  <c:param name="nId" value="${ n.noticeNo }"/>
+					                  <c:param name="page" value="${ pi.currentPage }"/>
+					               </c:url>
+					               <a href="${ ndetail }">${ n.noticeTitle }</a>
+					            </c:if>
+					            <c:if test="${ empty loginUser }">
+					               ${ n.noticeTitle }      
+					            </c:if>
+					         </td>
 								<td align="center">${ n.noticeWriter }</td>
 								<td align="center">${ n.noticeCreateDate }</td>
 								<td align="center">${ n.noticeCount }</td>
-								<td align="center">○</td>
+								<td align="center">
+									<c:if test="${ !empty n.originFileName }">
+										○
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -121,11 +137,6 @@
 <%-- 		               <a href="${ after }">[다음]</a> --%>
 		               <li class="page-item"><a class="page-link" href="${ after }">다음</a></li>
 		            </c:if>
-					
-<!-- 					<li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!-- 					<li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!-- 					<li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!-- 					<li class="page-item"><a class="page-link" href="#">다음</a></li> -->
 				</ul>
 			</div>
 		</div>
