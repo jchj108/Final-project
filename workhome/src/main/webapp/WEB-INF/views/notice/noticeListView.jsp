@@ -66,11 +66,27 @@
 						<c:forEach var="n" items="${ list }">
 							<tr>
 								<td align="center">${ n.noticeNo }</td>
-								<td align="center">${ n.noticeTitle }</td>
+								
+								<td align="left">
+					            <c:if test="${ !empty loginUser }">
+					               <c:url var="ndetail" value="ndetail.no">
+					                  <c:param name="nId" value="${ n.noticeNo }"/>
+					                  <c:param name="page" value="${ pi.currentPage }"/>
+					               </c:url>
+					               <a href="${ ndetail }">${ n.noticeTitle }</a>
+					            </c:if>
+					            <c:if test="${ empty loginUser }">
+					               ${ n.noticeTitle }      
+					            </c:if>
+					         </td>
 								<td align="center">${ n.noticeWriter }</td>
 								<td align="center">${ n.noticeCreateDate }</td>
 								<td align="center">${ n.noticeCount }</td>
-								<td align="center">○</td>
+								<td align="center">
+									<c:if test="${ !empty n.originFileName }">
+										○
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -84,13 +100,43 @@
 					</tr>
 				</table>
 
-				<!-- 페이징 -->
+				<!-- 이전 -->
 				<ul class="pagination justify-content-center">
+					<c:if test="${ pi.currentPage <= 1 }">
 					<li class="page-item"><a class="page-link" href="#">이전</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">다음</a></li>
+					</c:if>
+					<c:if test="${ pi.currentPage > 1 }">
+						<c:url var="before" value="nlist.no">
+							<c:param name="page" value="${ pi.currentPage -1 }"/>
+						</c:url>
+						<li class="page-item"><a class="page-link" href="${ before }">이전</a></li>
+					</c:if>
+					
+					<!-- 페이지 -->
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<c:if test="${ p eq pi.currentPage }">
+							<li class="page-item"><a class="page-link" href="#"><b>${ p }</b></a></li>
+						</c:if>
+						
+						 <c:if test="${ p ne pi.currentPage }">
+		                  <c:url var="pagination" value="nlist.no">
+		                     <c:param name="page" value="${ p }"/>
+		                  </c:url>
+							<li class="page-item"><a class="page-link" href="${ pagination }">${ p }</a></li>
+		               	</c:if>
+					</c:forEach>
+					
+					<!-- [다음] -->
+		            <c:if test="${ pi.currentPage >= pi.maxPage }">
+		               <li class="page-item"><a class="page-link" href="#">다음</a></li>
+		            </c:if>
+		            <c:if test="${ pi.currentPage < pi.maxPage }">
+		               <c:url var="after" value="nlist.no">
+		                  <c:param name="page" value="${ pi.currentPage + 1 }"/>
+		               </c:url> 
+<%-- 		               <a href="${ after }">[다음]</a> --%>
+		               <li class="page-item"><a class="page-link" href="${ after }">다음</a></li>
+		            </c:if>
 				</ul>
 			</div>
 		</div>

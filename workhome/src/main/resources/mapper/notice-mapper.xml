@@ -10,6 +10,7 @@
 	<select id="selectList" resultMap="noticeResultSet">
 		select *
 		from notice
+			join employee on(noticewriter = empname)
 		where noticeStatus='Y'
 		order by noticeNo desc
 	</select>
@@ -23,6 +24,25 @@
 		<result column="NOTICEMODIFYDATE" property="noticeModifyDate" />
 		<result column="NOTICESTATUS" property="noticeStatus" />
 		<result column="NOTICEWRITER" property="noticeWriter" />
+		<result column="ORIGINFILENAME" property="originFileName" />
+		<result column="RENAMEFILENAME" property="renameFileName" />
 	</resultMap>
+	
+	<insert id="insertNotice">
+		insert into notice values(seq_nid.nextval, #{noticeTitle}, #{noticeContent},
+						default, sysdate, sysdate, default,#{noticeWriter}, #{originFileName}, #{renameFileName})
+	</insert>
+	
+	<select id="selectNotice" resultMap="noticeResultSet">
+		select *
+		from notice
+			join employee on(noticeWriter = empname)
+		where noticeNo=#{nId} and noticeStatus='Y'
+	</select>
+	
+	<update id="addReadCount">
+		update notice set noticeCount = noticeCount +1
+		where noticeNo=#{nId}
+	</update>
 
 </mapper>

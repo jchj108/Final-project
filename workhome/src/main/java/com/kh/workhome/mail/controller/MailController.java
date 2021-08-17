@@ -6,15 +6,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.workhome.common.PageInfo;
+import com.kh.workhome.common.Pagination;
 import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.mail.model.exception.MailException;
 import com.kh.workhome.mail.model.service.MailService;
@@ -43,36 +45,33 @@ public class MailController {
 	}
 
 	@RequestMapping("templist.mail")
-	public String tempList() {
-		return "tempmaillist";
+	public ModelAndView tempList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = mService.getTempListCount();
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		
+		pi.setBoardLimit(15);
+		ArrayList<Mail> list = mService.selectTempList(pi);
+		
+		for(int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+		
+		if(list != null) {
+			mv.addObject("tempList", list).addObject("pi", pi);
+			mv.setViewName("tempmaillist");
+		} else {
+			throw new MailException("임시보관함 조회에 실패했습니다.");
+		}
+		
+		return mv;
 	}
-
-//	@RequestMapping("binsert.bo")
-//	public String insertBoard(@ModelAttribute Board b, @RequestParam("uploadFile") MultipartFile uploadFile,
-//			HttpServletRequest request) {
-//
-//		// 파일 안 넣었을 때 => ""
-//		// 파일 넣었을 때 => 파일 이름
-//
-//		// if(!uploadFile.getOriginalFilename().equals("")) {
-//		if (uploadFile != null && !uploadFile.isEmpty()) { // 파일이 들어왔을 때
-//			// 파일의 이름을 바꿔줘야 한다.
-//			String renameFileName = saveFile(uploadFile, request);
-//
-//			if (renameFileName != null) {
-//				b.setOriginalFileName(uploadFile.getOriginalFilename());
-//				b.setRenameFileName(renameFileName);
-//			}
-//		}
-//		int result = bService.insertBoard(b);
-//		if (result > 0) {
-//			return "redirect:blist.bo";
-//		} else {
-//			throw new BoardException("게시글 등록에 실패했습니다");
-//		}
-//
-////		return "redirect:blist.bo";
-//	}
 
 	@RequestMapping(value = "tmpInsert.mail")
 	public String requestupload2(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest) throws MailException {
@@ -86,9 +85,9 @@ public class MailController {
 		String empNo = e.getEmpNo();
 		
 		m.setSenderMailId(m.getSenderMailId() + "@workhome.com");
+		m.setEmpNo(empNo);
 		
 		System.out.println(m);
-		m.setEmpNo(empNo);
 		int result = mService.insertMail(m);
 
 		if(result <= 0) { // 메일 등록 취소 시 예외처리
@@ -117,7 +116,7 @@ public class MailController {
 			throw new MailException("파일 저장에 실패했습니다.");
 		}
 		
-		return "redirect:mail.mail";
+		return "templist.mail";
 	}
 
 	// 파일 저장용 메소드
