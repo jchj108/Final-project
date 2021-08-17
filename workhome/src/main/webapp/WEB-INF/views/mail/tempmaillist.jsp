@@ -32,12 +32,21 @@
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-	background-color: unset;
+    background-color: rgba(0,0,0,0); 
+}
+
+.table-hover tbody tr:hover {
+	background-color: rgba(0,0,0,.075)
 }
 
 .table td:nth-child(1) {
 	width: 4%;
 }
+
+.table td:nth-child(2) {
+	width: 10%;
+}
+
 
 .table td:nth-child(3) {
 	width: 20%;
@@ -46,16 +55,22 @@
 .table td:nth-child(4) {
 	width: 50%;
 }
+
 .table td:nth-child(5) {
 	text-align: right;
 }
+
 .table td:nth-child(6) {
 	width: 12%;
 	text-align: right;
 }
 
-.fa-star, .fa-envelope {
+.fa-star {
 	margin-right: 8px;
+}
+
+.fa-envelope {
+	margin-right: 10px;
 }
 
 .mailbox-name a {
@@ -64,8 +79,18 @@
 }
 
 td {
-	height : 35px;
+	height: 35px;
 }
+
+.pagination {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.table-hover tbody tr:hover {
+	
+}
+
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -209,7 +234,7 @@ td {
 											<i class="fas fa-sync-alt"></i>
 										</button>
 										<div class="float-right">
-											1-50/200
+<%-- 											${pi.currentPage }-15/${pi.listCount } --%>
 											<div class="btn-group">
 												<button type="button" class="btn btn-default btn-sm">
 													<i class="fas fa-chevron-left"></i>
@@ -224,105 +249,122 @@ td {
 									</div>
 									<div class="table-responsive mailbox-messages">
 										<table class="table table-hover table-striped">
-												<c:forEach var="m" items="${tempList }" varStatus="idCount">
-													<c:forEach var="mF" items="${m.mailFileList}" varStatus="idCount">
-														<c:if test="${mF.mStatus == 'Y'}">
-															<c:set var="attachment" value="on"/>
-														</c:if>
-														<c:if test="${mF.mStatus != 'Y'}">
-															<c:set var="attachment" value="off"/>
-														</c:if>
-													</c:forEach>
-														<tr>
-															<td>
-																<div class="icheck-primary">
-																	<input type="checkbox" value=""
-																		id="check${idCount.count }"> <label
-																		for="check${idCount.count }"></label>
-																</div>
-															</td>
-															<td class="mailbox-star"><a href="#"><i
-																	class="far fa-star text-warning"></i></a> <i
-																id="readmail" class="fas fa-envelope text-primary"></i>
-																<c:if test="${attachment == 'on' }">
-																	<i class="fas fa-paperclip"></i>
-																</c:if>
-																</td>
-															<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
-															<td class="mailbox-subject">${m.etitle }</td>
-<!-- 															<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td> -->
-															<td class="mailbox-date">${m.sDate }</td>
-														</tr>
+											<c:forEach var="m" items="${tempList }" varStatus="idCount">
+												<c:forEach var="mF" items="${m.mailFileList}">
+													<c:if test="${mF.mStatus == 'Y'}">
+														<c:set var="attachment" value="on" />
+													</c:if>
+													<c:if test="${mF.mStatus != 'Y'}">
+														<c:set var="attachment" value="off" />
+													</c:if>
 												</c:forEach>
-<!-- 											</tbody> -->
+												<tr>
+													<td>
+														<div class="icheck-primary">
+															<input type="checkbox" value=""
+																id="check${idCount.count }"> <label
+																for="check${idCount.count }"></label>
+														</div>
+													</td>
+													<td class="mailbox-star"><a href="#"><i
+															class="far fa-star text-warning"></i></a> <i id="readmail"
+														class="fas fa-envelope text-primary"></i> <c:if
+															test="${attachment == 'on' }">
+															<i class="fas fa-paperclip"></i>
+														</c:if></td>
+													<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
+													<td class="mailbox-subject">${m.etitle }</td>
+													<!-- 															<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td> -->
+													<td class="mailbox-date">${m.sDate }</td>
+												</tr>
+											</c:forEach>
+											<!-- 											</tbody> -->
 										</table>
 										<!-- /.table -->
 									</div>
 									<!-- /.mail-box-messages -->
 								</div>
 								<!-- /.card-body -->
-								<div class="card-footer p-0">
-									<div class="mailbox-controls">
-										<!-- Check all button -->
-										<button type="button"
-											class="btn btn-default btn-sm checkbox-toggle">
-											<i class="far fa-square"></i>
-										</button>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default btn-sm">
-												<i class="far fa-trash-alt"></i>
-											</button>
-											<button type="button" class="btn btn-default btn-sm">
-												<i class="fas fa-reply"></i>
-											</button>
-											<button type="button" class="btn btn-default btn-sm">
-												<i class="fas fa-share"></i>
-											</button>
-										</div>
-										<!-- /.btn-group -->
-										<button type="button" class="btn btn-default btn-sm">
-											<i class="fas fa-sync-alt"></i>
-										</button>
-										<div class="float-right">
-											1-50/200
-											<div class="btn-group">
-												<button type="button" class="btn btn-default btn-sm">
+								<div class="card-footer p-0" style="height: 51px;">
+									<div class="pagination justify-content-center">
+										<div class="btn-group" style="border-radius: 0px;">
+											<c:if test="${pi.currentPage <= 1 }">
+												<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
+													<i class="fas fa-chevron-left" style="color:lightgrey"></i>
+												</button>
+											</c:if>
+											<c:if test="${ pi.currentPage > 1 }">
+												<c:url var="before" value="templist.mail">
+													<c:param name="page" value="${ pi.currentPage - 1 }" />
+												</c:url>
+													<a href="${before }">
+												<button type="button" class="btn btn-default btn-sm "  style="border-radius: 0px;">
 													<i class="fas fa-chevron-left"></i>
 												</button>
-												<button type="button" class="btn btn-default btn-sm">
+													</a>
+											</c:if>
+												<c:forEach var="p" begin="${ pi.startPage }"
+													end="${ pi.endPage }">
+													<c:if test="${ p eq pi.currentPage }">
+														<button type="button" class="btn btn-default btn-sm"style="border-radius: 0px;">
+															<b>${p }</b>
+														</button>
+													</c:if>
+													<c:if test="${ p ne pi.currentPage }">
+														<c:url var="pagination" value="templist.mail">
+															<c:param name="page" value="${ p }" />
+														</c:url>
+															<a href="${ pagination }"> 
+														<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
+														${p }
+														</button>
+														</a>
+													</c:if>
+												</c:forEach>
+											<c:if test="${pi.currentPage >= pi.maxPage }">
+												<button type="button" class="btn btn-default btn-sm"  style="border-radius: 0px;">
+													<i class="fas fa-chevron-right" style="color:lightgrey"></i>
+												</button>
+											</c:if>
+											<c:if test="${ pi.currentPage < pi.maxPage }">
+												<c:url var="before" value="templist.mail">
+													<c:param name="page" value="${ pi.currentPage + 1 }" />
+												</c:url>
+													<a href="${before }">
+												<button type="button" class="btn btn-default btn-sm"  style="border-radius: 0px;">
 													<i class="fas fa-chevron-right"></i>
 												</button>
-											</div>
-											<!-- /.btn-group -->
+													</a>
+											</c:if>
 										</div>
-										<!-- /.float-right -->
 									</div>
 								</div>
 							</div>
-							<!-- /.card -->
 						</div>
-						<!-- /.col -->
+						<!-- /.card -->
 					</div>
-					<!-- /.row -->
+					<!-- /.col -->
 				</div>
-			</section>
-			<!-- /.content -->
+				<!-- /.row -->
 		</div>
-		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="float-right d-none d-sm-block">
-				<b>Version</b> 3.1.0
-			</div>
-			<strong>Copyright &copy; 2014-2021 <a
-				href="https://adminlte.io">AdminLTE.io</a>.
-			</strong> All rights reserved.
-		</footer>
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<footer class="main-footer">
+		<div class="float-right d-none d-sm-block">
+			<b>Version</b> 3.1.0
+		</div>
+		<strong>Copyright &copy; 2014-2021 <a
+			href="https://adminlte.io">AdminLTE.io</a>.
+		</strong> All rights reserved.
+	</footer>
 
-		<!-- Control Sidebar -->
-		<aside class="control-sidebar control-sidebar-dark">
-			<!-- Control sidebar content goes here -->
-		</aside>
-		<!-- /.control-sidebar -->
+	<!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-dark">
+		<!-- Control sidebar content goes here -->
+	</aside>
+	<!-- /.control-sidebar -->
 	</div>
 	<!-- ./wrapper -->
 
