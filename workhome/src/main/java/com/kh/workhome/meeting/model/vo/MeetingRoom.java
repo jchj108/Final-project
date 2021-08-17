@@ -1,4 +1,4 @@
-package com.kh.workhome.meeting.vo;
+package com.kh.workhome.meeting.model.vo;
 
 public class MeetingRoom {
 	private String MNo; // 회의실 번호
@@ -24,5 +24,4 @@ public class MeetingRoom {
 	public String toString() {
 		return "MeetingRoom [MNo=" + MNo + ", MName=" + MName + "]";
 	}
-	
 }

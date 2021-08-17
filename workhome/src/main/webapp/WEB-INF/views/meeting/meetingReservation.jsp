@@ -76,17 +76,18 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">예약 가능 시간</label>
-                 <div class="btn-group">
-              <button type="button" class="btn btn-danger">09</button>
-              <button type="button" class="btn btn-default">10</button>
-              <button type="button" class="btn btn-default">11</button>
-              <button type="button" class="btn btn-default">12</button>
-              <button type="button" class="btn btn-primary">13</button>
-              <button type="button" class="btn btn-primary">14</button>
-              <button type="button" class="btn btn-default">15</button>
-              <button type="button" class="btn btn-danger">16</button>
-              <button type="button" class="btn btn-danger">17</button>
-            </div>
+	            <div>
+	            	<button type="button" class="btn btn-danger btn-sm">09</button>
+	            	<button type="button" class="btn btn-default btn-sm">10</button>
+	            	<button type="button" class="btn btn-default btn-sm">11</button>
+	            	<button type="button" class="btn btn-default btn-sm">12</button>
+	            	<button type="button" class="btn btn-primary btn-sm">13</button>
+	            	<button type="button" class="btn btn-primary btn-sm">14</button>
+	            	<button type="button" class="btn btn-default btn-sm">15</button>
+	            	<button type="button" class="btn btn-danger btn-sm">16</button>
+	            	<button type="button" class="btn btn-danger btn-sm">17</button>
+	            	<button type="button" class="btn btn-danger btn-sm">18</button>
+	            </div>
               </div>
               <div class="form-group">
                 <label for="inputName">회의 제목</label>
@@ -194,12 +195,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.1.0
-    </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
+   <jsp:include page="../common/footer.jsp"></jsp:include>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
