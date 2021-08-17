@@ -35,4 +35,8 @@ public class NoticeDAO {
 		return sqlSession.update("noticeMapper.addReadCount", nId);
 	}
 
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.update("noticeMapper.updateNotice", n);
+	}
+
 }

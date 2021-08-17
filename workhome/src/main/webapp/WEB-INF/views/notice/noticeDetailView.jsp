@@ -94,9 +94,9 @@
 				<c:if test="${ loginUser.empName eq notice.noticeWriter }">
 					<tr>
 						<td colspan="2" align="center">
-							<button>수정하기</button>
-							<button>삭제하기</button>
-							<button>목록보기</button>
+							<button onclick="location.href='${ nupView }'">수정하기</button>
+							<button onclick="location.href='${ ndelete}'">삭제하기</button>
+							<button onclick="location.href='${ nlist}'">목록보기</button>
 						</td>
 					</tr>
 				</c:if>
