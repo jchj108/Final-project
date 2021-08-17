@@ -52,7 +52,14 @@
 	<select id="selectDeptList" resultType="Department">
         select *
 		from DEPARTMENT 
-		order by deptno
+		order by deptname
+	</select>
+	
+	<select id="getEmployee" resultType="Employee">
+		select *
+		from EMPLOYEE
+		JOIN DEPARTMENT USING (DEPTNO)
+		where DEPTNO=#{DEPTNO} AND EMPSTATUS !='N'
 	</select>
 	
 </mapper>

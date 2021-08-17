@@ -35,4 +35,8 @@ public class EmployeeDAO {
 	public ArrayList<Department> selectDeptList(SqlSessionTemplate sqlSession) {
 		return (ArrayList) sqlSession.selectList("employeeMapper.selectDeptList");
 	}
+
+	public ArrayList<Employee> getEmployee(SqlSessionTemplate sqlSession, String deptNo) {
+		return (ArrayList)sqlSession.selectList("employeeMapper.getEmployee", deptNo);
+	}
 }
