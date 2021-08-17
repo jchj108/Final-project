@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -116,5 +117,51 @@ public class NoticeController {
 		return mv;
 	}
 	
+	@RequestMapping("nupView.no")
+	public String noticeUpdateForm(@RequestParam("nId") int nId, @RequestParam("page") int page, Model model) {
+		Notice notice = nService.selectNotice(nId, false);
+	
+		model.addAttribute("notice",notice).addAttribute("page",page);
+		return "noticeUpdateForm";
+	}
+	
+	@RequestMapping("nupdate.no")
+	public ModelAndView updateNotice(@ModelAttribute Notice n, @RequestParam("page") int page,
+						@RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request, ModelAndView mv) {
+		
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(n.getRenameFileName() != null) {
+				deleteFile(request, n);
+			}
+			
+			String renameFileName = saveFile(reloadFile, request);
+			if(renameFileName != null) {
+				n.setOriginFileName(reloadFile.getOriginalFilename());
+				n.setRenameFileName(renameFileName);
+			}
+		}
+		
+		int result = nService.updateNotice(n);
+		if(result > 0) {
+			Notice notice = nService.selectNotice(n.getNoticeNo(), false);
+			mv.addObject("notice",notice);
+			mv.addObject("page",page);
+			mv.setViewName("noticeDetailView");
+		} else {
+			throw new NoticeException("공지사항 수정에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
+	public void deleteFile(HttpServletRequest request, Notice n) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\nuploadFile";
+		
+		File f = new File(savePath + "\\" + n.getRenameFileName());
+		if(f.exists()) {
+			f.delete();
+		}
+	}
 	
 }
