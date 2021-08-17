@@ -13,6 +13,7 @@
 		<typeAlias type="com.kh.workhome.todo.model.vo.ToDo" alias="Todo"/>
 		<typeAlias type="com.kh.workhome.approval.model.vo.Approval" alias="Approval"/>
 		<typeAlias type="com.kh.workhome.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.kh.workhome.meeting.model.vo.MeetingReservation" alias="MeetingReservation"/>
 	</typeAliases>
 
 	<mappers>
@@ -21,5 +22,6 @@
 		<mapper resource="mapper/todo-mapper.xml"/>
 		<mapper resource="mapper/approval-mapper.xml"/>
 		<mapper resource="mapper/notice-mapper.xml"/>
+		<mapper resource="mapper/meeting-mapper.xml"/>
 	</mappers>
 </configuration>
