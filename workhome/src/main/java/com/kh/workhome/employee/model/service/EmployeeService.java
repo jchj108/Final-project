@@ -43,4 +43,8 @@ public class EmployeeService {
 	public ArrayList<Department> selectDeptList() {
 		return eDao.selectDeptList(sqlSession);
 	}
+
+	public ArrayList<Employee> getEmployee(String deptNo) {
+		return eDao.getEmployee(sqlSession, deptNo);
+	}
 }
