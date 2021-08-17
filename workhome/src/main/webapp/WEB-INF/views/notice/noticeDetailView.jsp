@@ -70,15 +70,28 @@
 					<tr>
 						<th>내용</th>
 						<% pageContext.setAttribute("newLineChar", "\r\n"); %>
-						<td>${ fn:replace(board.boardContent, newLineChar, "<br>") }</td>
+						<td>${ fn:replace(notice.noticeContent, newLineChar, "<br>") }</td>
 					</tr>
 					
-					<c:if test="${ !empty notice.originalFileName }">
+					<c:if test="${ !empty notice.originFileName }">
 					<tr>
 						<th>첨부파일</th>
-						<td><a href="${ contextPath }/resources/nuploadFiles/${ notice.renameFileName }" download="${ notice.originalFileName }">${ notice.originalFileName }</a></td>
+						<td><a href="${ contextPath }/resources/nuploadFiles/${ notice.renameFileName }" download="${ notice.originFileName }">${ notice.originFileName }</a></td>
 					</tr>
 					</c:if>
+					
+				<c:url var="nupView" value="nupView.no">
+					<c:param name="nId" value="${ notice.noticeNo }"/>
+					<c:param name="page" value="${ page }"/>
+				</c:url>
+				<c:url var="ndelete" value="ndelete.no">
+					<c:param name="nId" value="${ notice.noticeNo }"/>
+				</c:url>
+				<c:url var="nlist" value="nlist.no">
+					<c:param name="page" value="${ page }"/>
+				</c:url>
+				
+				<c:if test="${ loginUser.empName eq notice.noticeWriter }">
 					<tr>
 						<td colspan="2" align="center">
 							<button>수정하기</button>
@@ -86,6 +99,7 @@
 							<button>목록보기</button>
 						</td>
 					</tr>
+				</c:if>
 				</table>
 			</div>
 		</div>

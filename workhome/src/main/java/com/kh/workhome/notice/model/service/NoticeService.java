@@ -14,4 +14,6 @@ public interface NoticeService {
 
 	int insertNotice(Notice n);
 
+	Notice selectNotice(int nId, boolean check);
+
 }
