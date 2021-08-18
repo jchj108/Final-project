@@ -46,7 +46,6 @@ public class MailController {
 
 	@RequestMapping("readtemp.mail")
 	public ModelAndView selectMail(@RequestParam("mId") int id, @RequestParam("page") int page, ModelAndView mv) {
-
 		Mail m = mService.selectMail(id);
 		System.out.println(m);
 

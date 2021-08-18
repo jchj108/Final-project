@@ -42,7 +42,7 @@
 	    from mail
 	        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
 	        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
-	    where estatus='Y' and mail.mailno=#{mId}
+	    where estatus='Y' and mail.mailno=#{id}
         order by mail_file.m_file_no desc
 	</select>
 	
