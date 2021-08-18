@@ -219,6 +219,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="meetReserv2.meet" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>회의실 예약2</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>예약 내역</p>
