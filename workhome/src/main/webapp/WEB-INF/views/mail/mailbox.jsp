@@ -31,6 +31,12 @@
 	.table-striped tbody tr:nth-of-type(odd) {
 		background-color: unset;
 	}
+	.table td:nth-child(1) {
+		width: 10px;
+	}
+	.fa-star {
+		margin-right : 7px;
+	}
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -61,14 +67,16 @@
 
 			<!-- Main content -->
 			<section class="content">
+							<div class="container-fluid">
+			
 				<div class="row">
 					<div class="col-md-3">
-						<a href="compose.html" class="btn btn-primary btn-block mb-3">메일
+						<a href="send.mail" class="btn btn-primary btn-block mb-3">메일
 							쓰기</a>
 
 						<div class="card">
 							<div class="card-header">
-								<h3 class="card-title">폴더</h3>
+								<h3 class="card-title">보관함</h3>
 
 								<div class="card-tools">
 									<button type="button" class="btn btn-tool"
@@ -79,12 +87,15 @@
 							</div>
 							<div class="card-body p-0">
 								<ul class="nav nav-pills flex-column">
+									<li class="nav-item"><a href="#" class="nav-link"> 
+									<i class="fas fa-envelope mail-icon"></i> 전체메일
+									</a></li>
 									<li class="nav-item active"><a href="#" class="nav-link">
-											<i class="fas fa-inbox mail-icon"></i> 받은메일함 <span
+											<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
 											class="badge bg-primary float-right">12</span>
 									</a></li>
-									<li class="nav-item"><a href="#" class="nav-link"> <i
-											class="far fa-envelope mail-icon"></i> 보낸메일함
+									<li class="nav-item"><a href="#" class="nav-link"> 
+									<i class="far fa-paper-plane mail-icon"></i> 보낸메일함
 									</a></li>
 									<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link"> <i
 											class="far fa-file-alt mail-icon"></i> 임시보관함
@@ -195,7 +206,9 @@
 													</div>
 												</td>
 												<td class="mailbox-star"><a href="#"><i
-														class="fas fa-star text-warning"></i></a></td>
+														class="far fa-star text-warning"></i></a>
+													<i id="readmail" class="fas fa-envelope text-primary"></i>
+														</td>
 												<td class="mailbox-name"><a href="read-mail.html">Alexander
 														Pierce</a></td>
 												<td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> -
@@ -278,7 +291,7 @@
 													</div>
 												</td>
 												<td class="mailbox-star"><a href="#"><i
-														class="fas fa-star-o text-warning"></i></a></td>
+														class="fas fa-star-o"></i></a></td>
 												<td class="mailbox-name"><a href="read-mail.html">Alexander
 														Pierce</a></td>
 												<td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> -
@@ -295,7 +308,7 @@
 													</div>
 												</td>
 												<td class="mailbox-star"><a href="#"><i
-														class="fas fa-star-o text-warning"></i></a></td>
+														class="far fa-star-o text-warning"></i></a></td>
 												<td class="mailbox-name"><a href="read-mail.html">Alexander
 														Pierce</a></td>
 												<td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> -
@@ -486,6 +499,7 @@
 					<!-- /.col -->
 				</div>
 				<!-- /.row -->
+				</div>
 			</section>
 			<!-- /.content -->
 		</div>

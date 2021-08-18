@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="meetingMapper">
+
+	<resultMap type="MeetingReservation" id="meetingResultSet">
+		<id column="MNO" property="mNo" />
+		<result column="STARTTIME" property="startTime" />
+		<result column="JOINEMP" property="joinEmp" />
+		<result column="MTITLE" property="mTitle" />
+		<result column="MCONTENT" property="mContent" />
+		<result column="RSTATUS" property="rStatus" />
+		<result column="EMPNO" property="empNo" />
+		<result column="ENDTIME" property="endTime" />
+	</resultMap>
+	
+</mapper>

@@ -19,6 +19,35 @@
 <!-- summernote -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/plugins/summernote/summernote-bs4.min.css">
+
+<style>
+.mailsubtitle-flex-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.mailsubtitle-right {
+	width: 87%;
+}
+
+.mailsubtitle-left {
+	height: calc(2.25rem + 2px);
+	align-self: center;
+}
+
+#chart {
+	height: 30px;
+	margin-top: 4px;
+	align-self: center;
+	background-color: rgba(128, 128, 128, 0.11);
+	border-color: rgba(0, 0, 0, 0.125);
+}
+
+.mail-icon {
+	width: 20px;
+}
+</style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -51,11 +80,11 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">돌아가기</a>
+							<a href="mail.mail" class="btn btn-primary btn-block mb-3">돌아가기</a>
 
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">폴더</h3>
+									<h3 class="card-title">보관함</h3>
 
 									<div class="card-tools">
 										<button type="button" class="btn btn-tool"
@@ -67,21 +96,22 @@
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
 										<li class="nav-item active"><a href="#" class="nav-link">
-												<i class="fas fa-inbox"></i> 받은메일함 <span
+												<i class="fas fa-inbox mail-icon"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-envelope"></i> 보낸메일함
+												class="far fa-envelope mail-icon"></i> 보낸메일함
+										</a></li>
+										<li class="nav-item"><a
+											href="${contextPath}/templist.mail" class="nav-link"> <i
+												class="far fa-file-alt mail-icon"></i> 임시보관함
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-file-alt"></i> 임시보관함
+												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
+												class="badge bg-warning float-right mail-icon">65</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="fas fa-filter"></i> 스팸메일함 <span
-												class="badge bg-warning float-right">65</span>
-										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-trash-alt"></i> 휴지통
+												class="far fa-trash-alt mail-icon"></i> 휴지통
 										</a></li>
 									</ul>
 								</div>
@@ -121,68 +151,65 @@
 									<h3 class="card-title">새 메일 쓰기</h3>
 								</div>
 								<!-- /.card-header -->
-								<form method="post" id="form-mailsend">
+								<form method="post" id="form-mailsend"
+									enctype="Multipart/form-data">
 									<div class="card-body">
-										<div class="form-group">
-											<input class="form-control" placeholder="받는 이">
+										<input type="hidden" value="${loginUser.empNo}"
+											name="senderMailId" />
+										<input type="hidden" value="${loginUser.empName}"
+											name=senderName />
+										<div class="mailsubtitle-flex-container">
+											<div class="mailsubtitle-left">
+												<b>받는 사람</b>
+											</div>
+											<div>
+												<button type="button" class="btn btn-sm btn-light"
+													id="chart">조직도</button>
+											</div>
+											<div class="form-group mailsubtitle-right">
+												<input class="form-control mail-subtitle" placeholder="받는 이"
+													name="receiveEmp">
+											</div>
+										</div>
+										<div class="mailsubtitle-flex-container">
+											<div class="mailsubtitle-left">
+												<b>제목</b>
+											</div>
+											<div class="form-group mailsubtitle-right">
+												<input class="form-control" placeholder="제목" name="etitle">
+											</div>
 										</div>
 										<div class="form-group">
-											<input class="form-control" placeholder="제목">
-										</div>
-										<div class="form-group">
-											<textarea id="compose-textarea" class="form-control"
-												style="height: 300px">
-					                      <h1>
-																	<u>Heading Of Message</u>
-																</h1>
-					                      <h4>Subheading</h4>
-					                      <p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain
-					                        was born and I will give you a complete account of the system, and expound the actual teachings
-					                        of the great explorer of the truth, the master-builder of human happiness. No one rejects,
-					                        dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know
-					                        how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again
-					                        is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain,
-					                        but because occasionally circumstances occur in which toil and pain can procure him some great
-					                        pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise,
-					                        except to obtain some advantage from it? But who has any right to find fault with a man who
-					                        chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that
-					                        produces no resultant pleasure? On the other hand, we denounce with righteous indignation and
-					                        dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so
-					                        blinded by desire, that they cannot foresee</p>
-					                      <ul>
-					                        <li>List item one</li>
-					                        <li>List item two</li>
-					                        <li>List item three</li>
-					                        <li>List item four</li>
-					                      </ul>
-					                      <p>Thank you,</p>
-					                      <p>John Doe</p>
-					                    </textarea>
+											<textarea id="compose-textarea"
+												class="form-control mail-subtitle" name="econtent">
+					                 	   </textarea>
 										</div>
 										<div class="form-group">
 											<div class="btn btn-default btn-file">
-												<i class="fas fa-paperclip"></i> 파일 첨부 <input type="file"
-													name="attachment">
+												<i class="fas fa-paperclip"> 파일 첨부 <input
+													multiple="multiple" id="uploadfileinput" type="file"
+													name="uploadFile"></i>
 											</div>
 											<p class="help-block">Max. 32MB</p>
+											<table></table>
 										</div>
 									</div>
-								</form>
-								<!-- /.card-body -->
-								<div class="card-footer">
-									<div class="float-right">
-										<button type="button" id="tmpInsert-btn"
-											class="btn btn-default">
-											<i class="fas fa-pencil-alt"></i> 임시 저장
-										</button>
-										<button type="submit" class="btn btn-primary">
-											<i class="far fa-envelope"></i> 보내기
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<div class="float-right">
+											<button type="submit" id="tmpInsert-btn"
+												class="btn btn-default">
+												<i class="fas fa-pencil-alt"></i> 임시 저장
+											</button>
+											<button type="submit" class="btn btn-primary">
+												<i class="far fa-envelope"></i> 보내기
+											</button>
+										</div>
+										<button type="reset" class="btn btn-default">
+											<i class="fas fa-times"></i> 취소
 										</button>
 									</div>
-									<button type="reset" class="btn btn-default">
-										<i class="fas fa-times"></i> 취소
-									</button>
-								</div>
+								</form>
 								<!-- /.card-footer -->
 							</div>
 							<!-- /.card -->
@@ -233,40 +260,14 @@
 			//Add text editor
 			$('#compose-textarea').summernote({
 				lang : "ko-KR",
-				callbacks : {
-					onImageUpload : function(image) {
-						uploadImage(image[0]);
-						console.log("이미지");
-					}
-				},
+				height : 600,
 			});
 		});
-		
-	    function uploadImage(image) {
-	        var data = new FormData();
-	        data.append("image", image);
-	        $.ajax({
-	            type: "post",
-	            cache: false,
-	            contentType:false,
-	            processData: false,
-	            dataType :'jsonp',
-	            url: '/cop/bbs/insertSummberNoteFile.do',
-	            data: data,
-	            success: function(data) {
-	//이미지 경로
-	                var image = $('<img>').attr('src', '/cmm/fms/getImage.do?atchFileId='+data[0].atchFileId+'&fileSn=0');
-	                $('#nttCn').summernote("insertNode", image[0]);
-	            },
-	            error: function(data) {
-	                alert('error : ' +data);
-	            }
-	        });
-	    }
 
 		$('#tmpInsert-btn').on("click", function() {
 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
 		});
+
 	</script>
 </body>
 </html>

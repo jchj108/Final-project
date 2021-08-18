@@ -21,9 +21,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">WorkHome</span>
+    <a href="index3.html" class="brand-link" style="margin-left:20px;">
+	  <i class="fas fa-laptop-house"></i>
+      <span class="brand-text font-weight-bold" style="margin-left:5px;">WorkHome</span>
     </a>
 
     <!-- Sidebar -->
@@ -153,9 +153,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link">
+                <a href="mail.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>전체메일</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="send.mail" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>메일 쓰기</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -171,7 +177,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/read-mail.html" class="nav-link">
+                <a href="templist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>임시보관함</p>
                 </a>
@@ -187,8 +193,9 @@
          
           <li class="nav-header">업무</li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+<!--             <a href="pages/widgets.html" class="nav-link"> -->
+            <a href="nlist.no" class="nav-link">
+              <i class="nav-icon fas fa-flag"></i>
               <p>
                 공지사항
                 <span class="right badge badge-danger">New</span>
@@ -197,7 +204,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fas fa-handshake"></i>
               <p>
                 회의실
                 <i class="fas fa-angle-left right"></i>
@@ -206,7 +213,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="meetReserv.meet" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>회의실 예약</p>
                 </a>
@@ -217,108 +224,20 @@
                   <p>예약 내역</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="pages/layout/boxed.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>+@</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar <small>+ Custom Area</small></p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-topnav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Navbar</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-footer.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Footer</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Collapsed Sidebar</p>
-                </a>
-              </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+           <li class="nav-item">
+            <a href="approvalView.ap" class="nav-link">
+              <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 전자결재함
-                <i class="right fas fa-angle-left"></i>
+                <span class="badge badge-info right">6</span>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-            <p style="color:white; font-size:13px;">결재 진행</p>
-              <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>미결재문서</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>결재 완료 문서</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>반려 문서</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>종결 문서</p>
-                </a>
-              </li>
-             <p style="color:white; font-size:13px;">개인 문서함</p>
-              <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>상신 문서</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>시행 문서</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>결재 완료 문서</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>참조 문서</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fas fa-tasks"></i>
               <p>
                 프로젝트
                 <i class="fas fa-angle-left right"></i>
