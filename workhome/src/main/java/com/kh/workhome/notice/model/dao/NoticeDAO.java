@@ -43,4 +43,8 @@ public class NoticeDAO {
 		return sqlSession.update("noticeMapper.deleteNotice", nId);
 	}
 
+	public ArrayList<Notice> selectTopList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectTopList");
+	}
+
 }
