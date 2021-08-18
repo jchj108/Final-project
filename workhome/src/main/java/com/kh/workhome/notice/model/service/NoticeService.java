@@ -18,4 +18,6 @@ public interface NoticeService {
 
 	int updateNotice(Notice n);
 
+	int deleteNotice(int nId);
+
 }
