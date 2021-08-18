@@ -44,5 +44,12 @@
 		update notice set noticeCount = noticeCount +1
 		where noticeNo=#{nId}
 	</update>
+	
+	<update id="updateNotice">
+		update notice 
+		set	noticeTitle=#{noticeTitle}, noticeContent=#{noticeContent}, originFileName=#{originFileName},
+		renameFileName=#{renameFileName},noticeModifyDate=sysdate
+		where noticeNo=#{noticeNo}
+	</update>
 
 </mapper>
