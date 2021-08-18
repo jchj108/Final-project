@@ -46,4 +46,9 @@ public class MailServiceImpl implements MailService {
 	public Mail selectMail(int id) {
 		return mDAO.selectMail(sqlSession, id);
 	}
+
+	@Override
+	public int updateMail(Mail m) {
+		return mDAO.updateMail(sqlSession, m);
+	}
 }

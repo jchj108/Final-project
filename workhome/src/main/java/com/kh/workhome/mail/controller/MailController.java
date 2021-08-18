@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -131,13 +133,22 @@ public class MailController {
 	}
 
 	@RequestMapping(value = "tmpUpdate.mail")
-	public String updateTemp(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest) throws MailException {
+	public ModelAndView updateTemp(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest, ModelAndView mv) throws MailException {
 		Employee e = (Employee) mtpRequest.getSession().getAttribute("loginUser");
-		String empNo = e.getEmpNo();
 		
 		System.out.println(m);
 		
-		return "tempmaillist";
+		int result = mService.updateMail(m);
+		
+		if(result <= 0) {
+			throw new MailException("임시 저장에 실패하였습니다.");
+		} else {
+			Mail mail = mService.selectMail(m.getMailNo());
+			mv.addObject("mail", mail);
+			mv.setViewName("tempmaillist");
+		}
+		
+		return mv;
 	}
 
 	// 파일 저장용 메소드
@@ -165,5 +176,17 @@ public class MailController {
 
 		// 바뀐 이름이 필요하다.
 		return renameFileName;
+	}
+	
+	// 파일 삭제용 메소드
+	public void deleteFile(MultipartHttpServletRequest mtpRequest, MailFile mf) {
+		// 수정했을 때 이전 파일 삭제하기
+		String root = mtpRequest.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "/mailUploadFiles";
+		
+		File f = new File(savePath + "/" + mf.getmChangeName());
+		if(f.exists()) { // buploadFiles에 renameFileName이 존재하면 지우기
+			f.delete();
+		}
 	}
 }

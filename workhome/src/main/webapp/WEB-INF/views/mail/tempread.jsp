@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -158,6 +160,9 @@
 											name="senderMailId" />
 										<input type="hidden" value="${loginUser.empName}"
 											name=senderName />
+										<input type="hidden" value="${mail.mailNo}"
+											name=mailNo />
+											
 										<div class="mailsubtitle-flex-container">
 											<div class="mailsubtitle-left">
 												<b>받는 사람</b>
@@ -190,7 +195,18 @@
 													multiple="multiple" id="uploadfileinput" type="file"
 													name="uploadFile"></i>
 											</div>
-											<p class="help-block">Max. 32MB</p>
+											<p class="help-block">
+												<c:forEach var="mF" items="${mail.mailFileList }">
+													<c:if test="${!empty mF.mChangeName}">
+<!-- 														<p>첨부된 파일이 있습니다.</p> -->
+														<div>첨부 파일 : ${mF.mOriginalName }        <span>X</span></div>
+													</c:if>
+													<c:if test="${empty mF.mChangeName}">
+														<p>첨부된 파일이 없습니다.</p>
+													</c:if>
+<%-- 												${mF }										 --%>
+												</c:forEach>
+											</p>
 											<table></table>
 										</div>
 									</div>
@@ -260,12 +276,8 @@
 			//Add text editor
 			$('#compose-textarea').summernote({
 				lang : "ko-KR",
-				height : 600,
+				height : 550,
 			});
-		});
-
-		$('#tmpInsert-btn').on("click", function() {
-			$('#form-mailsend').attr("action", "tmpUpdate.mail").submit();
 		});
 
 	</script>

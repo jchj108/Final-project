@@ -44,4 +44,8 @@ public class MailDAO {
 	public Mail selectMail(SqlSessionTemplate sqlSession, int id) {
 		return sqlSession.selectOne("mailMapper.selectMail", id);
 	}
+
+	public int updateMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.update("mailMapper.updateMail", m);
+	}
 }

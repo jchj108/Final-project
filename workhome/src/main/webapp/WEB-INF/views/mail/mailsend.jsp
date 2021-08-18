@@ -185,9 +185,9 @@
 										</div>
 										<div class="form-group">
 											<div class="btn btn-default btn-file">
-												<i class="fas fa-paperclip"> 파일 첨부 </i><input
+												<i class="fas fa-paperclip"> 파일 첨부 <input
 													multiple="multiple" id="uploadfileinput" type="file"
-													name="uploadFile">
+													name="uploadFile"></i>
 											</div>
 										</div>
 										<!-- 										<p class="help-block">Max. 32MB</p> -->
@@ -264,6 +264,10 @@
 
 		$('#tmpInsert-btn').on("click", function() {
 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
+		});
+		
+		$('#uploadfileinput').on("change", function() {
+			console.log($(uploadfileinput).val());
 		});
 	</script>
 </body>

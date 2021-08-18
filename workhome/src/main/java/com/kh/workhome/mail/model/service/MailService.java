@@ -19,5 +19,5 @@ public interface MailService {
 
 	Mail selectMail(int id);
 
-	
+	int updateMail(Mail m);
 }

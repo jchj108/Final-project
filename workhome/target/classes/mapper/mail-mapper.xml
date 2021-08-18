@@ -46,6 +46,15 @@
         order by mail_file.m_file_no desc
 	</select>
 	
+	<update id="updateMail">
+		UPDATE MAIL
+		SET
+			RECEIVEEMP = #{receiveEmp},
+			etitle = #{etitle},
+			econtent = #{econtent}
+		where mailNo = #{mailNo}
+	</update>
+	
 	<resultMap type="Mail" id="mailResultSet">
 		<id column="MAILNO" property="mailNo"/>
 		<result column="RECEIVEEMP" property="receiveEmp"/>
