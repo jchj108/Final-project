@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="${contextPath}/resources/plugins/fullcalendar/main.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="${contextPath}/resources/dist/css/adminlte.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -175,8 +176,14 @@
               </div>
             </div>
           </div>
+          
+          
+          
+          
+          
+          
           <!-- /.col -->
-          <div class="col-md-9">
+          <div class="col-md-9">         
             <div class="card card-primary">
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->

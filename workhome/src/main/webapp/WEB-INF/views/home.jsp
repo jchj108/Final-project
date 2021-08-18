@@ -83,17 +83,18 @@
 									<h4 id="board" style="margin-bottom: 1rem; cursor: pointer">
 										최신 공지</h4>
 									<div class="table-responsive">
-										<table class="table table-bordered">
+										<table class="table table-bordered" id="tb">
 											<thead>
 												<tr style="text-align: center">
+													<th>번호</th>
 													<th>제목</th>
-													<th>게시</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td><i class="fa fa-picture-o" aria-hidden="true"></i>
-														<i class="fa fa-video-camera" aria-hidden="true"></i></td>
+<!-- 													<td><i class="fa fa-picture-o" aria-hidden="false"></i> -->
+<!-- 														<i class="fa fa-video-camera" aria-hidden="true"></i></td> -->
+													<td></td>
 													<td></td>
 												</tr>
 											</tbody>
@@ -207,4 +208,41 @@
 		calendar.render()
 	})
 </script>
+
+<!-- 공지사항 top n -->
+<script>
+	function topList(){
+		$.ajax({
+			url : 'topList.no',
+			success : function(data){
+				console.log(data);
+				
+				$tableBody = $('#tb tbody');
+				$tableBody.html('');
+				
+				for(var i in data){
+					var $tr = $('<tr>');
+					var $no = $('<td>').text(data[i].noticeNo);
+					var $title =$('<td>').text(data[i].noticeTitle);
+				
+				$tr.append($no);
+				$tr.append($title);
+				$tableBody.append($tr);
+				}
+			},
+			error : function(data){
+				console.log(data);
+			}
+		});
+	};
+	
+	$(function(){
+		topList();
+		setInterval(function(){
+			topList();
+		}, 3000);
+	});
+</script>
+
+
 </html>
