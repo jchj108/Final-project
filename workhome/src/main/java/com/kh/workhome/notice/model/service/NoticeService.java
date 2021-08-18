@@ -20,4 +20,6 @@ public interface NoticeService {
 
 	int deleteNotice(int nId);
 
+	ArrayList<Notice> selectTopList();
+
 }

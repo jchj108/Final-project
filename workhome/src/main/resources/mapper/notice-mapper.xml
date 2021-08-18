@@ -57,5 +57,17 @@
 		set noticeStatus='N'
 		where noticeNo=#{nId}
 	</update>
+	
+	<select id="selectTopList" resultMap="noticeResultSet">
+		<![CDATA[ 
+		select *
+		from(select noticeno, noticetitle
+ 			from notice
+	  		  join employee on(noticewriter=empname)
+	  	 	  where noticestatus='Y'
+	 	      order by noticeno desc)
+  	 	 where rownum <=3
+  	 	 ]]>
+	</select>
 
 </mapper>

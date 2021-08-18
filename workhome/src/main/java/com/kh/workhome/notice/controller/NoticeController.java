@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.workhome.common.PageInfo;
 import com.kh.workhome.common.Pagination;
 import com.kh.workhome.notice.model.exception.NoticeException;
 import com.kh.workhome.notice.model.service.NoticeService;
 import com.kh.workhome.notice.model.vo.Notice;
-import com.kh.workhome.notice.model.vo.NoticeFile;
 
 @Controller
 public class NoticeController {
@@ -179,5 +182,21 @@ public class NoticeController {
 			}
 			
 		}
+	
+	@RequestMapping("topList.no")
+	public void selectTopList(HttpServletResponse response) {
+		ArrayList<Notice> list = nService.selectTopList();
+		System.out.println(list);
+		
+		Gson gson = new GsonBuilder().create();
+		response.setContentType("application/json; charset=UTF-8");
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
