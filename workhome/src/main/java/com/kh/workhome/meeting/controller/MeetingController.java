@@ -8,9 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MeetingController {
 
 	@RequestMapping("meetReserv.meet")
-	public String myInfoView() {
+	public String meetingReserv() {
 		
 		return "meetingReservation";
 
+	}
+	
+	@RequestMapping("meetReserv2.meet")
+	public String meetingReserv2() {
+		
+		return "meetingReservation2";
+		
 	}
 }

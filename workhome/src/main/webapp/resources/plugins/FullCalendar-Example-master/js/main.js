@@ -21,7 +21,7 @@ var calendar = $('#calendar').fullCalendar({
   },
   eventLimitClick: 'week', //popover
   navLinks: true,
-  defaultDate: moment('2019-05'), //실제 사용시 현재 날짜로 수정
+  defaultDate: moment('2021-08'), //실제 사용시 현재 날짜로 수정
   timeFormat: 'HH:mm',
   defaultTimedEventDuration: '01:00:00',
   editable: true,
