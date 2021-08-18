@@ -61,4 +61,14 @@ public class NoticeServiceImpl implements NoticeService {
 		return nDAO.updateNotice(sqlSession,n);
 	}
 
+	@Override
+	public int deleteNotice(int nId) {
+		return nDAO.deleteNotice(sqlSession, nId);
+	}
+
+	@Override
+	public ArrayList<Notice> selectTopList() {
+		return nDAO.selectTopList(sqlSession);
+	}
+
 }
