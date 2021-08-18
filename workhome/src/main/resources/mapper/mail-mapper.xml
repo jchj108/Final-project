@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
-
 	<insert id="insertMailFile">
 		insert into mail_file 
 		values (mail_file_seq.nextval, #{mOriginalName}, #{mChangeName}, 
@@ -20,13 +19,20 @@
 	</select>
 	
 	<select id="selectTempList" resultMap="mailResultSet">
-    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
-           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
-           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS
-    from mail
-        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
-        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
-    where estatus='Y'
+		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
+		    ECONTENT, ESTATUS, E_R_TIME, EMPNO, S_DATE, EMPNAME
+		    , M_STATUS
+		from(
+		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS
+		    from mail
+		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+		    where estatus='Y'
+		    order by MAILNO DESC
+		)
+		ORDER BY MAILNO DESC
 	</select>
 	
 	<resultMap type="Mail" id="mailResultSet">
