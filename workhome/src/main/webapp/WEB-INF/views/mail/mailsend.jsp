@@ -155,15 +155,14 @@
 									enctype="Multipart/form-data">
 									<div class="card-body">
 										<input type="hidden" value="${loginUser.empNo}"
-											name="senderMailId" />
-										<input type="hidden" value="${loginUser.empName}"
-											name=senderName />
+											name="senderMailId" /> <input type="hidden"
+											value="${loginUser.empName}" name=senderName />
 										<div class="mailsubtitle-flex-container">
 											<div class="mailsubtitle-left">
 												<b>받는 사람</b>
 											</div>
 											<div>
-												<button type="button" class="btn btn-sm btn-light"
+												<button type="button" class="btn btn-sm btn-primary" style="background-color:#007BFF"
 													id="chart">조직도</button>
 											</div>
 											<div class="form-group mailsubtitle-right">
@@ -186,30 +185,80 @@
 										</div>
 										<div class="form-group">
 											<div class="btn btn-default btn-file">
-												<i class="fas fa-paperclip"> 파일 첨부 <input
+												<i class="fas fa-paperclip"> 파일 첨부 </i><input
 													multiple="multiple" id="uploadfileinput" type="file"
-													name="uploadFile"></i>
+													name="uploadFile">
 											</div>
-											<p class="help-block">Max. 32MB</p>
-											<table></table>
 										</div>
-									</div>
-									<!-- /.card-body -->
-									<div class="card-footer">
-										<div class="float-right">
-											<button type="submit" id="tmpInsert-btn"
-												class="btn btn-default">
-												<i class="fas fa-pencil-alt"></i> 임시 저장
-											</button>
-											<button type="submit" class="btn btn-primary">
-												<i class="far fa-envelope"></i> 보내기
-											</button>
-										</div>
-										<button type="reset" class="btn btn-default">
-											<i class="fas fa-times"></i> 취소
-										</button>
+
+										<ul
+											class="mailbox-attachments d-flex align-items-stretch clearfix">
+											<li><span class="mailbox-attachment-icon"><i
+													class="far fa-file-pdf"></i></span>
+
+												<div class="mailbox-attachment-info">
+													<a href="#" class="mailbox-attachment-name"><i
+														class="fas fa-paperclip"></i> Sep2014-report.pdf</a> <span
+														class="mailbox-attachment-size clearfix mt-1"> <span>1,245
+															KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
+															class="fas fa-cloud-download-alt"></i></a>
+													</span>
+												</div></li>
+											<li><span class="mailbox-attachment-icon"><i
+													class="far fa-file-word"></i></span>
+
+												<div class="mailbox-attachment-info">
+													<a href="#" class="mailbox-attachment-name"><i
+														class="fas fa-paperclip"></i> App Description.docx</a> <span
+														class="mailbox-attachment-size clearfix mt-1"> <span>1,245
+															KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
+															class="fas fa-cloud-download-alt"></i></a>
+													</span>
+												</div></li>
+											<li><span class="mailbox-attachment-icon has-img"><img
+													src="../../dist/img/photo1.png" alt="Attachment"></span>
+
+												<div class="mailbox-attachment-info">
+													<a href="#" class="mailbox-attachment-name"><i
+														class="fas fa-camera"></i> photo1.png</a> <span
+														class="mailbox-attachment-size clearfix mt-1"> <span>2.67
+															MB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
+															class="fas fa-cloud-download-alt"></i></a>
+													</span>
+												</div></li>
+											<li><span class="mailbox-attachment-icon has-img"><img
+													src="../../dist/img/photo2.png" alt="Attachment"></span>
+
+												<div class="mailbox-attachment-info">
+													<a href="#" class="mailbox-attachment-name"><i
+														class="fas fa-camera"></i> photo2.png</a> <span
+														class="mailbox-attachment-size clearfix mt-1"> <span>1.9
+															MB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
+															class="fas fa-cloud-download-alt"></i></a>
+													</span>
+												</div></li>
+										</ul>
+
+
+
+										<!-- 										<p class="help-block">Max. 32MB</p> -->
 									</div>
 								</form>
+								<!-- /.card-body -->
+								<div class="card-footer">
+									<div class="float-right">
+										<button type="submit" id="tmpInsert-btn"
+											class="btn btn-default">
+											<i class="fas fa-pencil-alt"></i> 임시 저장
+										</button>
+										<button type="submit" class="btn btn-primary">
+											<i class="far fa-envelope"></i> 보내기
+										</button>
+									</div>
+									<button type="reset" class="btn btn-default">
+										<i class="fas fa-times"></i> 취소
+									</button>
+								</div>
 								<!-- /.card-footer -->
 							</div>
 							<!-- /.card -->
@@ -260,14 +309,13 @@
 			//Add text editor
 			$('#compose-textarea').summernote({
 				lang : "ko-KR",
-				height : 600,
+				height : 550,
 			});
 		});
 
 		$('#tmpInsert-btn').on("click", function() {
 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
 		});
-
 	</script>
 </body>
 </html>

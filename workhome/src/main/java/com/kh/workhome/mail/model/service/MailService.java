@@ -17,5 +17,7 @@ public interface MailService {
 
 	ArrayList<Mail> selectTempList(PageInfo pi);
 
+	Mail selectMail(int id);
+
 	
 }

@@ -40,4 +40,9 @@ public class MailDAO {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectTempList", null, rowBounds);
 	}
+
+	public Mail selectMail(SqlSessionTemplate sqlSession, int id) {
+		return sqlSession.selectOne("mailMapper.selectMail", id);
+	}
+
 }
