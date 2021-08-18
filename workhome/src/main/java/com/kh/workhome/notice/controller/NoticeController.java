@@ -164,4 +164,20 @@ public class NoticeController {
 		}
 	}
 	
+	@RequestMapping("ndelete.no")
+		public String deleteNotice(@RequestParam("nId") int nId, HttpServletRequest request) {
+			Notice notice = nService.selectNotice(nId, false);
+			if(notice.getOriginFileName() != null) {
+				deleteFile(request, notice);
+			}
+			
+			int result = nService.deleteNotice(nId);
+			if(result > 0) {
+				return "redirect:nlist.no";
+			} else {
+				throw new NoticeException("공지사항 삭제에 실패했습니다.");
+			}
+			
+		}
+	
 }
