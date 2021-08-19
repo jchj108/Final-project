@@ -52,4 +52,8 @@ public class MailServiceImpl implements MailService {
 		return mDAO.updateMail(sqlSession, m);
 	}
 
+	@Override
+	public int deleteMailFile(int mFileNo) {
+		return mDAO.deleteMailFile(sqlSession, mFileNo);
+	}
 }

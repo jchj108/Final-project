@@ -48,4 +48,8 @@ public class MailDAO {
 	public int updateMail(SqlSessionTemplate sqlSession, Mail m) {
 		return sqlSession.update("mailMapper.updateMail", m);
 	}
+
+	public int deleteMailFile(SqlSessionTemplate sqlSession, int mFileNo) {
+		return sqlSession.delete("mailMapper.deleteMailFile", mFileNo);
+	}
 }

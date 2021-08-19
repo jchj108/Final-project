@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -168,6 +167,21 @@ public class MailController {
 		}
 
 		return "redirect:templist.mail";
+	}
+	
+	@RequestMapping("fileDeleteAjax.mail")
+	@ResponseBody
+	public String deleteFileAjax(@RequestParam("mFileNo") int mFileNo) {
+		int result = mService.deleteMailFile(mFileNo);
+		
+		if(result > 0) {
+			
+			
+			return "파일 삭제 성공";
+		} else {
+			throw new MailException("파일 삭제에 실패했습니다.");
+		}
+		
 	}
 
 	// 파일 저장용 메소드

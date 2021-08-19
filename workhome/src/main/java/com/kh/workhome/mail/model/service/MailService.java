@@ -21,4 +21,6 @@ public interface MailService {
 
 	int updateMail(Mail m);
 
+	int deleteMailFile(int mFileNo);
+
 }

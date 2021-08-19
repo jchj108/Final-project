@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -47,6 +47,21 @@
 
 .mail-icon {
 	width: 20px;
+}
+
+.table-sm {
+	/* 	border: 1px; solid; rgb(128, 128, 128); */
+	width: 420.875px;
+	border-radius: 4px;
+	border: 1px solid rgb(222, 226, 230);
+}
+
+.table-sm th {
+	background-color: rgb(248, 249, 250);
+}
+
+.table-sm td {
+	align-items: center;
 }
 </style>
 
@@ -157,19 +172,17 @@
 									enctype="Multipart/form-data">
 									<div class="card-body">
 										<input type="hidden" value="${loginUser.empNo}"
-											name="senderMailId" />
-										<input type="hidden" value="${loginUser.empName}"
-											name=senderName />
-										<input type="hidden" value="${mail.mailNo}"
-											name=mailNo />
-											
+											name="senderMailId" /> <input type="hidden"
+											value="${loginUser.empName}" name=senderName /> <input
+											type="hidden" value="${mail.mailNo}" name=mailNo />
+
 										<div class="mailsubtitle-flex-container">
 											<div class="mailsubtitle-left">
 												<b>받는 사람</b>
 											</div>
 											<div>
-												<button type="button" class="btn btn-sm btn-primary" style="background-color:#007BFF"
-													id="chart">조직도</button>
+												<button type="button" class="btn btn-sm btn-primary"
+													style="background-color: #007BFF" id="chart">조직도</button>
 											</div>
 											<div class="form-group mailsubtitle-right">
 												<input class="form-control mail-subtitle" placeholder="받는 이"
@@ -181,7 +194,8 @@
 												<b>제목</b>
 											</div>
 											<div class="form-group mailsubtitle-right">
-												<input class="form-control" placeholder="제목" name="etitle" value="${mail.etitle }">
+												<input class="form-control" placeholder="제목" name="etitle"
+													value="${mail.etitle }">
 											</div>
 										</div>
 										<div class="form-group">
@@ -195,20 +209,32 @@
 													multiple="multiple" id="uploadfileinput" type="file"
 													name="uploadFile"></i>
 											</div>
-											<p class="help-block">
-												<c:forEach var="mF" items="${mail.mailFileList }">
-													<c:if test="${!empty mF.mChangeName}">
-<!-- 														<p>첨부된 파일이 있습니다.</p> -->
-														<div>첨부 파일 : ${mF.mOriginalName }        <span>X</span></div>
-													</c:if>
-													<c:if test="${empty mF.mChangeName}">
-														<p>첨부된 파일이 없습니다.</p>
-													</c:if>
-<%-- 												${mF }										 --%>
-												</c:forEach>
-											</p>
-											<table></table>
 										</div>
+										<table class="table table-hover table-sm">
+											<tr>
+												<th colspan=2>첨부된 파일</th>
+											</tr>
+											<c:forEach var="mF" items="${mail.mailFileList }">
+												<c:if test="${!empty mF.mChangeName}">
+													<tr>
+														<td>${mF.mOriginalName }</td>
+														<td><button type="button"
+																id="${mF.mFileNo }" class="close">
+																<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+															</button></td>
+													</tr>
+													<!-- 													<div> -->
+													<%-- 														첨부 파일 : ${mF.mOriginalName } <span>X</span> --%>
+													<!-- 													</div> -->
+												</c:if>
+												<c:if test="${empty mF.mChangeName}">
+													<tr>
+														<td>첨부된 파일이 없습니다.</td>
+													</tr>
+												</c:if>
+												<%-- 												${mF }										 --%>
+											</c:forEach>
+										</table>
 									</div>
 									<!-- /.card-body -->
 									<div class="card-footer">
@@ -278,12 +304,26 @@
 				lang : "ko-KR",
 				height : 550,
 			});
-			
+
 			$('#tmpInsert-btn').on("click", function() {
 				$('#form-mailsend').attr("action", "tmpUpdate.mail").submit();
 			});
+
+			$('.close').click(function() {
+				if(!window.confirm("정말 삭제하시겠습니까?")) {
+					return;
+				} 
+				var tagId = $(this).attr('id');
+				
+				$.ajax({
+					url: 'fileDeleteAjax.mail',
+					data: {mFileNo : tagId},
+					success : function(data) {
+						console.log(data);
+					}
+				});
+			});
 		});
-		
 	</script>
 </body>
 </html>
