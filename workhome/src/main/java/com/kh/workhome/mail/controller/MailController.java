@@ -97,21 +97,17 @@ public class MailController {
 		Employee e = (Employee) mtpRequest.getSession().getAttribute("loginUser");
 		String empNo = e.getEmpNo();
 
-		m.setSenderMailId(m.getSenderMailId() + "@workhome.com");
 		m.setEmpNo(empNo);
 
 		System.out.println(m);
-		int result = mService.insertMail(m);
+		int result1 = mService.insertMail(m);
 
-		if (result <= 0) { // 메일 등록 취소 시 예외처리
+		if (result1 <= 0) { // 메일 등록 취소 시 예외처리
 			throw new MailException("메일 저장에 실패했습니다.");
 		}
-		boolean flag = false;
 
-		if (!uploadFile.isEmpty()) {
-			// 받아온 파일이 있을 때만 MAIL과 MAIL_FILE CURRVAL로 연결
+		if (!uploadFile.isEmpty()) { // 받아온 파일이 있을 때만 MAIL과 MAIL_FILE CURRVAL로 연결
 			System.out.println("업로드된 파일 수 : " + fileList.size());
-			flag = true;
 			for (MultipartFile mf : fileList) {
 				String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 				long fileSize = mf.getSize(); // 파일 사이즈
@@ -122,33 +118,56 @@ public class MailController {
 
 				mailFileList.add(mailfile);
 			}
-		}
-		int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
+			int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
 
-		if (result2 <= 0 && flag) {
-			throw new MailException("파일 저장에 실패했습니다.");
+			if (result2 <= 0) {
+				throw new MailException("파일 저장에 실패했습니다.");
+			}
 		}
 
-		return "tempmaillist";
+		return "redirect:templist.mail";
 	}
 
 	@RequestMapping(value = "tmpUpdate.mail")
-	public ModelAndView updateTemp(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest, ModelAndView mv) throws MailException {
+	public String updateTemp(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest, ModelAndView mv) throws MailException {
+		String root = mtpRequest.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "/mailUploadFiles";
+		List<MultipartFile> fileList = mtpRequest.getFiles("uploadFile");
+		MultipartFile uploadFile = mtpRequest.getFile("uploadFile");
+		List<MailFile> mailFileList = new ArrayList<MailFile>();
+
 		Employee e = (Employee) mtpRequest.getSession().getAttribute("loginUser");
-		
+		String empNo = e.getEmpNo();
+
+		m.setEmpNo(empNo);
+
 		System.out.println(m);
-		
-		int result = mService.updateMail(m);
-		
-		if(result <= 0) {
-			throw new MailException("임시 저장에 실패하였습니다.");
-		} else {
-			Mail mail = mService.selectMail(m.getMailNo());
-			mv.addObject("mail", mail);
-			mv.setViewName("tempmaillist");
+		int result1 = mService.updateMail(m);
+
+		if (result1 <= 0) { 
+			throw new MailException("메일 임시 저장에 실패했습니다.");
 		}
-		
-		return mv;
+
+		if (!uploadFile.isEmpty()) { // 받아온 파일이 있을 때만 MAIL과 MAIL_FILE CURRVAL로 연결
+			System.out.println("업로드된 파일 수 : " + fileList.size());
+			for (MultipartFile mf : fileList) {
+				String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+				long fileSize = mf.getSize(); // 파일 사이즈
+
+				String mChangeName = saveFile(mtpRequest, mf);
+
+				MailFile mailfile = new MailFile(mf.getOriginalFilename(), mChangeName, filePath, m.getMailNo());
+
+				mailFileList.add(mailfile);
+			}
+			int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
+
+			if (result2 <= 0) {
+				throw new MailException("파일 저장에 실패했습니다.");
+			}
+		}
+
+		return "redirect:templist.mail";
 	}
 
 	// 파일 저장용 메소드

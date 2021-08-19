@@ -79,4 +79,11 @@ public class MailFile {
 		this.mChangeName = mChangeName;
 		this.mFilePath = mFilePath;
 	}
+	public MailFile(String mOriginalName, String mChangeName, String mFilePath, int mFileNo) {
+		super();
+		this.mOriginalName = mOriginalName;
+		this.mChangeName = mChangeName;
+		this.mFilePath = mFilePath;
+		this.mFileNo = mFileNo;
+	}
 }

@@ -51,4 +51,5 @@ public class MailServiceImpl implements MailService {
 	public int updateMail(Mail m) {
 		return mDAO.updateMail(sqlSession, m);
 	}
+
 }

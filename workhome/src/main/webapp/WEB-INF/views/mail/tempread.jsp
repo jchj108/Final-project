@@ -190,7 +190,7 @@
 					                 	   </textarea>
 										</div>
 										<div class="form-group">
-											<div class="btn btn-default btn-file">
+											<div class="btn btn-default btn-file" id="btn-upload">
 												<i class="fas fa-paperclip"> 파일 첨부 <input
 													multiple="multiple" id="uploadfileinput" type="file"
 													name="uploadFile"></i>
@@ -278,8 +278,12 @@
 				lang : "ko-KR",
 				height : 550,
 			});
+			
+			$('#tmpInsert-btn').on("click", function() {
+				$('#form-mailsend').attr("action", "tmpUpdate.mail").submit();
+			});
 		});
-
+		
 	</script>
 </body>
 </html>
