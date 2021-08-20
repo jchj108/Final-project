@@ -23,6 +23,12 @@
 	href="${contextPath}/resources/plugins/summernote/summernote-bs4.min.css">
 
 <style>
+
+.thispage, .thispage b, .thispage i {
+	color: #007bff;
+}
+
+
 .mailsubtitle-flex-container {
 	display: flex;
 	justify-content: space-between;
@@ -123,8 +129,8 @@
 												class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
 										<li class="nav-item"><a
-											href="${contextPath}/templist.mail" class="nav-link"> <i
-												class="far fa-file-alt mail-icon"></i> 임시보관함
+											href="${contextPath}/templist.mail" class="nav-link thispage"> <i
+												class="far fa-file-alt mail-icon"></i> <b>임시보관함</b>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
 												class="fas fa-filter mail-icon"></i> 스팸메일함 <span

@@ -96,5 +96,12 @@ public class MailFile {
 		this.mChangeName = mChangeName;
 		this.mFilePath = mFilePath;
 		this.mailNo = mailNo;
-	};
+	}
+
+	public MailFile(String mOriginalName, String mChangeName, String mFilePath) {
+		super();
+		this.mOriginalName = mOriginalName;
+		this.mChangeName = mChangeName;
+		this.mFilePath = mFilePath;
+	}
 }

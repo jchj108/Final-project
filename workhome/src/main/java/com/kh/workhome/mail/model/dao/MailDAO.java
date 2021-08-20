@@ -2,6 +2,7 @@ package com.kh.workhome.mail.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,8 +29,8 @@ public class MailDAO {
 		return sqlSession.insert("mailMapper.insertMail", m);
 	}
 	
-	public int getTempListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("mailMapper.getTempListCount");
+	public int getTempListCount(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.getTempListCount", empNo);
 	}
 
 	public ArrayList<Mail> selectTempList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
@@ -41,8 +42,8 @@ public class MailDAO {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectTempList", empNo, rowBounds);
 	}
 
-	public Mail selectMail(SqlSessionTemplate sqlSession, int id) {
-		return sqlSession.selectOne("mailMapper.selectMail", id);
+	public Mail selectTempMail(SqlSessionTemplate sqlSession, int id) {
+		return sqlSession.selectOne("mailMapper.selectTempMail", id);
 	}
 
 	public int updateMail(SqlSessionTemplate sqlSession, Mail m) {
@@ -55,5 +56,13 @@ public class MailDAO {
 
 	public MailFile selectMailFile(SqlSessionTemplate sqlSession, int mFileNo) {
 		return sqlSession.selectOne("mailMapper.selectMailFile", mFileNo);
+	}
+
+	public int getReceiveListCount(SqlSessionTemplate sqlSession, Map<String, String> map) {
+		return sqlSession.selectOne("mailMapper.getReceiveListCount", map);
+	}
+
+	public int insertTempMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.insert("mailMapper.insertTempMail", m);
 	}
 }

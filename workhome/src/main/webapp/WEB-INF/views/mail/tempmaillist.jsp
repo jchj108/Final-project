@@ -22,8 +22,13 @@
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
+
 .mail-icon {
 	width: 20px;
+}
+
+.thispage, .thispage b {
+	color: #007bff;
 }
 
 .table td, .table th {
@@ -68,8 +73,8 @@
 	margin-right: 8px;
 }
 
-.fa-envelope {
-	margin-right: 10px;
+.fa-paperclip {
+	margin-left: 10px;
 }
 
 .mailbox-name a {
@@ -139,19 +144,18 @@ td {
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="fas fa-envelope mail-icon"></i> 전체메일
+										<li class="nav-item"><a href="#" class="nav-link"> 
+										<i class="fas fa-envelope mail-icon"></i> 전체메일
 										</a></li>
-										<li class="nav-item active"><a href="#" class="nav-link">
+										<li class="nav-item active"><a href="${contextPath }/receivelist.mail" class="nav-link">
 												<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-paper-plane mail-icon"></i> 보낸메일함
+										<li class="nav-item"><a href="#" class="nav-link"> 
+										<i class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
-										<li class="nav-item"><a
-											href="${contextPath}/templist.mail" class="nav-link"> <i
-												class="far fa-file-alt mail-icon"></i> 임시보관함
+										<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link thispage"><i
+												class="far fa-file-alt mail-icon thispage"></i> <b>임시보관함</b>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
 												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
