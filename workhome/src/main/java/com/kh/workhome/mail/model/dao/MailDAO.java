@@ -52,4 +52,8 @@ public class MailDAO {
 	public int deleteMailFile(SqlSessionTemplate sqlSession, int mFileNo) {
 		return sqlSession.delete("mailMapper.deleteMailFile", mFileNo);
 	}
+
+	public MailFile selectMailFile(SqlSessionTemplate sqlSession, int mFileNo) {
+		return sqlSession.selectOne("mailMapper.selectMailFile", mFileNo);
+	}
 }

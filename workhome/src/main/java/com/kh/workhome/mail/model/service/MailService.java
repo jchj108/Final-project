@@ -23,4 +23,6 @@ public interface MailService {
 
 	int deleteMailFile(int mFileNo);
 
+	MailFile selectMailFile(int mFileNo);
+
 }

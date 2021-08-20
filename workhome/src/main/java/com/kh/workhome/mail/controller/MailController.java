@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -171,13 +174,14 @@ public class MailController {
 	
 	@RequestMapping("fileDeleteAjax.mail")
 	@ResponseBody
-	public String deleteFileAjax(@RequestParam("mFileNo") int mFileNo) {
+	public String deleteFileAjax(@RequestParam("mFileNo") int mFileNo, HttpServletRequest request) {
+		
+		MailFile mF = mService.selectMailFile(mFileNo);
 		int result = mService.deleteMailFile(mFileNo);
 		
 		if(result > 0) {
-			
-			
-			return "파일 삭제 성공";
+			deleteFile(request, mF);
+			return "success";
 		} else {
 			throw new MailException("파일 삭제에 실패했습니다.");
 		}
@@ -215,6 +219,17 @@ public class MailController {
 	public void deleteFile(MultipartHttpServletRequest mtpRequest, MailFile mf) {
 		// 수정했을 때 이전 파일 삭제하기
 		String root = mtpRequest.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "/mailUploadFiles";
+		
+		File f = new File(savePath + "/" + mf.getmChangeName());
+		if(f.exists()) { // buploadFiles에 renameFileName이 존재하면 지우기
+			f.delete();
+		}
+	}
+	
+	public void deleteFile(HttpServletRequest request, MailFile mf) {
+		// 수정했을 때 이전 파일 삭제하기
+		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "/mailUploadFiles";
 		
 		File f = new File(savePath + "/" + mf.getmChangeName());

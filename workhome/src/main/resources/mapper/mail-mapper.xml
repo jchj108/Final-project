@@ -13,6 +13,13 @@
 				#{mFilePath}, sysdate, 'Y', #{mailNo})
 		</if>
 	</insert>
+	<update id="deleteMailFile">
+		UPDATE MAIL_FILE
+		SET M_STATUS = 'N'
+		WHERE M_FILE_NO=#{mFileNo}
+	</update>
+	
+	
 	<insert id="insertMail">
 		insert into mail
 		values (MAIL_TEMP_SEQ.NEXTVAL, #{receiveEmp}, null, #{etitle}, 
@@ -51,6 +58,12 @@
 	        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 	    where estatus='Y' and mail.mailno=#{id}
         order by mail_file.m_file_no desc
+	</select>
+	
+	<select id="selectMailFile" resultMap="mailFileResultSet">
+		select *
+		from mail_File
+		where m_file_no = #{mFileNo}
 	</select>
 	
 	<update id="updateMail">

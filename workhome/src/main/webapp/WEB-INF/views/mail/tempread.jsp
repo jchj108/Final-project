@@ -313,13 +313,18 @@
 				if(!window.confirm("정말 삭제하시겠습니까?")) {
 					return;
 				} 
-				var tagId = $(this).attr('id');
+				var $tagId = $(this).attr('id');
+				var $container = $(this).closest('tr');
 				
-				$.ajax({
+				$.ajax({ // 파일 삭제
 					url: 'fileDeleteAjax.mail',
-					data: {mFileNo : tagId},
+					data: {mFileNo : $tagId},
 					success : function(data) {
 						console.log(data);
+						
+						if(data == 'success') {
+							$container.hide();
+						}
 					}
 				});
 			});
