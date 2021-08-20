@@ -112,12 +112,15 @@
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
+										<li class="nav-item"><a href="#" class="nav-link"> <i
+												class="fas fa-envelope mail-icon"></i> 전체메일
+										</a></li>
 										<li class="nav-item active"><a href="#" class="nav-link">
-												<i class="fas fa-inbox mail-icon"></i> 받은메일함 <span
+												<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-envelope mail-icon"></i> 보낸메일함
+												class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
 										<li class="nav-item"><a
 											href="${contextPath}/templist.mail" class="nav-link"> <i
@@ -218,21 +221,17 @@
 												<c:if test="${!empty mF.mChangeName}">
 													<tr>
 														<td>${mF.mOriginalName }</td>
-														<td><button type="button"
-																id="${mF.mFileNo }" class="close">
+														<td><button type="button" id="${mF.mFileNo }"
+																class="close">
 																<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 															</button></td>
 													</tr>
-													<!-- 													<div> -->
-													<%-- 														첨부 파일 : ${mF.mOriginalName } <span>X</span> --%>
-													<!-- 													</div> -->
 												</c:if>
 												<c:if test="${empty mF.mChangeName}">
 													<tr>
 														<td>첨부된 파일이 없습니다.</td>
 													</tr>
 												</c:if>
-												<%-- 												${mF }										 --%>
 											</c:forEach>
 										</table>
 									</div>
@@ -310,19 +309,21 @@
 			});
 
 			$('.close').click(function() {
-				if(!window.confirm("정말 삭제하시겠습니까?")) {
+				if (!window.confirm("정말 삭제하시겠습니까?")) {
 					return;
-				} 
+				}
 				var $tagId = $(this).attr('id');
 				var $container = $(this).closest('tr');
-				
+
 				$.ajax({ // 파일 삭제
-					url: 'fileDeleteAjax.mail',
-					data: {mFileNo : $tagId},
+					url : 'fileDeleteAjax.mail',
+					data : {
+						mFileNo : $tagId
+					},
 					success : function(data) {
 						console.log(data);
-						
-						if(data == 'success') {
+
+						if (data == 'success') {
 							$container.hide();
 						}
 					}

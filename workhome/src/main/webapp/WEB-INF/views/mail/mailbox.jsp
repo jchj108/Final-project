@@ -178,7 +178,7 @@
 										</button>
 									</div>
 									<!-- /.btn-group -->
-									<button type="button" class="btn btn-default btn-sm">
+									<button type="button" onclick="location.href='templist.mail'" class="btn btn-default btn-sm">
 										<i class="fas fa-sync-alt"></i>
 									</button>
 									<div class="float-right">

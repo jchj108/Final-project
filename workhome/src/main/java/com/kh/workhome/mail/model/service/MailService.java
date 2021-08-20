@@ -15,7 +15,7 @@ public interface MailService {
 
 	int getTempListCount();
 
-	ArrayList<Mail> selectTempList(PageInfo pi);
+	ArrayList<Mail> selectTempList(PageInfo pi, String empNo);
 
 	Mail selectMail(int id);
 

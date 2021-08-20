@@ -38,8 +38,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public ArrayList<Mail> selectTempList(PageInfo pi) {
-		return mDAO.selectTempList(sqlSession, pi);
+	public ArrayList<Mail> selectTempList(PageInfo pi, String empNo) {
+		return mDAO.selectTempList(sqlSession, pi, empNo);
 	}
 
 	@Override

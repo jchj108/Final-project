@@ -64,8 +64,14 @@ public class MailController {
 	}
 
 	@RequestMapping("templist.mail")
-	public ModelAndView tempList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
+	public ModelAndView tempList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv, HttpServletRequest request) {
 
+		String empNo = ((Employee)request.getSession().getAttribute("loginUser")).getEmpNo();
+		
+		if(empNo == null) {
+			throw new MailException("로그인이 필요합니다.");
+		}
+		
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -76,7 +82,7 @@ public class MailController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
 
-		ArrayList<Mail> list = mService.selectTempList(pi);
+		ArrayList<Mail> list = mService.selectTempList(pi, empNo);
 
 		if (list != null) {
 			mv.addObject("tempList", list).addObject("pi", pi);
@@ -137,7 +143,6 @@ public class MailController {
 		List<MultipartFile> fileList = mtpRequest.getFiles("uploadFile");
 		MultipartFile uploadFile = mtpRequest.getFile("uploadFile");
 		List<MailFile> mailFileList = new ArrayList<MailFile>();
-
 		Employee e = (Employee) mtpRequest.getSession().getAttribute("loginUser");
 		String empNo = e.getEmpNo();
 
@@ -159,7 +164,7 @@ public class MailController {
 				String mChangeName = saveFile(mtpRequest, mf);
 
 				MailFile mailfile = new MailFile(mf.getOriginalFilename(), mChangeName, filePath, m.getMailNo());
-
+				System.out.println(mailfile);
 				mailFileList.add(mailfile);
 			}
 			int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
@@ -185,7 +190,6 @@ public class MailController {
 		} else {
 			throw new MailException("파일 삭제에 실패했습니다.");
 		}
-		
 	}
 
 	// 파일 저장용 메소드
@@ -217,7 +221,6 @@ public class MailController {
 	
 	// 파일 삭제용 메소드
 	public void deleteFile(MultipartHttpServletRequest mtpRequest, MailFile mf) {
-		// 수정했을 때 이전 파일 삭제하기
 		String root = mtpRequest.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "/mailUploadFiles";
 		
@@ -228,7 +231,6 @@ public class MailController {
 	}
 	
 	public void deleteFile(HttpServletRequest request, MailFile mf) {
-		// 수정했을 때 이전 파일 삭제하기
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "/mailUploadFiles";
 		

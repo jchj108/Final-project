@@ -139,12 +139,15 @@ td {
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
+										<li class="nav-item"><a href="#" class="nav-link"> <i
+												class="fas fa-envelope mail-icon"></i> 전체메일
+										</a></li>
 										<li class="nav-item active"><a href="#" class="nav-link">
-												<i class="fas fa-inbox mail-icon"></i> 받은메일함 <span
+												<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-envelope mail-icon"></i> 보낸메일함
+												class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
 										<li class="nav-item"><a
 											href="${contextPath}/templist.mail" class="nav-link"> <i
@@ -228,7 +231,7 @@ td {
 											</button>
 										</div>
 										<!-- /.btn-group -->
-										<button type="button" class="btn btn-default btn-sm">
+										<button type="button" onclick="location.href='templist.mail'" class="btn btn-default btn-sm">
 											<i class="fas fa-sync-alt"></i>
 										</button>
 										<div class="float-right">
@@ -256,10 +259,10 @@ td {
 														<c:set var="attachment" value="off" />
 													</c:if>
 												</c:forEach>
-													<c:url var="mdetail" value="readtemp.mail">
-														<c:param name="mId" value="${ m.mailNo }" />
-														<c:param name="page" value="${ pi.currentPage }" />
-													</c:url>
+												<c:url var="mdetail" value="readtemp.mail">
+													<c:param name="mId" value="${ m.mailNo }" />
+													<c:param name="page" value="${ pi.currentPage }" />
+												</c:url>
 												<tr>
 													<td>
 														<div class="icheck-primary">
@@ -275,7 +278,8 @@ td {
 															<i class="fas fa-paperclip"></i>
 														</c:if></td>
 													<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
-													<td onclick="location.href='${mdetail}'" style="cursor:pointer;" class="mailbox-subject">${m.etitle }</td>
+													<td onclick="location.href='${mdetail}'"
+														style="cursor: pointer;" class="mailbox-subject">${m.etitle }</td>
 													<td class="mailbox-date">${m.sDate }</td>
 												</tr>
 											</c:forEach>
