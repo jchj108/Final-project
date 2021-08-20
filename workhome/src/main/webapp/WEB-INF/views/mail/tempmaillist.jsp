@@ -22,8 +22,13 @@
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
+
 .mail-icon {
 	width: 20px;
+}
+
+.thispage, .thispage b {
+	color: #007bff;
 }
 
 .table td, .table th {
@@ -32,11 +37,11 @@
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(0,0,0,0); 
+	background-color: rgba(0, 0, 0, 0);
 }
 
 .table-hover tbody tr:hover {
-	background-color: rgba(0,0,0,.075)
+	background-color: rgba(0, 0, 0, .075)
 }
 
 .table td:nth-child(1) {
@@ -46,7 +51,6 @@
 .table td:nth-child(2) {
 	width: 10%;
 }
-
 
 .table td:nth-child(3) {
 	width: 20%;
@@ -69,8 +73,8 @@
 	margin-right: 8px;
 }
 
-.fa-envelope {
-	margin-right: 10px;
+.fa-paperclip {
+	margin-left: 10px;
 }
 
 .mailbox-name a {
@@ -90,7 +94,6 @@ td {
 .table-hover tbody tr:hover {
 	
 }
-
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -141,16 +144,18 @@ td {
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item active"><a href="#" class="nav-link">
-												<i class="fas fa-inbox mail-icon"></i> 받은메일함 <span
+										<li class="nav-item"><a href="#" class="nav-link"> 
+										<i class="fas fa-envelope mail-icon"></i> 전체메일
+										</a></li>
+										<li class="nav-item active"><a href="${contextPath }/receivelist.mail" class="nav-link">
+												<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-envelope mail-icon"></i> 보낸메일함
+										<li class="nav-item"><a href="#" class="nav-link"> 
+										<i class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
-										<li class="nav-item"><a
-											href="${contextPath}/templist.mail" class="nav-link"> <i
-												class="far fa-file-alt mail-icon"></i> 임시보관함
+										<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link thispage"><i
+												class="far fa-file-alt mail-icon thispage"></i> <b>임시보관함</b>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
 												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
@@ -230,11 +235,11 @@ td {
 											</button>
 										</div>
 										<!-- /.btn-group -->
-										<button type="button" class="btn btn-default btn-sm">
+										<button type="button" onclick="location.href='templist.mail'" class="btn btn-default btn-sm">
 											<i class="fas fa-sync-alt"></i>
 										</button>
 										<div class="float-right">
-<%-- 											${pi.currentPage }-15/${pi.listCount } --%>
+											<%-- 											${pi.currentPage }-15/${pi.listCount } --%>
 											<div class="btn-group">
 												<button type="button" class="btn btn-default btn-sm">
 													<i class="fas fa-chevron-left"></i>
@@ -258,6 +263,10 @@ td {
 														<c:set var="attachment" value="off" />
 													</c:if>
 												</c:forEach>
+												<c:url var="mdetail" value="readtemp.mail">
+													<c:param name="mId" value="${ m.mailNo }" />
+													<c:param name="page" value="${ pi.currentPage }" />
+												</c:url>
 												<tr>
 													<td>
 														<div class="icheck-primary">
@@ -273,8 +282,8 @@ td {
 															<i class="fas fa-paperclip"></i>
 														</c:if></td>
 													<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
-													<td class="mailbox-subject">${m.etitle }</td>
-													<!-- 															<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td> -->
+													<td onclick="location.href='${mdetail}'"
+														style="cursor: pointer;" class="mailbox-subject">${m.etitle }</td>
 													<td class="mailbox-date">${m.sDate }</td>
 												</tr>
 											</c:forEach>
@@ -289,52 +298,56 @@ td {
 									<div class="pagination justify-content-center">
 										<div class="btn-group" style="border-radius: 0px;">
 											<c:if test="${pi.currentPage <= 1 }">
-												<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
-													<i class="fas fa-chevron-left" style="color:lightgrey"></i>
+												<button type="button" class="btn btn-default btn-sm"
+													style="border-radius: 0px;">
+													<i class="fas fa-chevron-left" style="color: lightgrey"></i>
 												</button>
 											</c:if>
 											<c:if test="${ pi.currentPage > 1 }">
 												<c:url var="before" value="templist.mail">
 													<c:param name="page" value="${ pi.currentPage - 1 }" />
 												</c:url>
-													<a href="${before }">
-												<button type="button" class="btn btn-default btn-sm "  style="border-radius: 0px;">
-													<i class="fas fa-chevron-left"></i>
-												</button>
-													</a>
+												<a href="${before }">
+													<button type="button" class="btn btn-default btn-sm "
+														style="border-radius: 0px;">
+														<i class="fas fa-chevron-left"></i>
+													</button>
+												</a>
 											</c:if>
-												<c:forEach var="p" begin="${ pi.startPage }"
-													end="${ pi.endPage }">
-													<c:if test="${ p eq pi.currentPage }">
-														<button type="button" class="btn btn-default btn-sm"style="border-radius: 0px;">
-															<b>${p }</b>
-														</button>
-													</c:if>
-													<c:if test="${ p ne pi.currentPage }">
-														<c:url var="pagination" value="templist.mail">
-															<c:param name="page" value="${ p }" />
-														</c:url>
-															<a href="${ pagination }"> 
-														<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
-														${p }
-														</button>
-														</a>
-													</c:if>
-												</c:forEach>
+											<c:forEach var="p" begin="${ pi.startPage }"
+												end="${ pi.endPage }">
+												<c:if test="${ p eq pi.currentPage }">
+													<button type="button" class="btn btn-default btn-sm"
+														style="border-radius: 0px;">
+														<b>${p }</b>
+													</button>
+												</c:if>
+												<c:if test="${ p ne pi.currentPage }">
+													<c:url var="pagination" value="templist.mail">
+														<c:param name="page" value="${ p }" />
+													</c:url>
+													<a href="${ pagination }">
+														<button type="button" class="btn btn-default btn-sm"
+															style="border-radius: 0px;">${p }</button>
+													</a>
+												</c:if>
+											</c:forEach>
 											<c:if test="${pi.currentPage >= pi.maxPage }">
-												<button type="button" class="btn btn-default btn-sm"  style="border-radius: 0px;">
-													<i class="fas fa-chevron-right" style="color:lightgrey"></i>
+												<button type="button" class="btn btn-default btn-sm"
+													style="border-radius: 0px;">
+													<i class="fas fa-chevron-right" style="color: lightgrey"></i>
 												</button>
 											</c:if>
 											<c:if test="${ pi.currentPage < pi.maxPage }">
 												<c:url var="before" value="templist.mail">
 													<c:param name="page" value="${ pi.currentPage + 1 }" />
 												</c:url>
-													<a href="${before }">
-												<button type="button" class="btn btn-default btn-sm"  style="border-radius: 0px;">
-													<i class="fas fa-chevron-right"></i>
-												</button>
-													</a>
+												<a href="${before }">
+													<button type="button" class="btn btn-default btn-sm"
+														style="border-radius: 0px;">
+														<i class="fas fa-chevron-right"></i>
+													</button>
+												</a>
 											</c:if>
 										</div>
 									</div>

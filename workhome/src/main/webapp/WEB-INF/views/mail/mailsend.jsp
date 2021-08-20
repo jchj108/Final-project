@@ -155,19 +155,19 @@
 									enctype="Multipart/form-data">
 									<div class="card-body">
 										<input type="hidden" value="${loginUser.empNo}"
-											name="senderMailId" />
-										<input type="hidden" value="${loginUser.empName}"
-											name=senderName />
+											name="senderMailId" /> <input type="hidden"
+											value="${loginUser.empName}" name=senderName />
 										<div class="mailsubtitle-flex-container">
 											<div class="mailsubtitle-left">
 												<b>받는 사람</b>
 											</div>
 											<div>
-												<button type="button" class="btn btn-sm btn-light"
-													id="chart">조직도</button>
+												<button type="button" class="btn btn-sm btn-primary"
+													style="background-color: #007BFF" id="chart">조직도</button>
 											</div>
 											<div class="form-group mailsubtitle-right">
-												<input class="form-control mail-subtitle" placeholder="받는 이"
+												<input type="email" id="email"
+													class="form-control mail-subtitle" placeholder="받는 이"
 													name="receiveEmp">
 											</div>
 										</div>
@@ -176,7 +176,8 @@
 												<b>제목</b>
 											</div>
 											<div class="form-group mailsubtitle-right">
-												<input class="form-control" placeholder="제목" name="etitle">
+												<input class="form-control" placeholder="제목" name="etitle"
+													id="title">
 											</div>
 										</div>
 										<div class="form-group">
@@ -190,26 +191,26 @@
 													multiple="multiple" id="uploadfileinput" type="file"
 													name="uploadFile"></i>
 											</div>
-											<p class="help-block">Max. 32MB</p>
-											<table></table>
 										</div>
-									</div>
-									<!-- /.card-body -->
-									<div class="card-footer">
-										<div class="float-right">
-											<button type="submit" id="tmpInsert-btn"
-												class="btn btn-default">
-												<i class="fas fa-pencil-alt"></i> 임시 저장
-											</button>
-											<button type="submit" class="btn btn-primary">
-												<i class="far fa-envelope"></i> 보내기
-											</button>
-										</div>
-										<button type="reset" class="btn btn-default">
-											<i class="fas fa-times"></i> 취소
-										</button>
+										<!-- 										<p class="help-block">Max. 32MB</p> -->
 									</div>
 								</form>
+								<!-- /.card-body -->
+								<div class="card-footer">
+									<div class="float-right">
+										<button type="button" id="tmpInsert-btn"
+											class="btn btn-default">
+											<i class="fas fa-pencil-alt"></i> 임시 저장
+										</button>
+										<button type="button" id="sendMail-btn"
+											class="btn btn-primary">
+											<i class="far fa-envelope"></i> 보내기
+										</button>
+									</div>
+									<button type="reset" class="btn btn-default">
+										<i class="fas fa-times"></i> 취소
+									</button>
+								</div>
 								<!-- /.card-footer -->
 							</div>
 							<!-- /.card -->
@@ -260,7 +261,7 @@
 			//Add text editor
 			$('#compose-textarea').summernote({
 				lang : "ko-KR",
-				height : 600,
+				height : 550,
 			});
 		});
 
@@ -268,6 +269,37 @@
 			$('#form-mailsend').attr("action", "tmpInsert.mail").submit();
 		});
 
+		$('#sendMail-btn').on("click", function() {
+			if (validate() != false) {
+				$('#form-mailsend').attr("action", "mailInsert.mail").submit();
+			}
+		});
+
+		function validate() {
+			var email = document.getElementById('email').value;
+			var title = document.getElementById('title').value;
+			var content = document.getElementById('compose-textarea').value;
+
+			var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+			if (email == '' || email.length == 0) {
+				alert('이메일을 입력해주세요.');
+				document.getElementById('email').focus();
+				return false;
+			} else if (title == '' || title.length == 0) {
+				alert('제목을 입력해주세요.');
+				document.getElementById('title').focus();
+				return false;
+			} else if (content == '' || content.length == 0) {
+				alert('내용을 입력해주세요.')
+				document.getElementById('compose-textarea').focus();
+				return false;
+			} else if (!regExp.test(email)) {
+				alert('올바른 이메일 주소를 입력해주세요.')
+				document.getElementById('email').focus();
+				return false;
+			}
+		}
 	</script>
 </body>
 </html>
