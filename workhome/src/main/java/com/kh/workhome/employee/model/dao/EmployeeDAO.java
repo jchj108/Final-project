@@ -39,4 +39,26 @@ public class EmployeeDAO {
 	public ArrayList<Employee> getEmployee(SqlSessionTemplate sqlSession, String deptNo) {
 		return (ArrayList)sqlSession.selectList("employeeMapper.getEmployee", deptNo);
 	}
+
+	public int insertAlert(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		ArrayList<String> emps = (ArrayList)map.get("empNo");
+		int result = 0;
+		for(int i = 0 ; i < emps.size() ; i++) {
+			map.put("empNo", emps.get(i));
+			result += sqlSession.insert("employeeMapper.insertAlert", map);
+		}
+		return result;
+	}
+	
+	public ArrayList<HashMap<String, Object>> selectAlertList(SqlSessionTemplate sqlSession, String empNo) {
+		return (ArrayList) sqlSession.selectList("employeeMapper.selectAlertList", empNo);
+	}
+
+	public int deleteAlert(SqlSessionTemplate sqlSession, String alertNo) {
+		return sqlSession.update("employeeMapper.deleteAlert", alertNo);
+	}
+
+	public int deletAllAlerts(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("employeeMapper.deletAllAlerts",map);
+	}
 }

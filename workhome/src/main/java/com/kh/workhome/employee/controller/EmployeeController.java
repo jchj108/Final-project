@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -222,8 +223,9 @@ public class EmployeeController {
 		}
 	}
 	
+	// 부서별 사원 목록 
 	@RequestMapping("getEmployee.emp")
-	public void selectEmp(HttpServletResponse response, @RequestParam("deptNo") String deptNo) throws IOException {
+	public void getEmployee(HttpServletResponse response, @RequestParam("deptNo") String deptNo) throws IOException {
 		ArrayList<Employee> eList = eService.getEmployee(deptNo);
 		for (Employee e : eList) {
 			e.setEmpName(URLEncoder.encode(e.getEmpName(), "utf-8"));
@@ -232,5 +234,48 @@ public class EmployeeController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		response.setContentType("application/json; charset=UTF-8");
 		gson.toJson(eList, response.getWriter());
+	}
+	
+	// 알림 불러오기
+	@RequestMapping(value="selectAlertList.emp")
+	public void selectAlertList(HttpSession session, HttpServletResponse response) throws IOException {
+		String empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<HashMap<String,Object>> list = eService.selectAlertList(empNo);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	    gson.toJson(list, response.getWriter());
+	}
+	
+	//알림 하나 삭제 
+	@RequestMapping("deleteAlert.emp")
+	@ResponseBody
+	public String deleteAlert(@RequestParam("alertNo") String alertNo) {
+		int result = eService.deleteAlert(alertNo);
+		
+		if(result>0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	//알림 전체삭제
+	@RequestMapping("deletAllAlerts.emp")
+	@ResponseBody
+	public String deletAllAlerts(@RequestParam("empNo")String empNo, @RequestParam("aType")String aType) {
+		System.out.println("empNo: " + empNo);
+		System.out.println("aType: " + aType);
+		
+		HashMap<String,String> map = new HashMap<>();
+		map.put("empNo", empNo);
+		map.put("aType", aType);
+		int result = eService.deletAllAlerts(map);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 }
