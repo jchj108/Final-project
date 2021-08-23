@@ -49,8 +49,33 @@ public class MailController {
 		return "mailread";
 	}
 
-	@RequestMapping("readtemp.mail")
+	@RequestMapping("readmail.mail")
 	public ModelAndView selectMail(@RequestParam("mId") int id, @RequestParam("page") int page, ModelAndView mv) {
+		Mail m = mService.selectMail(id);
+		System.out.println(m);
+		
+		String mId = getMId(m.getReceiveEmp());
+		Employee e = mService.getMId(mId); // 받는 사람 이름 구하는 메소드
+
+		System.out.println(e);
+		
+		
+		if (m != null) {
+			if(e != null) {
+				m.setReceiverName(e.getEmpName());
+				System.out.println(m);
+			}
+			mv.addObject("mail", m);
+			mv.addObject("page", page);
+			mv.setViewName("mailread");
+		} else {
+			throw new MailException("메일 상세보기에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	@RequestMapping("readtemp.mail")
+	public ModelAndView selectTempMail(@RequestParam("mId") int id, @RequestParam("page") int page, ModelAndView mv) {
 		Mail m = mService.selectTempMail(id);
 		System.out.println(m);
 
@@ -64,6 +89,31 @@ public class MailController {
 		return mv;
 	}
 
+	@RequestMapping("sendlist.mail")
+	public ModelAndView sendList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
+			HttpServletRequest request) {
+
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		int boardLimit = 15;
+		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
+		int listCount = mService.getsendListCount(empNo);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		ArrayList<Mail> list = mService.selectSendList(pi, empNo);
+		
+		if(list != null) {
+			mv.addObject("sendList", list).addObject("pi", pi);
+			mv.setViewName("sendmaillist");
+		} else {
+			throw new MailException("보낸메일함 조회에 실패했습니다.");
+		}
+		
+		return mv;
+	}
+
 	@RequestMapping("receivelist.mail")
 	public ModelAndView receivemaillist(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
 			HttpServletRequest request) {
@@ -72,12 +122,12 @@ public class MailController {
 
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("empNo", empNo);
-		
+
 		String email = empNo += "@workhome.com";
-		
+
 		map.put("empNo", empNo);
 		map.put("email", email);
-		
+
 		if (empNo == null) {
 			throw new MailException("로그인이 필요합니다.");
 		}
@@ -167,7 +217,7 @@ public class MailController {
 				MailFile mailfile = new MailFile(mf.getOriginalFilename(), mChangeName, filePath);
 
 				mailFileList.add(mailfile);
-				
+
 				System.out.println(mailfile);
 			}
 			int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
@@ -179,7 +229,7 @@ public class MailController {
 
 		return "redirect:templist.mail";
 	}
-	
+
 	@RequestMapping(value = "mailInsert.mail")
 	public String mailInsert(@ModelAttribute Mail m, MultipartHttpServletRequest mtpRequest) throws MailException {
 		String root = mtpRequest.getSession().getServletContext().getRealPath("resources");
@@ -187,39 +237,58 @@ public class MailController {
 		List<MultipartFile> fileList = mtpRequest.getFiles("uploadFile");
 		MultipartFile uploadFile = mtpRequest.getFile("uploadFile");
 		List<MailFile> mailFileList = new ArrayList<MailFile>();
-		
+
+		if (isType(m)) {
+			m.setEtype("Y"); // 사내메일
+		} else {
+			m.setEtype("N"); // 외부메일
+		}
+
 		Employee e = (Employee) mtpRequest.getSession().getAttribute("loginUser");
 		String empNo = e.getEmpNo();
-		
+
 		m.setEmpNo(empNo);
-		
+
 		System.out.println(m);
 		int result1 = mService.insertMail(m);
-		
+
 		if (result1 <= 0) { // 메일 등록 취소 시 예외처리
 			throw new MailException("메일 저장에 실패했습니다.");
 		}
-		
+
 		if (!uploadFile.isEmpty()) { // 받아온 파일이 있을 때만 MAIL과 MAIL_FILE CURRVAL로 연결
 			System.out.println("업로드된 파일 수 : " + fileList.size());
 			for (MultipartFile mf : fileList) {
 				String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 				long fileSize = mf.getSize(); // 파일 사이즈
-				
+
 				String mChangeName = saveFile(mtpRequest, mf);
-				
+
 				MailFile mailfile = new MailFile(mf.getOriginalFilename(), mChangeName, filePath);
-				
+
 				mailFileList.add(mailfile);
 			}
 			int result2 = mService.insertMailFile(mailFileList); // 파일 삽입 결과 리턴
-			
+
 			if (result2 <= 0) {
 				throw new MailException("파일 저장에 실패했습니다.");
 			}
 		}
-		
-		return "redirect:templist.mail";
+
+		return "redirect:sendlist.mail";
+	}
+
+	private boolean isType(Mail m) {
+		String id = m.getReceiveEmp();
+		int index = id.lastIndexOf('@');
+
+		System.out.println(id.substring(index + 1));
+
+		if (id.substring(index + 1).equals("workhome.com")) {
+			return true; // true일 경우 사내메일
+		} else {
+			return false; // 외부메일
+		}
 	}
 
 	@RequestMapping(value = "tmpUpdate.mail")
@@ -325,5 +394,9 @@ public class MailController {
 		if (f.exists()) { // buploadFiles에 renameFileName이 존재하면 지우기
 			f.delete();
 		}
+	}
+	
+	private String getMId(String email) {
+		return email.substring(0, email.lastIndexOf('@'));
 	}
 }

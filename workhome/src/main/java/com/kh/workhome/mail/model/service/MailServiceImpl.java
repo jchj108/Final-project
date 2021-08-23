@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.workhome.common.PageInfo;
+import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.mail.model.dao.MailDAO;
 import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
@@ -76,5 +77,25 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> selectReceiveList(PageInfo pi, Map<String, String> map) {
 		return null;
+	}
+
+	@Override
+	public int getsendListCount(String empNo) {
+		return mDAO.getSendListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSendList(PageInfo pi, String empNo) {
+		return mDAO.selectSendList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public Mail selectMail(int id) {
+		return mDAO.selectMail(sqlSession, id);
+	}
+
+	@Override
+	public Employee getMId(String mId) {
+		return mDAO.getMId(sqlSession, mId);
 	}
 }

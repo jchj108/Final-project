@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.workhome.common.PageInfo;
+import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
 
@@ -32,4 +33,11 @@ public interface MailService {
 
 	ArrayList<Mail> selectReceiveList(PageInfo pi, Map<String, String> map);
 
+	int getsendListCount(String empNo);
+
+	ArrayList<Mail> selectSendList(PageInfo pi, String empNo);
+
+	Mail selectMail(int id);
+
+	Employee getMId(String mId);
 }

@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.workhome.common.PageInfo;
+import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
 
@@ -64,5 +65,24 @@ public class MailDAO {
 
 	public int insertTempMail(SqlSessionTemplate sqlSession, Mail m) {
 		return sqlSession.insert("mailMapper.insertTempMail", m);
+	}
+
+	public int getSendListCount(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.getSendListCount", empNo);
+	}
+
+	public ArrayList<Mail> selectSendList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage()-1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSendList", empNo, rowBounds);
+	}
+
+	public Mail selectMail(SqlSessionTemplate sqlSession, int id) {
+		return sqlSession.selectOne("mailMapper.selectMail", id);
+	}
+
+	public Employee getMId(SqlSessionTemplate sqlSession, String mId) {
+		return sqlSession.selectOne("mailMapper.getMId", mId);
 	}
 }

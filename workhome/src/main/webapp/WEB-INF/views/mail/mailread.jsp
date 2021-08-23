@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,7 +16,15 @@
 <link rel="stylesheet"
 	href="${contextPath}/resources/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="${contextPath}/resources/dist/css/adminlte.min.css">
+<link rel="stylesheet"
+	href="${contextPath}/resources/dist/css/adminlte.min.css">
+
+<style>
+.mailbox-read-message {
+	min-height: 200px;
+}
+</style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -47,7 +57,8 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">메일함으로 돌아가기</a>
+							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">메일함으로
+								돌아가기</a>
 
 							<div class="card">
 								<div class="card-header">
@@ -114,7 +125,7 @@
 						<div class="col-md-9">
 							<div class="card card-primary card-outline">
 								<div class="card-header">
-									<h3 class="card-title">Read Mail</h3>
+									<h3 class="card-title">${mail.etitle }</h3>
 
 									<div class="card-tools">
 										<a href="#" class="btn btn-tool" title="Previous"><i
@@ -126,12 +137,15 @@
 								<!-- /.card-header -->
 								<div class="card-body p-0">
 									<div class="mailbox-read-info">
-										<h5>Message Subject Is Placed Here</h5>
 										<h6>
-											From: support@adminlte.io <span
-												class="mailbox-read-time float-right">15 Feb. 2015
-												11:03 PM</span>
-										</h6>
+											보낸 사람 : &lt;${mail.senderName }&gt; ${mail.empNo }@workhome.com
+											</h5>
+											<h6>
+											받는 사람 : 
+											<c:if test="${mail.receiverName != null }">&lt;${mail.receiverName }&gt;</c:if> 
+											${mail.receiveEmp} <span
+													class="mailbox-read-time float-right">${mail.sDate }</span>
+											</h6>
 									</div>
 									<!-- /.mailbox-read-info -->
 									<div class="mailbox-controls with-border text-center">
@@ -156,60 +170,30 @@
 										</button>
 									</div>
 									<!-- /.mailbox-controls -->
-									<div class="mailbox-read-message">
-										
-									</div>
+									<div class="mailbox-read-message">${mail.econtent }</div>
 									<!-- /.mailbox-read-message -->
 								</div>
 								<!-- /.card-body -->
 								<div class="card-footer bg-white">
 									<ul
 										class="mailbox-attachments d-flex align-items-stretch clearfix">
-										<li><span class="mailbox-attachment-icon"><i
-												class="far fa-file-pdf"></i></span>
+										<c:forEach var="mF" items="${mail.mailFileList }">
+											<c:if test="${mF.mFileNo != 0}">
+											<li><span class="mailbox-attachment-icon"><i
+													class="far fa-file-pdf"></i></span>
 
-											<div class="mailbox-attachment-info">
-												<a href="#" class="mailbox-attachment-name"><i
-													class="fas fa-paperclip"></i> Sep2014-report.pdf</a> <span
-													class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-														KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-														class="fas fa-cloud-download-alt"></i></a>
-												</span>
-											</div></li>
-										<li><span class="mailbox-attachment-icon"><i
-												class="far fa-file-word"></i></span>
-
-											<div class="mailbox-attachment-info">
-												<a href="#" class="mailbox-attachment-name"><i
-													class="fas fa-paperclip"></i> App Description.docx</a> <span
-													class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-														KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-														class="fas fa-cloud-download-alt"></i></a>
-												</span>
-											</div></li>
-										<li><span class="mailbox-attachment-icon has-img"><img
-												src="../../dist/img/photo1.png" alt="Attachment"></span>
-
-											<div class="mailbox-attachment-info">
-												<a href="#" class="mailbox-attachment-name"><i
-													class="fas fa-camera"></i> photo1.png</a> <span
-													class="mailbox-attachment-size clearfix mt-1"> <span>2.67
-														MB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-														class="fas fa-cloud-download-alt"></i></a>
-												</span>
-											</div></li>
-										<li><span class="mailbox-attachment-icon has-img"><img
-												src="../../dist/img/photo2.png" alt="Attachment"></span>
-
-											<div class="mailbox-attachment-info">
-												<a href="#" class="mailbox-attachment-name"><i
-													class="fas fa-camera"></i> photo2.png</a> <span
-													class="mailbox-attachment-size clearfix mt-1"> <span>1.9
-														MB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-														class="fas fa-cloud-download-alt"></i></a>
-												</span>
-											</div></li>
+												<div class="mailbox-attachment-info">
+													<a href="#" class="mailbox-attachment-name"><i
+														class="fas fa-paperclip"></i> ${mF.mOriginalName }</a> <span
+														class="mailbox-attachment-size clearfix mt-1"> <span>1,245
+															KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
+															class="fas fa-cloud-download-alt"></i></a>
+													</span>
+												</div></li>
+											</c:if>
+										</c:forEach>
 									</ul>
+
 								</div>
 								<!-- /.card-footer -->
 								<div class="card-footer">
@@ -260,7 +244,8 @@
 	<!-- jQuery -->
 	<script src="${contextPath}/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="${contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
