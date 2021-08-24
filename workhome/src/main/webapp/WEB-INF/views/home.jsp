@@ -102,7 +102,6 @@
 										style="color: white; display: none;"> 퇴근하기 </a>
 								</div>
 							</div>
-						</div>
 
 							<div class="card shadow mb-4">
 								<div class="card-body">
