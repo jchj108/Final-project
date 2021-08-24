@@ -186,7 +186,7 @@ public class NoticeController {
 	@RequestMapping("topList.no")
 	public void selectTopList(HttpServletResponse response) {
 		ArrayList<Notice> list = nService.selectTopList();
-		System.out.println(list);
+//		System.out.println(list);
 		
 		Gson gson = new GsonBuilder().create();
 		response.setContentType("application/json; charset=UTF-8");

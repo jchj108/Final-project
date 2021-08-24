@@ -68,11 +68,11 @@
 		 <if test="aType == 'ap'">
          SEQ_APNO.currval
          </if>
-	     )
+	)
 	</insert>
 	
 	<select id="selectAlertList" resultType="map">
-		select * from ALERT where EMPNO = #{empNo} and ASTATUS ='Y' order by createdate desc
+		select * from ALERT where EMPNO = #{empNo} and ASTATUS ='Y'
 	</select>
 	
 	<update id="deleteAlert">

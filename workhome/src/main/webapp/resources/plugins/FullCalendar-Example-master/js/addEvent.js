@@ -81,10 +81,12 @@ var newEvent = function (start, end, eventType) {
 
         //새로운 일정 저장
         $.ajax({
-            type: "get",
-            url: "",
+            
+            url: "meInsert.meet",
+            dataType: "json",
             data: {
-                //.....
+            	startDate: moment(start).format('YYYY-MM-DD')
+            	, endDate: moment(end).format('YYYY-MM-DD')
             },
             success: function (response) {
                 //DB연동시 중복이벤트 방지를 위한
