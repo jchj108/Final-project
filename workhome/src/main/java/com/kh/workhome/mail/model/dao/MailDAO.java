@@ -59,8 +59,8 @@ public class MailDAO {
 		return sqlSession.selectOne("mailMapper.selectMailFile", mFileNo);
 	}
 
-	public int getReceiveListCount(SqlSessionTemplate sqlSession, Map<String, String> map) {
-		return sqlSession.selectOne("mailMapper.getReceiveListCount", map);
+	public int getReceiveListCount(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("mailMapper.getReceiveListCount", email);
 	}
 
 	public int insertTempMail(SqlSessionTemplate sqlSession, Mail m) {
@@ -84,5 +84,9 @@ public class MailDAO {
 
 	public Employee getMId(SqlSessionTemplate sqlSession, String mId) {
 		return sqlSession.selectOne("mailMapper.getMId", mId);
+	}
+
+	public ArrayList<Mail> selectReceiveList(SqlSessionTemplate sqlSession, PageInfo pi, String email) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", email);
 	}
 }

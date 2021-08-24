@@ -27,11 +27,7 @@ public interface MailService {
 
 	MailFile selectMailFile(int mFileNo);
 
-	int getReceiveListCount(Map<String, String> map);
-
 	int insertTempMail(Mail m);
-
-	ArrayList<Mail> selectReceiveList(PageInfo pi, Map<String, String> map);
 
 	int getsendListCount(String empNo);
 
@@ -40,4 +36,8 @@ public interface MailService {
 	Mail selectMail(int id);
 
 	Employee getMId(String mId);
+
+	int getReceiveListCount(String email);
+
+	ArrayList<Mail> selectReceiveList(PageInfo pi, String email);
 }

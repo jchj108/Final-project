@@ -227,10 +227,10 @@ public class EmployeeController {
 	@RequestMapping("getEmployee.emp")
 	public void getEmployee(HttpServletResponse response, @RequestParam("deptNo") String deptNo) throws IOException {
 		ArrayList<Employee> eList = eService.getEmployee(deptNo);
-		for (Employee e : eList) {
-			e.setEmpName(URLEncoder.encode(e.getEmpName(), "utf-8"));
-			e.setDeptName(URLEncoder.encode(e.getDeptName(), "utf-8"));
-		}
+//		for (Employee e : eList) {
+//			e.setEmpName(URLEncoder.encode(e.getEmpName(), "utf-8"));
+//			e.setDeptName(URLEncoder.encode(e.getDeptName(), "utf-8"));
+//		}
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		response.setContentType("application/json; charset=UTF-8");
 		gson.toJson(eList, response.getWriter());
@@ -242,7 +242,7 @@ public class EmployeeController {
 		String empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
 		ArrayList<HashMap<String,Object>> list = eService.selectAlertList(empNo);
-		
+		System.out.println(list);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 	    gson.toJson(list, response.getWriter());

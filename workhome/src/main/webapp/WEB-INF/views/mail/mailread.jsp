@@ -23,6 +23,79 @@
 .mailbox-read-message {
 	min-height: 200px;
 }
+
+
+.mail-icon {
+	width: 20px;
+}
+
+.thispage, .thispage b {
+	color: #007bff;
+}
+
+.table td, .table th {
+	padding: .25rem;
+	vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.table-hover tbody tr:hover {
+	background-color: rgba(0, 0, 0, .075)
+}
+
+.table td:nth-child(1) {
+	width: 4%;
+}
+
+.table td:nth-child(2) {
+	width: 10%;
+}
+
+.table td:nth-child(3) {
+	width: 20%;
+}
+
+.table td:nth-child(4) {
+	width: 50%;
+}
+
+.table td:nth-child(5) {
+	text-align: right;
+}
+
+.table td:nth-child(6) {
+	width: 12%;
+	text-align: right;
+}
+
+.fa-star {
+	margin-right: 8px;
+}
+
+.fa-paperclip {
+	margin-left: 10px;
+}
+
+.mailbox-name a {
+	margin-left: 20px;
+	text-decoration: none;
+}
+
+td {
+	height: 35px;
+}
+
+.pagination {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.table-hover tbody tr:hover {
+	
+}
 </style>
 
 </head>
@@ -73,22 +146,27 @@
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item active"><a href="#" class="nav-link">
-												<i class="fas fa-inbox"></i> 받은메일함 <span
-												class="badge bg-primary float-right">12</span>
+										<li class="nav-item"><a href="#" class="nav-link"> <i
+												class="fas fa-envelope mail-icon"></i> 전체메일
+										</a></li>
+										<li class="nav-item active"><a
+											href="${contextPath }/receivelist.mail" class="nav-link">
+												<i class="far fa-envelope-open mail-icon"></i> 받은메일함
+												<span class="badge bg-primary float-right">12</span>
+										</a></li>
+										<li class="nav-item"><a
+											href="${contextPath }/sendlist.mail" class="nav-link"> <i
+												class="far fa-paper-plane mail-icon"></i> 보낸메일함
+										</a></li>
+										<li class="nav-item"><a
+											href="${contextPath}/templist.mail" class="nav-link"><i
+												class="far fa-file-alt mail-icon"></i> 임시보관함 </a></li>
+										<li class="nav-item"><a href="#" class="nav-link"> <i
+												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
+												class="badge bg-warning float-right mail-icon">65</span>
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-envelope"></i> 보낸메일함
-										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-file-alt"></i> 임시보관함
-										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="fas fa-filter"></i> 스팸메일함 <span
-												class="badge bg-warning float-right">65</span>
-										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-trash-alt"></i> 휴지통
+												class="far fa-trash-alt mail-icon"></i> 휴지통
 										</a></li>
 									</ul>
 								</div>
@@ -141,9 +219,9 @@
 											보낸 사람 : &lt;${mail.senderName }&gt; ${mail.empNo }@workhome.com
 											</h5>
 											<h6>
-											받는 사람 : 
-											<c:if test="${mail.receiverName != null }">&lt;${mail.receiverName }&gt;</c:if> 
-											${mail.receiveEmp} <span
+												받는 사람 :
+												<c:if test="${mail.receiverName != null }">&lt;${mail.receiverName }&gt;</c:if>
+												${mail.receiveEmp} <span
 													class="mailbox-read-time float-right">${mail.sDate }</span>
 											</h6>
 									</div>
@@ -179,17 +257,18 @@
 										class="mailbox-attachments d-flex align-items-stretch clearfix">
 										<c:forEach var="mF" items="${mail.mailFileList }">
 											<c:if test="${mF.mFileNo != 0}">
-											<li><span class="mailbox-attachment-icon"><i
-													class="far fa-file-pdf"></i></span>
+												<li><span class="mailbox-attachment-icon"><i
+														class="far fa-file-pdf"></i></span>
 
-												<div class="mailbox-attachment-info">
-													<a href="#" class="mailbox-attachment-name"><i
-														class="fas fa-paperclip"></i> ${mF.mOriginalName }</a> <span
-														class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-															KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-															class="fas fa-cloud-download-alt"></i></a>
-													</span>
-												</div></li>
+													<div class="mailbox-attachment-info">
+														<a href="#" class="mailbox-attachment-name"><i
+															class="fas fa-paperclip"></i> ${mF.mOriginalName }</a> <span
+															class="mailbox-attachment-size clearfix mt-1"> <span>1,245
+																KB</span> <a href="#"
+															class="btn btn-default btn-sm float-right"><i
+																class="fas fa-cloud-download-alt"></i></a>
+														</span>
+													</div></li>
 											</c:if>
 										</c:forEach>
 									</ul>

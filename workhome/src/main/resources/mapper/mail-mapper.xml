@@ -22,7 +22,7 @@
 	<select id="getReceiveListCount" resultType="_int">
 		select count(*)
 		from mail
-		where estatus='Y' and empno = #{empNo} and receiveemp = #{email}
+		where estatus='Y' and receiveemp = #{email}
 	</select>
 	
 	
@@ -97,8 +97,7 @@
 		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		    where estatus='Y'
-		    and employee.empNo = #{empNo}
-		    and mail.receiveEmp = #{receiveEmp}
+		    and mail.receiveEmp = #{email}
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
