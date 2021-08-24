@@ -88,22 +88,21 @@
 								퇴근 : ${map.GOHOME}
 								</c:if>
 										</p>
-										<p id="resultArea"></p>
+<!-- 										<p id="resultArea"></p> -->
 									</div>
 									<c:if test="${empty map.ATTEND}">
 										<a id="commute" class="btn btn-primary btn-user btn-block"
-											style="color: white;"> 출근하기! </a>
+											style="color: white;"> 출근하기 </a>
 									</c:if>
 									<c:if test="${!empty map.ATTEND &&  empty map.GOHOME}">
-										<a id="end" class="btn btn-success btn-user btn-block goHome"
+										<a id="off" class="btn btn-success btn-user btn-block goHome"
 											style="color: white;"> 퇴근하기 </a>
 									</c:if>
-									<a class="btn btn-success btn-user btn-block goHome"
+									<a id="off" class="btn btn-success btn-user btn-block goHome"
 										style="color: white; display: none;"> 퇴근하기 </a>
 								</div>
-
-
 							</div>
+						</div>
 
 							<div class="card shadow mb-4">
 								<div class="card-body">
@@ -232,6 +231,42 @@
 				}
 			}
 		});
+	});
+// 	$(document).on('click','.goHome',function(){
+// 		var result ="";
+// 		var check = false;
+		
+// 		if (check){
+// 			$.ajax({
+// 				url:"goHome.do",
+// 				dataType:"json",
+// 				success:function(data){
+// 					if(data.result=="fail"){
+// 						alert("퇴근등록에 실패했습니다.");
+// 					}else{
+// 						$(".goHome").fadeOut(1000);
+// 						$(".zipgalle").text("퇴근 : "+data.map.GOHOME);
+// 						clock.stop();
+// 					}
+// 				}
+// 			});
+// 		}
+// 	});
+
+	$(document).on('click','#off',function(){
+// 		alert("off클릭");
+		$.ajax({
+			url:"goHome.do",
+			success:function(data){
+				console.log(data);
+				if(data == "fail"){
+					alert("퇴근 실패!!")
+				} else {
+					$('#off').fadeout(1000);
+					$('.zipgalle').text("퇴근 : "+data.map.GOHOME);
+				}
+			}
+		})
 	});
 </script>
 

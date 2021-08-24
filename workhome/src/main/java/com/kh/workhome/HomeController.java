@@ -50,6 +50,8 @@ public class HomeController {
 //		model.addAttribute("serverTime", formattedDate );
 		
 //		return "home";
+		
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 		String strDate = dateFormat.format(Calendar.getInstance().getTime());
 		String[] temp = strDate.split(" ");
@@ -70,7 +72,7 @@ public class HomeController {
 	}
 	
 	//출근
-	@RequestMapping(value = "workstart.do")
+	@RequestMapping(value="workstart.do")
 	@ResponseBody
 	public String chulgun(HttpSession session) {
 		Employee loginUser = (Employee) session.getAttribute("loginUser");
@@ -91,4 +93,24 @@ public class HomeController {
 		}
 	}
 	
-}
+	//퇴근
+		@RequestMapping("goHome.do")
+		public String goHome(HttpSession session) {
+			Employee loginUser = (Employee) session.getAttribute("loginUser");
+			String EmpNo = loginUser.getEmpNo();
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+			String strDate = dateFormat.format(Calendar.getInstance().getTime());
+			
+			HashMap<String,String> map = new HashMap<>();
+			map.put("empNo", EmpNo);
+			map.put("Date", strDate);
+			int result = atService.goHome(map);
+		
+			if(result>0) {
+				return "Date";
+			}else {
+				return "fail";
+			}
+		}
+	}

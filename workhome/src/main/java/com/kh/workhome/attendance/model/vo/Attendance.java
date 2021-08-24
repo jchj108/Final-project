@@ -6,17 +6,19 @@ public class Attendance {
 	private Date aDate;
 	private String empNo;
 	private Date attend;
-	private Date leave;
+	private Date goHome;
 	
 	public Attendance() {}
 
-	public Attendance(Date aDate, String empNo, Date attend, Date leave) {
+	public Attendance(Date aDate, String empNo, Date attend, Date goHome) {
 		super();
 		this.aDate = aDate;
 		this.empNo = empNo;
 		this.attend = attend;
-		this.leave = leave;
+		this.goHome = goHome;
 	}
+
+
 
 	public Date getaDate() {
 		return aDate;
@@ -42,17 +44,19 @@ public class Attendance {
 		this.attend = attend;
 	}
 
-	public Date getLeave() {
-		return leave;
+	public Date getGoHome() {
+		return goHome;
 	}
 
-	public void setLeave(Date leave) {
-		this.leave = leave;
+	public void setGoHome(Date goHome) {
+		this.goHome = goHome;
 	}
 
 	@Override
 	public String toString() {
-		return "Attandance [aDate=" + aDate + ", empNo=" + empNo + ", attend=" + attend + ", leave=" + leave + "]";
+		return "Attendance [aDate=" + aDate + ", empNo=" + empNo + ", attend=" + attend + ", goHome=" + goHome + "]";
 	}
+
+	
 	
 }
