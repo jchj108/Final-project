@@ -1,12 +1,13 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard 3</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
@@ -16,16 +17,12 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="resources/dist/css/adminlte.min.css">
   
+ <style>
+  caption {
+	caption-side: top;
+	}
+ </style>
 </head>
-<!--
-`body` tag options:
-
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- header -->
@@ -58,7 +55,7 @@
 				                  <i class="fas fa fa-file-text-o fa-sm fa-fw mr-2 text-gray-400 fa-fw"></i>기안하기
 				                </a>
 				                <div class="dropdown-divider"></div>
-				                <a class="dropdown-item" href="apporvalinsertView.ap?tag=T">
+				                <a class="dropdown-item" href="apporvalInsertView.ap?tag=T">
 				                  <i class="fas fa fa-user-o fa-sm fa-fw mr-2 text-gray-400 fa-fw"></i>근태신청
 				                </a>
 				              </div>
@@ -109,7 +106,7 @@
 								<div class="col-lg-8">
 									<table class="table table-bordered"  style="text-align: center;">
 										<tr>
-											<th colspan="4">개인 문서함</th>
+											<th colspan="2">개인 문서함</th>
 										</tr>
 										<tr>
 											<th>상신 문서</th>
@@ -118,25 +115,20 @@
 												<input type="hidden" class="map" value="${map['m']}">
 												${fn:length(mlist)}  건
 											</td>
-											<th>시행 문서</th>
-											<td class="aplist">
-												<input type="hidden" class="tag" value="s">
-												<input type="hidden" class="map" value="${map['s']}">
-												${fn:length(slist)} 건
-											</td>
-										</tr>
-										<tr>
-											<th>결재 완료 문서</th>
-											<td class="aplist">
-												<input type="hidden" class="tag" value="mf">
-												<input type="hidden" class="map" value="${map['mf']}">
-												${fn:length(mflist)}  건
-											</td>
+										<tr>	
 											<th>참조문서</th>
 											<td class="aplist">
 												<input type="hidden" class="tag" value="c">
 												<input type="hidden" class="map" value="${map['c']}">
 												${fn:length(clist)} 건
+											</td>
+										</tr>
+										<tr>	
+											<th>결재 완료 문서</th>
+											<td class="aplist">
+												<input type="hidden" class="tag" value="mf">
+												<input type="hidden" class="map" value="${map['mf']}">
+												${fn:length(mflist)}  건
 											</td>
 										</tr>
 										<tr>
@@ -146,8 +138,14 @@
 												<input type="hidden" class="map" value="${map['mr']}">
 												${fn:length(mrlist)} 건
 											</td>
-											<th></th>
-											<td></td>
+										</tr>
+										<tr>
+<!-- 											<th>시행 문서</th> -->
+<!-- 											<td class="aplist"> -->
+<!-- 												<input type="hidden" class="tag" value="s"> -->
+<%-- 												<input type="hidden" class="map" value="${map['s']}"> --%>
+<%-- 												${fn:length(slist)} 건 --%>
+<!-- 											</td> -->
 										</tr>
 									</table>
 									<script type="text/javascript">
@@ -156,7 +154,7 @@
 											var tag = $(this).find('.tag').val();
 											var map = $(this).find('.map').val();
 											$.ajax({
-												url:"aplist.do",
+												url:"aplist.ap",
 												data:{map:map},
 												dataType:"json",
 												success:function(data){
@@ -273,7 +271,7 @@
 										$(document).on('click',".detailView",function(){
 											var apNo = $(this).find(".apNo").val();
 											var tag = $(this).find(".tag").val();
-											location.href="apDetail.do?apNo="+apNo+"&tag="+tag;										
+											location.href="apDetail.ap?apNo="+apNo+"&tag="+tag;										
 										});
 									</script>
 								</div>
@@ -316,7 +314,7 @@
 														<td>근태결재</td>
 													</c:if>
 													<td>
-														<c:url var="apDetail" value="apDetail.do">
+														<c:url var="apDetail" value="apDetail.ap">
 															<c:param name="apNo" value="${ap.apNo}"/>
 															<c:param name="tag" value="g"/>
 														</c:url>
@@ -379,7 +377,7 @@
 														<td>근태결재</td>
 													</c:if>
 													<td>
-														<c:url var="apDetail" value="apDetail.do">
+														<c:url var="apDetail" value="apDetail.ap">
 															<c:param name="apNo" value="${ap.apNo}"/>
 															<c:param name="tag" value="c"/>
 														</c:url>
@@ -411,68 +409,68 @@
 								</table>
 							</div>
 
-							<!-- 시행문서  -->
-							<div class="table-responsive">
-								<table class="table table-bordered" style="text-align: center;">
-									<caption>● 시행문서함</caption>
-									<thead>
-										<tr>
-											<th>품의 번호</th>
-											<th>문서 분류</th>
-											<th>제목</th>
-											<th>기안자</th>
-											<th>기안일</th>
-											<th>상태</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:if test="${empty slist}">
-											<tr>
-												<td colspan="6">데이터가 없습니다.</td>
-											</tr>
-										</c:if>
-										<c:if test="${!empty slist}">
-											<c:forEach var="ap" items="${slist}">
-												<tr>
-													<td>${ap.apNo}</td>
-													<c:if test="${empty ap.a_v_first}">
-														<td>일반결재</td>
-													</c:if>
-													<c:if test="${!empty ap.a_v_first}">
-														<td>근태결재</td>
-													</c:if>
-													<td>
-														<c:url var="apDetail" value="apDetail.do">
-															<c:param name="apNo" value="${ap.apNo}"/>
-															<c:param name="tag" value="s"/>
-														</c:url>
-														<a href="${apDetail }">${ap.apTitle}</a>
-													</td>
-													<td>${ap.empNo}</td>
-													<td>${ap.apDate}</td>
-													<c:if test="${ap.apStatus eq 'Y'}">
-														<c:set var="approvalEmp" value="${ap.approvalEmpstatus}"/>
-														<c:set var="hEmp" value="${ap.hEmpstatus}"/>
+<!-- 							시행문서  -->
+<!-- 							<div class="table-responsive"> -->
+<!-- 								<table class="table table-bordered" style="text-align: center;"> -->
+<%-- 									<caption>● 시행문서함</caption> --%>
+<!-- 									<thead> -->
+<!-- 										<tr> -->
+<!-- 											<th>품의 번호</th> -->
+<!-- 											<th>문서 분류</th> -->
+<!-- 											<th>제목</th> -->
+<!-- 											<th>기안자</th> -->
+<!-- 											<th>기안일</th> -->
+<!-- 											<th>상태</th> -->
+<!-- 										</tr> -->
+<!-- 									</thead> -->
+<!-- 									<tbody> -->
+<%-- 										<c:if test="${empty slist}"> --%>
+<!-- 											<tr> -->
+<!-- 												<td colspan="6">데이터가 없습니다.</td> -->
+<!-- 											</tr> -->
+<%-- 										</c:if> --%>
+<%-- 										<c:if test="${!empty slist}"> --%>
+<%-- 											<c:forEach var="ap" items="${slist}"> --%>
+<!-- 												<tr> -->
+<%-- 													<td>${ap.apNo}</td> --%>
+<%-- 													<c:if test="${empty ap.a_v_first}"> --%>
+<!-- 														<td>일반결재</td> -->
+<%-- 													</c:if> --%>
+<%-- 													<c:if test="${!empty ap.a_v_first}"> --%>
+<!-- 														<td>근태결재</td> -->
+<%-- 													</c:if> --%>
+<!-- 													<td> -->
+<%-- 														<c:url var="apDetail" value="apDetail.ap"> --%>
+<%-- 															<c:param name="apNo" value="${ap.apNo}"/> --%>
+<%-- 															<c:param name="tag" value="s"/> --%>
+<%-- 														</c:url> --%>
+<%-- 														<a href="${apDetail }">${ap.apTitle}</a> --%>
+<!-- 													</td> -->
+<%-- 													<td>${ap.empNo}</td> --%>
+<%-- 													<td>${ap.apDate}</td> --%>
+<%-- 													<c:if test="${ap.apStatus eq 'Y'}"> --%>
+<%-- 														<c:set var="approvalEmp" value="${ap.approvalEmpstatus}"/> --%>
+<%-- 														<c:set var="hEmp" value="${ap.hEmpstatus}"/> --%>
 														
-														<c:if test="${( fn:contains(hEmp, ',Y')) or fn:contains(approvalEmp, ',Y')}">
-															<td>진행</td>
-														</c:if>
-														<c:if test="${!fn:contains(hEmp, ',Y') and !fn:contains(approvalEmp, ',Y')}">
-															<td>상신</td>
-														</c:if>
-													</c:if>
-													<c:if test="${ap.apStatus eq 'D'}">
-														<td>종결</td>
-													</c:if>
-													<c:if test="${ap.apStatus eq 'R'}">
-														<td>거부</td>
-													</c:if>
-												</tr>
-											</c:forEach>
-										</c:if>
-									</tbody>
-								</table>
-							</div>
+<%-- 														<c:if test="${( fn:contains(hEmp, ',Y')) or fn:contains(approvalEmp, ',Y')}"> --%>
+<!-- 															<td>진행</td> -->
+<%-- 														</c:if> --%>
+<%-- 														<c:if test="${!fn:contains(hEmp, ',Y') and !fn:contains(approvalEmp, ',Y')}"> --%>
+<!-- 															<td>상신</td> -->
+<%-- 														</c:if> --%>
+<%-- 													</c:if> --%>
+<%-- 													<c:if test="${ap.apStatus eq 'D'}"> --%>
+<!-- 														<td>종결</td> -->
+<%-- 													</c:if> --%>
+<%-- 													<c:if test="${ap.apStatus eq 'R'}"> --%>
+<!-- 														<td>거부</td> -->
+<%-- 													</c:if> --%>
+<!-- 												</tr> -->
+<%-- 											</c:forEach> --%>
+<%-- 										</c:if> --%>
+<!-- 									</tbody> -->
+<!-- 								</table> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>

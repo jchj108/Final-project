@@ -168,7 +168,8 @@ li {
 								}
 								
 								for(var i in data){
-									if(!tEmp.includes(data[i].empNo) && (data[i].empNo!="${loginEmp.empNo}")){
+									if(!tEmp.includes(data[i].empNo) && (data[i].empNo!="${loginUser.empNo}")){
+										console.log(data[i].empNo);
 										var $tr = $('<tr class="selectTr" style="cursor:pointer">');
 										var $deptName = $('<td>').text("(" + data[i].deptNo+") "+decodeURIComponent(data[i].deptName.replace(/\+/g, " ")) );
 										var $empPosition = $('<td>').text("lv." + data[i].empPosition);
@@ -223,6 +224,9 @@ li {
 									</tr>
 								</tbody>
 							</table>
+							
+							
+							<br>
 							<div class="row" style="text-align: center;">
 								<div class="buttons">
 									<a style="cursor: pointer;"  class="btn btn-secondary btn-icon-split" id="h">
@@ -250,6 +254,9 @@ li {
 <!-- 					                    <span class="text" style="color: white;">시행</span> -->
 <!-- 					                  </a> -->
 				                  </div>
+				                  
+				                  
+				                  
 				                  <script type="text/javascript">
 				                  //합의-list에 추가
 						              	$(document).on('click','#h',function(){
@@ -270,16 +277,16 @@ li {
 									$(document).on('click','#g',function(){
 										addList('realG','#glist');
 									});
-							 	//list 클릭시 클래스 추가
-			                	$(document).on('click','.realG',function(){
-			                		addbgClass(this);
-								});
-							 
-			                	//list 더블클릭시 제거
-								$(document).on('dblclick','.realG',function(){
-									removeLi(this,gEmp);
-									
-								});
+								 	//list 클릭시 클래스 추가
+				                	$(document).on('click','.realG',function(){
+				                		addbgClass(this);
+									});
+								 
+				                	//list 더블클릭시 제거
+									$(document).on('dblclick','.realG',function(){
+										removeLi(this,gEmp);
+										
+									});
 								
 								//참조
 									$(document).on('click','#c',function(){
@@ -297,18 +304,18 @@ li {
 									});
 				                	
 				                	
-									//시행
-									$(document).on('click','#s',function(){
-										addList('realS','#slist');
-									});
-								 	//list 클릭시 클래스 추가
-				                	$(document).on('click','.realS',function(){
-				                		addbgClass(this);
-									});
-				                	//list 더블클릭시 제거
-									$(document).on('dblclick','.realS',function(){
-										removeLi(this,sEmp);
-									});
+// 									//시행
+// 									$(document).on('click','#s',function(){
+// 										addList('realS','#slist');
+// 									});
+// 								 	//list 클릭시 클래스 추가
+// 				                	$(document).on('click','.realS',function(){
+// 				                		addbgClass(this);
+// 									});
+// 				                	//list 더블클릭시 제거
+// 									$(document).on('dblclick','.realS',function(){
+// 										removeLi(this,sEmp);
+// 									});
 										
 				                	
 				                	//지정 list 에 append 하는 function

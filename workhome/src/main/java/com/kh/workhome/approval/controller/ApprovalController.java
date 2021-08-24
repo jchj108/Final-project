@@ -287,26 +287,26 @@ public class ApprovalController {
 				ap.setRenameFile(renameFileName);
 			}
 		}
-		aService.insertApproval(ap);
-
-		// 알람 insert!
+		 aService.insertApproval(ap);
+		
+		// 알림 전송
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("aContents", loginUser.getEmpName() + "님이 새로운 기안을 올렸습니다.");
 		map.put("aType", "ap");
-		ArrayList<String> emp = new ArrayList<>();
-
+		
+		ArrayList<String> emp = new ArrayList<String>();
 		emp = splitEmp1(ap.gethEmp(), emp);
 		emp = splitEmp1(ap.getApprovalEmp(), emp);
-		emp = splitEmp2(ap.getRunEmp(), emp);
+//		emp = splitEmp2(ap.getRunEmp(), emp);
 		emp = splitEmp2(ap.getRefEmp(), emp);
 		map.put("empNo", emp);
-//		eService.insertAlert(map);
+		eService.insertAlert(map);
 
 		mv.setViewName("redirect:approvalView.ap");
 		return mv;
 	}
 	
-	// 알람 insert용....사원 다시 끊기...;;
+	// 알람 insert용 사원 다시 끊기 
 	public ArrayList<String> splitEmp1(String str, ArrayList<String> emp) {
 		if (!str.equals("")) {
 			if (str.contains(";")) {
@@ -421,7 +421,7 @@ public class ApprovalController {
 	}
 
 	@RequestMapping("apDetail.ap")
-	public ModelAndView apDetail(ModelAndView mv, @RequestParam("apNo") String apNo, @RequestParam("tag") String tag) {
+	public ModelAndView apDetail(ModelAndView mv, @RequestParam("apNo") String apNo, @RequestParam(value="tag", required=false) String tag) {
 		Approval ap = aService.selectApprovalDetail(apNo);
 		// 출력용 기안자 만들기- 이름붙이기
 		Employee e = new Employee();

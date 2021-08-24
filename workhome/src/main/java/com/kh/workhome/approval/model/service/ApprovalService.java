@@ -45,4 +45,5 @@ public class ApprovalService {
 	public ArrayList<Approval> selectDeptVacation(ArrayList<String> emp) {
 		return aDAO.selectDeptVacation(sqlSession, emp);
 	}
+
 }
