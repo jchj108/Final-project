@@ -81,7 +81,7 @@ li {
 					var hEmp = "";
 					var gEmp = "";
 					var cEmp = "";
-// 					var sEmp = "";
+					var sEmp = "";
 					var tEmp = "";
 				</script>
 					<br>
@@ -341,10 +341,9 @@ li {
 						              		$li.append($input3);
 						              		$ul.append($li);
 						              		
-						              		/* if(listId == '#slist'){
+						              		if(listId == '#slist'){
 						              			sEmp += empNo +', ';
-						              		}else */ 
-						              		if(listId == '#hlist'){
+						              		}else if(listId == '#hlist'){
 						              			hEmp += empNo +', ';
 						              		}else if(listId == '#clist'){
 						              			cEmp += empNo +', ';
@@ -389,13 +388,12 @@ li {
 										}else if(class_name.includes('realC')){
 											cEmp = empV;
 											console.log(cEmp);
-										} /* else if(class_name.includes('realS')){
+										}else if(class_name.includes('realS')){
 											sEmp = empV;
 											console.log(sEmp);
-										}*/
+										}
 										
-										console.log('array: ' + array);
-										console.log('tEmp: ' + tEmp);
+										
 										array = tEmp.split(', ');
 										tEmp="";
 										
@@ -478,7 +476,7 @@ li {
 				var $input1 =$('<input name="hEmp" type="hidden">').val(hEmp);
 				var $input2 =$('<input name="gEmp" type="hidden">').val(gEmp);
 				var $input3 =$('<input name="cEmp" type="hidden">').val(cEmp);
-// 				var $input4 =$('<input name="sEmp" type="hidden">').val(sEmp);
+				var $input4 =$('<input name="sEmp" type="hidden">').val(sEmp);
 				var $input5 =$('<input name="tag" type="hidden">').val(tag);
 				
 				$hiddenform.append($input1);
