@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -40,6 +42,16 @@
 
 
 <body class="hold-transition sidebar-mini">
+
+	<script type="text/javascript">
+		var joinEmp ="";//참여 emp
+		var date = ""; //참여일
+		var SelectTime = "";//선택시간
+		var mNo = "";//회의실 번호
+		var savedTime="";//예약되어있는시간
+	</script>
+
+
 <div class="wrapper">
   <!-- header -->
   <jsp:include page="../common/header.jsp"></jsp:include>
@@ -375,30 +387,38 @@
 
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#joinEmp").autocomplete({
-				source : function(request, response) {
-
-					$.ajax({
-
-						url : "searchEmp.meet",
-						type : "post",
-						dataType : "json",
-						data : request,
-
-						success : function(data) {
-
-							var result = data;
-							response(result);
-						},
-
-						error : function(data) {
-							alert("에러가 발생하였습니다.")
+		$(document).on('keyup','#joinEmp',function(){
+				var search = $(this).val();
+				$.ajax({
+				url:"searchEmpList.meet",
+				data:{search:search},
+				dataType:"json",
+				success : function(data){
+					var list = [];
+					if(data.length > 0){
+						for(var i in data){
+							var inputText = decodeURIComponent(data[i].replace(/\+/g," "));
+							if(!joinEmp.includes(inputText)){
+								list.push(inputText);
+								console.log("list : " + list);
+							}
 						}
-					});
+						$("#joinEmp").autocomplete({
+							source:list,
+							select: function(event, ui) {
+								console.log(ui.item);
+								/* $(this).attr('readonly',true); */
+								addFun(ui.item.value);
+								return false;
+					        },
+					        focus: function(event, ui) {
+					            return false;
+					        }
+						});
+					}
 				}
 			});
-		});
+	});
 	</script>
 
 
