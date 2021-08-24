@@ -8,4 +8,6 @@ public interface AttendanceService{
 
 	int chulgun(HashMap<String, String> map);
 
+	int goHome(HashMap<String, String> map);
+
 }
