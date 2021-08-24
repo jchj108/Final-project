@@ -27,4 +27,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return atDAO.chulgun(map, sqlSession);
 	}
 
+	@Override
+	public int goHome(HashMap<String, String> map) {
+		return atDAO.goHome(map, sqlSession);
+	}
+
 }
