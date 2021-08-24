@@ -26,5 +26,24 @@ public class ApprovalService {
 		return aDAO.selectApprovalList(sqlSession, empNo);
 	}
 
-	 
+	public Approval selectApprovalDetail(String apNo) {
+		return aDAO.selectApprovalDetail(sqlSession, apNo);
+	}
+
+	public int updateAp(Approval ap) {
+		return aDAO.updateAp(sqlSession, ap);
+	}
+
+	public ArrayList<Approval> selectApListByAr(String[] array) {
+		return aDAO.selectApListByAr(sqlSession, array);
+	}
+
+	public int deleteAp(String apNo) {
+		return aDAO.deleteAp(sqlSession, apNo);
+	}
+
+	public ArrayList<Approval> selectDeptVacation(ArrayList<String> emp) {
+		return aDAO.selectDeptVacation(sqlSession, emp);
+	}
+
 }
