@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -32,6 +33,12 @@
 <!-- Theme style -->
 <link rel="stylesheet"
 	href="${contextPath }/resources/dist/css/adminlte.min.css" />
+
+<style>
+.chulgun {
+	transition: .8s;
+}
+</style>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -62,19 +69,37 @@
 						<div class="col-lg-5">
 							<div class="card shadow mb-4">
 								<div class="card-body">
-									<h4 style="margin-bottom: 1rem">출퇴근</h4>
-									<div style="padding: 1.5rem; font-size: 1.3rem">
+									<h4 style="margin-bottom: 1rem;">출퇴근</h4>
+									<div style="padding: 1.5rem; font-size: 1.3rem;">
 										<p id="pClock"></p>
-										<p class="workstart">출근 : 아직 출근 시간이 기록되지 않았습니다.</p>
-										<p class="workend">퇴근 : 아직 퇴근 시간이 기록되지 않았습니다.</p>
-										<p id="resultArea"></p>
+										<p class="chulgun">
+											<c:if test="${!empty map.ATTEND}">
+								출근 : ${map.ATTEND}
+								</c:if>
+											<c:if test="${empty map.ATTEND}">
+								출근 : 아직 출근 시간이 기록되지 않았어요!
+								</c:if>
+										</p>
+										<p class="zipgalle">
+											<c:if test="${!empty map.ATTEND && empty map.GOHOME}">
+								퇴근 : 아직 퇴근 시간이 기록되지 않았어요!
+								</c:if>
+											<c:if test="${!empty map.GOHOME}">
+								퇴근 : ${map.GOHOME}
+								</c:if>
+										</p>
+<!-- 										<p id="resultArea"></p> -->
 									</div>
-									<a id="commute" class="btn btn-primary btn-user btn-block"
-										style="color: white"> 출근하기 </a> <a
-										class="btn btn-success btn-user btn-block goHome"
-										style="color: white"> 퇴근하기 </a> <a
-										class="btn btn-success btn-user btn-block goHome"
-										style="color: white; display: none"> 퇴근하기 </a>
+									<c:if test="${empty map.ATTEND}">
+										<a id="commute" class="btn btn-primary btn-user btn-block"
+											style="color: white;"> 출근하기 </a>
+									</c:if>
+									<c:if test="${!empty map.ATTEND &&  empty map.GOHOME}">
+										<a id="off" class="btn btn-success btn-user btn-block goHome"
+											style="color: white;"> 퇴근하기 </a>
+									</c:if>
+									<a id="off" class="btn btn-success btn-user btn-block goHome"
+										style="color: white; display: none;"> 퇴근하기 </a>
 								</div>
 							</div>
 
@@ -156,8 +181,8 @@
 		<!-- jQuery -->
 		<script src="${contextPath }/resources/plugins/jquery/jquery.min.js"></script>
 		<!-- Bootstrap -->
-<!-- 		<script -->
-<%-- 			src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --%>
+		<!-- 		<script -->
+		<%-- 			src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --%>
 		<!-- jQuery UI -->
 		<script
 			src="${contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -189,6 +214,61 @@
 		showClock()
 	})
 </script>
+<script>
+	$(document).on('click', '#commute', function() {
+		$.ajax({
+			url : "workstart.do",
+			success : function(data) {
+				if (data == "fail") {
+					alert("출근 등록 실패");
+				} else {
+					$("#commute").hide();
+					$(".goHome").fadeIn(1000);
+					$(".chulgun").text("출근 : " + data);
+					$(".zipgalle").text("퇴근 : 아직 퇴근 시간이 기록되지 않았어요!");
+					clock.start();
+				}
+			}
+		});
+	});
+// 	$(document).on('click','.goHome',function(){
+// 		var result ="";
+// 		var check = false;
+		
+// 		if (check){
+// 			$.ajax({
+// 				url:"goHome.do",
+// 				dataType:"json",
+// 				success:function(data){
+// 					if(data.result=="fail"){
+// 						alert("퇴근등록에 실패했습니다.");
+// 					}else{
+// 						$(".goHome").fadeOut(1000);
+// 						$(".zipgalle").text("퇴근 : "+data.map.GOHOME);
+// 						clock.stop();
+// 					}
+// 				}
+// 			});
+// 		}
+// 	});
+
+	$(document).on('click','#off',function(){
+// 		alert("off클릭");
+		$.ajax({
+			url:"goHome.do",
+			success:function(data){
+				console.log(data);
+				if(data == "fail"){
+					alert("퇴근 실패!!")
+				} else {
+					$('#off').fadeout(1000);
+					$('.zipgalle').text("퇴근 : "+data.map.GOHOME);
+				}
+			}
+		})
+	});
+</script>
+
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar')
@@ -211,34 +291,34 @@
 
 <!-- 공지사항 top n -->
 <script>
-	function topList(){
+	function topList() {
 		$.ajax({
 			url : 'topList.no',
-			success : function(data){
+			success : function(data) {
 				console.log(data);
-				
+
 				$tableBody = $('#tb tbody');
 				$tableBody.html('');
-				
-				for(var i in data){
+
+				for ( var i in data) {
 					var $tr = $('<tr>');
 					var $no = $('<td>').text(data[i].noticeNo);
-					var $title =$('<td>').text(data[i].noticeTitle);
-				
-				$tr.append($no);
-				$tr.append($title);
-				$tableBody.append($tr);
+					var $title = $('<td>').text(data[i].noticeTitle);
+
+					$tr.append($no);
+					$tr.append($title);
+					$tableBody.append($tr);
 				}
 			},
-			error : function(data){
+			error : function(data) {
 				console.log(data);
 			}
 		});
 	};
-	
-	$(function(){
+
+	$(function() {
 		topList();
-		setInterval(function(){
+		setInterval(function() {
 			topList();
 		}, 3000);
 	});

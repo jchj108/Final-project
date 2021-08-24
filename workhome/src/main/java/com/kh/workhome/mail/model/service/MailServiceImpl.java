@@ -2,12 +2,14 @@ package com.kh.workhome.mail.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.workhome.common.PageInfo;
+import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.mail.model.dao.MailDAO;
 import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
@@ -33,18 +35,18 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int getTempListCount() {
-		return mDAO.getTempListCount(sqlSession);
+	public int getTempListCount(String empNo) {
+		return mDAO.getTempListCount(sqlSession, empNo);
 	}
 
 	@Override
-	public ArrayList<Mail> selectTempList(PageInfo pi) {
-		return mDAO.selectTempList(sqlSession, pi);
+	public ArrayList<Mail> selectTempList(PageInfo pi, String empNo) {
+		return mDAO.selectTempList(sqlSession, pi, empNo);
 	}
 
 	@Override
-	public Mail selectMail(int id) {
-		return mDAO.selectMail(sqlSession, id);
+	public Mail selectTempMail(int id) {
+		return mDAO.selectTempMail(sqlSession, id);
 	}
 
 	@Override
@@ -55,5 +57,45 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public int deleteMailFile(int mFileNo) {
 		return mDAO.deleteMailFile(sqlSession, mFileNo);
+	}
+
+	@Override
+	public MailFile selectMailFile(int mFileNo) {
+		return mDAO.selectMailFile(sqlSession, mFileNo);
+	}
+
+	@Override
+	public int getReceiveListCount(Map<String, String> map) {
+		return mDAO.getReceiveListCount(sqlSession, map);
+	}
+
+	@Override
+	public int insertTempMail(Mail m) {
+		return mDAO.insertTempMail(sqlSession, m);
+	}
+
+	@Override
+	public ArrayList<Mail> selectReceiveList(PageInfo pi, Map<String, String> map) {
+		return null;
+	}
+
+	@Override
+	public int getsendListCount(String empNo) {
+		return mDAO.getSendListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSendList(PageInfo pi, String empNo) {
+		return mDAO.selectSendList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public Mail selectMail(int id) {
+		return mDAO.selectMail(sqlSession, id);
+	}
+
+	@Override
+	public Employee getMId(String mId) {
+		return mDAO.getMId(sqlSession, mId);
 	}
 }

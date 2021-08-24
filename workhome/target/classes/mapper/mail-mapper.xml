@@ -2,27 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
 	<insert id="insertMailFile">
-		<if test="mailNo == null">
+		<if test="mailNo == 0">
 		insert into mail_file 
 		values (mail_file_seq.nextval, #{mOriginalName}, #{mChangeName}, 
 				#{mFilePath}, sysdate, 'Y', MAIL_TEMP_SEQ.CURRVAL)
 		</if>
-		<if test="mailNo != null">
+		<if test="mailNo != 0">
 		insert into mail_file 
 		values (mail_file_seq.nextval, #{mOriginalName}, #{mChangeName}, 
 				#{mFilePath}, sysdate, 'Y', #{mailNo})
 		</if>
 	</insert>
+	<update id="deleteMailFile">
+		UPDATE MAIL_FILE
+		SET M_STATUS = 'N'
+		WHERE M_FILE_NO=#{mFileNo}
+	</update>
+	
+	<select id="getReceiveListCount" resultType="_int">
+		select count(*)
+		from mail
+		where estatus='Y' and empno = #{empNo} and receiveemp = #{email}
+	</select>
+	
+	
 	<insert id="insertMail">
 		insert into mail
 		values (MAIL_TEMP_SEQ.NEXTVAL, #{receiveEmp}, null, #{etitle}, 
 				#{econtent}, 'Y', null, #{empNo}, sysdate)
 	</insert>
+	<insert id="insertTempMail">
+		insert into mail
+		values (MAIL_TEMP_SEQ.NEXTVAL, #{receiveEmp}, null, #{etitle}, 
+				#{econtent}, 'T', null, #{empNo}, sysdate)
+	</insert>
 	
 	<select id="getTempListCount" resultType="_int">
 		select count(*)
 		from mail
-		where estatus='Y'
+		where estatus='T' and empno = #{empNo}
+	</select>
+	
+	<select id="getSendListCount" resultType="_int">
+		select count(*)
+		from mail
+		where estatus='Y' and empno = #{empNo}
 	</select>
 	
 	<select id="selectTempList" resultMap="mailResultSet">
@@ -36,12 +60,61 @@
 		    from mail
 		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+		    where estatus='T'
+		    and employee.empNo = #{empNo}
+		    order by MAILNO DESC
+		)
+		ORDER BY MAILNO DESC
+	</select>
+	
+	<select id="selectSendList" resultMap="mailResultSet">
+		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
+		    ECONTENT, ESTATUS, E_R_TIME, EMPNO, S_DATE, EMPNAME
+		    , M_STATUS
+		from(
+		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS
+		    from mail
+		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		    where estatus='Y'
+		    and employee.empNo = #{empNo}
+		    order by MAILNO DESC
+		)
+		ORDER BY MAILNO DESC
+	</select>
+	
+	<select id="selectReceiveList" resultMap="mailResultSet">
+		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
+		    ECONTENT, ESTATUS, E_R_TIME, EMPNO, S_DATE, EMPNAME
+		    , M_STATUS
+		from(
+		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS
+		    from mail
+		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+		    where estatus='Y'
+		    and employee.empNo = #{empNo}
+		    and mail.receiveEmp = #{receiveEmp}
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
 	</select>
 		
+	<select id="selectTempMail" parameterType="_int" resultMap="mailResultSet">
+		select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+	           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_ORIGINAL_NAME, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_FILE_PATH, MAIL_FILE.M_UPLOAD_DATE, MAIL_FILE.M_STATUS
+	    from mail
+	        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+	        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+	    where estatus='T' and mail.mailno=#{id}
+        order by mail_file.m_file_no desc
+	</select>
+	
 	<select id="selectMail" parameterType="_int" resultMap="mailResultSet">
 		select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
 	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
@@ -51,6 +124,18 @@
 	        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 	    where estatus='Y' and mail.mailno=#{id}
         order by mail_file.m_file_no desc
+	</select>
+	
+	<select id="selectMailFile" resultMap="mailFileResultSet">
+		select *
+		from mail_File
+		where m_file_no = #{mFileNo}
+	</select>
+	
+	<select id="getMId" resultMap="employeeResultSet">
+		select *
+		from employee
+		where empno = #{mId}
 	</select>
 	
 	<update id="updateMail">
@@ -84,5 +169,21 @@
 		<result column="M_UPLOAD_DATE" property="mUploadDate"/>
 		<result column="M_STATUS" property="mStatus"/>
 		<result column="MAILNO" property="mailNo"/>
+	</resultMap>
+	
+	<resultMap type="Employee" id="employeeResultSet">
+		<id column="EMPNO" property="empNo"/>
+		<result column="EMPNAME" property="empName"/>
+		<result column="EMPPOSITION" property="empPosition"/>
+		<result column="JOINDATE" property="joinDate"/>
+		<result column="PHONE" property="phone"/>
+		<result column="EMPPHONE" property="empPhone"/>
+		<result column="EMAIL" property="email"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="EMPSTATUS" property="empStatus"/>
+		<result column="EMPAUTO" property="empAuto"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="DEPTNO" property="deptNo"/>
+		<result column="EMPID" property="empId"/>
 	</resultMap>
 </mapper>

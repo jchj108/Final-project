@@ -62,4 +62,35 @@
 		where DEPTNO=#{DEPTNO} AND EMPSTATUS !='N'
 	</select>
 	
+	<insert id="insertAlert">
+		insert into ALERT
+		values (SEQ_ANO.nextval, #{aContents}, #{aType}, default, #{empNo}, sysdate, 
+		 <if test="aType == 'ap'">
+         SEQ_APNO.currval
+         </if>
+	     )
+	</insert>
+	
+	<select id="selectAlertList" resultType="map">
+		select * from ALERT where EMPNO = #{empNo} and ASTATUS ='Y' order by createdate desc
+	</select>
+	
+	<update id="deleteAlert">
+		update ALERT
+		set ASTATUS = 'N'
+		where ALERTNO = #{alertNo}
+	</update>
+	
+	<update id="deletAllAlerts">
+		update ALERT
+		set ASTATUS = 'N'
+		where EMPNO= #{empNo}
+		<if test="aType == 'mail'">
+		and ATYPE = 'mail'
+		</if>
+		<if test="aType == 'notMail'">
+		and ATYPE != 'mail'
+		</if>
+	</update>
+	
 </mapper>
