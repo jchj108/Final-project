@@ -220,9 +220,9 @@
                 <textarea id="inputDescription" class="form-control" rows="4" placeholder="회의  상세 설명을 입력하세요."></textarea>
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">총 참여 사원</label>   
+                <label for="inputClientCompany">총 참여 사원</label>  
+                <input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가">  
                 	<div class="extraArea">	</div>
-					  	<input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가"> 
 
                      <button type="button" class="btn btn-block btn-primary reserv-button">예약하기</button>
                    
