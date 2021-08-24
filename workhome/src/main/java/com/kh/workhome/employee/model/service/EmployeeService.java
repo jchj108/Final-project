@@ -47,4 +47,20 @@ public class EmployeeService {
 	public ArrayList<Employee> getEmployee(String deptNo) {
 		return eDao.getEmployee(sqlSession, deptNo);
 	}
+
+	public int insertAlert(HashMap<String, Object> map) {
+		return eDao.insertAlert(sqlSession, map);
+	}
+	
+	public ArrayList<HashMap<String, Object>> selectAlertList(String empNo) {
+		return eDao.selectAlertList(sqlSession, empNo);
+	}
+	
+	public int deleteAlert(String alertNo) {
+		return eDao.deleteAlert(sqlSession, alertNo);
+	}
+
+	public int deletAllAlerts(HashMap<String, String> map) {
+		return eDao.deletAllAlerts(sqlSession, map);
+	}
 }

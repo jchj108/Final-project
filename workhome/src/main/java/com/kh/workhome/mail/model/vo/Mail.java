@@ -16,8 +16,9 @@ public class Mail {
 	private String empNo;
 	private String senderMailId; // 보낸 사람 메일 주소
 	private String senderName;
+	private String receiverName; // 받는 사람 이름
 	private ArrayList<MailFile> mailFileList;
-	
+
 	public Mail() {}
 	
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
@@ -121,17 +122,45 @@ public class Mail {
 	public String getSenderName() {
 		return senderName;
 	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
+	}
+	public String getReceiverName() {
+		return receiverName;
+	}
+
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
+	}
+
+	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
+			Date eRTime, Date sDate, String empNo, String senderMailId, String senderName, String receiverName,
+			ArrayList<MailFile> mailFileList) {
+		super();
+		this.mailNo = mailNo;
+		this.receiveEmp = receiveEmp;
+		this.etype = etype;
+		this.etitle = etitle;
+		this.econtent = econtent;
+		this.estatus = estatus;
+		this.eRTime = eRTime;
+		this.sDate = sDate;
+		this.empNo = empNo;
+		this.senderMailId = senderMailId;
+		this.senderName = senderName;
+		this.receiverName = receiverName;
+		this.mailFileList = mailFileList;
+	}
+
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", receiveEmp=" + receiveEmp + ", etype=" + etype + ", etitle=" + etitle
 				+ ", econtent=" + econtent + ", estatus=" + estatus + ", eRTime=" + eRTime + ", sDate=" + sDate
 				+ ", empNo=" + empNo + ", senderMailId=" + senderMailId + ", senderName=" + senderName
-				+ ", mailFileList=" + mailFileList + "]";
+				+ ", receiverName=" + receiverName + ", mailFileList=" + mailFileList + "]";
 	}
 
-	public void setSenderName(String senderName) {
-		this.senderName = senderName;
-	}
 	public ArrayList<MailFile> getMailFileList() {
 		return mailFileList;
 	}
