@@ -64,19 +64,10 @@ public class MailServiceImpl implements MailService {
 		return mDAO.selectMailFile(sqlSession, mFileNo);
 	}
 
-	@Override
-	public int getReceiveListCount(Map<String, String> map) {
-		return mDAO.getReceiveListCount(sqlSession, map);
-	}
 
 	@Override
 	public int insertTempMail(Mail m) {
 		return mDAO.insertTempMail(sqlSession, m);
-	}
-
-	@Override
-	public ArrayList<Mail> selectReceiveList(PageInfo pi, Map<String, String> map) {
-		return null;
 	}
 
 	@Override
@@ -97,5 +88,15 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public Employee getMId(String mId) {
 		return mDAO.getMId(sqlSession, mId);
+	}
+
+	@Override
+	public int getReceiveListCount(String email) {
+		return mDAO.getReceiveListCount(sqlSession, email);
+	}
+
+	@Override
+	public ArrayList<Mail> selectReceiveList(PageInfo pi, String email) {
+		return mDAO.selectReceiveList(sqlSession, pi, email);
 	}
 }

@@ -19,6 +19,24 @@ public class ApprovalDAO {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalList", empNo);
 	}
 
-	
+	public Approval selectApprovalDetail(SqlSessionTemplate sqlSession, String apNo) {
+		return (Approval)sqlSession.selectOne("approvalMapper.selectApprovalDetail", apNo);
+	}
+
+	public int updateAp(SqlSessionTemplate sqlSession, Approval ap) {
+		return sqlSession.update("approvalMapper.updateAp", ap);
+	}
+
+	public ArrayList<Approval> selectApListByAr(SqlSessionTemplate sqlSession, String[] array) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectApListByAr",array);
+	}
+
+	public int deleteAp(SqlSessionTemplate sqlSession, String apNo) {
+		return sqlSession.update("approvalMapper.deleteAp", apNo);
+	}
+
+	public ArrayList<Approval> selectDeptVacation(SqlSessionTemplate sqlSession, ArrayList<String> list) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptVacation",list);
+	}
 
 }
