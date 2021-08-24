@@ -3,7 +3,9 @@ package com.kh.workhome.meeting.model.vo;
 import java.sql.Date;
 
 public class MeetingReservation {
-	
+
+	private String rDate;
+	private String rTime;
 	private Date startTime; // 회의 시작 시간
 	private Date endTime; // 회의 종료 시간
 	private String mNo; // 회의실 번호
@@ -15,9 +17,11 @@ public class MeetingReservation {
 	
 	public MeetingReservation() {}
 
-	public MeetingReservation(Date startTime, Date endTime, String mNo, String joinEmp, String mTitle, String mContent,
-			String rStatus, String empNo) {
+	public MeetingReservation(String rDate, String rTime, Date startTime, Date endTime, String mNo, String joinEmp,
+			String mTitle, String mContent, String rStatus, String empNo) {
 		super();
+		this.rDate = rDate;
+		this.rTime = rTime;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.mNo = mNo;
@@ -26,6 +30,22 @@ public class MeetingReservation {
 		this.mContent = mContent;
 		this.rStatus = rStatus;
 		this.empNo = empNo;
+	}
+
+	public String getrDate() {
+		return rDate;
+	}
+
+	public void setrDate(String rDate) {
+		this.rDate = rDate;
+	}
+
+	public String getrTime() {
+		return rTime;
+	}
+
+	public void setrTime(String rTime) {
+		this.rTime = rTime;
 	}
 
 	public Date getStartTime() {
@@ -94,9 +114,9 @@ public class MeetingReservation {
 
 	@Override
 	public String toString() {
-		return "MeetingReservation [startTime=" + startTime + ", endTime=" + endTime + ", mNo=" + mNo + ", joinEmp="
-				+ joinEmp + ", mTitle=" + mTitle + ", mContent=" + mContent + ", rStatus=" + rStatus + ", empNo="
-				+ empNo + "]";
+		return "MeetingReservation [rDate=" + rDate + ", rTime=" + rTime + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", mNo=" + mNo + ", joinEmp=" + joinEmp + ", mTitle=" + mTitle + ", mContent=" + mContent
+				+ ", rStatus=" + rStatus + ", empNo=" + empNo + "]";
 	}
 
 

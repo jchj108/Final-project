@@ -2,9 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="meetingMapper">
 
+	<select id="selectRoom" resultType="map">
+		select *
+		from meetingRoom
+	</select>
+	
+	<select id="searchEmpList" parameterType="string" resultType="Employee">
+		select *
+		from EMPLOYEE
+		JOIN DEPARTMENT USING (DEPTNO)
+		where EMPSTATUS!='N' AND (EMPNO LIKE #{string} or EMPNAME LIKE #{string})
+	</select>
+
+
 	<resultMap type="MeetingReservation" id="meetingResultSet">
 		<id column="MNO" property="mNo" />
 		<result column="STARTTIME" property="startTime" />
+		<result column="RTIME" property="rTime" />
+		<result column="RDATE" property="rDate" />
 		<result column="JOINEMP" property="joinEmp" />
 		<result column="MTITLE" property="mTitle" />
 		<result column="MCONTENT" property="mContent" />
@@ -13,4 +28,25 @@
 		<result column="ENDTIME" property="endTime" />
 	</resultMap>
 	
+	<resultMap type="Employee" id="employeeResultSet">
+		<id column="EMPNO" property="empNo"/>
+		<result column="EMPNAME" property="empName"/>
+		<result column="EMPPOSITION" property="empPosition"/>
+		<result column="JOINDATE" property="joinDate"/>
+		<result column="PHONE" property="phone"/>
+		<result column="EMPPHONE" property="empPhone"/>
+		<result column="EMAIL" property="email"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="EMPSTATUS" property="empStatus"/>
+		<result column="EMPAUTO" property="empAuto"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="DEPTNO" property="deptNo"/>
+		<result column="EMPID" property="empId"/>
+	</resultMap>
+	
+	<resultMap type="Department" id="departmentResultSet">
+		<id column="DEPTNO" property="deptNo"/>
+		<result column="DEPTNAME" property="deptName"/>
+	</resultMap>
+		
 </mapper>

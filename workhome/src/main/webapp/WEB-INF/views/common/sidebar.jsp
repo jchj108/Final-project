@@ -215,13 +215,25 @@
               <li class="nav-item">
                 <a href="meetReserv.meet" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>회의실 예약</p>
+                  <p>회의실 예약 가짜</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="meetReserv2.meet" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>회의실 예약2</p>
+                  <p>회의실 예약2 가짜</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="meetReserv3.meet" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>회의실 예약3 진짜</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="meetReserv4.meet" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>회의실 예약4 가짜</p>
                 </a>
               </li>
               <li class="nav-item">
