@@ -1,5 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,24 +11,22 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="${contextPath}/resources/plugins/fontawesome-free/css/all.min.css">
-  <!-- fullCalendar -->
-  <link rel="stylesheet" href="${contextPath}/resources/plugins/fullcalendar/main.css">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="${contextPath}/resources/dist/css/adminlte.min.css">
   
+  <!-- 자동 완성 -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  
+	<!-- Full Calendar  -->
+	<link href='${contextPath}/resources/fullcalendar/core/main.css' rel='stylesheet' />
+	<link href='${contextPath}/resources/fullcalendar/daygrid/main.css' rel='stylesheet' />
+	<script src='${contextPath}/resources/fullcalendar/core/main.js'></script>
+	<script src='${contextPath}/resources/fullcalendar/interaction/main.js'></script>
+	<script src='${contextPath}/resources/fullcalendar/daygrid/main.js'></script>   
 
 
 <style type="text/css">
-	.fc-title{
-	color: white;
-	}
-	.fc-event, .fc-event-dot {
-    background-color: rgb(20,20,50);
-	}
-	.fc-event{
-	border: rgb(20,20,50);
-	}
 	
 	.first-area{
 		margin-bottom: 5rem;
@@ -130,12 +126,29 @@
 		cursor:default;
 		z-index:999999 !important;
 	}
+	
+	.reserv-button{
+		position:relative;
+		top: 10px;
+	}
+	
+	#calendar{
+		height: 70%;
+		width: 90%;
+		position: relative;
+		left: 50px;		
+	}
+	
+	.dateResult{
+		zoom: 1.3;
+	}
+	
 
 </style>
 
-
 </head>
 <body class="hold-transition sidebar-mini">
+
 
 	<script type="text/javascript">
 		var joinEmp ="";//참여 emp
@@ -191,7 +204,7 @@
                    
             <div class="sticky-top mb-3">          
        <!-- 회의실 예약 바 -->   
-           <div class="card card-primary reserv-bar">
+           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">회의실 예약</h3>
 
@@ -202,6 +215,12 @@
               </div>
             </div>
             <div class="card-body">
+            
+              <div class="form-group">
+                <label for="inputName">선택 날짜</label><br>
+                <span class="dateResult"></span>
+              </div>   
+                       
               <div class="form-group">
                 <label for="inputName">예약 가능 시간</label>
 	            <div>
@@ -215,7 +234,11 @@
 	            	<button type="button" class="btn btn-danger btn-sm">16</button>
 	            	<button type="button" class="btn btn-danger btn-sm">17</button>
 	            	<button type="button" class="btn btn-danger btn-sm">18</button>
+	            		        
 	            </div>
+	            
+	          <!-- 시간 -->
+	            
               </div>
               <div class="form-group">
                 <label for="inputName">회의 제목</label>
@@ -226,21 +249,11 @@
                 <textarea id="inputDescription" class="form-control" rows="4" placeholder="회의  상세 설명을 입력하세요."></textarea>
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">총 참여 사원</label>
-                          		 <div>
-							  		<div class="extraArea">							  			
-								</div>
-					  				<input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가">           
-                      <button type="button" class="btn btn-block bg-gradient-info btn-sm">강건강 - 영업팀</button>
-                      <button type="button" class="btn btn-block bg-gradient-info btn-sm">남나눔 - 기획팀</button>
-                      <button type="button" class="btn btn-block bg-gradient-info btn-sm">류라라 - 생산팀</button>
-                      <br>
-                      <button type="button" class="btn btn-info btn-sm">강건강 - 영업팀</button>
-                      <button type="button" class="btn btn-info btn-sm">남나눔 - 기획팀</button>
-                      <button type="button" class="btn btn-info btn-sm">류라라 - 생산팀</button>
+                <label for="inputClientCompany">총 참여 사원</label>  
+                <input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가">  
+                	<div class="extraArea">	</div>
 
-                  <br><br>
-                     <button type="button" class="btn btn-block btn-primary">예약하기</button>
+                     <button type="button" class="btn btn-block btn-primary reserv-button">예약하기</button>
                    
               </div>
             </div>
@@ -298,18 +311,52 @@
               </div>
             </div>
           </div>
-          
-          
-          
-          
-          
+                   
           
           <!-- /.col -->
           <div class="col-md-9">         
             <div class="card card-primary">
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
-                <div id="calendar"></div>
+                <div id="calendar" class="fc fc-ltr fc-bootstrap">
+<script>
+
+	  document.addEventListener('DOMContentLoaded', function() {
+		    var calendarEl = document.getElementById('calendar');
+		 		var today = new Date();
+		 		var firstDayOfMonth = new Date( today.getFullYear(), today.getMonth() , 1 );
+		 		var lastMonth = new Date ( firstDayOfMonth.setDate( firstDayOfMonth.getDate() - 1 ) );
+ 			 var yesterDate = today.getTime() - (1 * 24 * 60 * 60 * 1000);
+			
+ 			 console.log("firstDayOfMonth" + firstDayOfMonth);
+ 			 console.log("lastMonth" + lastMonth);
+ 			 console.log("today" + today);
+ 			 
+		    var calendar = new FullCalendar.Calendar(calendarEl, {
+		        plugins: [ 'interaction', 'dayGrid' ],
+		        defaultDate: today,
+		        editable: false,
+		        eventLimit: true,
+		        dateClick: function(info) {
+		            /* alert('Clicked on: ' + info.dateStr); */
+		            //날짜 받아옴!
+					if(yesterDate > info.date){
+						alert("이미 지난 날짜는 선택할 수 없습니다.");
+					}else{			             
+			            date=info.dateStr;
+			            $(".secondArea").fadeIn(1000);
+			            $(".fc-day").css('background','none');
+			            info.dayEl.style.backgroundColor = '#B2EBF4';
+//			            console.log(info.dateStr);
+			            $(".dateResult").text(info.dateStr);
+//			            rSelectDateFun(date);
+					}
+		          }
+		      });
+
+		      calendar.render();
+		    });
+</script>                
               </div>
               <!-- /.card-body -->
             </div>
@@ -342,9 +389,7 @@
 <script src="${contextPath}/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
-<!-- fullCalendar 2.2.5 -->
-<script src="${contextPath}/resources/plugins/moment/moment.min.js"></script>
-<script src="${contextPath}/resources/plugins/fullcalendar/main.js"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="${contextPath}/resources/dist/js/demo.js"></script>
 <!-- Page specific script -->
@@ -423,6 +468,76 @@
 
 
 <script>
+function(data){
+	savedTime = data;
+	
+	$timearea.html("");
+	for(var i = 9 ; i < 18 ; i ++){
+		if(savedTime.includes(i)){
+			var $div1 = $('<div class="card shadow h-100 py-2 notFcards">');	
+		}else{
+		var $div1 = $('<div class="card shadow h-100 py-2 cards">');
+		}
+		var $div2 = $('<div class="card-body">');
+		var $div3 = $('<div class="row no-gutters align-items-center">');
+		var $div4 = $('<div class="col mr-2">');
+		var $div5 = $('<div class="h5 mb-0 font-weight-bold selection">');
+		var $span = $('<span class="time">').text(i);
+		var $span2 = $('<span>').text("시");
+		
+		$div5.append($span);
+		$div5.append($span2);
+		$div4.append($div5);
+		$div3.append($div4);
+		$div2.append($div3);
+		$div1.append($div2);
+		$timearea.append($div1);
+	}
+};
+</script>
+
+
+
+<!-- 풀캘린더 -->
+
+
+
+
+<!-- 시간 선택 -->
+	<script type="text/javascript">
+				          $(document).on('click',".cards",function(){
+				        	  var time =$(this).find(".time").text();
+				        	  SelectTime += time+",";
+				        	  $(this).addClass("cardsSelect");
+				        	  $(".ThirdArea").show(1000);
+				          });
+				          
+				          $(document).on('click',".cardsSelect",function(){
+				        	  $(this).removeClass("cardsSelect");
+				        	  var time =$(this).find(".time").text();
+				        	  var array = SelectTime.split(",");
+				        	 	SelectTime = "";
+		  						for ( var i in array ) {
+		  							if(array[i]==time){
+		  								array[i]="";
+		  							}else{
+		  								array[i]+=",";
+		  							}
+		  							SelectTime+=array[i];
+		  					      }
+		  							SelectTime=SelectTime.substr(0,SelectTime.length-1);
+			  						console.log(SelectTime);
+				          });
+				          
+				          $(document).on('click','.notFcards',function(){
+				        	  alert("이미 마감된 시간입니다.");
+				          })
+				          </script>
+			          
+				          
+				          
+				          
+	<script>
   $(function () {
 
     /* initialize the external events
@@ -516,6 +631,22 @@
           start          : new Date(y, m, d, 12, 0),
           end            : new Date(y, m, d, 14, 0),
           allDay         : false,
+          backgroundColor: '#00c0ef', //Info (aqua)
+          borderColor    : '#00c0ef' //Info (aqua)
+        },
+        {
+          title          : '인사부 회의입니다',
+          start          : new Date(y, m, d+1, 10, 0),
+          end            : new Date(y, m, d+1, 16, 0),
+          allDay         : false,
+          backgroundColor: '#00c0ef', //Info (aqua)
+          borderColor    : '#00c0ef' //Info (aqua)
+        },
+        {
+          title          : '전산팀 회의',
+          start          : new Date(y, m, d+3, 10, 0),
+          end            : new Date(y, m, d+3, 16, 0),
+          allDay         : true,
           backgroundColor: '#00c0ef', //Info (aqua)
           borderColor    : '#00c0ef' //Info (aqua)
         },

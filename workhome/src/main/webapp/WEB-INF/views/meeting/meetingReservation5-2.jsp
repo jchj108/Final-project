@@ -1,5 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,122 +15,9 @@
   <link rel="stylesheet" href="${contextPath}/resources/plugins/fullcalendar/main.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="${contextPath}/resources/dist/css/adminlte.min.css">
+
   
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-
-
-<style type="text/css">
-	.fc-title{
-	color: white;
-	}
-	.fc-event, .fc-event-dot {
-    background-color: rgb(20,20,50);
-	}
-	.fc-event{
-	border: rgb(20,20,50);
-	}
-	
-	.first-area{
-		margin-bottom: 5rem;
-		margin-left: auto;
-		margin-right: auto;
-		transition: .8s;
-		margin-top: 5rem;
-	}
-	
-	#calendarWrapper{
-	display: none;
-	}
-	
-	.secondArea, .ThirdArea{
-		display: none;
-	}
-	.selection{
-		text-align: center;
-		
-	}
-	.cards{
-		display:inline-block;
-	 	margin:.8rem;
-	 	transition: .8s;
-	 	cursor: pointer;
-	}
-	.cards:hover{
-		background: lightblue;
-		/* margin:.9rem; */
-	}
-	.cardsSelect{
-		background: lightgray;
-		border: 2px solid rgb(150,150,150);
-	}
-	.fc-day:hover{
-		background: lightblue;
-	}
-	#joinEmp{
-		display:inline-block;
-		border: none;
-		margin: 5px;
-		padding: 5px;
-		clear: both;
-		width: 30%;		
-	}
-	#joinEmp:focus{
-	outline: none;
-	}
-	
-	.calssArea{
-		zoom: 0.9;
-		float:left;
-		text-align: center; 
-		border: 1px solid #5CD1E5; 
-		background: #4ABFD3; 
-		color:white;
-		border-radius: 1rem;
-		padding: 12px;
-		padding-top:5px;
-		padding-bottom: 5px;
-		margin: 5px;
-		transition: .8s;
-	}
-	#commit{
-		/* display: none; */
-		text-align: center;
-		margin: auto;
-	}
-	.buttonArea{
-		text-align: center;
-		margin-top: 2rem;
-		margin-bottom: 2rem;
-	}
-	.notFcards{
-		display:inline-block;
-	 	margin:.8rem;
-	 	transition: .8s;
-	 	background: rgb(20,20,50);
-	 	color: rgb(255,255,255);
-	}
-	.fc-scroller {
-   	overflow-y: hidden !important;
-	}
-	
-	.ui-autocomplete, .ui-menu
-    {
-    	position : fixed;
-        z-index: 1 !important;
-    }
-
-	.reserv-bar, card-primary {
-		z-index: -1;
-	}
-
-	.ui-autocomplete {
-		position:absolute;
-		cursor:default;
-		z-index:999999 !important;
-	}
-
-</style>
-
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -189,9 +74,13 @@
         
           <div class="col-md-3">
                    
-            <div class="sticky-top mb-3">          
+            <div class="sticky-top mb-3">  
+    
        <!-- 회의실 예약 바 -->   
-           <div class="card card-primary reserv-bar">
+           <div class="card card-primary">
+           <input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가">   
+           
+           
             <div class="card-header">
               <h3 class="card-title">회의실 예약</h3>
 
@@ -227,11 +116,7 @@
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">총 참여 사원</label>
-                          		 <div>
-							  		<div class="extraArea">							  			
-								</div>
-					  				<input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가">           
-                      <button type="button" class="btn btn-block bg-gradient-info btn-sm">강건강 - 영업팀</button>
+                       <button type="button" class="btn btn-block bg-gradient-info btn-sm">강건강 - 영업팀</button>
                       <button type="button" class="btn btn-block bg-gradient-info btn-sm">남나눔 - 기획팀</button>
                       <button type="button" class="btn btn-block bg-gradient-info btn-sm">류라라 - 생산팀</button>
                       <br>
@@ -419,6 +304,7 @@
 					}
 				});		
 	</script>
+
 
 
 

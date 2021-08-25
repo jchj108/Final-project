@@ -16,8 +16,8 @@ public class AttendanceDAO {
 		return sqlSession.insert("attendanceMapper.chulgun",map);
 	}
 
-	public int goHome(HashMap<String, String> map, SqlSession sqlSession) {
-		return sqlSession.update("attendanceMapper.goHome",map);
+	public int goHome(HashMap<String, String> keys, SqlSession sqlSession) {
+		return sqlSession.update("attendanceMapper.goHome",keys);
 	}
 
 }
