@@ -40,4 +40,6 @@ public interface MailService {
 	int getReceiveListCount(String email);
 
 	ArrayList<Mail> selectReceiveList(PageInfo pi, String email);
+
+	int deleteMail(int mNo);
 }

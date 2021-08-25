@@ -89,4 +89,8 @@ public class MailDAO {
 	public ArrayList<Mail> selectReceiveList(SqlSessionTemplate sqlSession, PageInfo pi, String email) {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", email);
 	}
+
+	public int deleteMail(SqlSessionTemplate sqlSession, int mNo) {
+		return sqlSession.update("mailMapper.deleteMail", mNo);
+	}
 }

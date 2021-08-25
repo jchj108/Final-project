@@ -183,6 +183,30 @@ public class MailController {
 		return mv;
 	}
 	
+	@RequestMapping("deletemail.mail") // 메일 삭제 (커맨드 패턴 적용)
+	public String deleteMail(@RequestParam("check") int[] check, @RequestParam("command") String command) {
+		System.out.println(command);
+		int result = 0;
+		
+		for(int i = 0; i < check.length; i++) {
+			int mNo = check[i];
+			result += mService.deleteMail(mNo);
+		}
+		
+		System.out.println(result);
+		
+		if(result > 0) {
+			switch(command) {
+			case "templist" : return "redirect:templist.mail";
+			case "sendlist" : return "redirect:sendlist.mail";
+			case "receivelist" : return "redirect:receivelist.mail";
+			}
+		} else {
+			throw new MailException("메일 삭제에 실패했습니다.");
+		}
+		return null; 
+	}
+	
 	@RequestMapping("deletelist.mail")
 	public ModelAndView deleteList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
 			HttpServletRequest request) {
@@ -207,7 +231,7 @@ public class MailController {
 		
 		if (list != null) {
 			mv.addObject("tempList", list).addObject("pi", pi);
-			mv.setViewName("tempmaillist");
+			mv.setViewName("deletemaillist");
 		} else {
 			throw new MailException("임시보관함 조회에 실패했습니다.");
 		}

@@ -25,6 +25,11 @@
 		where estatus='Y' and receiveemp = #{email}
 	</select>
 	
+	<update id="deleteMail">
+		update mail
+		set estatus='N'
+		where mailno=#{mNo}
+	</update>
 	
 	<insert id="insertMail">
 		insert into mail

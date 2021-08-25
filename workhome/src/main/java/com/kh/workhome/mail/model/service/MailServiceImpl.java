@@ -99,4 +99,9 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Mail> selectReceiveList(PageInfo pi, String email) {
 		return mDAO.selectReceiveList(sqlSession, pi, email);
 	}
+
+	@Override
+	public int deleteMail(int mNo) {
+		return mDAO.deleteMail(sqlSession, mNo);
+	}
 }
