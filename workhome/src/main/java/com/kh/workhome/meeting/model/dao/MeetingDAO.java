@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.workhome.employee.model.vo.Employee;
+import com.kh.workhome.meeting.model.vo.MeetingReservation;
 
 @Repository("meDAO")
 public class MeetingDAO {
@@ -21,6 +22,10 @@ public class MeetingDAO {
 
 	public ArrayList<Employee> searchEmpList2(SqlSessionTemplate sqlSession, String result) {
 		return (ArrayList)sqlSession.selectList("meetingMapper.searchEmpList2", result);
+	}
+
+	public int reInsert(SqlSessionTemplate sqlSession, MeetingReservation m) {
+		return sqlSession.insert("meetingMapper.reInsert", m);
 	}
 
 

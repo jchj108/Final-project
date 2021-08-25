@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.meeting.model.dao.MeetingDAO;
+import com.kh.workhome.meeting.model.vo.MeetingReservation;
 
 @Service("meService")
 public class MeetingServiceImpl implements MeetingService {
@@ -32,6 +33,11 @@ public class MeetingServiceImpl implements MeetingService {
 	@Override
 	public ArrayList<Employee> searchEmpList2(String result) {
 		return meDAO.searchEmpList2(sqlSession, result);
+	}
+
+	@Override
+	public int reInsert(MeetingReservation m) {
+		return meDAO.reInsert(sqlSession, m);
 	}
 
 }
