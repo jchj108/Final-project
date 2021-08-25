@@ -56,6 +56,12 @@ public class MeetingController {
 		
 		return "meetingReservation3";		
 	}
+	
+	@RequestMapping("meetReserv5.meet")
+	public String meetingReserv5() {
+		
+		return "meetingReservation6";		
+	}
 
 	
 	

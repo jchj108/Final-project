@@ -1,5 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,20 +15,12 @@
   <link rel="stylesheet" href="${contextPath}/resources/plugins/fullcalendar/main.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="${contextPath}/resources/dist/css/adminlte.min.css">
+
   
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
 
 <style type="text/css">
-	.fc-title{
-	color: white;
-	}
-	.fc-event, .fc-event-dot {
-    background-color: rgb(20,20,50);
-	}
-	.fc-event{
-	border: rgb(20,20,50);
-	}
 	
 	.first-area{
 		margin-bottom: 5rem;
@@ -121,15 +111,10 @@
         z-index: 1 !important;
     }
 
-	.reserv-bar, card-primary {
+	.reserv-bar, card-primary, card-header {
 		z-index: -1;
 	}
 
-	.ui-autocomplete {
-		position:absolute;
-		cursor:default;
-		z-index:999999 !important;
-	}
 
 </style>
 
@@ -189,49 +174,38 @@
         
           <div class="col-md-3">
                    
-            <div class="sticky-top mb-3">          
+            <div class="sticky-top mb-3">  
+    
        <!-- 회의실 예약 바 -->   
-           <div class="card card-primary reserv-bar">
-            <div class="card-header">
-              <h3 class="card-title">회의실 예약</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
+           <div class="card card-primary">
+			<input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가"> 
+     
+  
+  
+  <br><br><br><br>         
               <div class="form-group">
                 <label for="inputName">예약 가능 시간</label>
-	            <div>
-	            	<button type="button" class="btn btn-danger btn-sm">09</button>
-	            	<button type="button" class="btn btn-default btn-sm">10</button>
-	            	<button type="button" class="btn btn-default btn-sm">11</button>
-	            	<button type="button" class="btn btn-default btn-sm">12</button>
-	            	<button type="button" class="btn btn-primary btn-sm">13</button>
-	            	<button type="button" class="btn btn-primary btn-sm">14</button>
-	            	<button type="button" class="btn btn-default btn-sm">15</button>
-	            	<button type="button" class="btn btn-danger btn-sm">16</button>
-	            	<button type="button" class="btn btn-danger btn-sm">17</button>
-	            	<button type="button" class="btn btn-danger btn-sm">18</button>
-	            </div>
+	            
+	            
+	            
               </div>
+              
               <div class="form-group">
                 <label for="inputName">회의 제목</label>
                 <input type="text" id="inputName" class="form-control" placeholder="회의 제목을 입력하세요.">
               </div>
+              
               <div class="form-group">
                 <label for="inputDescription">회의 상세 설명</label>
                 <textarea id="inputDescription" class="form-control" rows="4" placeholder="회의  상세 설명을 입력하세요."></textarea>
               </div>
+                                       
+            <div class="card-body">
+
+
               <div class="form-group">
                 <label for="inputClientCompany">총 참여 사원</label>
-                          		 <div>
-							  		<div class="extraArea">							  			
-								</div>
-					  				<input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가">           
-                      <button type="button" class="btn btn-block bg-gradient-info btn-sm">강건강 - 영업팀</button>
+                       <button type="button" class="btn btn-block bg-gradient-info btn-sm">강건강 - 영업팀</button>
                       <button type="button" class="btn btn-block bg-gradient-info btn-sm">남나눔 - 기획팀</button>
                       <button type="button" class="btn btn-block bg-gradient-info btn-sm">류라라 - 생산팀</button>
                       <br>
@@ -419,6 +393,7 @@
 					}
 				});		
 	</script>
+
 
 
 
