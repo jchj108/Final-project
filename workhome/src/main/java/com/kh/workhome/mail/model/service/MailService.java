@@ -42,4 +42,8 @@ public interface MailService {
 	ArrayList<Mail> selectReceiveList(PageInfo pi, String email);
 
 	int deleteMail(int mNo);
+
+	int insertMailSRReceiver(String mId);
+
+	int insertMailSRSender(String empNo);
 }

@@ -124,20 +124,17 @@ public class MailController {
 		
 		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
 		
-		String email = empNo + "@workhome.com";
-
-
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
 		}
 		int boardLimit = 15;
-		int listCount = mService.getReceiveListCount(email);
+		int listCount = mService.getReceiveListCount(empNo);
 		System.out.println(listCount);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
 
-		ArrayList<Mail> list = mService.selectReceiveList(pi, email);
+		ArrayList<Mail> list = mService.selectReceiveList(pi, empNo);
 		
 		System.out.println(list);
 		
@@ -327,7 +324,14 @@ public class MailController {
 				throw new MailException("파일 저장에 실패했습니다.");
 			}
 		}
-
+		
+		int result3 = mService.insertMailSRReceiver(getMId(m.getReceiveEmp()));
+		int result4 = mService.insertMailSRSender(m.getEmpNo()); // 보낸 메일함에 저장
+		
+		if(result3 <= 0 || result4 <= 0) {
+			throw new MailException("메일 전송에 실패했습니다.");
+		}
+		
 		return "redirect:sendlist.mail";
 	}
 

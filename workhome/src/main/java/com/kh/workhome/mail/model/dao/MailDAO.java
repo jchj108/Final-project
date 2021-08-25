@@ -93,4 +93,12 @@ public class MailDAO {
 	public int deleteMail(SqlSessionTemplate sqlSession, int mNo) {
 		return sqlSession.update("mailMapper.deleteMail", mNo);
 	}
+
+	public int insertMailSRReceiver(SqlSessionTemplate sqlSession, String mId) {
+		return sqlSession.insert("mailMapper.insertMailSRReceiver", mId);
+	}
+
+	public int insertMailSRSender(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.insert("mailMapper.insertMailSRSender", empNo);
+	}
 }

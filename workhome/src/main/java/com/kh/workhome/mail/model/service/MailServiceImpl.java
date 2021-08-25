@@ -104,4 +104,14 @@ public class MailServiceImpl implements MailService {
 	public int deleteMail(int mNo) {
 		return mDAO.deleteMail(sqlSession, mNo);
 	}
+
+	@Override
+	public int insertMailSRReceiver(String mId) {
+		return mDAO.insertMailSRReceiver(sqlSession, mId);
+	}
+
+	@Override
+	public int insertMailSRSender(String empNo) {
+		return mDAO.insertMailSRSender(sqlSession, empNo);
+	}
 }
