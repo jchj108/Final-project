@@ -41,6 +41,7 @@
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
+	<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 	<div class="wrapper">
 		<!-- header -->
 		<jsp:include page="common/header.jsp"></jsp:include>
@@ -88,7 +89,7 @@
 								퇴근 : ${map.GOHOME}
 								</c:if>
 										</p>
-<!-- 										<p id="resultArea"></p> -->
+										<!-- 										<p id="resultArea"></p> -->
 									</div>
 									<c:if test="${empty map.ATTEND}">
 										<a id="commute" class="btn btn-primary btn-user btn-block"
@@ -98,7 +99,7 @@
 										<a id="off" class="btn btn-success btn-user btn-block goHome"
 											style="color: white;"> 퇴근하기 </a>
 									</c:if>
-									<a id="off" class="btn btn-success btn-user btn-block goHome"
+									<a class="btn btn-success btn-user btn-block goHome"
 										style="color: white; display: none;"> 퇴근하기 </a>
 								</div>
 							</div>
@@ -179,13 +180,16 @@
 		<!-- ./wrapper -->
 
 		<!-- jQuery -->
+
 		<script src="${contextPath }/resources/plugins/jquery/jquery.min.js"></script>
+
 		<!-- Bootstrap -->
 		<!-- 		<script -->
 		<%-- 			src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --%>
 		<!-- jQuery UI -->
 		<script
 			src="${contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
+		<%-- 			src="${contextPath }/resources/plugins/js/jquery-3.6.0.min.js"></script> --%>
 		<!-- AdminLTE App -->
 		<script src="${contextPath }/resources/dist/js/adminlte.min.js"></script>
 		<!-- Page specific script -->
@@ -231,38 +235,15 @@
 			}
 		});
 	});
-// 	$(document).on('click','.goHome',function(){
-// 		var result ="";
-// 		var check = false;
-		
-// 		if (check){
-// 			$.ajax({
-// 				url:"goHome.do",
-// 				dataType:"json",
-// 				success:function(data){
-// 					if(data.result=="fail"){
-// 						alert("퇴근등록에 실패했습니다.");
-// 					}else{
-// 						$(".goHome").fadeOut(1000);
-// 						$(".zipgalle").text("퇴근 : "+data.map.GOHOME);
-// 						clock.stop();
-// 					}
-// 				}
-// 			});
-// 		}
-// 	});
-
-	$(document).on('click','#off',function(){
-// 		alert("off클릭");
+	$(document).on('click', '.goHome', function() {
 		$.ajax({
-			url:"goHome.do",
-			success:function(data){
+			url : "goHome.do",
+			dataType : "json",
+			success : function(data) {
 				console.log(data);
-				if(data == "fail"){
-					alert("퇴근 실패!!")
-				} else {
-					$('#off').fadeout(1000);
-					$('.zipgalle').text("퇴근 : "+data.map.GOHOME);
+				if (data.result == "success") {
+					$(".goHome").hide();
+					$('.zipgalle').text("퇴근 : " + data.map.GOHOME);
 				}
 			}
 		})
