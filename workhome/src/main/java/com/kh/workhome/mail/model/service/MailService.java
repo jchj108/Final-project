@@ -41,9 +41,13 @@ public interface MailService {
 
 	ArrayList<Mail> selectReceiveList(PageInfo pi, String email);
 
-	int deleteMail(int mNo);
+	int deleteMail(Map<String, Object> map);
 
 	int insertMailSRReceiver(String mId);
 
 	int insertMailSRSender(String empNo);
+
+	int getDeleteListCount(String empNo);
+
+	ArrayList<Mail> selectDeleteList(PageInfo pi, String empNo);
 }

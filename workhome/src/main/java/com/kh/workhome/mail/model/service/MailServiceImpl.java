@@ -1,6 +1,7 @@
 package com.kh.workhome.mail.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -101,8 +102,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int deleteMail(int mNo) {
-		return mDAO.deleteMail(sqlSession, mNo);
+	public int deleteMail(Map<String, Object> map) {
+		return mDAO.deleteMail(sqlSession, map);
 	}
 
 	@Override
@@ -113,5 +114,15 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public int insertMailSRSender(String empNo) {
 		return mDAO.insertMailSRSender(sqlSession, empNo);
+	}
+
+	@Override
+	public int getDeleteListCount(String empNo) {
+		return mDAO.getDeleteListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectDeleteList(PageInfo pi, String empNo) {
+		return mDAO.selectDeleteList(sqlSession, pi, empNo);
 	}
 }

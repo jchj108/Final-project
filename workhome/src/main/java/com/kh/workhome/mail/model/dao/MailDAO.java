@@ -1,6 +1,7 @@
 package com.kh.workhome.mail.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,11 +88,15 @@ public class MailDAO {
 	}
 
 	public ArrayList<Mail> selectReceiveList(SqlSessionTemplate sqlSession, PageInfo pi, String email) {
-		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", email);
+		
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage()-1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", email, rowBounds);
 	}
 
-	public int deleteMail(SqlSessionTemplate sqlSession, int mNo) {
-		return sqlSession.update("mailMapper.deleteMail", mNo);
+	public int deleteMail(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.update("mailMapper.deleteMail", map);
 	}
 
 	public int insertMailSRReceiver(SqlSessionTemplate sqlSession, String mId) {
@@ -100,5 +105,17 @@ public class MailDAO {
 
 	public int insertMailSRSender(SqlSessionTemplate sqlSession, String empNo) {
 		return sqlSession.insert("mailMapper.insertMailSRSender", empNo);
+	}
+
+	public int getDeleteListCount(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.getDeleteListCount", empNo);
+	}
+
+	public ArrayList<Mail> selectDeleteList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
+
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage()-1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteList", empNo, rowBounds);
 	}
 }

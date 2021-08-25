@@ -159,13 +159,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="send.mail" class="nav-link">
+                <a href="${contextPath }/send.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>메일 쓰기</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
+                <a href="${contextPath }/receivelist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>받은메일함</p>
                 </a>
@@ -177,13 +177,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="templist.mail" class="nav-link">
+                <a href="${contextPath }/templist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>임시보관함</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/read-mail.html" class="nav-link">
+                <a href="${contextPath }/deletelist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>휴지통</p>
                 </a>

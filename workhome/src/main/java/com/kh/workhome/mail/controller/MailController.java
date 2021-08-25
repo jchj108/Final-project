@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -181,13 +182,19 @@ public class MailController {
 	}
 	
 	@RequestMapping("deletemail.mail") // 메일 삭제 (커맨드 패턴 적용)
-	public String deleteMail(@RequestParam("check") int[] check, @RequestParam("command") String command) {
+	public String deleteMail(@RequestParam("check") int[] check, @RequestParam("command") String command, HttpSession session) {
 		System.out.println(command);
+		
+		String empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
 		int result = 0;
 		
 		for(int i = 0; i < check.length; i++) {
 			int mNo = check[i];
-			result += mService.deleteMail(mNo);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("empNo", empNo);
+			map.put("mNo", mNo);
+			result += mService.deleteMail(map);
 		}
 		
 		System.out.println(result);
@@ -219,15 +226,18 @@ public class MailController {
 			currentPage = page;
 		}
 		int boardLimit = 15;
-		int listCount = mService.getTempListCount(empNo);
+		int listCount = mService.getDeleteListCount(empNo);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
 		
-		ArrayList<Mail> list = mService.selectTempList(pi, empNo);
+		ArrayList<Mail> list = mService.selectDeleteList(pi, empNo);
+		
+		System.out.println(list);
+		
 		
 		if (list != null) {
-			mv.addObject("tempList", list).addObject("pi", pi);
+			mv.addObject("deleteList", list).addObject("pi", pi);
 			mv.setViewName("deletemaillist");
 		} else {
 			throw new MailException("임시보관함 조회에 실패했습니다.");

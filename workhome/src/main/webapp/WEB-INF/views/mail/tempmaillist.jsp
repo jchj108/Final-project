@@ -289,7 +289,7 @@ td {
 																test="${attachment == 'on' }">
 																<i class="fas fa-paperclip"></i>
 															</c:if></td>
-														<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
+														<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
 														<td onclick="location.href='${mdetail}'"
 															style="cursor: pointer;" class="mailbox-subject">${m.etitle }</td>
 														<td class="mailbox-date">${m.sDate }</td>
