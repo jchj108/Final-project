@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.workhome.employee.model.vo.Employee;
+import com.kh.workhome.meeting.model.vo.MeetingReservation;
 
 public interface MeetingService {
 
@@ -12,5 +13,7 @@ public interface MeetingService {
 	ArrayList<HashMap<Integer, String>> selectRoom();
 
 	ArrayList<Employee> searchEmpList2(String result);
+
+	int reInsert(MeetingReservation m);
 
 }
