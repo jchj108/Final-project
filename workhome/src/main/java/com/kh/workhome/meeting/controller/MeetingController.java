@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ import com.google.gson.GsonBuilder;
 import com.kh.workhome.employee.model.service.EmployeeService;
 import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.meeting.model.service.MeetingService;
+import com.kh.workhome.meeting.model.vo.MeetingReservation;
 
 @Controller
 public class MeetingController {
@@ -38,24 +40,6 @@ public class MeetingController {
 	
 	@Autowired
 	private EmployeeService eService;
-
-	@RequestMapping("meetReserv.meet")
-	public String meetingReserv() {
-		
-		return "meetingReservation";
-	}
-	
-	@RequestMapping("meetReserv2.meet")
-	public String meetingReserv2() {
-		
-		return "meetingReservation2";		
-	}
-	
-	@RequestMapping("meetReserv3.meet")
-	public String meetingReserv3() {
-		
-		return "meetingReservation3";		
-	}
 	
 	@RequestMapping("meetReserv5.meet")
 	public String meetingReserv5() {
@@ -63,26 +47,15 @@ public class MeetingController {
 		return "meetingReservation6";		
 	}
 
-	
-	
-		
-	@RequestMapping("meetReserv4.meet")
-	public ModelAndView rInsertView(ModelAndView mv) {
-		ArrayList<HashMap<Integer,String>> roomList = meService.selectRoom();
-		mv.addObject("roomList",roomList);
-		mv.setViewName("meetingReservation4");
-		return mv;
-	}	
-
 		
 	@RequestMapping("searchEmpList.meet")
 	public void searchEmpList(HttpServletResponse response, HttpSession session,
 							 @RequestParam("search")String search) throws IOException {
 		
-		System.out.println("search : " + search);
+//		System.out.println("search : " + search);
 		
 		ArrayList<Employee>list = meService.searchEmpList("%"+search.trim()+"%");
-		System.out.println("list : " + list);
+//		System.out.println("list : " + list);
 		ArrayList<String> resultList = new ArrayList<>();
 			
 //		Employee loginEmp = (Employee) session.getAttribute("loginEmp");
@@ -90,39 +63,42 @@ public class MeetingController {
 //		String myNo = loginEmp.getEmpNo();
 		
 		for(Employee emp :list) {
-				String str = URLEncoder.encode("( "+emp.getEmpNo()+" ) "+ emp.getEmpName() +" - "+emp.getDeptName() ,"utf-8");
+				String str = URLEncoder.encode("["+emp.getEmpNo()+"] "+ emp.getEmpName() +" - "+emp.getDeptName() ,"utf-8");
 				resultList.add(str);
-				System.out.println("str : " + str);
-				System.out.println("resultList : " + resultList);				
+//				System.out.println("str : " + str);
+//				System.out.println("resultList : " + resultList);				
 		}
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(resultList,response.getWriter());
 	}
-	
-//	
-//	@RequestMapping(value = "searchEmp.meet", method = RequestMethod.POST)
-//	 public void AutoTest(Locale locale, Model model, HttpServletRequest request,
-//			 HttpServletResponse response) throws IOException {
-//	 
-//	 String result = request.getParameter("term");
-//	 
-//	 ArrayList<Employee>list = meService.searchEmpList2(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
-//	 
-//	 System.out.println(result);
-//	 
-//	 JSONArray ja = new JSONArray();
-//	 for (int i = 0; i < list.size(); i++) {
-//		 ja.add(list.get(i).getEmpName());
-//	 }
-//	 
-//	 System.out.println(list);
-//	 
-//	 PrintWriter out = response.getWriter();
-//	 
-//	 out.print(ja.toString());
-//	 
-//	 }
 
+	// 예약하기
+	@RequestMapping("reInsert.meet")
+	@ResponseBody
+	public String reInsert(
+			  @RequestParam(value="rDate", required=false) String rDate,
+			  @RequestParam("joinEmp") String joinEmp,
+			  @RequestParam("mTitle") String mTitle,
+			  @RequestParam("mContent") String mContent) {
+		
+		MeetingReservation m = new MeetingReservation();
+		
+		m.setrDate(rDate);
+		m.setJoinEmp(joinEmp);
+		m.setmTitle(mTitle);
+		m.setmContent(mContent);
+	
+		System.out.println(m);
+		
+		int result = meService.reInsert(m);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+		
+	}
 	
 }

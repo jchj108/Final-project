@@ -24,6 +24,10 @@
 	<script src='${contextPath}/resources/fullcalendar/core/main.js'></script>
 	<script src='${contextPath}/resources/fullcalendar/interaction/main.js'></script>
 	<script src='${contextPath}/resources/fullcalendar/daygrid/main.js'></script>   
+	
+	<!-- 모달 -->
+
+
 
 
 <style type="text/css">
@@ -134,9 +138,9 @@
 	
 	#calendar{
 		height: 70%;
-		width: 90%;
+		width: 85%;
 		position: relative;
-		left: 50px;		
+		left: 80px;		
 	}
 	
 	.dateResult{
@@ -157,6 +161,27 @@
 		var mNo = "";//회의실 번호
 		var savedTime="";//예약되어있는시간
 	</script>
+
+ 
+ <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">WorkHome</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="wrapper">
   <!-- header -->
@@ -242,25 +267,26 @@
               </div>
               <div class="form-group">
                 <label for="inputName">회의 제목</label>
-                <input type="text" id="inputName" class="form-control" placeholder="회의 제목을 입력하세요.">
+                <input type="text" id="mTitle" class="form-control" placeholder="회의 제목을 입력하세요.">
               </div>
               <div class="form-group">
                 <label for="inputDescription">회의 상세 설명</label>
-                <textarea id="inputDescription" class="form-control" rows="4" placeholder="회의  상세 설명을 입력하세요."></textarea>
+                <textarea id="mContent" class="form-control" rows="4" placeholder="회의  상세 설명을 입력하세요."></textarea>
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">총 참여 사원</label>  
                 <input class="inputModal" type="text" id="joinEmp" placeholder="참가인 추가">  
                 	<div class="extraArea">	</div>
 
-                     <button type="button" class="btn btn-block btn-primary reserv-button">예약하기</button>
+                     <button type="button" class="btn btn-block btn-primary reserv-button" id="commit">예약하기</button>
                    
               </div>
             </div>
             <!-- /.card-body -->
           </div>          
           <!-- 끝 -->  
-          
+ 
+
           
                 
               <div class="card" style="display:none;">
@@ -341,7 +367,9 @@
 		            /* alert('Clicked on: ' + info.dateStr); */
 		            //날짜 받아옴!
 					if(yesterDate > info.date){
-						alert("이미 지난 날짜는 선택할 수 없습니다.");
+//						alert("이미 지난 날짜는 선택할 수 없습니다.");
+						 $('.modal-body').text("이미 지난 날짜는 선택 불가능합니다.");
+						 $('#exampleModal').modal('show');
 					}else{			             
 			            date=info.dateStr;
 			            $(".secondArea").fadeIn(1000);
@@ -420,7 +448,7 @@
 						$("#joinEmp").autocomplete({
 							source:list,
 							select: function(event, ui) {
-								console.log(ui.item);
+//								console.log(ui.item);
 								/* $(this).attr('readonly',true); */
 								addFun(ui.item.value);
 								return false;
@@ -462,7 +490,7 @@
 						joinEmp=joinEmp.substr(0,joinEmp.length-1);
 						console.log(joinEmp);
 					}
-				});		
+				});	
 	</script>
 
 
@@ -533,11 +561,89 @@ function(data){
 				        	  alert("이미 마감된 시간입니다.");
 				          })
 				          </script>
-			          
-				          
-				          
-				          
+
+
+<!-- 예약 확인 -->
+						  			<script type="text/javascript">
+						  				$(document).on('click','#commit',function(){
+						  					
+						  					
+						  					var mTitle = $("#mTitle").val();
+						  					var mContent = $("#mContent").val();
+						  					var date = $(".dateResult").text();
+						  					var count = false;
+
+						  					if(date==""){
+//						  						alert("날짜를 선택해 주세요.");
+												 $('.modal-body').text("날짜를 선택해 주세요.");
+												 $('#exampleModal').modal('show');
+						  						return;
+						  					}						  					
+						  					
+						  					if(mTitle==""){
+												 $('.modal-body').text("회의 제목을 입력해 주세요.");
+												 $('#exampleModal').modal('show');
+						  						$("#mTitle").focus();
+						  						return;
+						  					}
+						  					if(mContent==""){
+												 $('.modal-body').text("회의 상세 설명을 입력해 주세요.");
+												 $('#exampleModal').modal('show');
+						  						$("#mContent").focus();
+						  						return;
+						  					}
+						  					if(joinEmp!=""){
+							  					var array = joinEmp.match(/;/g);
+							  					count = array.length>=1?true:false;
+						  					}
+						  					if(!count){
+												 $('.modal-body').text("참가인을 한 명 이상 등록해 주세요.");
+												 $('#exampleModal').modal('show');
+						  						$("#joinEmp").focus();
+						  						return;
+						  					}
+//						  					if(SelectTime==""){
+//						  						alert("시간을 선택해주세요!");
+//						  						return;
+//						  					}
+						  					
+//						  					SelectTime = SelectTime.substr(0,SelectTime.length-1);
+						  					
+						  					if(confirm("날짜 : "+date+"\n제목 : \'"+mTitle+"\n참가인 : \'"+joinEmp+"\'\n예약이 맞습니까?")){
+						  						var rDate = date+";";
+//						  						var rDate = date+";"+SelectTime;
+//						  						var empNo = "${loginEmp.empNo}";
+						  						
+						  						console.log("rDate : " + rDate);
+						  											  						
+						  						$.ajax({
+													url:"reInsert.meet",
+													data:{rDate:rDate,joinEmp:joinEmp,mTitle:mTitle,mContent:mContent},
+													type:"post",
+													success:function(data){
+														if(data=="success"){
+															 $('.modal-body').text("성공적으로 예약하였습니다.");
+															 $('#exampleModal').modal('show');
+//															location.href="meetReserv5.meet";
+														}else{
+															console.log(date, mTitle, joinEmp);
+															 $('.modal-body').text("예약에 실패하였습니다.");
+															 $('#exampleModal').modal('show');
+														}
+													}
+						  						});
+						  					}else{
+//						  						SelectTime+=",";
+												 $('.modal-body').text("예약을 취소하였습니다.");
+												 $('#exampleModal').modal('show');
+						  					}
+						  					
+						  				})
+						  			</script>
+
+			          		          
 	<script>
+		
   $(function () {
 
     /* initialize the external events

@@ -11,21 +11,23 @@
 		select *
 		from EMPLOYEE
 		JOIN DEPARTMENT USING (DEPTNO)
-		where EMPSTATUS!='N' AND (EMPNO LIKE #{string} or EMPNAME LIKE #{string})
+		where EMPSTATUS!='N' AND (EMPNO LIKE #{string} or EMPNAME LIKE #{string} or EMPNAME LIKE #{string})
 	</select>
 
+	<insert id="reInsert" parameterType="MeetingReservation">
+		insert into RESERVATION
+		values('ROOM01', #{joinEmp}, #{mTitle}, #{mContent}, 'Y', null, #{rDate}, null)
+	</insert>
 
 	<resultMap type="MeetingReservation" id="meetingResultSet">
 		<id column="MNO" property="mNo" />
-		<result column="STARTTIME" property="startTime" />
-		<result column="RTIME" property="rTime" />
-		<result column="RDATE" property="rDate" />
 		<result column="JOINEMP" property="joinEmp" />
 		<result column="MTITLE" property="mTitle" />
 		<result column="MCONTENT" property="mContent" />
 		<result column="RSTATUS" property="rStatus" />
+		<result column="RTIME" property="rTime" />
+		<result column="RDATE" property="rDate" />		
 		<result column="EMPNO" property="empNo" />
-		<result column="ENDTIME" property="endTime" />
 	</resultMap>
 	
 	<resultMap type="Employee" id="employeeResultSet">
