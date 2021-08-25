@@ -109,7 +109,7 @@ td {
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>임시보관함</h1>
+							<h1>받은메일함</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -147,15 +147,15 @@ td {
 										<li class="nav-item"><a href="#" class="nav-link"> 
 										<i class="fas fa-envelope mail-icon"></i> 전체메일
 										</a></li>
-										<li class="nav-item active"><a href="${contextPath }/read.mail" class="nav-link">
-												<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
+										<li class="nav-item active thispage"><a href="${contextPath }/receivelist.mail" class="nav-link">
+												<i class="far fa-envelope-open mail-icon thispage"></i> <b>받은메일함</b> <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> 
+										<li class="nav-item"><a href="${contextPath }/sendlist.mail" class="nav-link"> 
 										<i class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
-										<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link thispage"><i
-												class="far fa-file-alt mail-icon thispage"></i> <b>임시보관함</b>
+										<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link"><i
+												class="far fa-file-alt mail-icon"></i> 임시보관함
 										</a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
 												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
@@ -235,11 +235,10 @@ td {
 											</button>
 										</div>
 										<!-- /.btn-group -->
-										<button type="button" onclick="location.href='templist.mail'" class="btn btn-default btn-sm">
+										<button type="button" onclick="location.href='receivelist.mail'" class="btn btn-default btn-sm">
 											<i class="fas fa-sync-alt"></i>
 										</button>
 										<div class="float-right">
-											<%-- 											${pi.currentPage }-15/${pi.listCount } --%>
 											<div class="btn-group">
 												<button type="button" class="btn btn-default btn-sm">
 													<i class="fas fa-chevron-left"></i>
@@ -254,7 +253,7 @@ td {
 									</div>
 									<div class="table-responsive mailbox-messages">
 										<table class="table table-hover table-striped">
-											<c:forEach var="m" items="${tempList }" varStatus="idCount">
+											<c:forEach var="m" items="${receiveList }" varStatus="idCount">
 												<c:forEach var="mF" items="${m.mailFileList}">
 													<c:if test="${mF.mStatus == 'Y'}">
 														<c:set var="attachment" value="on" />
@@ -263,7 +262,7 @@ td {
 														<c:set var="attachment" value="off" />
 													</c:if>
 												</c:forEach>
-												<c:url var="mdetail" value="readtemp.mail">
+												<c:url var="mdetail" value="readmail.mail">
 													<c:param name="mId" value="${ m.mailNo }" />
 													<c:param name="page" value="${ pi.currentPage }" />
 												</c:url>

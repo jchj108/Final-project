@@ -213,15 +213,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="meetReserv.meet" class="nav-link">
+                <a href="meetReserv5.meet" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>회의실 예약</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="meetReserv2.meet" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>회의실 예약2</p>
                 </a>
               </li>
               <li class="nav-item">

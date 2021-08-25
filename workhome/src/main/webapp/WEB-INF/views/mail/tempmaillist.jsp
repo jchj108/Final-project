@@ -151,7 +151,7 @@ td {
 												<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> 
+										<li class="nav-item"><a href="${contextPath }/sendlist.mail" class="nav-link"> 
 										<i class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
 										<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link thispage"><i
@@ -161,7 +161,7 @@ td {
 												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
 												class="badge bg-warning float-right mail-icon">65</span>
 										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
+										<li class="nav-item"><a href="deletelist.mail" class="nav-link"> <i
 												class="far fa-trash-alt mail-icon"></i> 휴지통
 										</a></li>
 									</ul>
@@ -224,7 +224,7 @@ td {
 											<i class="far fa-square"></i>
 										</button>
 										<div class="btn-group">
-											<button type="button" class="btn btn-default btn-sm">
+											<button type="button" class="btn btn-default btn-sm deleteMailBtn">
 												<i class="far fa-trash-alt"></i>
 											</button>
 											<button type="button" class="btn btn-default btn-sm">
@@ -412,7 +412,7 @@ td {
 									'fa-square').addClass('fa-check-square')
 						}
 						$(this).data('clicks', !clicks)
-					})
+					});
 
 			//Handle starring for font awesome
 			$('.mailbox-star').click(function(e) {
@@ -427,6 +427,11 @@ td {
 					$this.toggleClass('fa-star-o')
 				}
 			});
+			
+			$('.deleteMailBtn').click(function() {
+			});
+			
+			
 		});
 	</script>
 </body>

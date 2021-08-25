@@ -114,41 +114,38 @@ public class MailController {
 		return mv;
 	}
 
-	@RequestMapping("receivelist.mail")
+	@RequestMapping("receivelist.mail") // 받은 메일함 조회
 	public ModelAndView receivemaillist(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
 			HttpServletRequest request) {
 
-		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
-
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("empNo", empNo);
-
-		String email = empNo += "@workhome.com";
-
-		map.put("empNo", empNo);
-		map.put("email", email);
-
-		if (empNo == null) {
+		if (request.getSession().getAttribute("loginUser") == null) {
 			throw new MailException("로그인이 필요합니다.");
 		}
+		
+		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
+		
+		String email = empNo + "@workhome.com";
+
 
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
 		}
 		int boardLimit = 15;
-		int listCount = mService.getReceiveListCount(map);
-
+		int listCount = mService.getReceiveListCount(email);
+		System.out.println(listCount);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
 
-		ArrayList<Mail> list = mService.selectReceiveList(pi, map);
-
+		ArrayList<Mail> list = mService.selectReceiveList(pi, email);
+		
+		System.out.println(list);
+		
 		if (list != null) {
-			mv.addObject("tempList", list).addObject("pi", pi);
+			mv.addObject("receiveList", list).addObject("pi", pi);
 			mv.setViewName("receivemaillist");
 		} else {
-			throw new MailException("임시보관함 조회에 실패했습니다.");
+			throw new MailException("받은 메일함 조회에 실패했습니다.");
 		}
 
 		return mv;
@@ -183,6 +180,38 @@ public class MailController {
 			throw new MailException("임시보관함 조회에 실패했습니다.");
 		}
 
+		return mv;
+	}
+	
+	@RequestMapping("deletelist.mail")
+	public ModelAndView deleteList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
+			HttpServletRequest request) {
+		
+		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
+		
+		if (empNo == null) {
+			throw new MailException("로그인이 필요합니다.");
+		}
+		
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		int boardLimit = 15;
+		int listCount = mService.getTempListCount(empNo);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
+		
+		ArrayList<Mail> list = mService.selectTempList(pi, empNo);
+		
+		if (list != null) {
+			mv.addObject("tempList", list).addObject("pi", pi);
+			mv.setViewName("tempmaillist");
+		} else {
+			throw new MailException("임시보관함 조회에 실패했습니다.");
+		}
+		
 		return mv;
 	}
 
