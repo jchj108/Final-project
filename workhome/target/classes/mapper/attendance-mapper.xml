@@ -14,10 +14,12 @@
 	insert into attendance 
 	values(TO_DATE(replace(#{Date},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss'), #{empNo}, TO_DATE(replace(#{Date},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss'), null)
 	</insert>
-	
-	<update id="goHome">
-	update attendance 
-	set goHome=TO_DATE(replace(#{Date},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss')
-	where empNo=#{empNo}
+
+	<update id="goHome" parameterType="map">
+		<![CDATA[
+ 		update attendance 
+ 		set GOHOME = to_date(replace(#{date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss') 
+		where empNo =#{empNo} and (ATTEND between TO_DATE(replace(#{start},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss') and to_date( replace(#{date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss')) 
+ 		]]> 
 	</update>
 </mapper>
