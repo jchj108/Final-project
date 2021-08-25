@@ -28,8 +28,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public int goHome(HashMap<String, String> map) {
-		return atDAO.goHome(map, sqlSession);
+	public int goHome(HashMap<String, String> keys) {
+		return atDAO.goHome(keys, sqlSession);
 	}
 
 }
