@@ -35,6 +35,12 @@
 		</if>
 	</update>
 	
+	<select id="searchEmp" resultMap="employeeResultSet">
+		select * from employee
+		where empno like '%' || #{keyword} || '%'
+		OR EMPNAME LIKE '%' || #{keyword} || '%'
+	</select>
+	
 	<insert id="insertMail">
 		insert into mail
 		values (MAIL_TEMP_SEQ.NEXTVAL, #{receiveEmp}, null, #{etitle}, 

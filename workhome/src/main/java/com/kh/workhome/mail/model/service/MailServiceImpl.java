@@ -125,4 +125,9 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Mail> selectDeleteList(PageInfo pi, String empNo) {
 		return mDAO.selectDeleteList(sqlSession, pi, empNo);
 	}
+
+	@Override
+	public ArrayList<Employee> searchEmp(String keyword) {
+		return mDAO.searchEmp(sqlSession, keyword);
+	}
 }

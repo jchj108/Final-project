@@ -1,6 +1,7 @@
 package com.kh.workhome.mail.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.workhome.common.PageInfo;
 import com.kh.workhome.common.Pagination;
 import com.kh.workhome.employee.model.vo.Employee;
@@ -179,6 +184,17 @@ public class MailController {
 		}
 
 		return mv;
+	}
+	
+	@RequestMapping("searchemp.mail") // 메일 보내기 사원 자동완성
+	@ResponseBody
+	public void searchEmp(HttpServletResponse response, @RequestParam("keyword") String keyword) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=UTF-8");
+		
+		ArrayList<Employee> list = mService.searchEmp(keyword);
+		
+		Gson gson = new Gson();
+		gson.toJson(list, response.getWriter());		
 	}
 	
 	@RequestMapping("deletemail.mail") // 메일 삭제 (커맨드 패턴 적용)
