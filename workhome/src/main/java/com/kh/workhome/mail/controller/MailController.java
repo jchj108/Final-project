@@ -193,7 +193,10 @@ public class MailController {
 			int mNo = check[i];
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("empNo", empNo);
+			System.out.println("empNo : " + empNo);
 			map.put("mNo", mNo);
+			System.out.println("mNo : " + mNo);
+			map.put("command", command);
 			result += mService.deleteMail(map);
 		}
 		
