@@ -107,14 +107,13 @@
   <!-- /.navbar -->
 
 <script>
-
 /******************** 알림 *******************/
 	$(function() {
 		alertList();
 	
-// 		setInterval(function() {
-// 			alertList();
-// 		}, 10000);
+		setInterval(function() {
+			alertList();
+		}, 10000);
 	});
 	
 	function alertList() {
@@ -130,7 +129,6 @@
 				var mCount = 0;
 
 				for(var i in data){
-				console.log(data[i].DOCNO);
 				var $area;
 				var $a = $('<a class="dropdown-item d-flex align-items-center oneAlert" style="clear: both;">');
 				var $input = $('<input type="hidden" class="link">');
