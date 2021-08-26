@@ -101,7 +101,8 @@ public class MeetingController {
 			  @RequestParam("joinEmp") String joinEmp,
 			  @RequestParam("mTitle") String mTitle,
 			  @RequestParam("mContent") String mContent,
-			  @RequestParam("empNo") String empNo) {
+			  @RequestParam("empNo") String empNo,
+			  @RequestParam("mNo") String mNo) {
 		
 		MeetingReservation m = new MeetingReservation();
 		
@@ -110,6 +111,7 @@ public class MeetingController {
 		m.setmTitle(mTitle);
 		m.setmContent(mContent);
 		m.setEmpNo(empNo);
+		m.setmNo(mNo);
 	
 		System.out.println(m);
 		

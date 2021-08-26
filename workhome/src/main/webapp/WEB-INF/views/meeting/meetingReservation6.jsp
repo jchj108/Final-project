@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -240,6 +242,23 @@
               </div>
             </div>
             <div class="card-body">
+
+
+
+            
+              <div class="form-group">
+                <label for="inputName">회의실 선택</label><br>
+		           <div class="form-group">
+                        <select class="form-control" id="roomSelect">
+                          <option value="" disabled selected hidden>회의실을 선택해 주세요</option>
+                          <option value="ROOM01">중앙 회의실</option>
+                          <option value="ROOM02">회의실 A</option>
+                          <option value="ROOM03">회의실 B</option>
+                          <option value="ROOM04">회의실 C</option>
+                          <option value="ROOM05">회의실 D</option>
+                        </select>
+		            </div>
+              </div>   
             
               <div class="form-group">
                 <label for="inputName">선택 날짜</label><br>
@@ -338,6 +357,12 @@
             </div>
           </div>
                    
+
+
+
+
+
+
           
           <!-- /.col -->
           <div class="col-md-9">         
@@ -345,46 +370,12 @@
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
                 <div id="calendar" class="fc fc-ltr fc-bootstrap">
-<script>
+                
+                
 
-	  document.addEventListener('DOMContentLoaded', function() {
-		    var calendarEl = document.getElementById('calendar');
-		 		var today = new Date();
-		 		var firstDayOfMonth = new Date( today.getFullYear(), today.getMonth() , 1 );
-		 		var lastMonth = new Date ( firstDayOfMonth.setDate( firstDayOfMonth.getDate() - 1 ) );
- 			 var yesterDate = today.getTime() - (1 * 24 * 60 * 60 * 1000);
-			
- 			 console.log("firstDayOfMonth" + firstDayOfMonth);
- 			 console.log("lastMonth" + lastMonth);
- 			 console.log("today" + today);
- 			 
-		    var calendar = new FullCalendar.Calendar(calendarEl, {
-		        plugins: [ 'interaction', 'dayGrid' ],
-		        defaultDate: today,
-		        editable: false,
-		        eventLimit: true,
-		        dateClick: function(info) {
-		            /* alert('Clicked on: ' + info.dateStr); */
-		            //날짜 받아옴!
-					if(yesterDate > info.date){
-//						alert("이미 지난 날짜는 선택할 수 없습니다.");
-						 $('.modal-body').text("이미 지난 날짜는 선택 불가능합니다.");
-						 $('#exampleModal').modal('show');
-					}else{			             
-			            date=info.dateStr;
-			            $(".secondArea").fadeIn(1000);
-			            $(".fc-day").css('background','none');
-			            info.dayEl.style.backgroundColor = '#B2EBF4';
-//			            console.log(info.dateStr);
-			            $(".dateResult").text(info.dateStr);
-//			            rSelectDateFun(date);
-					}
-		          }
-		      });
 
-		      calendar.render();
-		    });
-</script>                
+
+         
               </div>
               <!-- /.card-body -->
             </div>
@@ -424,6 +415,73 @@
 
   <!--자동완성  -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                
+
+
+
+
+<!-- 회의실 선택 -->
+			           		<script type="text/javascript">
+			           			$(document).ready(function(){
+					           		$("#roomSelect").val("");
+			           			});
+	
+			           			$("#roomSelect").change(function() {
+			           				   mNo = $("#roomSelect option:selected").val();
+							           $(".fc-today-button").trigger('click');
+										
+							           console.log("mNo : " + mNo);
+							           
+							           if(date!=""){
+							        	   rSelectDateFun(date);
+							           }
+									});
+			           		</script>
+
+        
+<!-- 캘린더로 날짜 선택 -->
+
+<script>
+
+	  document.addEventListener('DOMContentLoaded', function() {
+		    var calendarEl = document.getElementById('calendar');
+		 		var today = new Date();
+		 		var firstDayOfMonth = new Date( today.getFullYear(), today.getMonth() , 1 );
+		 		var lastMonth = new Date ( firstDayOfMonth.setDate( firstDayOfMonth.getDate() - 1 ) );
+ 			 var yesterDate = today.getTime() - (1 * 24 * 60 * 60 * 1000);
+			
+ 			 console.log("firstDayOfMonth" + firstDayOfMonth);
+ 			 console.log("lastMonth" + lastMonth);
+ 			 console.log("today" + today);
+ 			 
+		    var calendar = new FullCalendar.Calendar(calendarEl, {
+		        plugins: [ 'interaction', 'dayGrid' ],
+		        defaultDate: today,
+		        editable: false,
+		        eventLimit: true,
+		        dateClick: function(info) {
+		            /* alert('Clicked on: ' + info.dateStr); */
+		            //날짜 받아옴!
+					if(yesterDate > info.date){
+//						alert("이미 지난 날짜는 선택할 수 없습니다.");
+						 $('.modal-body').text("이미 지난 날짜는 선택 불가능합니다.");
+						 $('#exampleModal').modal('show');
+					}else{			             
+			            date=info.dateStr;
+			            $(".secondArea").fadeIn(1000);
+			            $(".fc-day").css('background','none');
+			            info.dayEl.style.backgroundColor = '#B2EBF4';
+//			            console.log(info.dateStr);
+			            $(".dateResult").text(info.dateStr);
+//			            rSelectDateFun(date);
+					}
+		          }
+		      });
+
+		      calendar.render();
+		    });
+</script>       
+
 
 
 <!-- 참가인 추가 -->
@@ -495,36 +553,6 @@
 
 
 
-<script>
-function(data){
-	savedTime = data;
-	
-	$timearea.html("");
-	for(var i = 9 ; i < 18 ; i ++){
-		if(savedTime.includes(i)){
-			var $div1 = $('<div class="card shadow h-100 py-2 notFcards">');	
-		}else{
-		var $div1 = $('<div class="card shadow h-100 py-2 cards">');
-		}
-		var $div2 = $('<div class="card-body">');
-		var $div3 = $('<div class="row no-gutters align-items-center">');
-		var $div4 = $('<div class="col mr-2">');
-		var $div5 = $('<div class="h5 mb-0 font-weight-bold selection">');
-		var $span = $('<span class="time">').text(i);
-		var $span2 = $('<span>').text("시");
-		
-		$div5.append($span);
-		$div5.append($span2);
-		$div4.append($div5);
-		$div3.append($div4);
-		$div2.append($div3);
-		$div1.append($div2);
-		$timearea.append($div1);
-	}
-};
-</script>
-
-
 
 <!-- 풀캘린더 -->
 
@@ -571,8 +599,16 @@ function(data){
 						  					var mTitle = $("#mTitle").val();
 						  					var mContent = $("#mContent").val();
 						  					var date = $(".dateResult").text();
+						  					var room = $("#roomSelect").val();
 						  					var count = false;
 						  					var empName = "${loginUser.empName}";
+
+						  					if(mNo==""){
+//						  						alert("날짜를 선택해 주세요.");
+												 $('.modal-body').text("회의실을 선택해 주세요.");
+												 $('#exampleModal').modal('show');
+						  						return;
+						  					}						  					
 
 						  					if(date==""){
 //						  						alert("날짜를 선택해 주세요.");
@@ -620,7 +656,7 @@ function(data){
 						  											  						
 						  						$.ajax({
 													url:"reInsert.meet",
-													data:{rDate:rDate,joinEmp:joinEmp,mTitle:mTitle,mContent:mContent, empNo:empNo},
+													data:{rDate:rDate,joinEmp:joinEmp,mTitle:mTitle,mContent:mContent, empNo:empNo, mNo:mNo},
 													type:"post",
 													success:function(data){
 														if(data=="success"){
