@@ -50,7 +50,7 @@ public class MeetingController {
 		
 	@RequestMapping("searchEmpList.meet")
 	public void searchEmpList(HttpServletResponse response, HttpSession session,
-							 @RequestParam("search")String search) throws IOException {
+							 @RequestParam("search")String search, HttpServletRequest request) throws IOException {
 		
 //		System.out.println("search : " + search);
 		
@@ -62,12 +62,32 @@ public class MeetingController {
 //		System.out.println("loginEmp : " + loginEmp);
 //		String myNo = loginEmp.getEmpNo();
 		
+		
+		String myNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
+		
+//		System.out.println("empNo : " + empNo);
+		
+		
+//		for(Employee emp :list) {
+//				String str = URLEncoder.encode("["+emp.getEmpNo()+"] "+ emp.getEmpName() +" - "+emp.getDeptName() ,"utf-8");
+//				resultList.add(str);
+////				System.out.println("str : " + str);
+////				System.out.println("resultList : " + resultList);				
+//		}
+		
+		
+		// 로그인한 사원은 뜨지 않도록 하기
+		
 		for(Employee emp :list) {
+			if(emp.getEmpNo().equals(myNo)) {
+			}else {
 				String str = URLEncoder.encode("["+emp.getEmpNo()+"] "+ emp.getEmpName() +" - "+emp.getDeptName() ,"utf-8");
 				resultList.add(str);
 //				System.out.println("str : " + str);
-//				System.out.println("resultList : " + resultList);				
+//				System.out.println("resultList : " + resultList);
+			}
 		}
+		
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(resultList,response.getWriter());
@@ -80,7 +100,8 @@ public class MeetingController {
 			  @RequestParam(value="rDate", required=false) String rDate,
 			  @RequestParam("joinEmp") String joinEmp,
 			  @RequestParam("mTitle") String mTitle,
-			  @RequestParam("mContent") String mContent) {
+			  @RequestParam("mContent") String mContent,
+			  @RequestParam("empNo") String empNo) {
 		
 		MeetingReservation m = new MeetingReservation();
 		
@@ -88,6 +109,7 @@ public class MeetingController {
 		m.setJoinEmp(joinEmp);
 		m.setmTitle(mTitle);
 		m.setmContent(mContent);
+		m.setEmpNo(empNo);
 	
 		System.out.println(m);
 		
