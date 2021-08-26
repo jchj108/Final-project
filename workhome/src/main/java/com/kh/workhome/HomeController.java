@@ -66,7 +66,6 @@ public class HomeController {
 		
 		HashMap<String,String> map = atService.selectCommute(keys);
 		mv.addObject("map",map);
-		System.out.println(map);
 
 		mv.setViewName("home");
 		return mv;
