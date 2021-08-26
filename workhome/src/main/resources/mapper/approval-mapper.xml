@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="approvalMapper">
+	<select id="selectApprovalList" parameterType="string" resultMap="approvalResultSet">
+		select *
+		from APPROVAL
+		where (EMPNO like #{empno}
+		or APPROVALEMP like #{empno}
+		or RUNEMP like #{empno}
+		or REFEMP like #{empno}
+		or HEMP like #{empno}
+		)and APSTATUS!='N'
+	</select>
+	
 	<insert id="insertApproval" parameterType="Approval">
 		insert into APPROVAL 
 		values(SEQ_APNO.nextval,
@@ -39,17 +50,6 @@
 		<result column="ORIGINALFILE" property="originalFile"/>
 		<result column="RENAMEFILE" property="renameFile"/>
 	</resultMap>
-	
-	<select id="selectApprovalList" parameterType="string" resultMap="approvalResultSet">
-		select *
-		from APPROVAL
-		where (EMPNO like #{empno}
-		or APPROVALEMP like #{empno}
-		or RUNEMP like #{empno}
-		or REFEMP like #{empno}
-		or HEMP like #{empno}
-		)and APSTATUS!='N'
-	</select>
 	
 	<select id="selectApprovalDetail" parameterType="string" resultType="Approval">
 		select *

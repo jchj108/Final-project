@@ -60,9 +60,6 @@
 								<c:set var="str05" value="${fn:replace(str04, ';', ', ')}" />
 						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${str05}" readonly>
 						   </div>
-<!-- 						   <div class="form-group col-lg-6"> -->
-<%-- 						    	<strong>시행자 : </strong><input type="text" class="form-control" value="${ap.runEmp}" readonly> --%>
-<!-- 						    </div> -->
 						    <div class="form-group col-lg-6">
 						    	<strong>참조자 : </strong><input type="text" class="form-control" value="${ap.refEmp}" readonly>
 					    </div>
@@ -97,12 +94,12 @@
 						  	  <!--결재 할 문서일때  -->
 						  	 <c:set var="empNo" value="${loginUser.empNo}"/>
 							  <c:if test="${tag eq 'g'}">
-							  	 <c:set var="hEmp" value="${ap.hEmp}" />
 							  	 <c:set var="approvalEmp" value="${ap.approvalEmp}"/>
 							  	 <c:if test="${fn:contains(approvalEmp, empNo)}">
 								 	 <button type="button" id="agreeFun" class="btn btn-success">결재</button>
 								 	 <button type="button" id="disareeFun" class="btn btn-danger">반려</button>
 							  	 </c:if>
+							  	 <c:set var="hEmp" value="${ap.hEmp}" />
 							  	 <c:if test="${fn:contains(hEmp,empNo)}">
 								 	 <button type="button" id="yesFun" class="btn btn-success">합의</button>
 								 	 <button type="button" id="nopeFun" class="btn btn-danger">거절</button>
@@ -149,6 +146,35 @@
 							updateApFun(cate,agree);
 						}
 					});
+					
+					function updateApFun(cate,agree){
+						var loginUser = "${empNo}";
+						var apNo = "${ap.apNo}";
+						var status="";
+						var plusStatus="";
+						
+						if(cate=='g'){
+							status= "${ap.approvalEmp}";
+							plusStatus= "${ap.hEmp}";
+						} else if(cate=='h'){
+							status= "${ap.hEmp}";
+							plusStatus= "${ap.approvalEmp}";
+						}
+						$.ajax({
+							url:"updateAp.ap",
+							data:{apNo:apNo,cate:cate,agree:agree,loginUser:loginUser,status:status,plusStatus:plusStatus},
+							type:"POST",
+							success:function(data){
+								if(data=="success"){
+									alert("요청하신 결재가 완료되었습니다.\n결재 목록으로 이동합니다.");
+									location.href="approvalView.ap";
+								}else{
+									alert("결재에 실패하였습니다.\n관라자에게 문의해주세요");
+								}
+							}
+						});
+					}
+					
 					$(document).on('click','#deleteBtn',function(){
 						if(confirm("'${ap.apTitle}'를 정말로 삭제 하시겠습니까?\n 삭제 후 재조회는 불가능합니다.")){
 							var apNo = "${ap.apNo}";
@@ -167,34 +193,7 @@
 							});
 						}
 					});
-					
-					
-					function updateApFun(cate,agree){
-						var loginUser = "${empNo}";
-						var apNo = "${ap.apNo}";
-						var status="";
-						var plusStatus="";
-						if(cate=='h'){
-							status= "${ap.hEmp}";
-							plusStatus= "${ap.approvalEmp}";
-						}else if(cate=='g'){
-							status= "${ap.approvalEmp}";
-							plusStatus= "${ap.hEmp}";
-						}
-						$.ajax({
-							url:"updateAp.ap",
-							data:{apNo:apNo,cate:cate,agree:agree,loginUser:loginUser,status:status,plusStatus:plusStatus},
-							type:"POST",
-							success:function(data){
-								if(data=="success"){
-									alert("요청하신 결재가 완료되었습니다.\n결재 목록으로 이동합니다.");
-									location.href="approvalView.ap";
-								}else{
-									alert("결재에 실패하였습니다.\n관라자에게 문의해주세요");
-								}
-							}
-						});
-					}
+				
 				</script>
 		</div>
 	</section>	
