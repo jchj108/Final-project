@@ -20,11 +20,26 @@
 	</update>
 	
 	
-	<update id="deleteMail">
-		update mail
-		set estatus='N'
-		where mailno=#{mNo}
+	<update id="deleteMail" parameterType="hashmap">
+		<if test='!command.equals("templist")'>
+			update mail_s_r
+			set s_r_status='N'
+			where mailno=#{mNo}
+			and empno=#{empNo}
+		</if>
+		<if test='command.equals("templist")'>
+			delete from mail
+			where mailno=#{mNo}
+			and empno=#{empNo}
+			and estatus='T'
+		</if>
 	</update>
+	
+	<select id="searchEmp" resultMap="employeeResultSet">
+		select * from employee
+		where empno like '%' || #{keyword} || '%'
+		OR EMPNAME LIKE '%' || #{keyword} || '%'
+	</select>
 	
 	<insert id="insertMail">
 		insert into mail
@@ -44,6 +59,13 @@
 		insert into mail_s_r
 		values (MAIL_TEMP_SEQ.CURRVAL, #{mId}, 'R', null, null)
 	</insert>
+	
+	<select id="getDeleteListCount" resultType="_int">
+		select count(*)
+		from mail_S_R
+		where S_R_STATUS='N'
+		and empno = #{empNo}
+	</select>
 	
 	<select id="getTempListCount" resultType="_int">
 		select count(*)
@@ -68,11 +90,11 @@
 
 	<select id="selectTempList" resultMap="mailResultSet">
 		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
-		    ECONTENT, ESTATUS, E_R_TIME, EMPNO, S_DATE, EMPNAME
+		    ECONTENT, ESTATUS, EMPNO, S_DATE, EMPNAME
 		    , M_STATUS
 		from(
 		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
-		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
 		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS
 		    from mail
 		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
@@ -123,10 +145,30 @@
 		)
 		ORDER BY MAILNO DESC
 	</select>
+	
+	<select id="selectDeleteList" resultMap="mailResultSet">
+		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
+		    ECONTENT, ESTATUS, EMPNO, S_DATE, EMPNAME, S_R_STATUS, FAVORITES, R_DATE
+		    , M_STATUS
+		from(
+		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS,
+		           S_R_STATUS, FAVORITES, MAIL_S_R.R_DATE
+		    from mail
+		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+		        join mail_s_r on(mail.mailno = mail_s_r.mailno AND S_R_STATUS='N')
+		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+		        WHERE ESTATUS='Y'
+		        AND mail_s_r.empno = #{empNo}
+		    order by MAILNO DESC
+		)
+		ORDER BY MAILNO DESC		
+	</select>
 		
 	<select id="selectTempMail" parameterType="_int" resultMap="mailResultSet">
 		select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
-	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
 	           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_ORIGINAL_NAME, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_FILE_PATH, MAIL_FILE.M_UPLOAD_DATE, MAIL_FILE.M_STATUS
 	    from mail
 	        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
@@ -137,7 +179,7 @@
 	
 	<select id="selectMail" parameterType="_int" resultMap="mailResultSet">
 		select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
-	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.E_R_TIME, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
 	           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_ORIGINAL_NAME, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_FILE_PATH, MAIL_FILE.M_UPLOAD_DATE, MAIL_FILE.M_STATUS
 	    from mail
 	        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
@@ -174,7 +216,6 @@
 		<result column="ETITLE" property="etitle"/>
 		<result column="ECONTENT" property="econtent"/>
 		<result column="ESTATUS" property="estatus"/>
-		<result column="E_R_TIME" property="eRTime"/>
 		<result column="EMPNO" property="empNo"/>
 		<result column="S_DATE" property="sDate"/>
 		<result column="EMPNAME" property="senderName"/>

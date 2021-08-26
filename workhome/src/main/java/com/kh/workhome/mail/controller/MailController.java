@@ -1,6 +1,7 @@
 package com.kh.workhome.mail.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.workhome.common.PageInfo;
 import com.kh.workhome.common.Pagination;
 import com.kh.workhome.employee.model.vo.Employee;
@@ -180,14 +186,34 @@ public class MailController {
 		return mv;
 	}
 	
+	@RequestMapping("searchemp.mail") // 메일 보내기 사원 자동완성
+	@ResponseBody
+	public void searchEmp(HttpServletResponse response, @RequestParam("keyword") String keyword) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=UTF-8");
+		
+		ArrayList<Employee> list = mService.searchEmp(keyword);
+		
+		Gson gson = new Gson();
+		gson.toJson(list, response.getWriter());		
+	}
+	
 	@RequestMapping("deletemail.mail") // 메일 삭제 (커맨드 패턴 적용)
-	public String deleteMail(@RequestParam("check") int[] check, @RequestParam("command") String command) {
+	public String deleteMail(@RequestParam("check") int[] check, @RequestParam("command") String command, HttpSession session) {
 		System.out.println(command);
+		
+		String empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
 		int result = 0;
 		
 		for(int i = 0; i < check.length; i++) {
 			int mNo = check[i];
-			result += mService.deleteMail(mNo);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("empNo", empNo);
+			System.out.println("empNo : " + empNo);
+			map.put("mNo", mNo);
+			System.out.println("mNo : " + mNo);
+			map.put("command", command);
+			result += mService.deleteMail(map);
 		}
 		
 		System.out.println(result);
@@ -219,15 +245,18 @@ public class MailController {
 			currentPage = page;
 		}
 		int boardLimit = 15;
-		int listCount = mService.getTempListCount(empNo);
+		int listCount = mService.getDeleteListCount(empNo);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
 		
-		ArrayList<Mail> list = mService.selectTempList(pi, empNo);
+		ArrayList<Mail> list = mService.selectDeleteList(pi, empNo);
+		
+		System.out.println(list);
+		
 		
 		if (list != null) {
-			mv.addObject("tempList", list).addObject("pi", pi);
+			mv.addObject("deleteList", list).addObject("pi", pi);
 			mv.setViewName("deletemaillist");
 		} else {
 			throw new MailException("임시보관함 조회에 실패했습니다.");

@@ -140,12 +140,6 @@
 											</td>
 										</tr>
 										<tr>
-<!-- 											<th>시행 문서</th> -->
-<!-- 											<td class="aplist"> -->
-<!-- 												<input type="hidden" class="tag" value="s"> -->
-<%-- 												<input type="hidden" class="map" value="${map['s']}"> --%>
-<%-- 												${fn:length(slist)} 건 --%>
-<!-- 											</td> -->
 										</tr>
 									</table>
 									<script type="text/javascript">
@@ -283,7 +277,6 @@
 							<h6 class="m-0 font-weight-bold text-primary">문서함</h6>
 						</div>
 						<div class="card-body" id="contentArea">
-							<!-- 매결재문서  -->
 							<div class="table-responsive">
 								<table class="table table-bordered" style="text-align: center;">
 									<caption>● 결재 진행 > 미결재 문서</caption>
@@ -408,69 +401,6 @@
 									</tbody>
 								</table>
 							</div>
-
-<!-- 							시행문서  -->
-<!-- 							<div class="table-responsive"> -->
-<!-- 								<table class="table table-bordered" style="text-align: center;"> -->
-<%-- 									<caption>● 시행문서함</caption> --%>
-<!-- 									<thead> -->
-<!-- 										<tr> -->
-<!-- 											<th>품의 번호</th> -->
-<!-- 											<th>문서 분류</th> -->
-<!-- 											<th>제목</th> -->
-<!-- 											<th>기안자</th> -->
-<!-- 											<th>기안일</th> -->
-<!-- 											<th>상태</th> -->
-<!-- 										</tr> -->
-<!-- 									</thead> -->
-<!-- 									<tbody> -->
-<%-- 										<c:if test="${empty slist}"> --%>
-<!-- 											<tr> -->
-<!-- 												<td colspan="6">데이터가 없습니다.</td> -->
-<!-- 											</tr> -->
-<%-- 										</c:if> --%>
-<%-- 										<c:if test="${!empty slist}"> --%>
-<%-- 											<c:forEach var="ap" items="${slist}"> --%>
-<!-- 												<tr> -->
-<%-- 													<td>${ap.apNo}</td> --%>
-<%-- 													<c:if test="${empty ap.a_v_first}"> --%>
-<!-- 														<td>일반결재</td> -->
-<%-- 													</c:if> --%>
-<%-- 													<c:if test="${!empty ap.a_v_first}"> --%>
-<!-- 														<td>근태결재</td> -->
-<%-- 													</c:if> --%>
-<!-- 													<td> -->
-<%-- 														<c:url var="apDetail" value="apDetail.ap"> --%>
-<%-- 															<c:param name="apNo" value="${ap.apNo}"/> --%>
-<%-- 															<c:param name="tag" value="s"/> --%>
-<%-- 														</c:url> --%>
-<%-- 														<a href="${apDetail }">${ap.apTitle}</a> --%>
-<!-- 													</td> -->
-<%-- 													<td>${ap.empNo}</td> --%>
-<%-- 													<td>${ap.apDate}</td> --%>
-<%-- 													<c:if test="${ap.apStatus eq 'Y'}"> --%>
-<%-- 														<c:set var="approvalEmp" value="${ap.approvalEmpstatus}"/> --%>
-<%-- 														<c:set var="hEmp" value="${ap.hEmpstatus}"/> --%>
-														
-<%-- 														<c:if test="${( fn:contains(hEmp, ',Y')) or fn:contains(approvalEmp, ',Y')}"> --%>
-<!-- 															<td>진행</td> -->
-<%-- 														</c:if> --%>
-<%-- 														<c:if test="${!fn:contains(hEmp, ',Y') and !fn:contains(approvalEmp, ',Y')}"> --%>
-<!-- 															<td>상신</td> -->
-<%-- 														</c:if> --%>
-<%-- 													</c:if> --%>
-<%-- 													<c:if test="${ap.apStatus eq 'D'}"> --%>
-<!-- 														<td>종결</td> -->
-<%-- 													</c:if> --%>
-<%-- 													<c:if test="${ap.apStatus eq 'R'}"> --%>
-<!-- 														<td>거부</td> -->
-<%-- 													</c:if> --%>
-<!-- 												</tr> -->
-<%-- 											</c:forEach> --%>
-<%-- 										</c:if> --%>
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
 						</div>
 					</div>
 				</div>

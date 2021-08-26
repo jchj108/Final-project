@@ -22,7 +22,6 @@
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
-
 .mail-icon {
 	width: 20px;
 }
@@ -144,19 +143,22 @@ td {
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item"><a href="#" class="nav-link"> 
-										<i class="fas fa-envelope mail-icon"></i> 전체메일
+										<li class="nav-item"><a href="#" class="nav-link"> <i
+												class="fas fa-envelope mail-icon"></i> 전체메일
 										</a></li>
-										<li class="nav-item active"><a href="${contextPath }/receivelist.mail" class="nav-link">
+										<li class="nav-item active"><a
+											href="${contextPath }/receivelist.mail" class="nav-link">
 												<i class="far fa-envelope-open mail-icon"></i> 받은메일함 <span
 												class="badge bg-primary float-right">12</span>
 										</a></li>
-										<li class="nav-item"><a href="${contextPath }/sendlist.mail" class="nav-link thispage"> 
-										<i class="far fa-paper-plane mail-icon thispage"></i> <b>보낸메일함</b>
+										<li class="nav-item"><a
+											href="${contextPath }/sendlist.mail"
+											class="nav-link thispage"> <i
+												class="far fa-paper-plane mail-icon thispage"></i> <b>보낸메일함</b>
 										</a></li>
-										<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link"><i
-												class="far fa-file-alt mail-icon"></i> 임시보관함
-										</a></li>
+										<li class="nav-item"><a
+											href="${contextPath}/templist.mail" class="nav-link"><i
+												class="far fa-file-alt mail-icon"></i> 임시보관함 </a></li>
 										<li class="nav-item"><a href="#" class="nav-link"> <i
 												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
 												class="badge bg-warning float-right mail-icon">65</span>
@@ -224,7 +226,8 @@ td {
 											<i class="far fa-square"></i>
 										</button>
 										<div class="btn-group">
-											<button type="button" class="btn btn-default btn-sm">
+											<button type="button"
+												class="btn btn-default btn-sm deleteMailBtn">
 												<i class="far fa-trash-alt"></i>
 											</button>
 											<button type="button" class="btn btn-default btn-sm">
@@ -235,11 +238,11 @@ td {
 											</button>
 										</div>
 										<!-- /.btn-group -->
-										<button type="button" onclick="location.href='sendlist.mail'" class="btn btn-default btn-sm">
+										<button type="button" onclick="location.href='sendlist.mail'"
+											class="btn btn-default btn-sm">
 											<i class="fas fa-sync-alt"></i>
 										</button>
 										<div class="float-right">
-											<%-- 											${pi.currentPage }-15/${pi.listCount } --%>
 											<div class="btn-group">
 												<button type="button" class="btn btn-default btn-sm">
 													<i class="fas fa-chevron-left"></i>
@@ -254,40 +257,44 @@ td {
 									</div>
 									<div class="table-responsive mailbox-messages">
 										<table class="table table-hover table-striped">
-											<c:forEach var="m" items="${sendList }" varStatus="idCount">
-												<c:forEach var="mF" items="${m.mailFileList}">
-													<c:if test="${mF.mStatus == 'Y'}">
-														<c:set var="attachment" value="on" />
-													</c:if>
-													<c:if test="${mF.mStatus != 'Y'}">
-														<c:set var="attachment" value="off" />
-													</c:if>
+											<form id="sendManage" method="post">
+												<input type="hidden" value="sendlist" name="command">
+
+												<c:forEach var="m" items="${sendList }" varStatus="idCount">
+													<c:forEach var="mF" items="${m.mailFileList}">
+														<c:if test="${mF.mStatus == 'Y'}">
+															<c:set var="attachment" value="on" />
+														</c:if>
+														<c:if test="${mF.mStatus != 'Y'}">
+															<c:set var="attachment" value="off" />
+														</c:if>
+													</c:forEach>
+													<c:url var="mdetail" value="readmail.mail">
+														<c:param name="mId" value="${ m.mailNo }" />
+														<c:param name="page" value="${ pi.currentPage }" />
+													</c:url>
+													<tr>
+														<td>
+															<div class="icheck-primary">
+																<input type="checkbox" value="${m.mailNo}" name="check"
+																	id="check${idCount.count }"> <label
+																	for="check${idCount.count }"></label>
+															</div>
+														</td>
+														<td class="mailbox-star"><a href="#"><i
+																class="far fa-star text-warning"></i></a> <i id="readmail"
+															class="fas fa-envelope text-primary"></i> <c:if
+																test="${attachment == 'on' }">
+																<i class="fas fa-paperclip"></i>
+															</c:if></td>
+														<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
+														<td onclick="location.href='${mdetail}'"
+															style="cursor: pointer;" class="mailbox-subject">${m.etitle }</td>
+														<td class="mailbox-date">${m.sDate }</td>
+													</tr>
 												</c:forEach>
-												<c:url var="mdetail" value="readmail.mail">
-													<c:param name="mId" value="${ m.mailNo }" />
-													<c:param name="page" value="${ pi.currentPage }" />
-												</c:url>
-												<tr>
-													<td>
-														<div class="icheck-primary">
-															<input type="checkbox" value=""
-																id="check${idCount.count }"> <label
-																for="check${idCount.count }"></label>
-														</div>
-													</td>
-													<td class="mailbox-star"><a href="#"><i
-															class="far fa-star text-warning"></i></a> <i id="readmail"
-														class="fas fa-envelope text-primary"></i> <c:if
-															test="${attachment == 'on' }">
-															<i class="fas fa-paperclip"></i>
-														</c:if></td>
-													<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
-													<td onclick="location.href='${mdetail}'"
-														style="cursor: pointer;" class="mailbox-subject">${m.etitle }</td>
-													<td class="mailbox-date">${m.sDate }</td>
-												</tr>
-											</c:forEach>
-											<!-- 											</tbody> -->
+												<!-- 											</tbody> -->
+											</form>
 										</table>
 										<!-- /.table -->
 									</div>
@@ -425,6 +432,27 @@ td {
 				if (fa) {
 					$this.toggleClass('fa-star')
 					$this.toggleClass('fa-star-o')
+				}
+			});
+
+			$('.deleteMailBtn').click(function() {
+
+				var check = document.getElementsByName('check');
+				console.log(check.length);
+				var count = 0;
+				for (i = 0; i < check.length; i++) {
+					if (check[i].checked) {
+						count++;
+					}
+				}
+				if (count == 0) {
+					alert("선택된 항목이 없습니다.");
+				} else {
+					var bool = confirm('정말 삭제하시겠습니까? \n삭제한 메일은 휴지통으로 이동합니다..');
+					if (bool) {
+						$('#sendManage').attr('action', 'deletemail.mail');
+						$('#sendManage').submit();
+					}
 				}
 			});
 		});
