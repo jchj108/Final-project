@@ -16,7 +16,7 @@
 
 	<insert id="reInsert" parameterType="MeetingReservation">
 		insert into RESERVATION
-		values('ROOM01', #{joinEmp}, #{mTitle}, #{mContent}, 'Y', null, #{rDate}, null)
+		values('ROOM01', #{joinEmp}, #{mTitle}, #{mContent}, 'Y', null, #{rDate}, #{empNo})
 	</insert>
 
 	<resultMap type="MeetingReservation" id="meetingResultSet">
