@@ -38,15 +38,14 @@ public class ApprovalController {
 	
 	// ******* 전자결재리스트 ********
 	@RequestMapping("approvalView.ap")
-	public ModelAndView approvalView(HttpSession session,ModelAndView mv) {
+	public ModelAndView approvalView(HttpSession session, ModelAndView mv) {
 		Employee loginUser = (Employee) session.getAttribute("loginUser");
-		//로그인유저 사번
 		String loginUserNo = loginUser.getEmpNo();
 		ArrayList<Approval> list = aService.selectApprovalList("%"+loginUserNo+"%");
 		
 		//기안문서-내가 올린문서 중 진행중 혹은 상신중인 문서
 		ArrayList<Approval> mlist = new ArrayList<Approval>();
-		//기안문서인데 결제완료됨
+		//기안문서인데 결재완료됨
 		ArrayList<Approval> mflist = new ArrayList<Approval>();
 		//기안문서인데 중지
 		ArrayList<Approval> mrlist = new ArrayList<Approval>();
@@ -59,8 +58,6 @@ public class ApprovalController {
 		ArrayList<Approval> rlist = new ArrayList<Approval>();
 		// 종결문서
 		ArrayList<Approval> endlist = new ArrayList<Approval>();
-		//시행문서
-		ArrayList<Approval> slist = new ArrayList<Approval>();
 		//참조문서
 		ArrayList<Approval> clist = new ArrayList<Approval>();
 		
@@ -70,7 +67,7 @@ public class ApprovalController {
 		for(Approval ap : list) {
 			ap.sethEmpstatus(ap.gethEmp());
 			ap.setApprovalEmpstatus(ap.getApprovalEmp());
-			if(ap.gethEmp()!=null) {
+			if(ap.gethEmp()!= null) {
 				ap.sethEmp(deleteStatus(ap.gethEmp()));
 			}
 			ap.setApprovalEmp(deleteStatus(ap.getApprovalEmp()));
@@ -86,16 +83,12 @@ public class ApprovalController {
 			if(ap.getRefEmp()==null) {
 				ap.setRefEmp("");
 			}
-			if(ap.getRunEmp()==null) {
-				ap.setRunEmp("");
-			}
 			
 			//기안문서 - 로그인 empno와 기안자와 사번이 일치한다면 기안문서로
 			if(ap.getEmpNo().contains(loginUserNo)) {
 				if(ap.getApStatus().contentEquals("R")) {
 					//기안문서중 반려됨
 					mrlist.add(ap);
-					
 				}else if(ap.getApStatus().contentEquals("D")) {
 					//기안문서중 종결됨
 					mflist.add(ap);
@@ -103,6 +96,7 @@ public class ApprovalController {
 					//진행중임
 					mlist.add(ap);
 				}
+				
 			//결재문서&& 합의문서
 			}else if(ap.getApprovalEmp().contains(loginUserNo)||(ap.gethEmp().contains(loginUserNo))) {
 				//1. 중지문서인가?
@@ -130,10 +124,7 @@ public class ApprovalController {
 			//참조문서 - 참조자에 내 이름이 들어잇을때
 			}else if(ap.getRefEmp().contains(loginUserNo)) {
 				clist.add(ap);
-			//시행문서
-			}else if(ap.getRunEmp().contains(loginUserNo)) {
-				slist.add(ap);
-			}
+			} 
 		}
 		
 		//각 문서들 map에 담음
@@ -144,25 +135,43 @@ public class ApprovalController {
 		map.put("f", putIntheMap(flist));
 		map.put("r", putIntheMap(rlist));
 		map.put("end", putIntheMap(endlist));
-		map.put("s", putIntheMap(slist));
 		map.put("c", putIntheMap(clist));
 		
 		
 		mv.addObject("map",map);
 		mv.addObject("mlist", mlist);//기안문서-내가 올린문서 중 진행중 혹은 상신중인 문서
-		mv.addObject("mflist", mflist);//기안문서인데 결제완료됨
+		mv.addObject("mflist", mflist);//기안문서인데 결재완료됨
 		mv.addObject("mrlist", mrlist);//기안문서인데 중지(반려됨)
 		
 		mv.addObject("glist", glist);//결재할 문서(합의, 결재 통합)
 		mv.addObject("flist", flist);//결재한 문서(합의, 결재 통합)
 		mv.addObject("rlist", rlist);//중지문서
 		mv.addObject("endlist", endlist);//종결문서
-		mv.addObject("slist", slist);//시행문서(내가 참조할 문서
 		mv.addObject("clist", clist);//참조문서 (내가 시행자인 문서
 		mv.setViewName("approval");
 		return mv;
 	}
+	
+	// 목록 페이지로 이동
+	@RequestMapping("aplist.ap")
+	public void apList(HttpServletResponse response, @RequestParam("map") String map) throws IOException {
+		map = map.substring(1, map.length() - 1);
+		String array[] = map.split(", ");
+		ArrayList<Approval> list = aService.selectApListByAr(array);
 
+		for (Approval ap : list) {
+			Employee e = new Employee();
+			e.setEmpNo(ap.getEmpNo());
+			e = eService.selectEmp(e);
+			ap.setEmpNo("(" + e.getEmpNo() + ") " + e.getEmpName());
+
+			ap.setEmpNo(URLEncoder.encode(ap.getEmpNo(), "utf-8"));
+			ap.setApTitle(URLEncoder.encode(ap.getApTitle(), "utf-8"));
+		}
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(list, response.getWriter());
+	}
+	
 	// 불러올때 결재, 합의의 경우 결재 상태로 따로 넘겨줌
 	public String deleteStatus(String emp) {
 		if (!emp.equals("") && emp.contains(";")) {
@@ -226,10 +235,9 @@ public class ApprovalController {
 		ArrayList<Department> teamlist = new ArrayList<Department>();
 		
 		for (Department d : list) {
-			String deptNo = d.getDeptNo();
-			if (deptNo.length() == 2) {
+			if (d.getDeptNo().length() == 2) {
 				deptlist.add(d);
-			} else if (deptNo.length() == 3) {
+			} else {
 				teamlist.add(d);
 			}
 		}
@@ -243,18 +251,16 @@ public class ApprovalController {
 
 	// 기안할때 전역변수를 다음페이지로 넘겨줌
 	@RequestMapping("nextPage.ap")
-	public ModelAndView apporvalWriteView(ModelAndView mv, @RequestParam("hEmp") String hEmp,
-			@RequestParam("gEmp") String gEmp, @RequestParam("cEmp") String cEmp, /* @RequestParam("sEmp") String sEmp*/
-			@RequestParam("tag") String tag) {
+	public ModelAndView apporvalWriteView(ModelAndView mv,
+						@RequestParam("hEmp") String hEmp, @RequestParam("gEmp") String gEmp,
+						@RequestParam("cEmp") String cEmp, @RequestParam("tag") String tag) {
 		hEmp = cuttingFun(hEmp);
 		gEmp = cuttingFun(gEmp);
 		cEmp = cuttingFun(cEmp);
-//		sEmp = cuttingFun(sEmp);
 
 		mv.addObject("hEmp", hEmp);
 		mv.addObject("gEmp", gEmp);
 		mv.addObject("cEmp", cEmp);
-//		mv.addObject("sEmp", sEmp);
 		mv.addObject("tag", tag);
 		mv.setViewName("approvalWrite");
 		return mv;
@@ -270,9 +276,8 @@ public class ApprovalController {
 
 	@RequestMapping("insertApproval.ap")
 	@ResponseBody
-	public ModelAndView insertApproval(@ModelAttribute Approval ap, ModelAndView mv, HttpSession session,
-			@RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
-			HttpServletRequest request) {
+	public ModelAndView insertApproval(@ModelAttribute Approval ap, @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
+										HttpServletRequest request, HttpSession session, ModelAndView mv) {
 		ap.setApprovalEmp(insertMethod(ap.getApprovalEmp()));
 		if (!ap.gethEmp().equals("")) {
 			ap.sethEmp(insertMethod(ap.gethEmp()));
@@ -287,7 +292,8 @@ public class ApprovalController {
 				ap.setRenameFile(renameFileName);
 			}
 		}
-		 aService.insertApproval(ap);
+		
+		aService.insertApproval(ap);
 		
 		// 알림 전송
 		HashMap<String, Object> map = new HashMap<>();
@@ -297,13 +303,51 @@ public class ApprovalController {
 		ArrayList<String> emp = new ArrayList<String>();
 		emp = splitEmp1(ap.gethEmp(), emp);
 		emp = splitEmp1(ap.getApprovalEmp(), emp);
-//		emp = splitEmp2(ap.getRunEmp(), emp);
 		emp = splitEmp2(ap.getRefEmp(), emp);
 		map.put("empNo", emp);
 		eService.insertAlert(map);
 
 		mv.setViewName("redirect:approvalView.ap");
 		return mv;
+	}
+	
+	// DB에 보낼 때 결재 혹은 합의가 되지 않았음을 보내줌 - 기본 삽입이므로!
+	public String insertMethod(String empStr) {
+		String array[] = empStr.split(", ");
+		empStr = "";
+		for (int i = 0; i < array.length; i++) {
+			if (i != array.length - 1) {
+				empStr += array[i] + ",N;";
+			} else {
+				empStr += array[i] + ",N";
+			}
+		}
+		return empStr;
+	}
+	
+	// 파일 rename
+	@RequestMapping("saveFile.ap")
+	@ResponseBody
+	public String saveFile(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		
+		File folder = new File(savePath);
+		if (!folder.exists()) { // 지정된 경로에 파일이 없다면 만듦
+			folder.mkdirs();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String originalFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+				+ originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+		// 확장자 빼고
+		String renamePath = folder + "\\" + renameFileName;
+		try {
+			file.transferTo(new File(renamePath));// 전달받은 file이 rename명으로 저장
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName;
 	}
 	
 	// 알람 insert용 사원 다시 끊기 
@@ -334,90 +378,6 @@ public class ApprovalController {
 			}
 		}
 		return emp;
-	}
-
-	// 파일 rename
-	public String saveFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\buploadFiles";
-
-		File folder = new File(savePath);
-		if (!folder.exists()) {// 지정된 경로에 파일이 없다면 만듦
-			folder.mkdirs();
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String originalFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-				+ originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-		// 확장자 빼고
-		String renamePath = folder + "\\" + renameFileName;
-		try {
-			file.transferTo(new File(renamePath));// 전달받은 file이 rename명으로 저장
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		return renameFileName;
-	}
-
-	//사진 경로 변경 및 이름 가져오기
-	@RequestMapping("getchagePhoto.ap")
-	@ResponseBody
-	public String savePhoto(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\buploadFiles";
-		
-		File folder = new File(savePath);
-		if (!folder.exists()) {
-			folder.mkdirs();
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String originalFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-				+ originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-		// 확장자 빼고
-		
-		String renamePath = folder + "\\" + renameFileName;
-		try {
-			file.transferTo(new File(renamePath));// 전달받은 file이 rename명으로 저장
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return renameFileName;
-	}
-	
-	// DB에 보낼 때 결재 혹은 합의가 되지 않았음을 보내줌 - 기본 삽입이므로!
-	public String insertMethod(String empStr) {
-		String array[] = empStr.split(", ");
-		empStr = "";
-		for (int i = 0; i < array.length; i++) {
-			if (i != array.length - 1) {
-				empStr += array[i] + ",N;";
-			} else {
-				empStr += array[i] + ",N";
-			}
-		}
-		return empStr;
-	}
-
-	// 목록 페이지로 이동
-	@RequestMapping("aplist.ap")
-	public void apList(HttpServletResponse response, @RequestParam("map") String map) throws IOException {
-		map = map.substring(1, map.length() - 1);
-		String array[] = map.split(", ");
-		ArrayList<Approval> list = aService.selectApListByAr(array);
-
-		for (Approval ap : list) {
-			Employee e = new Employee();
-			e.setEmpNo(ap.getEmpNo());
-			e = eService.selectEmp(e);
-			ap.setEmpNo("(" + e.getEmpNo() + ") " + e.getEmpName());
-
-			ap.setEmpNo(URLEncoder.encode(ap.getEmpNo(), "utf-8"));
-			ap.setApTitle(URLEncoder.encode(ap.getApTitle(), "utf-8"));
-		}
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(list, response.getWriter());
 	}
 
 	@RequestMapping("apDetail.ap")
