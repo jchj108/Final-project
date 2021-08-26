@@ -130,4 +130,9 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Employee> searchEmp(String keyword) {
 		return mDAO.searchEmp(sqlSession, keyword);
 	}
+
+	@Override
+	public int updateRDate(int mId) {
+		return mDAO.updateRDate(sqlSession, mId);
+	}
 }

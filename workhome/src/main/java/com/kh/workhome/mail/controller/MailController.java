@@ -33,6 +33,7 @@ import com.kh.workhome.mail.model.exception.MailException;
 import com.kh.workhome.mail.model.service.MailService;
 import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
+import com.kh.workhome.mail.model.vo.MailSR;
 
 @Controller
 public class MailController {
@@ -59,15 +60,21 @@ public class MailController {
 	}
 
 	@RequestMapping("readmail.mail")
-	public ModelAndView selectMail(@RequestParam("mId") int id, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView selectMail(@RequestParam("mId") int id, @RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
 		Mail m = mService.selectMail(id);
 		System.out.println(m);
+		
+		// R_date가 null이면 읽은 시간 추가(읽음 표시)
+		ArrayList<MailSR> list = m.getMailSRList();
+		
+		if(list.get(0).getRDate() == null) {
+			int result = mService.updateRDate(id);
+		}
 		
 		String mId = getMId(m.getReceiveEmp());
 		Employee e = mService.getMId(mId); // 받는 사람 이름 구하는 메소드
 
 		System.out.println(e);
-		
 		
 		if (m != null) {
 			if(e != null) {
@@ -84,7 +91,7 @@ public class MailController {
 		return mv;
 	}
 	@RequestMapping("readtemp.mail")
-	public ModelAndView selectTempMail(@RequestParam("mId") int id, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView selectTempMail(@RequestParam("mId") int id, @RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
 		Mail m = mService.selectTempMail(id);
 		System.out.println(m);
 

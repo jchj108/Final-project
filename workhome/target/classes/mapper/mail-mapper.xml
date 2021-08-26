@@ -177,13 +177,21 @@
         order by mail_file.m_file_no desc
 	</select>
 	
+	<update id="updateRDate">
+		update mail_s_r
+		set r_date = sysdate
+		where mailno = #{mId}	
+	</update>
+	
 	<select id="selectMail" parameterType="_int" resultMap="mailResultSet">
 		select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
 	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
-	           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_ORIGINAL_NAME, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_FILE_PATH, MAIL_FILE.M_UPLOAD_DATE, MAIL_FILE.M_STATUS
+	           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_ORIGINAL_NAME, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_FILE_PATH, MAIL_FILE.M_UPLOAD_DATE, MAIL_FILE.M_STATUS,
+	           S_R_STATUS, FAVORITES, MAIL_S_R.R_DATE
 	    from mail
 	        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
 	        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+	        join mail_s_r on (mail.mailno = mail_s_r.mailno)
 	    where estatus='Y' and mail.mailno=#{id}
         order by mail_file.m_file_no desc
 	</select>
@@ -220,6 +228,7 @@
 		<result column="S_DATE" property="sDate"/>
 		<result column="EMPNAME" property="senderName"/>
 		<collection property="mailFileList" javaType="arraylist" resultMap="mailFileResultSet"></collection>
+		<collection property="mailSRList" javaType="arraylist" resultMap="mailSRResultSet"></collection>
 	</resultMap>
 	
 	<resultMap type="MailFile" id="mailFileResultSet">
@@ -247,4 +256,13 @@
 		<result column="DEPTNO" property="deptNo"/>
 		<result column="EMPID" property="empId"/>
 	</resultMap>
+	
+	<resultMap type="MailSR" id="mailSRResultSet">
+		<id column="MAILNO" property="mailNo"/>
+		<id column="EMPNO" property="empNo"/>
+		<result column="S_R_STATUS" property="sRStatus"/>
+		<result column="FAVORITES" property="favorites"/>
+		<result column="R_DATE" property="rDate"/>
+	</resultMap>
+		
 </mapper>

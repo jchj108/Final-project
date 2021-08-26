@@ -52,4 +52,7 @@ public interface MailService {
 	ArrayList<Mail> selectDeleteList(PageInfo pi, String empNo);
 
 	ArrayList<Employee> searchEmp(String keyword);
+
+	int updateRDate(int id);
+
 }
