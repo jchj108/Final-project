@@ -242,7 +242,6 @@ public class EmployeeController {
 		String empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
 		ArrayList<HashMap<String,Object>> list = eService.selectAlertList(empNo);
-		System.out.println(list);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 	    gson.toJson(list, response.getWriter());
@@ -265,8 +264,6 @@ public class EmployeeController {
 	@RequestMapping("deletAllAlerts.emp")
 	@ResponseBody
 	public String deletAllAlerts(@RequestParam("empNo")String empNo, @RequestParam("aType")String aType) {
-		System.out.println("empNo: " + empNo);
-		System.out.println("aType: " + aType);
 		
 		HashMap<String,String> map = new HashMap<>();
 		map.put("empNo", empNo);

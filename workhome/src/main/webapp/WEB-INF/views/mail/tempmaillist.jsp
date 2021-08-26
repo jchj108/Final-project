@@ -450,7 +450,7 @@ td {
 				if (count == 0) {
 					alert("선택된 항목이 없습니다.");
 				} else {
-					var bool = confirm('정말 삭제하시겠습니까?');
+					var bool = confirm('정말 삭제하시겠습니까? \n임시보관함의 메일은 삭제 시 복구할 수 없습니다.');
 					if (bool) {
 						$('#tempManage').attr('action', 'deletemail.mail');
 						$('#tempManage').submit();

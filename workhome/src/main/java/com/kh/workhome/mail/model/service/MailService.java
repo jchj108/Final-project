@@ -50,4 +50,6 @@ public interface MailService {
 	int getDeleteListCount(String empNo);
 
 	ArrayList<Mail> selectDeleteList(PageInfo pi, String empNo);
+
+	ArrayList<Employee> searchEmp(String keyword);
 }

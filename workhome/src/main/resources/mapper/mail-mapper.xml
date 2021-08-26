@@ -21,11 +21,25 @@
 	
 	
 	<update id="deleteMail" parameterType="hashmap">
-		update mail_s_r
-		set s_r_status='N'
-		where mailno=#{mNo}
-		and empno=#{empNo}
+		<if test='!command.equals("templist")'>
+			update mail_s_r
+			set s_r_status='N'
+			where mailno=#{mNo}
+			and empno=#{empNo}
+		</if>
+		<if test='command.equals("templist")'>
+			delete from mail
+			where mailno=#{mNo}
+			and empno=#{empNo}
+			and estatus='T'
+		</if>
 	</update>
+	
+	<select id="searchEmp" resultMap="employeeResultSet">
+		select * from employee
+		where empno like '%' || #{keyword} || '%'
+		OR EMPNAME LIKE '%' || #{keyword} || '%'
+	</select>
 	
 	<insert id="insertMail">
 		insert into mail

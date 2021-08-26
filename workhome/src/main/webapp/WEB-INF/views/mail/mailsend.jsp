@@ -46,6 +46,75 @@
 .mail-icon {
 	width: 20px;
 }
+
+.ui-autocomplete {
+	max-height: 350px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden; -->
+	border: 10px solid black;
+}
+
+.ui-autocomplete {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+	float: left;
+	display: none;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	background-color: #ffffff;
+	border-color: #ccc;
+	border-color: rgba(0, 0, 0, 0.2);
+	border-style: solid;
+	border-width: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding;
+	background-clip: padding-box;
+	*border-right-width: 2px;
+	*border-bottom-width: 2px;
+}
+
+.ui-menu-item > a.ui-corner-all {
+    display: block;
+    clear: both;
+    font-weight: normal;
+    line-height: 18px;
+    color: #555555;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+
+.ui-state-hover, .ui-state-active {
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    background-image: none;
+}
+
+.ui-widget.ui-widget-content {
+    border: 2px solid #c5c5c5;
+    border-radius: 4px;
+    width: 433px; !important;
+}
+
+.ui-menu-item .ui-menu-item-wrapper.ui-state-active {
+	border: 2px solid #00b1d2 !important;
+    background: #00b1d2 !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+} 
 </style>
 
 </head>
@@ -242,7 +311,7 @@
 	<!-- ./wrapper -->
 
 	<!-- jQuery -->
-	<script src="${contextPath}/resources/plugins/jquery/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!-- Bootstrap 4 -->
 	<script
 		src="${contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -258,11 +327,59 @@
 	<!-- Page specific script -->
 	<script>
 		$(function() {
-			//Add text editor
+			// 썸머노트 렌더링
 			$('#compose-textarea').summernote({
 				lang : "ko-KR",
 				height : 550,
 			});
+			
+			var empEmail;
+			// 자동완성
+            $("#email").autocomplete({
+                source : function( request, response ) {
+                     $.ajax({
+                            url: 'searchemp.mail',
+                            dataType: "json",
+                            data: {keyword: $('#email').val()},
+                            success: function(data) {
+                                //서버에서 json 데이터 response 후 목록에 추가
+                                console.log(data)
+                                response(
+                                    $.map(data, function(item) {    //json[i] 번째 에 있는게 item .
+                                        return {
+                                            value: item.empName +" (" + item.empPosition +")",    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+<%-- 											gNo: "<%= request.getContextPath() %>/detail.do?gNo=" + item.G_NO --%>
+											test: item.empNo + "@workhome.com"
+                                        }
+                                    })
+                                );
+                            }
+                       });
+                    },    // source 는 자동 완성 대상
+                select : function(event, ui) {    //아이템 선택시
+					console.log(ui.item.test);
+                	console.log($('#email').val());
+                	empEmail = ui.item.test;
+                    
+                },
+                focus : function(event, ui) {    
+                    return false;//한글 에러 잡기용도로 사용됨
+                },
+                minLength: 1,// 최소 글자수
+                autoFocus: true, //첫번째 항목 자동 포커스 기본값 false
+                classes: {    
+                    "ui-autocomplete": "highlight"
+                },
+                close : function(event){    //자동완성창 닫아질때 호출
+                	$('#email').val(empEmail);
+
+                    console.log(event);
+                }
+            }).autocomplete( "instance" )._renderItem = function( ul, item ) {    // UI를 마음대로 변경하는 부분
+                  return $( "<li>" )    //기본 tag가 li로 되어 있음 
+                  .append("<div>" + item.value + "</div>")    //여기에다가 원하는 모양의 HTML을 만들면 UI가 원하는 모양으로 변함.
+                  .appendTo( ul );
+           }
 		});
 
 		$('#tmpInsert-btn').on("click", function() {

@@ -118,4 +118,8 @@ public class MailDAO {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteList", empNo, rowBounds);
 	}
+
+	public ArrayList<Employee> searchEmp(SqlSessionTemplate sqlSession, String keyword) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchEmp", keyword);
+	}
 }
