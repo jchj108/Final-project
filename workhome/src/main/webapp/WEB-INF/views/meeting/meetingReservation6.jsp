@@ -572,6 +572,7 @@ function(data){
 						  					var mContent = $("#mContent").val();
 						  					var date = $(".dateResult").text();
 						  					var count = false;
+						  					var empName = "${loginUser.empName}";
 
 						  					if(date==""){
 //						  						alert("날짜를 선택해 주세요.");
@@ -609,16 +610,17 @@ function(data){
 						  					
 //						  					SelectTime = SelectTime.substr(0,SelectTime.length-1);
 						  					
-						  					if(confirm("날짜 : "+date+"\n제목 : \'"+mTitle+"\n참가인 : \'"+joinEmp+"\'\n예약이 맞습니까?")){
+						  					if(confirm("날짜 : "+date+"\n제목 : \'"+mTitle+"\n참가인 : \'"+joinEmp+"\n회의 등록인 : \'"+empName+"\'\n예약이 맞습니까?")){
 						  						var rDate = date+";";
 //						  						var rDate = date+";"+SelectTime;
-//						  						var empNo = "${loginEmp.empNo}";
+						  						var empNo = "${loginUser.empNo}";
+						  						
 						  						
 						  						console.log("rDate : " + rDate);
 						  											  						
 						  						$.ajax({
 													url:"reInsert.meet",
-													data:{rDate:rDate,joinEmp:joinEmp,mTitle:mTitle,mContent:mContent},
+													data:{rDate:rDate,joinEmp:joinEmp,mTitle:mTitle,mContent:mContent, empNo:empNo},
 													type:"post",
 													success:function(data){
 														if(data=="success"){
