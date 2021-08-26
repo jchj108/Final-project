@@ -265,6 +265,18 @@
             </ul>
           </li>
           <li class="nav-header">기타</li>
+          
+          <li class="nav-item">
+<!--             <a href="pages/widgets.html" class="nav-link"> -->
+            <a href="alist.ao" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                출퇴근 기록
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle"></i>
