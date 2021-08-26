@@ -24,10 +24,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.workhome.common.PageInfo;
 import com.kh.workhome.common.Pagination;
+import com.kh.workhome.employee.model.service.EmployeeService;
 import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.mail.model.exception.MailException;
 import com.kh.workhome.mail.model.service.MailService;
@@ -39,6 +39,9 @@ public class MailController {
 	// 테스트입니다.
 	@Autowired
 	private MailService mService;
+	
+	@Autowired
+	private EmployeeService eService;
 
 	@RequestMapping("mail.mail")
 	public String mailBoxForm() {
@@ -330,7 +333,7 @@ public class MailController {
 
 		System.out.println(m);
 		int result1 = mService.insertMail(m);
-
+		
 		if (result1 <= 0) { // 메일 등록 취소 시 예외처리
 			throw new MailException("메일 저장에 실패했습니다.");
 		}
@@ -359,6 +362,12 @@ public class MailController {
 		
 		if(result3 <= 0 || result4 <= 0) {
 			throw new MailException("메일 전송에 실패했습니다.");
+		} else { // 알림 등록
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("aContents", e.getEmpName() + "님으로부터 메일이 도착했습니다.");
+			map.put("aType", "mail");
+			map.put("empNo", getMId(m.getReceiveEmp())); // 알림 보내는 사람이 아니라 받는 사람의 empNo 넣기
+			eService.insertAlert(map);
 		}
 		
 		return "redirect:sendlist.mail";

@@ -47,6 +47,7 @@
 	width: 20px;
 }
 
+/* 자동완성 */
 .ui-autocomplete {
 	max-height: 350px;
 	overflow-y: auto;
@@ -115,6 +116,7 @@
     font-weight: bold !important;
     color: #ffffff !important;
 } 
+/* 자동완성 끝 */
 </style>
 
 </head>
