@@ -122,4 +122,9 @@ public class MailDAO {
 	public ArrayList<Employee> searchEmp(SqlSessionTemplate sqlSession, String keyword) {
 		return (ArrayList)sqlSession.selectList("mailMapper.searchEmp", keyword);
 	}
+
+	public int updateRDate(SqlSessionTemplate sqlSession, int mId) {
+		return sqlSession.update("mailMapper.updateRDate", mId);
+	}
+
 }

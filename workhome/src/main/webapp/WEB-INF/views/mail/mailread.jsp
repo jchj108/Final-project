@@ -130,7 +130,7 @@ td {
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-3">
-							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">메일함으로
+							<a href="${contextPath }/receivelist.mail" class="btn btn-primary btn-block mb-3">메일함으로
 								돌아가기</a>
 
 							<div class="card">

@@ -143,7 +143,7 @@
 					$input1.val(data[i].ALERTNO);
 					if(data[i].ATYPE == "mail"){
 						$area = $(".mailA_area");
-						$input.val("inbox.mail?mailNo="+data[i].DOCNO);
+						$input.val("readmail.mail?mId="+data[i].DOCNO);
 						$i = '<i class="fas fa-envelope"></i>';
 						mCount++;
 					}else if(data[i].ATYPE != "mail"){

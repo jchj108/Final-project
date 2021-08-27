@@ -24,21 +24,25 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.workhome.common.PageInfo;
 import com.kh.workhome.common.Pagination;
+import com.kh.workhome.employee.model.service.EmployeeService;
 import com.kh.workhome.employee.model.vo.Employee;
 import com.kh.workhome.mail.model.exception.MailException;
 import com.kh.workhome.mail.model.service.MailService;
 import com.kh.workhome.mail.model.vo.Mail;
 import com.kh.workhome.mail.model.vo.MailFile;
+import com.kh.workhome.mail.model.vo.MailSR;
 
 @Controller
 public class MailController {
 	// 테스트입니다.
 	@Autowired
 	private MailService mService;
+	
+	@Autowired
+	private EmployeeService eService;
 
 	@RequestMapping("mail.mail")
 	public String mailBoxForm() {
@@ -56,15 +60,21 @@ public class MailController {
 	}
 
 	@RequestMapping("readmail.mail")
-	public ModelAndView selectMail(@RequestParam("mId") int id, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView selectMail(@RequestParam("mId") int id, @RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
 		Mail m = mService.selectMail(id);
 		System.out.println(m);
+		
+		// R_date가 null이면 읽은 시간 추가(읽음 표시)
+		ArrayList<MailSR> list = m.getMailSRList();
+		
+		if(list.get(0).getRDate() == null) {
+			int result = mService.updateRDate(id);
+		}
 		
 		String mId = getMId(m.getReceiveEmp());
 		Employee e = mService.getMId(mId); // 받는 사람 이름 구하는 메소드
 
 		System.out.println(e);
-		
 		
 		if (m != null) {
 			if(e != null) {
@@ -81,7 +91,7 @@ public class MailController {
 		return mv;
 	}
 	@RequestMapping("readtemp.mail")
-	public ModelAndView selectTempMail(@RequestParam("mId") int id, @RequestParam("page") int page, ModelAndView mv) {
+	public ModelAndView selectTempMail(@RequestParam("mId") int id, @RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
 		Mail m = mService.selectTempMail(id);
 		System.out.println(m);
 
@@ -330,7 +340,7 @@ public class MailController {
 
 		System.out.println(m);
 		int result1 = mService.insertMail(m);
-
+		
 		if (result1 <= 0) { // 메일 등록 취소 시 예외처리
 			throw new MailException("메일 저장에 실패했습니다.");
 		}
@@ -359,6 +369,12 @@ public class MailController {
 		
 		if(result3 <= 0 || result4 <= 0) {
 			throw new MailException("메일 전송에 실패했습니다.");
+		} else { // 알림 등록
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("aContents", e.getEmpName() + "님으로부터 메일이 도착했습니다.");
+			map.put("aType", "mail");
+			map.put("empNo", getMId(m.getReceiveEmp())); // 알림 보내는 사람이 아니라 받는 사람의 empNo 넣기
+			eService.insertAlert(map);
 		}
 		
 		return "redirect:sendlist.mail";

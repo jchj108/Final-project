@@ -41,6 +41,10 @@ public class EmployeeDAO {
 	}
 
 	public int insertAlert(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		
+		if(map.get("empNo") instanceof String) {
+			return sqlSession.insert("employeeMapper.insertAlert", map);
+		} else {
 		ArrayList<String> emps = (ArrayList)map.get("empNo");
 		int result = 0;
 		for(int i = 0 ; i < emps.size() ; i++) {
@@ -48,6 +52,7 @@ public class EmployeeDAO {
 			result += sqlSession.insert("employeeMapper.insertAlert", map);
 		}
 		return result;
+		}
 	}
 	
 	public ArrayList<HashMap<String, Object>> selectAlertList(SqlSessionTemplate sqlSession, String empNo) {

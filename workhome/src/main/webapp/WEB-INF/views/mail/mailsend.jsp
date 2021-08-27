@@ -47,6 +47,7 @@
 	width: 20px;
 }
 
+/* 자동완성 */
 .ui-autocomplete {
 	max-height: 350px;
 	overflow-y: auto;
@@ -110,11 +111,12 @@
 }
 
 .ui-menu-item .ui-menu-item-wrapper.ui-state-active {
-	border: 2px solid #00b1d2 !important;
-    background: #00b1d2 !important;
+	border: 2px solid #007BFF !important; 
+    background: #007BFF !important;
     font-weight: bold !important;
     color: #ffffff !important;
 } 
+/* 자동완성 끝 */
 </style>
 
 </head>

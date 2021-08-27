@@ -11,18 +11,18 @@ public class Mail {
 	private String etitle;
 	private String econtent;
 	private String estatus;
-	private Date eRTime; // 읽은 시간
 	private Date sDate; // 보낸 시간
 	private String empNo;
 	private String senderMailId; // 보낸 사람 메일 주소
 	private String senderName;
 	private String receiverName; // 받는 사람 이름
 	private ArrayList<MailFile> mailFileList;
+	private ArrayList<MailSR> mailSRList; 
 
 	public Mail() {}
 	
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
-			Date eRTime, Date sDate, String senderMailId, String senderName, ArrayList<MailFile> mailFileList) {
+			Date sDate, String senderMailId, String senderName, ArrayList<MailFile> mailFileList) {
 		super();
 		this.mailNo = mailNo;
 		this.receiveEmp = receiveEmp;
@@ -30,7 +30,6 @@ public class Mail {
 		this.etitle = etitle;
 		this.econtent = econtent;
 		this.estatus = estatus;
-		this.eRTime = eRTime;
 		this.sDate = sDate;
 		this.senderMailId = senderMailId;
 		this.senderName = senderName;
@@ -48,7 +47,7 @@ public class Mail {
 	
 
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
-			Date eRTime, Date sDate, String empNo, String senderMailId, String senderName,
+			Date sDate, String empNo, String senderMailId, String senderName,
 			ArrayList<MailFile> mailFileList) {
 		super();
 		this.mailNo = mailNo;
@@ -57,7 +56,6 @@ public class Mail {
 		this.etitle = etitle;
 		this.econtent = econtent;
 		this.estatus = estatus;
-		this.eRTime = eRTime;
 		this.sDate = sDate;
 		this.empNo = empNo;
 		this.senderMailId = senderMailId;
@@ -101,12 +99,6 @@ public class Mail {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
-	public Date geteRTime() {
-		return eRTime;
-	}
-	public void seteRTime(Date eRTime) {
-		this.eRTime = eRTime;
-	}
 	public Date getsDate() {
 		return sDate;
 	}
@@ -135,7 +127,7 @@ public class Mail {
 	}
 
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
-			Date eRTime, Date sDate, String empNo, String senderMailId, String senderName, String receiverName,
+			Date sDate, String empNo, String senderMailId, String senderName, String receiverName,
 			ArrayList<MailFile> mailFileList) {
 		super();
 		this.mailNo = mailNo;
@@ -144,7 +136,6 @@ public class Mail {
 		this.etitle = etitle;
 		this.econtent = econtent;
 		this.estatus = estatus;
-		this.eRTime = eRTime;
 		this.sDate = sDate;
 		this.empNo = empNo;
 		this.senderMailId = senderMailId;
@@ -153,12 +144,42 @@ public class Mail {
 		this.mailFileList = mailFileList;
 	}
 
+
+
+	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus, Date sDate,
+			String empNo, String senderMailId, String senderName, String receiverName, ArrayList<MailFile> mailFileList,
+			ArrayList<MailSR> mailSRList) {
+		super();
+		this.mailNo = mailNo;
+		this.receiveEmp = receiveEmp;
+		this.etype = etype;
+		this.etitle = etitle;
+		this.econtent = econtent;
+		this.estatus = estatus;
+		this.sDate = sDate;
+		this.empNo = empNo;
+		this.senderMailId = senderMailId;
+		this.senderName = senderName;
+		this.receiverName = receiverName;
+		this.mailFileList = mailFileList;
+		this.mailSRList = mailSRList;
+	}
+
+	public ArrayList<MailSR> getMailSRList() {
+		return mailSRList;
+	}
+
+	public void setMailSRList(ArrayList<MailSR> mailSRList) {
+		this.mailSRList = mailSRList;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", receiveEmp=" + receiveEmp + ", etype=" + etype + ", etitle=" + etitle
-				+ ", econtent=" + econtent + ", estatus=" + estatus + ", eRTime=" + eRTime + ", sDate=" + sDate
-				+ ", empNo=" + empNo + ", senderMailId=" + senderMailId + ", senderName=" + senderName
-				+ ", receiverName=" + receiverName + ", mailFileList=" + mailFileList + "]";
+				+ ", econtent=" + econtent + ", estatus=" + estatus + ", sDate=" + sDate + ", empNo=" + empNo
+				+ ", senderMailId=" + senderMailId + ", senderName=" + senderName + ", receiverName=" + receiverName
+				+ ", mailFileList=" + mailFileList + ", mailSRList=" + mailSRList + "]";
 	}
 
 	public ArrayList<MailFile> getMailFileList() {

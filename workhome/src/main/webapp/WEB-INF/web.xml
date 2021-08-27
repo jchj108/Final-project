@@ -123,6 +123,21 @@
 		<url-pattern>*.no</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 출퇴근 관련  -->
+	<servlet>
+		<servlet-name>attendanceServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/attendance-context2.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>attendanceServlet</servlet-name>
+		<url-pattern>*.ao</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 인코딩 필터 등록  -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
