@@ -125,4 +125,33 @@ public class MeetingController {
 		
 	}
 	
+	
+	@RequestMapping("rSelectDate.meet")
+	public void rSelectDate(HttpServletResponse response, @RequestParam("date")String date,@RequestParam("mNo") String mNo) throws IOException {
+		HashMap<String,Object> map= new HashMap<>();
+		map.put("date", date+"%");
+		map.put("mNo", mNo);
+		ArrayList<String> list = meService.rSelectDate(map);
+		String result = "";
+		
+		System.out.println("selectDateList : " + list); // 그 날짜의 그 회의실에 회의가 있으면 list에 담긴다
+		
+		if(list!=null) { // list {[2021-07-07;3,4,5], [2021-07-07;6,7]
+			for(String str : list ) {
+				String resultStr = str.substring(str.indexOf(";")+1, str.length()); // ;이후부터 가져와서 저장하기 ex) 6,7
+				if(resultStr.contains(",")) {
+					String[] resultArr = resultStr.split(","); // ,로 쪼개서 배열로 담기 [6], [7]
+					for(int i = 0 ; i <resultArr.length; i++) {
+						result += resultArr[i]+","; // result에 String으로 담기 6,7,
+					}
+				}else { // 7만 있으면
+					result += str+","; //7,
+				}
+				System.out.println("result : " + result);
+			}
+		}
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(result,response.getWriter());
+	}
+	
 }

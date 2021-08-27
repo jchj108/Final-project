@@ -19,6 +19,12 @@
 		values(#{mNo}, #{joinEmp}, #{mTitle}, #{mContent}, 'Y', null, #{rDate}, #{empNo})
 	</insert>
 
+	<select id="rSelectDate" parameterType="map" resultType="string">
+		select RDATE
+		from RESERVATION
+		where (RDATE like #{date} and mNo = #{mNo})and RSTATUS='Y'
+	</select>
+
 	<resultMap type="MeetingReservation" id="meetingResultSet">
 		<id column="MNO" property="mNo" />
 		<result column="JOINEMP" property="joinEmp" />

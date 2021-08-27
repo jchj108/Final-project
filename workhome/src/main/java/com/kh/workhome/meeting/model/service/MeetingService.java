@@ -16,4 +16,6 @@ public interface MeetingService {
 
 	int reInsert(MeetingReservation m);
 
+	ArrayList<String> rSelectDate(HashMap<String, Object> map);
+
 }
