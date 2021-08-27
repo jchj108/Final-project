@@ -205,15 +205,6 @@
             <h1>회의실 예약</h1>
           </div>
           <div class="col-sm-4">
-           <div class="form-group">
-                        <select class="form-control">
-                          <option>중앙 회의실</option>
-                          <option>회의실 A</option>
-                          <option>회의실 B</option>
-                          <option>회의실 C</option>
-                          <option>회의실 D</option>
-                        </select>
-            </div>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -268,7 +259,7 @@
               <div class="form-group">
                 <label for="inputName">예약 가능 시간</label>
 	            <div id="timearea" style="margin: auto; min-height: 2rem;">
-	            	날짜 및 회의실을 선택해 주세요.	            		        
+	            	회의실 및 날짜를 선택해 주세요.	            		        
 	            </div>
 	            
 	          <!-- 시간 -->
@@ -463,21 +454,6 @@
 <!-- 시간 선택 -->
 
 <script>
-
-/*	$(document).on('click', ".time-button", function() {
-		if($(this).hasClass("btn-default") === true) {
-			$(this).attr("class", "btn btn-primary btn-sm");
-		}
-		if($(this).hasClass("btn-primary") === true) {
-			$(this).attr("class", "btn btn-default btn-sm");
-		}
-	});
-*/
-
-</script>
-
-
-<script>
 	function rSelectDateFun(date){
 		$.ajax({
 			url:"rSelectDate.meet",
@@ -507,6 +483,48 @@
 			}
 		});
 	}
+
+</script>
+
+<script>
+
+	$(document).on('click', ".open-time", function() {
+		var time=$(this).find(".time").text();
+		console.log("time : " + time);
+		SelectTime += time+",";
+		console.log("SelectTime : " + SelectTime);
+		
+		$(this).attr("class", "btn btn-primary btn-sm select-time");
+	});
+	
+	$(document).on('click', ".select-time", function(){
+		$(this).attr("class", "btn btn-default btn-sm open-time");
+		var time = $(this).find(".time").text();
+		var array = SelectTime.split(",");
+		console.log("선택 해제 후 time : " + time);
+		console.log("array : " + array);
+		
+		SelectTime = "";
+		
+		for(var i in array) {
+			if(array[i] == time) {
+				array[i] = "";
+			} else {
+				array[i] += ",";
+			}
+			SelectTime += array[i];
+		}
+		
+		SelectTime = SelectTime.substr(0,SelectTime.length-1);
+		console.log("최종 SelectTime : " + SelectTime);
+		
+	});
+	
+	$(document).on('click', ".closed-time", function() {
+		 $('.modal-body').text("마감된 시간입니다. 다른 시간을 선택해 주세요.");
+		 $('#exampleModal').modal('show');		
+	})
+	
 
 </script>
 
@@ -614,6 +632,12 @@
 						  						return;
 						  					}						  					
 						  					
+						  					if(SelectTime==""){
+												 $('.modal-body').text("시간을 선택해 주세요.");
+												 $('#exampleModal').modal('show');
+						  						return;
+						  					}						  					
+						  					
 						  					if(mTitle==""){
 												 $('.modal-body').text("회의 제목을 입력해 주세요.");
 												 $('#exampleModal').modal('show');
@@ -636,16 +660,12 @@
 						  						$("#joinEmp").focus();
 						  						return;
 						  					}
-//						  					if(SelectTime==""){
-//						  						alert("시간을 선택해주세요!");
-//						  						return;
-//						  					}
 						  					
-//						  					SelectTime = SelectTime.substr(0,SelectTime.length-1);
+						  					SelectTime = SelectTime.substr(0,SelectTime.length-1);
 						  					
-						  					if(confirm("날짜 : "+date+"\n제목 : \'"+mTitle+"\n참가인 : \'"+joinEmp+"\n회의 등록인 : \'"+empName+"\'\n예약이 맞습니까?")){
-						  						var rDate = date+";";
-//						  						var rDate = date+";"+SelectTime;
+						  					if(confirm("날짜 : "+date+"\n시간 : " + SelectTime + "\n제목 : \'"+mTitle+"\n참가인 : \'"+joinEmp+"\n회의 등록인 : \'"+empName+"\'\n예약이 맞습니까?")){
+//						  						var rDate = date+";";
+						  						var rDate = date+";"+SelectTime;
 						  						var empNo = "${loginUser.empNo}";
 						  						
 						  						
@@ -659,7 +679,6 @@
 														if(data=="success"){
 															 $('.modal-body').text("성공적으로 예약하였습니다.");
 															 $('#exampleModal').modal('show');
-//															location.href="meetReserv5.meet";
 														}else{
 															console.log(date, mTitle, joinEmp);
 															 $('.modal-body').text("예약에 실패하였습니다.");
@@ -668,7 +687,7 @@
 													}
 						  						});
 						  					}else{
-//						  						SelectTime+=",";
+						  						SelectTime+=",";
 												 $('.modal-body').text("예약을 취소하였습니다.");
 												 $('#exampleModal').modal('show');
 						  					}
