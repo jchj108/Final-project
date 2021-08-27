@@ -40,4 +40,10 @@ public class MeetingServiceImpl implements MeetingService {
 		return meDAO.reInsert(sqlSession, m);
 	}
 
+	@Override
+	public ArrayList<String> rSelectDate(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return meDAO.rSelectDate(map, sqlSession);
+	}
+
 }

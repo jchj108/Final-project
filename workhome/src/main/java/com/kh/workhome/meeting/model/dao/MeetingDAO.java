@@ -28,5 +28,9 @@ public class MeetingDAO {
 		return sqlSession.insert("meetingMapper.reInsert", m);
 	}
 
+	public ArrayList<String> rSelectDate(HashMap<String, Object> map, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("meetingMapper.rSelectDate", map);
+	}
+
 
 }

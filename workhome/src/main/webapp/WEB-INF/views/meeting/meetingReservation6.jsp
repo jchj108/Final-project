@@ -267,18 +267,8 @@
                        
               <div class="form-group">
                 <label for="inputName">예약 가능 시간</label>
-	            <div>
-	            	<button type="button" class="btn btn-danger btn-sm">09</button>
-	            	<button type="button" class="btn btn-default btn-sm">10</button>
-	            	<button type="button" class="btn btn-default btn-sm">11</button>
-	            	<button type="button" class="btn btn-default btn-sm">12</button>
-	            	<button type="button" class="btn btn-primary btn-sm">13</button>
-	            	<button type="button" class="btn btn-primary btn-sm">14</button>
-	            	<button type="button" class="btn btn-default btn-sm">15</button>
-	            	<button type="button" class="btn btn-danger btn-sm">16</button>
-	            	<button type="button" class="btn btn-danger btn-sm">17</button>
-	            	<button type="button" class="btn btn-danger btn-sm">18</button>
-	            		        
+	            <div id="timearea" style="margin: auto; min-height: 2rem;">
+	            	날짜 및 회의실을 선택해 주세요.	            		        
 	            </div>
 	            
 	          <!-- 시간 -->
@@ -356,26 +346,13 @@
               </div>
             </div>
           </div>
-                   
-
-
-
-
-
-
-          
+       
           <!-- /.col -->
           <div class="col-md-9">         
             <div class="card card-primary">
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
-                <div id="calendar" class="fc fc-ltr fc-bootstrap">
-                
-                
-
-
-
-         
+                <div id="calendar" class="fc fc-ltr fc-bootstrap">                     
               </div>
               <!-- /.card-body -->
             </div>
@@ -473,7 +450,7 @@
 			            info.dayEl.style.backgroundColor = '#B2EBF4';
 //			            console.log(info.dateStr);
 			            $(".dateResult").text(info.dateStr);
-//			            rSelectDateFun(date);
+			            rSelectDateFun(date);
 					}
 		          }
 		      });
@@ -481,6 +458,58 @@
 		      calendar.render();
 		    });
 </script>       
+
+
+<!-- 시간 선택 -->
+
+<script>
+
+/*	$(document).on('click', ".time-button", function() {
+		if($(this).hasClass("btn-default") === true) {
+			$(this).attr("class", "btn btn-primary btn-sm");
+		}
+		if($(this).hasClass("btn-primary") === true) {
+			$(this).attr("class", "btn btn-default btn-sm");
+		}
+	});
+*/
+
+</script>
+
+
+<script>
+	function rSelectDateFun(date){
+		$.ajax({
+			url:"rSelectDate.meet",
+			data:{date:date, mNo:mNo},
+			dataType:"json",
+			success:function(data) {
+				savedTime = data;
+				
+				console.log(savedTime);
+				
+				var $timearea = $("#timearea");
+				$timearea.html("");
+				for(var i = 10 ; i < 19 ; i++) {
+					if(savedTime.includes(i)) {
+						console.log("if문 진입 : 포함된 시간이 있다");
+						var $div1 = $('<button type="button" class="btn btn-danger btn-sm closed-time" style="margin:3px;">'); // 빨간 카드
+					} else {
+						console.log("if문 진입 X : 포함된 시간이 없다");
+						var $div1 = $('<button type="button" class="btn btn-default btn-sm open-time" style="margin:3px;">'); // default 카드
+					}
+					var $span = $('<span class="time">').text(i);
+					var $span2 = $('<span>').text("시");
+					
+					$div1.append($span);
+					$timearea.append($div1);
+				}
+			}
+		});
+	}
+
+</script>
+
 
 
 
@@ -557,38 +586,6 @@
 <!-- 풀캘린더 -->
 
 
-
-
-<!-- 시간 선택 -->
-	<script type="text/javascript">
-				          $(document).on('click',".cards",function(){
-				        	  var time =$(this).find(".time").text();
-				        	  SelectTime += time+",";
-				        	  $(this).addClass("cardsSelect");
-				        	  $(".ThirdArea").show(1000);
-				          });
-				          
-				          $(document).on('click',".cardsSelect",function(){
-				        	  $(this).removeClass("cardsSelect");
-				        	  var time =$(this).find(".time").text();
-				        	  var array = SelectTime.split(",");
-				        	 	SelectTime = "";
-		  						for ( var i in array ) {
-		  							if(array[i]==time){
-		  								array[i]="";
-		  							}else{
-		  								array[i]+=",";
-		  							}
-		  							SelectTime+=array[i];
-		  					      }
-		  							SelectTime=SelectTime.substr(0,SelectTime.length-1);
-			  						console.log(SelectTime);
-				          });
-				          
-				          $(document).on('click','.notFcards',function(){
-				        	  alert("이미 마감된 시간입니다.");
-				          })
-				          </script>
 
 
 <!-- 예약 확인 -->
@@ -679,182 +676,6 @@
 						  				})
 						  			</script>
 
-			          		          
-	<script>
-		
-  $(function () {
 
-    /* initialize the external events
-     -----------------------------------------------------------------*/
-    function ini_events(ele) {
-      ele.each(function () {
-
-        // create an Event Object (https://fullcalendar.io/docs/event-object)
-        // it doesn't need to have a start or end
-        var eventObject = {
-          title: $.trim($(this).text()) // use the element's text as the event title
-        }
-
-        // store the Event Object in the DOM element so we can get to it later
-        $(this).data('eventObject', eventObject)
-
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-          zIndex        : 1070,
-          revert        : true, // will cause the event to go back to its
-          revertDuration: 0  //  original position after the drag
-        })
-
-      })
-    }
-
-    ini_events($('#external-events div.external-event'))
-
-    /* initialize the calendar
-     -----------------------------------------------------------------*/
-    //Date for the calendar events (dummy data)
-    var date = new Date()
-    var d    = date.getDate(),
-        m    = date.getMonth(),
-        y    = date.getFullYear()
-
-    var Calendar = FullCalendar.Calendar;
-    var Draggable = FullCalendar.Draggable;
-
-    var containerEl = document.getElementById('external-events');
-    var checkbox = document.getElementById('drop-remove');
-    var calendarEl = document.getElementById('calendar');
-
-    // initialize the external events
-    // -----------------------------------------------------------------
-
-    new Draggable(containerEl, {
-      itemSelector: '.external-event',
-      eventData: function(eventEl) {
-        return {
-          title: eventEl.innerText,
-          backgroundColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
-          borderColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
-          textColor: window.getComputedStyle( eventEl ,null).getPropertyValue('color'),
-        };
-      }
-    });
-
-    var calendar = new Calendar(calendarEl, {
-      headerToolbar: {
-        left  : 'prev,next today',
-        center: 'title',
-        right : 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      themeSystem: 'bootstrap',
-      //Random default events
-      events: [
-        {
-          title          : 'All Day Event',
-          start          : new Date(y, m, 1),
-          backgroundColor: '#f56954', //red
-          borderColor    : '#f56954', //red
-          allDay         : true
-        },
-        {
-          title          : 'Long Event',
-          start          : new Date(y, m, d - 5),
-          end            : new Date(y, m, d - 2),
-          backgroundColor: '#f39c12', //yellow
-          borderColor    : '#f39c12' //yellow
-        },
-        {
-          title          : '오전 회의',
-          start          : new Date(y, m, d, 10, 30),
-          allDay         : false,
-          backgroundColor: '#0073b7', //Blue
-          borderColor    : '#0073b7' //Blue
-        },
-        {
-          title          : '점심 회의',
-          start          : new Date(y, m, d, 12, 0),
-          end            : new Date(y, m, d, 14, 0),
-          allDay         : false,
-          backgroundColor: '#00c0ef', //Info (aqua)
-          borderColor    : '#00c0ef' //Info (aqua)
-        },
-        {
-          title          : '인사부 회의입니다',
-          start          : new Date(y, m, d+1, 10, 0),
-          end            : new Date(y, m, d+1, 16, 0),
-          allDay         : false,
-          backgroundColor: '#00c0ef', //Info (aqua)
-          borderColor    : '#00c0ef' //Info (aqua)
-        },
-        {
-          title          : '전산팀 회의',
-          start          : new Date(y, m, d+3, 10, 0),
-          end            : new Date(y, m, d+3, 16, 0),
-          allDay         : true,
-          backgroundColor: '#00c0ef', //Info (aqua)
-          borderColor    : '#00c0ef' //Info (aqua)
-        },
-        {
-          title          : 'Click for Google',
-          start          : new Date(y, m, 28),
-          end            : new Date(y, m, 29),
-          url            : 'https://www.google.com/',
-          backgroundColor: '#3c8dbc', //Primary (light-blue)
-          borderColor    : '#3c8dbc' //Primary (light-blue)
-        }
-      ],
-      editable  : true,
-      droppable : true, // this allows things to be dropped onto the calendar !!!
-      drop      : function(info) {
-        // is the "remove after drop" checkbox checked?
-        if (checkbox.checked) {
-          // if so, remove the element from the "Draggable Events" list
-          info.draggedEl.parentNode.removeChild(info.draggedEl);
-        }
-      }
-    });
-
-    calendar.render();
-    // $('#calendar').fullCalendar()
-
-    /* ADDING EVENTS */
-    var currColor = '#3c8dbc' //Red by default
-    // Color chooser button
-    $('#color-chooser > li > a').click(function (e) {
-      e.preventDefault()
-      // Save color
-      currColor = $(this).css('color')
-      // Add color effect to button
-      $('#add-new-event').css({
-        'background-color': currColor,
-        'border-color'    : currColor
-      })
-    })
-    $('#add-new-event').click(function (e) {
-      e.preventDefault()
-      // Get value and make sure it is not null
-      var val = $('#new-event').val()
-      if (val.length == 0) {
-        return
-      }
-
-      // Create events
-      var event = $('<div />')
-      event.css({
-        'background-color': currColor,
-        'border-color'    : currColor,
-        'color'           : '#fff'
-      }).addClass('external-event')
-      event.text(val)
-      $('#external-events').prepend(event)
-
-      // Add draggable funtionality
-      ini_events(event)
-
-      // Remove event from text input
-      $('#new-event').val('')
-    })
-  })
-</script>
 </body>
 </html>
