@@ -44,11 +44,6 @@ public class MailController {
 	@Autowired
 	private EmployeeService eService;
 
-	@RequestMapping("mail.mail")
-	public String mailBoxForm() {
-		return "mailbox";
-	}
-
 	@RequestMapping("send.mail")
 	public String mailSendForm() {
 		return "mailsend";
@@ -64,17 +59,21 @@ public class MailController {
 			@RequestParam(value = "page", required = false) Integer page, ModelAndView mv, HttpSession session) {
 
 		String empNo = ((Employee) session.getAttribute("loginUser")).getEmpNo();
-		Mail m = mService.selectMail(id);
-		System.out.println(m);
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("mId", id);
+		map.put("id", id);
 		map.put("empNo", empNo);
+		
+		System.out.println(id);
+		System.out.println(empNo);
 
+		Mail m = mService.selectMail(map);
+		System.out.println(m);
 		// R_date가 null이면 읽은 시간 추가(읽음 표시)
 		ArrayList<MailSR> list = m.getMailSRList();
 
 		if (list.get(0).getRDate() == null) {
+			System.out.println("업데이트");
 			int result = mService.updateRDate(map);
 		}
 
@@ -148,7 +147,7 @@ public class MailController {
 	@RequestMapping("alllist.mail")
 	public ModelAndView alllist(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
 			HttpServletRequest request) {
-		
+
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
@@ -156,19 +155,46 @@ public class MailController {
 		int boardLimit = 15;
 		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
 		int listCount = mService.getAllListCount(empNo);
-		
+
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		ArrayList<Mail> list = mService.selectAllList(pi, empNo);
-		
-		int count = mService.selectCountNotRead(empNo);  // 읽지 않은 메일 개수 가져오기
-		
+
+		int count = mService.selectCountNotRead(empNo); // 읽지 않은 메일 개수 가져오기
+
 		if (list != null) {
 			mv.addObject("allList", list).addObject("pi", pi).addObject("count", count);
 			mv.setViewName("allmaillist");
 		} else {
 			throw new MailException("전체메일함 조회에 실패했습니다.");
 		}
-		
+
+		return mv;
+	}
+
+	@RequestMapping("favoriteslist.mail")
+	public ModelAndView FavoriteList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
+			HttpServletRequest request) {
+
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		int boardLimit = 15;
+		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
+		int listCount = mService.getFavoritesListCount(empNo);
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		ArrayList<Mail> list = mService.selectFavoritesList(pi, empNo);
+
+		int count = mService.selectCountNotRead(empNo); // 읽지 않은 메일 개수 가져오기
+
+		if (list != null) {
+			mv.addObject("favoritesList", list).addObject("pi", pi).addObject("count", count);
+			mv.setViewName("favoritesmaillist");
+		} else {
+			throw new MailException("즐겨찾기 조회에 실패했습니다.");
+		}
+
 		return mv;
 	}
 
@@ -308,12 +334,18 @@ public class MailController {
 
 		if (result > 0) {
 			switch (command) {
+			case "alllist":
+				return "redirect:alllist.mail";
 			case "templist":
 				return "redirect:templist.mail";
 			case "sendlist":
 				return "redirect:sendlist.mail";
 			case "receivelist":
 				return "redirect:receivelist.mail";
+			case "favoriteslist":
+				return "redirect:favoriteslist.mail";
+			case "deletelist" :
+				return "redirect:deletelist.mail";
 			}
 		} else {
 			throw new MailException("메일 삭제에 실패했습니다.");

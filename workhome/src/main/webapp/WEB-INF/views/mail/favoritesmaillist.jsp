@@ -115,7 +115,7 @@ td {
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>받은메일함</h1>
+							<h1>즐겨찾기</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -140,7 +140,7 @@ td {
 						<div class="col-md-9">
 							<div class="card card-primary card-outline">
 								<div class="card-header">
-									<h3 class="card-title">전체메일</h3>
+									<h3 class="card-title">즐겨찾기</h3>
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm">
@@ -191,9 +191,9 @@ td {
 									</div>
 									<div class="table-responsive mailbox-messages">
 										<table class="table table-hover table-striped">
-											<form id="allManage" method="post">
-												<input type="hidden" value="alllist" name="command">
-												<c:forEach var="m" items="${allList }" varStatus="idCount">
+											<form id=favoritesManage method="post">
+												<input type="hidden" value="favoriteslist" name="command">
+												<c:forEach var="m" items="${favoritesList }" varStatus="idCount">
 													<c:forEach var="mF" items="${m.mailFileList}">
 														<c:if test="${mF.mStatus == 'Y'}">
 															<c:set var="attachment" value="on" />
@@ -203,6 +203,9 @@ td {
 														</c:if>
 													</c:forEach>
 													<c:forEach var = "mSR" items="${m.mailSRList }">
+														<c:if test="${mSR.favorites == 'Y' }">
+															<c:set var = "fav" value = "y"></c:set>
+														</c:if>
 														<c:if test="${empty mSR.RDate }">
 															<c:set var ="read" value = "n" />
 														</c:if>
@@ -221,7 +224,14 @@ td {
 																<label for="check${idCount.count }"></label>
 															</div>
 														</td>
-														<td class="mailbox-star"><a href="#"><i class="far fa-star text-warning"></i></a> 
+														<td class="mailbox-star"><a href="#">
+														<c:if test="${fav != 'y' }">
+														<i class="far fa-star text-warning"></i>
+														</c:if>
+														<c:if test="${fav == 'y' }">
+														<i class="fas fa-star text-warning"></i>
+														</c:if>
+														</a> 
 															<c:if test="${read == 'y' }">
 																<i id="readmail" class="far fa-envelope-open text-primary"></i>
 															</c:if>
@@ -397,8 +407,8 @@ td {
 				} else {
 					var bool = confirm('정말 삭제하시겠습니까?');
 					if (bool) {
-						$('#allManage').attr('action', 'deletemail.mail');
-						$('#allManage').submit();
+						$('#favoritesManage').attr('action', 'deletemail.mail');
+						$('#favoritesManage').submit();
 					}
 				}
 			});

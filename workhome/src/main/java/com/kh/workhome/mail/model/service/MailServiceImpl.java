@@ -160,4 +160,14 @@ public class MailServiceImpl implements MailService {
 	public int selectCountNotRead(String empNo) {
 		return mDAO.selectCountNotRead(sqlSession, empNo);
 	}
+
+	@Override
+	public int getFavoritesListCount(String empNo) {
+		return mDAO.getFavoritesListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectFavoritesList(PageInfo pi, String empNo) {
+		return mDAO.selectFavoritesList(sqlSession, pi, empNo);
+	}
 }

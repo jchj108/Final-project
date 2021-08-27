@@ -65,4 +65,8 @@ public interface MailService {
 
 	int selectCountNotRead(String empNo);
 
+	int getFavoritesListCount(String empNo);
+
+	ArrayList<Mail> selectFavoritesList(PageInfo pi, String empNo);
+
 }
