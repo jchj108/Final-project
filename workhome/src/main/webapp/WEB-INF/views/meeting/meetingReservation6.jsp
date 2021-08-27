@@ -397,6 +397,8 @@
 			           			$("#roomSelect").change(function() {
 			           				   mNo = $("#roomSelect option:selected").val();
 							           $(".fc-today-button").trigger('click');
+							           
+							           SelectTime = "";
 										
 							           console.log("mNo : " + mNo);
 							           
@@ -442,6 +444,8 @@
 //			            console.log(info.dateStr);
 			            $(".dateResult").text(info.dateStr);
 			            rSelectDateFun(date);
+			            
+			            SelectTime = "";
 					}
 		          }
 		      });
