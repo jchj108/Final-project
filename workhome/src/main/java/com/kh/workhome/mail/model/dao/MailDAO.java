@@ -123,8 +123,30 @@ public class MailDAO {
 		return (ArrayList)sqlSession.selectList("mailMapper.searchEmp", keyword);
 	}
 
-	public int updateRDate(SqlSessionTemplate sqlSession, int mId) {
-		return sqlSession.update("mailMapper.updateRDate", mId);
+	public int updateRDate(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.update("mailMapper.updateRDate", map);
 	}
 
+	public int updateFavorites(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.update("mailMapper.updateFavorites", map);
+	}
+
+	public Mail selectMail(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.selectOne("mailMapper.selectMailByMap", map);
+	}
+
+	public int getAllListCount(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.getAllListCount", empNo);
+	}
+
+	public ArrayList<Mail> selectAllList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage()-1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectAllList", empNo, rowBounds);
+	}
+
+	public int selectCountNotRead(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.selectCountNotRead", empNo);
+	}
 }

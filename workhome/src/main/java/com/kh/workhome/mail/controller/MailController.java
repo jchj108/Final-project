@@ -40,7 +40,7 @@ public class MailController {
 	// 테스트입니다.
 	@Autowired
 	private MailService mService;
-	
+
 	@Autowired
 	private EmployeeService eService;
 
@@ -60,24 +60,31 @@ public class MailController {
 	}
 
 	@RequestMapping("readmail.mail")
-	public ModelAndView selectMail(@RequestParam("mId") int id, @RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
+	public ModelAndView selectMail(@RequestParam("mId") int id,
+			@RequestParam(value = "page", required = false) Integer page, ModelAndView mv, HttpSession session) {
+
+		String empNo = ((Employee) session.getAttribute("loginUser")).getEmpNo();
 		Mail m = mService.selectMail(id);
 		System.out.println(m);
-		
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mId", id);
+		map.put("empNo", empNo);
+
 		// R_date가 null이면 읽은 시간 추가(읽음 표시)
 		ArrayList<MailSR> list = m.getMailSRList();
-		
-		if(list.get(0).getRDate() == null) {
-			int result = mService.updateRDate(id);
+
+		if (list.get(0).getRDate() == null) {
+			int result = mService.updateRDate(map);
 		}
-		
+
 		String mId = getMId(m.getReceiveEmp());
 		Employee e = mService.getMId(mId); // 받는 사람 이름 구하는 메소드
 
 		System.out.println(e);
-		
+
 		if (m != null) {
-			if(e != null) {
+			if (e != null) {
 				m.setReceiverName(e.getEmpName());
 				System.out.println(m);
 			}
@@ -87,11 +94,13 @@ public class MailController {
 		} else {
 			throw new MailException("메일 상세보기에 실패했습니다.");
 		}
-		
+
 		return mv;
 	}
+
 	@RequestMapping("readtemp.mail")
-	public ModelAndView selectTempMail(@RequestParam("mId") int id, @RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
+	public ModelAndView selectTempMail(@RequestParam("mId") int id,
+			@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
 		Mail m = mService.selectTempMail(id);
 		System.out.println(m);
 
@@ -102,6 +111,64 @@ public class MailController {
 		} else {
 			throw new MailException("메일 상세보기에 실패했습니다.");
 		}
+		return mv;
+	}
+
+	@RequestMapping("updateFavorites.mail") // 메일 즐겨찾기 추가
+	@ResponseBody
+	public void updateFavorites(@RequestParam("mNo") int mNo, HttpSession session, HttpServletResponse response)
+			throws IOException {
+		String empNo = ((Employee) session.getAttribute("loginUser")).getEmpNo();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", empNo);
+		map.put("id", mNo);
+
+		Mail m = mService.selectMail(map);
+		System.out.println(m);
+
+		if (m.getMailSRList().get(0).getFavorites() == null) {
+			map.put("favorites", "Y");
+			if (m.getMailSRList().get(0).getFavorites() != null) {
+				if (m.getMailSRList().get(0).getFavorites().equals("N")) {
+					map.put("favorites", "Y");
+				}
+			}
+		} else {
+			map.put("favorites", "N");
+		}
+
+		// mail의 favorites가 null이거나 n 이면 y, n이면 y로
+		int result = mService.updateFavorites(map);
+
+		if (result > 0) {
+			response.getWriter().append("success");
+		}
+	}
+
+	@RequestMapping("alllist.mail")
+	public ModelAndView alllist(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
+			HttpServletRequest request) {
+		
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		int boardLimit = 15;
+		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
+		int listCount = mService.getAllListCount(empNo);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		ArrayList<Mail> list = mService.selectAllList(pi, empNo);
+		
+		int count = mService.selectCountNotRead(empNo);  // 읽지 않은 메일 개수 가져오기
+		
+		if (list != null) {
+			mv.addObject("allList", list).addObject("pi", pi).addObject("count", count);
+			mv.setViewName("allmaillist");
+		} else {
+			throw new MailException("전체메일함 조회에 실패했습니다.");
+		}
+		
 		return mv;
 	}
 
@@ -116,17 +183,17 @@ public class MailController {
 		int boardLimit = 15;
 		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
 		int listCount = mService.getsendListCount(empNo);
-		
+
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		ArrayList<Mail> list = mService.selectSendList(pi, empNo);
-		
-		if(list != null) {
+
+		if (list != null) {
 			mv.addObject("sendList", list).addObject("pi", pi);
 			mv.setViewName("sendmaillist");
 		} else {
 			throw new MailException("보낸메일함 조회에 실패했습니다.");
 		}
-		
+
 		return mv;
 	}
 
@@ -137,25 +204,34 @@ public class MailController {
 		if (request.getSession().getAttribute("loginUser") == null) {
 			throw new MailException("로그인이 필요합니다.");
 		}
-		
+
 		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
-		
+
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
 		}
 		int boardLimit = 15;
 		int listCount = mService.getReceiveListCount(empNo);
-		System.out.println(listCount);
+
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
 
 		ArrayList<Mail> list = mService.selectReceiveList(pi, empNo);
-		
+
+		int count = 0;
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMailSRList().get(0).getRDate() == null) {
+				count++;
+			}
+		}
+
+		System.out.println(count);
 		System.out.println(list);
-		
+
 		if (list != null) {
-			mv.addObject("receiveList", list).addObject("pi", pi);
+			mv.addObject("receiveList", list).addObject("pi", pi).addObject("count", count);
 			mv.setViewName("receivemaillist");
 		} else {
 			throw new MailException("받은 메일함 조회에 실패했습니다.");
@@ -195,27 +271,29 @@ public class MailController {
 
 		return mv;
 	}
-	
+
 	@RequestMapping("searchemp.mail") // 메일 보내기 사원 자동완성
 	@ResponseBody
-	public void searchEmp(HttpServletResponse response, @RequestParam("keyword") String keyword) throws JsonIOException, IOException {
+	public void searchEmp(HttpServletResponse response, @RequestParam("keyword") String keyword)
+			throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=UTF-8");
-		
+
 		ArrayList<Employee> list = mService.searchEmp(keyword);
-		
+
 		Gson gson = new Gson();
-		gson.toJson(list, response.getWriter());		
+		gson.toJson(list, response.getWriter());
 	}
-	
+
 	@RequestMapping("deletemail.mail") // 메일 삭제 (커맨드 패턴 적용)
-	public String deleteMail(@RequestParam("check") int[] check, @RequestParam("command") String command, HttpSession session) {
+	public String deleteMail(@RequestParam("check") int[] check, @RequestParam("command") String command,
+			HttpSession session) {
 		System.out.println(command);
-		
-		String empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		
+
+		String empNo = ((Employee) session.getAttribute("loginUser")).getEmpNo();
+
 		int result = 0;
-		
-		for(int i = 0; i < check.length; i++) {
+
+		for (int i = 0; i < check.length; i++) {
 			int mNo = check[i];
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("empNo", empNo);
@@ -225,53 +303,55 @@ public class MailController {
 			map.put("command", command);
 			result += mService.deleteMail(map);
 		}
-		
+
 		System.out.println(result);
-		
-		if(result > 0) {
-			switch(command) {
-			case "templist" : return "redirect:templist.mail";
-			case "sendlist" : return "redirect:sendlist.mail";
-			case "receivelist" : return "redirect:receivelist.mail";
+
+		if (result > 0) {
+			switch (command) {
+			case "templist":
+				return "redirect:templist.mail";
+			case "sendlist":
+				return "redirect:sendlist.mail";
+			case "receivelist":
+				return "redirect:receivelist.mail";
 			}
 		} else {
 			throw new MailException("메일 삭제에 실패했습니다.");
 		}
-		return null; 
+		return null;
 	}
-	
+
 	@RequestMapping("deletelist.mail")
 	public ModelAndView deleteList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
 			HttpServletRequest request) {
-		
+
 		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
-		
+
 		if (empNo == null) {
 			throw new MailException("로그인이 필요합니다.");
 		}
-		
+
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
 		}
 		int boardLimit = 15;
 		int listCount = mService.getDeleteListCount(empNo);
-		
+
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
 		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
-		
+
 		ArrayList<Mail> list = mService.selectDeleteList(pi, empNo);
-		
+
 		System.out.println(list);
-		
-		
+
 		if (list != null) {
 			mv.addObject("deleteList", list).addObject("pi", pi);
 			mv.setViewName("deletemaillist");
 		} else {
 			throw new MailException("임시보관함 조회에 실패했습니다.");
 		}
-		
+
 		return mv;
 	}
 
@@ -340,7 +420,7 @@ public class MailController {
 
 		System.out.println(m);
 		int result1 = mService.insertMail(m);
-		
+
 		if (result1 <= 0) { // 메일 등록 취소 시 예외처리
 			throw new MailException("메일 저장에 실패했습니다.");
 		}
@@ -363,11 +443,11 @@ public class MailController {
 				throw new MailException("파일 저장에 실패했습니다.");
 			}
 		}
-		
+
 		int result3 = mService.insertMailSRReceiver(getMId(m.getReceiveEmp()));
 		int result4 = mService.insertMailSRSender(m.getEmpNo()); // 보낸 메일함에 저장
-		
-		if(result3 <= 0 || result4 <= 0) {
+
+		if (result3 <= 0 || result4 <= 0) {
 			throw new MailException("메일 전송에 실패했습니다.");
 		} else { // 알림 등록
 			HashMap<String, Object> map = new HashMap<>();
@@ -376,7 +456,7 @@ public class MailController {
 			map.put("empNo", getMId(m.getReceiveEmp())); // 알림 보내는 사람이 아니라 받는 사람의 empNo 넣기
 			eService.insertAlert(map);
 		}
-		
+
 		return "redirect:sendlist.mail";
 	}
 
@@ -497,7 +577,7 @@ public class MailController {
 			f.delete();
 		}
 	}
-	
+
 	private String getMId(String email) {
 		return email.substring(0, email.lastIndexOf('@'));
 	}

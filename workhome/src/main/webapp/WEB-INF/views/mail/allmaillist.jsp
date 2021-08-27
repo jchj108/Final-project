@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,6 +18,16 @@
 <link rel="stylesheet" href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
+
+.mailSR-info {
+	font-size: 14px;
+	color: gray;
+}
+
+#favorites-icon {
+	font-size: 14px;
+}
+
 .mail-icon {
 	width: 20px;
 }
@@ -43,11 +54,11 @@
 }
 
 .table td:nth-child(2) {
-	width: 10%;
+	width: 8%;
 }
 
 .table td:nth-child(3) {
-	width: 20%;
+	width: 18%;
 }
 
 .table td:nth-child(4) {
@@ -137,11 +148,11 @@ td {
 								</div>
 								<div class="card-body p-0">
 									<ul class="nav nav-pills flex-column">
-										<li class="nav-item"><a href="#" class="nav-link"> <i class="fas fa-envelope mail-icon"></i> 전체메일
+										<li class="nav-item thispage"><a href="#" class="nav-link"> <i class="thispage fas fa-envelope mail-icon"></i> <b>전체메일</b>
 										</a></li>
-										<li class="nav-item active thispage"><a href="${contextPath }/receivelist.mail" class="nav-link"> <i
-												class="far fa-envelope-open mail-icon thispage"
-											></i> <b>받은메일함</b> 
+										<li class="nav-item active"><a href="${contextPath }/receivelist.mail" class="nav-link"> <i
+												class="far fa-envelope-open mail-icon"
+											></i> 받은메일함 
 												<c:if test="${count != 0 }">
 											<span class="badge bg-primary float-right">
 													${count }	
@@ -151,7 +162,7 @@ td {
 										<li class="nav-item"><a href="${contextPath }/sendlist.mail" class="nav-link"> <i class="far fa-paper-plane mail-icon"></i> 보낸메일함
 										</a></li>
 										<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link"><i class="far fa-file-alt mail-icon"></i> 임시보관함 </a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i class="far fa-star favorites"></i>즐겨찾기<span
+										<li class="nav-item"><a href="#" class="nav-link"> <i class="far fa-star favorites" id="favorites-icon"></i>즐겨찾기<span
 												class="badge bg-warning float-right mail-icon"
 											>65</span>
 										</a></li>
@@ -190,7 +201,7 @@ td {
 						<div class="col-md-9">
 							<div class="card card-primary card-outline">
 								<div class="card-header">
-									<h3 class="card-title">받은 메일함</h3>
+									<h3 class="card-title">전체메일</h3>
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm">
@@ -223,7 +234,7 @@ td {
 											</button>
 										</div>
 										<!-- /.btn-group -->
-										<button type="button" onclick="location.href='receivelist.mail'" class="btn btn-default btn-sm">
+										<button type="button" onclick="location.href='alllist.mail'" class="btn btn-default btn-sm">
 											<i class="fas fa-sync-alt"></i>
 										</button>
 										<div class="float-right">
@@ -241,9 +252,9 @@ td {
 									</div>
 									<div class="table-responsive mailbox-messages">
 										<table class="table table-hover table-striped">
-											<form id="receiveManage" method="post">
-												<input type="hidden" value="receivelist" name="command">
-												<c:forEach var="m" items="${receiveList }" varStatus="idCount">
+											<form id="allManage" method="post">
+												<input type="hidden" value="alllist" name="command">
+												<c:forEach var="m" items="${allList }" varStatus="idCount">
 													<c:forEach var="mF" items="${m.mailFileList}">
 														<c:if test="${mF.mStatus == 'Y'}">
 															<c:set var="attachment" value="on" />
@@ -282,12 +293,20 @@ td {
 																<i class="fas fa-paperclip"></i>
 															</c:if></td>
 														<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
-														<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject">${m.etitle }</td>
+<%-- 														${m.mailSRList.get(0).sRStatus } --%>
+														<c:if test="${ m.mailSRList.get(0).sRStatus == 'R'}">
+														<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[받은메일함]</span> ${m.etitle }</td>
+														</c:if>
+														<c:if test="${ m.mailSRList.get(0).sRStatus == 'S'}">
+														<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[보낸메일함]</span> ${m.etitle }</td>
+														</c:if>
 														<td class="mailNo-hidden">${m.mailNo }</td>
-														<td class="mailbox-date">${m.sDate }</td>
+														<td class="mailbox-date">
+														<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${m.sDate }"/>
+														</td>
 													</tr>
 												</c:forEach>
-												<!-- 											</tbody> -->
+												<!-- </tbody> -->
 											</form>
 										</table>
 										<!-- /.table -->
@@ -438,8 +457,8 @@ td {
 				} else {
 					var bool = confirm('정말 삭제하시겠습니까?');
 					if (bool) {
-						$('#receiveManage').attr('action', 'deletemail.mail');
-						$('#receiveManage').submit();
+						$('#allManage').attr('action', 'deletemail.mail');
+						$('#allManage').submit();
 					}
 				}
 			});
