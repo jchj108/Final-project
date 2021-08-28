@@ -38,16 +38,16 @@ public class MeetingController {
 	@Autowired
 	private MeetingService meService;
 	
-	@Autowired
-	private EmployeeService eService;
-	
+
+	// 회의 예약하기 페이지 호출
 	@RequestMapping("meetReserv5.meet")
 	public String meetingReserv5() {
 		
 		return "meetingReservation6";		
 	}
 
-		
+
+	// 자동 완성 참여 사원 검색하기
 	@RequestMapping("searchEmpList.meet")
 	public void searchEmpList(HttpServletResponse response, HttpSession session,
 							 @RequestParam("search")String search, HttpServletRequest request) throws IOException {
@@ -57,27 +57,14 @@ public class MeetingController {
 		ArrayList<Employee>list = meService.searchEmpList("%"+search.trim()+"%");
 //		System.out.println("list : " + list);
 		ArrayList<String> resultList = new ArrayList<>();
-			
-//		Employee loginEmp = (Employee) session.getAttribute("loginEmp");
-//		System.out.println("loginEmp : " + loginEmp);
-//		String myNo = loginEmp.getEmpNo();
 		
 		
 		String myNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
 		
 //		System.out.println("empNo : " + empNo);
+
 		
-		
-//		for(Employee emp :list) {
-//				String str = URLEncoder.encode("["+emp.getEmpNo()+"] "+ emp.getEmpName() +" - "+emp.getDeptName() ,"utf-8");
-//				resultList.add(str);
-////				System.out.println("str : " + str);
-////				System.out.println("resultList : " + resultList);				
-//		}
-		
-		
-		// 로그인한 사원은 뜨지 않도록 하기
-		
+		// 로그인한 사원은 뜨지 않도록 하기		
 		for(Employee emp :list) {
 			if(emp.getEmpNo().equals(myNo)) {
 			}else {
@@ -113,7 +100,7 @@ public class MeetingController {
 		m.setEmpNo(empNo);
 		m.setmNo(mNo);
 	
-		System.out.println(m);
+//		System.out.println(m);
 		
 		int result = meService.reInsert(m);
 		
@@ -125,7 +112,7 @@ public class MeetingController {
 		
 	}
 	
-	
+	// 날짜와 회의실을 받아 예약 가능 시간 비교하기
 	@RequestMapping("rSelectDate.meet")
 	public void rSelectDate(HttpServletResponse response, @RequestParam("date")String date,@RequestParam("mNo") String mNo) throws IOException {
 		HashMap<String,Object> map= new HashMap<>();
@@ -134,7 +121,7 @@ public class MeetingController {
 		ArrayList<String> list = meService.rSelectDate(map);
 		String result = "";
 		
-		System.out.println("selectDateList : " + list); // 그 날짜의 그 회의실에 회의가 있으면 list에 담긴다
+//		System.out.println("selectDateList : " + list); // 그 날짜의 그 회의실에 회의가 있으면 list에 담긴다
 		
 		if(list!=null) { // list {[2021-07-07;3,4,5], [2021-07-07;6,7]
 			for(String str : list ) {
@@ -147,7 +134,7 @@ public class MeetingController {
 				}else { // 7만 있으면
 					result += str+","; //7,
 				}
-				System.out.println("result : " + result);
+//				System.out.println("result : " + result);
 			}
 		}
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
