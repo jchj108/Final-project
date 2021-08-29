@@ -153,7 +153,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="mail.mail" class="nav-link">
+                <a href="${contextPath }/alllist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>전체메일</p>
                 </a>

@@ -126,6 +126,42 @@
 		ORDER BY MAILNO DESC
 	</select>
 	
+	<select id="getAllListCount" resultType="_int">
+		select count(*)
+		from mail_s_r
+		where empno = #{empNo}
+		AND (S_R_STATUS = 'R' or s_r_status = 'S')
+	</select>
+	
+	<select id="selectAllList" resultMap = "mailResultSet">
+		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
+		    ECONTENT, ESTATUS, EMPNO, S_DATE, EMPNAME, S_R_STATUS, FAVORITES, R_DATE
+		    , M_STATUS
+		from(
+		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS,
+		           S_R_STATUS, FAVORITES, MAIL_S_R.R_DATE
+		    from mail
+		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+		        join mail_s_r on(mail.mailno = mail_s_r.mailno)
+		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+		        WHERE ESTATUS='Y'
+		        AND mail_s_r.empno = #{empNo}
+                AND (S_R_STATUS = 'R' or s_r_status = 'S')
+		    order by MAILNO DESC
+		)
+		ORDER BY MAILNO DESC
+	</select>
+	
+	<select id="selectCountNotRead" resultType="_int">
+		SELECT COUNT(*)
+		FROM MAIL_S_R
+		WHERE EMPNO = #{empNo}
+		AND S_R_STATUS = 'R'
+		AND R_DATE IS NULL
+	</select>
+	
 	<select id="selectReceiveList" resultMap="mailResultSet">
 		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
 		    ECONTENT, ESTATUS, EMPNO, S_DATE, EMPNAME, S_R_STATUS, FAVORITES, R_DATE
@@ -178,12 +214,29 @@
 	</select>
 	
 	<update id="updateRDate">
+		<!-- 파라미터에 empNo 추가할 것.-->
 		update mail_s_r
 		set r_date = sysdate
 		where mailno = #{mId}	
+		and empno = #{empNo}
 	</update>
 	
-	<select id="selectMail" parameterType="_int" resultMap="mailResultSet">
+	<select id="selectMailByMap" resultMap="mailResultSet">
+		select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_ORIGINAL_NAME, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_FILE_PATH, MAIL_FILE.M_UPLOAD_DATE, MAIL_FILE.M_STATUS,
+           S_R_STATUS, FAVORITES, MAIL_S_R.R_DATE
+	    from mail
+	        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+	        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+	        join mail_s_r on (mail.mailno = mail_s_r.mailno)
+	    where estatus='Y' and mail.mailno=#{id}
+	    and empno = #{empNo}
+        order by mail_file.m_file_no desc
+    
+	</select>
+	
+	<select id="selectMail" resultMap="mailResultSet">
 		select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
 	           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
 	           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_ORIGINAL_NAME, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_FILE_PATH, MAIL_FILE.M_UPLOAD_DATE, MAIL_FILE.M_STATUS,
@@ -215,6 +268,13 @@
 			etitle = #{etitle},
 			econtent = #{econtent}
 		where mailNo = #{mailNo}
+	</update>
+	
+	<update id="updateFavorites">
+			UPDATE MAIL_S_R
+			SET favorites = #{favorites}
+			where empno = #{empNo}
+			and mailno = #{id}
 	</update>
 	
 	<resultMap type="Mail" id="mailResultSet">

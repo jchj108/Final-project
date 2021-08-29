@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -222,7 +224,9 @@ td {
 												받는 사람 :
 												<c:if test="${mail.receiverName != null }">&lt;${mail.receiverName }&gt;</c:if>
 												${mail.receiveEmp} <span
-													class="mailbox-read-time float-right">${mail.sDate }</span>
+													class="mailbox-read-time float-right">
+														<fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${mail.sDate }"/>
+													</span>
 											</h6>
 									</div>
 									<!-- /.mailbox-read-info -->
@@ -261,10 +265,15 @@ td {
 														class="far fa-file-pdf"></i></span>
 
 													<div class="mailbox-attachment-info">
-														<a href="#" class="mailbox-attachment-name"><i
+														<a 
+														href="${contextPath }/resources/mailUploadFiles/${mF.mChangeName}" 
+														download="${mF.mOriginalName }"
+														class="mailbox-attachment-name"><i
 															class="fas fa-paperclip"></i> ${mF.mOriginalName }</a> <span
 															class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-																KB</span> <a href="#"
+																KB</span> <a 
+																href="${contextPath }/resources/mailUploadFiles/${mF.mChangeName}" 
+																download="${mF.mOriginalName }"
 															class="btn btn-default btn-sm float-right"><i
 																class="fas fa-cloud-download-alt"></i></a>
 														</span>

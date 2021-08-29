@@ -82,6 +82,11 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
+	public Mail selectMail(Map<String, Object> map) {
+		return mDAO.selectMail(sqlSession, map);
+	}
+	
+	@Override
 	public Mail selectMail(int id) {
 		return mDAO.selectMail(sqlSession, id);
 	}
@@ -132,7 +137,27 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int updateRDate(int mId) {
-		return mDAO.updateRDate(sqlSession, mId);
+	public int updateRDate(Map<String, Object> map) {
+		return mDAO.updateRDate(sqlSession, map);
+	}
+
+	@Override
+	public int updateFavorites(Map<String, Object> map) {
+		return mDAO.updateFavorites(sqlSession, map);
+	}
+
+	@Override
+	public int getAllListCount(String empNo) {
+		return mDAO.getAllListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectAllList(PageInfo pi, String empNo) {
+		return mDAO.selectAllList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public int selectCountNotRead(String empNo) {
+		return mDAO.selectCountNotRead(sqlSession, empNo);
 	}
 }

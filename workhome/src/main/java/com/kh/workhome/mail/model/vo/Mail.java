@@ -1,6 +1,6 @@
 package com.kh.workhome.mail.model.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Mail {
@@ -11,18 +11,17 @@ public class Mail {
 	private String etitle;
 	private String econtent;
 	private String estatus;
-	private Date sDate; // 보낸 시간
+	private Timestamp sDate; // 보낸 시간
 	private String empNo;
 	private String senderMailId; // 보낸 사람 메일 주소
 	private String senderName;
 	private String receiverName; // 받는 사람 이름
 	private ArrayList<MailFile> mailFileList;
 	private ArrayList<MailSR> mailSRList; 
-
 	public Mail() {}
 	
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
-			Date sDate, String senderMailId, String senderName, ArrayList<MailFile> mailFileList) {
+			Timestamp sDate, String senderMailId, String senderName, ArrayList<MailFile> mailFileList) {
 		super();
 		this.mailNo = mailNo;
 		this.receiveEmp = receiveEmp;
@@ -47,7 +46,7 @@ public class Mail {
 	
 
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
-			Date sDate, String empNo, String senderMailId, String senderName,
+			Timestamp sDate, String empNo, String senderMailId, String senderName,
 			ArrayList<MailFile> mailFileList) {
 		super();
 		this.mailNo = mailNo;
@@ -99,10 +98,10 @@ public class Mail {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
-	public Date getsDate() {
+	public Timestamp getsDate() {
 		return sDate;
 	}
-	public void setsDate(Date sDate) {
+	public void setsDate(Timestamp sDate) {
 		this.sDate = sDate;
 	}
 	public String getSenderMailId() {
@@ -127,7 +126,7 @@ public class Mail {
 	}
 
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
-			Date sDate, String empNo, String senderMailId, String senderName, String receiverName,
+			Timestamp sDate, String empNo, String senderMailId, String senderName, String receiverName,
 			ArrayList<MailFile> mailFileList) {
 		super();
 		this.mailNo = mailNo;
@@ -146,7 +145,7 @@ public class Mail {
 
 
 
-	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus, Date sDate,
+	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus, Timestamp sDate,
 			String empNo, String senderMailId, String senderName, String receiverName, ArrayList<MailFile> mailFileList,
 			ArrayList<MailSR> mailSRList) {
 		super();

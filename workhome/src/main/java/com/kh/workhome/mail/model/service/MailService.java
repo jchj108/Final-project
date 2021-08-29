@@ -53,6 +53,16 @@ public interface MailService {
 
 	ArrayList<Employee> searchEmp(String keyword);
 
-	int updateRDate(int id);
+	int updateRDate(Map<String, Object> map);
+
+	int updateFavorites(Map<String, Object> map);
+
+	Mail selectMail(Map<String, Object> map);
+
+	int getAllListCount(String empNo);
+
+	ArrayList<Mail> selectAllList(PageInfo pi, String empNo);
+
+	int selectCountNotRead(String empNo);
 
 }
