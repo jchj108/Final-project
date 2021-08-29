@@ -53,6 +53,14 @@ public class MailController {
 	public String mailReadForm() {
 		return "mailread";
 	}
+	
+	@RequestMapping("searchList.mail")
+	public String searchMail(@RequestParam("command") Integer command) {
+		
+		
+		
+		return null;
+	}
 
 	@RequestMapping("readmail.mail")
 	public ModelAndView selectMail(@RequestParam("mId") int id,
