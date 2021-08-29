@@ -1,6 +1,7 @@
 package com.kh.workhome.notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,6 +46,17 @@ public class NoticeDAO {
 
 	public ArrayList<Notice> selectTopList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectTopList");
+	}
+
+	public int getSearchResultListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("noticeMapper.getSearchResultListCount", map);
+	}
+
+	public ArrayList<Notice> selectSearchResultList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
+			PageInfo pi) {
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage()-1); 
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectSearchResultList", map, rowBounds);
 	}
 
 }
