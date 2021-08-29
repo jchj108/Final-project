@@ -86,10 +86,6 @@ public class MailServiceImpl implements MailService {
 		return mDAO.selectMail(sqlSession, map);
 	}
 	
-	@Override
-	public Mail selectMail(int id) {
-		return mDAO.selectMail(sqlSession, id);
-	}
 
 	@Override
 	public Employee getMId(String mId) {
@@ -169,5 +165,15 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> selectFavoritesList(PageInfo pi, String empNo) {
 		return mDAO.selectFavoritesList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public int getSearchListCount(Map<String, Object> map) {
+		return mDAO.getSearchListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Mail> searchList(PageInfo pi, Map<String, Object> map) {
+		return mDAO.searchList(sqlSession, pi, map);
 	}
 }

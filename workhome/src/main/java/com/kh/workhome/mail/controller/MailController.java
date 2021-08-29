@@ -54,12 +54,33 @@ public class MailController {
 		return "mailread";
 	}
 	
-	@RequestMapping("searchList.mail")
-	public String searchMail(@RequestParam("command") Integer command) {
+	@RequestMapping("search.mail")
+	public ModelAndView searchMail(@RequestParam(value="page", required = false) Integer page, @RequestParam("command") String command, @RequestParam("searchValue") String searchValue, HttpSession session, ModelAndView mv) {
 		
 		
+		String empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
-		return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchValue", searchValue);
+		map.put("command", command);
+		map.put("empNo", empNo);
+		
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		int boardLimit = 15;
+		int listCount = mService.getSearchListCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		ArrayList<Mail> list = mService.searchList(pi, map);
+		int count = mService.selectCountNotRead(empNo); // 읽지 않은 메일 개수 가져오기
+		
+		mv.addObject("searchList", list).addObject("page", page).addObject(count);
+		mv.setViewName(command);
+		
+		return mv;
 	}
 
 	@RequestMapping("readmail.mail")

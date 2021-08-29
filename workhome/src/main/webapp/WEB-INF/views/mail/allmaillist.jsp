@@ -144,9 +144,9 @@ td {
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm">
-											<input type="text" class="form-control" placeholder="메일 검색">
+											<input type="text" class="form-control" id="searchValue" placeholder="메일 검색">
 											<div class="input-group-append">
-												<div class="btn btn-primary">
+												<div onclick="searchMail();" class="btn btn-primary">
 													<i class="fas fa-search"></i>
 												</div>
 											</div>
@@ -403,6 +403,13 @@ td {
 				}
 			});
 		});
+		
+		function searchMail() {
+			var searchValue = $('#searchValue').val();
+			var command = 'allmaillist';
+			
+			location.href="search.mail?searchValue="+searchValue+"&command="+command;
+		}
 		
 		
 	</script>

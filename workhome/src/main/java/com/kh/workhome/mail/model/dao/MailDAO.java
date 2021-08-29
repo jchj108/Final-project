@@ -162,4 +162,16 @@ public class MailDAO {
 
 		return (ArrayList)sqlSession.selectList("mailMapper.selectFavoritesList", empNo, rowBounds);
 	}
+
+	public int getSearchListCount(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.selectOne("mailMapper.getSearchListCount", map);
+	}
+
+	public ArrayList<Mail> searchList(SqlSessionTemplate sqlSession, PageInfo pi, Map<String, Object> map) {
+		
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("mailMapper.searchList", map, rowBounds);
+	}
 }
