@@ -1,6 +1,7 @@
 package com.kh.workhome.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,16 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<Notice> selectTopList() {
 		return nDAO.selectTopList(sqlSession);
+	}
+
+	@Override
+	public int getSearchResultListCount(HashMap<String, String> map) {
+		return nDAO.getSearchResultListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchResultList(HashMap<String, String> map, PageInfo pi) {
+		return nDAO.selectSearchResultList(sqlSession, map, pi);
 	}
 
 }
