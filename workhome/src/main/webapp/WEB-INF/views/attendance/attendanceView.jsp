@@ -60,12 +60,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="" items="">
+						<c:forEach var="a" items="${list}">
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td>${a.empNo}</td>
+							<td>${a.aDate}</td>
+							<td>${a.attend}</td>
+							<td>${a.goHome}</td>
 							<td></td>
 						</tr>
 						</c:forEach>

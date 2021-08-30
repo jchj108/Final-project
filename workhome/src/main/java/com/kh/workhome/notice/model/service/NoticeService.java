@@ -1,6 +1,7 @@
 package com.kh.workhome.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.workhome.common.PageInfo;
 import com.kh.workhome.notice.model.vo.Notice;
@@ -21,5 +22,9 @@ public interface NoticeService {
 	int deleteNotice(int nId);
 
 	ArrayList<Notice> selectTopList();
+
+	int getSearchResultListCount(HashMap<String, String> map);
+
+	ArrayList<Notice> selectSearchResultList(HashMap<String, String> map, PageInfo pi);
 
 }
