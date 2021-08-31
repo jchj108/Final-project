@@ -62,7 +62,7 @@
 					<tbody>
 						<c:forEach var="a" items="${list}">
 						<tr>
-							<td>${loginUser.empName}</td>
+							<td>${a.empName}</td>
 							<td>${a.aDate}</td>
 							<td>${a.attend}</td>
 							<td>${a.goHome}</td>
