@@ -365,6 +365,26 @@
 		ORDER BY MAILNO DESC
 	</select>
 	
+	<select id="selectCheckList" resultMap="mailResultSet">
+        select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
+		    ECONTENT, ESTATUS, EMPNO, S_DATE, EMPNAME, S_R_STATUS, FAVORITES, R_DATE
+		    , M_STATUS
+		from(
+		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS,
+		           S_R_STATUS, FAVORITES, MAIL_S_R.R_DATE
+		    from mail
+		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+		        join mail_s_r on(mail.mailno = mail_s_r.mailno AND S_R_STATUS='R')
+		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+		        WHERE ESTATUS='Y'
+		        AND mail.empno = #{empNo}
+		    order by MAILNO DESC
+		)
+		ORDER BY MAILNO DESC
+	</select>
+	
 	<select id="getAllListCount" resultType="_int">
 		select count(*)
 		from mail_s_r

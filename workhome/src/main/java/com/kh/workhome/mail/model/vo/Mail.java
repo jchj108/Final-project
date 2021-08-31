@@ -18,6 +18,36 @@ public class Mail {
 	private String receiverName; // 받는 사람 이름
 	private ArrayList<MailFile> mailFileList;
 	private ArrayList<MailSR> mailSRList; 
+	private Timestamp receiverRTime; // 읽은 시간
+	
+	public Timestamp getReceiverRTime() {
+		return receiverRTime;
+	}
+
+	public void setReceiverRTime(Timestamp receiverRTime) {
+		this.receiverRTime = receiverRTime;
+	}
+
+	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
+			Timestamp sDate, String empNo, String senderMailId, String senderName, String receiverName,
+			ArrayList<MailFile> mailFileList, ArrayList<MailSR> mailSRList, Timestamp receiverRTime) {
+		super();
+		this.mailNo = mailNo;
+		this.receiveEmp = receiveEmp;
+		this.etype = etype;
+		this.etitle = etitle;
+		this.econtent = econtent;
+		this.estatus = estatus;
+		this.sDate = sDate;
+		this.empNo = empNo;
+		this.senderMailId = senderMailId;
+		this.senderName = senderName;
+		this.receiverName = receiverName;
+		this.mailFileList = mailFileList;
+		this.mailSRList = mailSRList;
+		this.receiverRTime = receiverRTime;
+	}
+
 	public Mail() {}
 	
 	public Mail(int mailNo, String receiveEmp, String etype, String etitle, String econtent, String estatus,
@@ -172,13 +202,13 @@ public class Mail {
 		this.mailSRList = mailSRList;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", receiveEmp=" + receiveEmp + ", etype=" + etype + ", etitle=" + etitle
 				+ ", econtent=" + econtent + ", estatus=" + estatus + ", sDate=" + sDate + ", empNo=" + empNo
 				+ ", senderMailId=" + senderMailId + ", senderName=" + senderName + ", receiverName=" + receiverName
-				+ ", mailFileList=" + mailFileList + ", mailSRList=" + mailSRList + "]";
+				+ ", mailFileList=" + mailFileList + ", mailSRList=" + mailSRList + ", receiverRTime=" + receiverRTime
+				+ "]";
 	}
 
 	public ArrayList<MailFile> getMailFileList() {

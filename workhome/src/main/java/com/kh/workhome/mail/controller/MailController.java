@@ -267,6 +267,55 @@ public class MailController {
 
 		return mv;
 	}
+	
+	@RequestMapping("checkReadTime.mail")
+	public ModelAndView checkReadTime(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,
+			HttpServletRequest request) {
+
+		if (request.getSession().getAttribute("loginUser") == null) {
+			throw new MailException("로그인이 필요합니다.");
+		}
+
+		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
+
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		int boardLimit = 15;
+		int listCount = mService.getsendListCount(empNo);
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
+		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
+
+		ArrayList<Mail> list = mService.selectSendList(pi, empNo);
+		ArrayList<Mail> rList = mService.selectCheckList(empNo);
+		
+		for(Mail m : list) {
+			for(int i = 0; i < rList.size(); i++) {
+				if(rList.get(i).getMailNo() == m.getMailNo()) {
+					m.setReceiverRTime(rList.get(i).getMailSRList().get(0).getRDate());
+				}
+			}
+		}
+		
+		System.out.println("추가 후 메일리스트 : " + list);
+		
+		int count = mService.selectCountNotRead(empNo);
+
+		System.out.println(list);
+		System.out.println(rList);
+
+		if (list != null) {
+			mv.addObject("list", list).addObject("pi", pi).addObject("count", count);
+			mv.setViewName("checkReadTime");
+		} else {
+			throw new MailException("받은 메일함 조회에 실패했습니다.");
+		}
+
+		return mv;
+	}
+	
 
 	@RequestMapping("receivelist.mail") // 받은 메일함 조회
 	public ModelAndView receivemaillist(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv,

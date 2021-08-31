@@ -174,4 +174,8 @@ public class MailDAO {
 
 		return (ArrayList)sqlSession.selectList("mailMapper.searchList", map, rowBounds);
 	}
+
+	public ArrayList<Mail> selectCheckList(SqlSessionTemplate sqlSession, String empNo) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectCheckList", empNo);
+	}
 }

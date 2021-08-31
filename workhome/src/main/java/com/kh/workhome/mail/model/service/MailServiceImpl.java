@@ -176,4 +176,9 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Mail> searchList(PageInfo pi, Map<String, Object> map) {
 		return mDAO.searchList(sqlSession, pi, map);
 	}
+
+	@Override
+	public ArrayList<Mail> selectCheckList(String empNo) {
+		return mDAO.selectCheckList(sqlSession, empNo);
+	}
 }

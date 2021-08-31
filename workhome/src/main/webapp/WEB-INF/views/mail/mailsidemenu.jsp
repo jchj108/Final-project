@@ -10,10 +10,11 @@
 .badge {
 	margin-top: 3px;
 }
+
 .susin-Btn {
-    font-size: 12px;
-    bottom: 2px;
-    position: relative;
+	font-size: 12px;
+	bottom: 2px;
+	position: relative;
 }
 </style>
 </head>
@@ -37,20 +38,21 @@
 					</a></li>
 					<li class="nav-item active"><a href="${contextPath }/receivelist.mail" class="nav-link receivelist"> <i
 							class="far fa-envelope-open mail-icon"
-						></i> 받은메일함 
-							<c:if test="${count != 0 && count ne null}">
+						></i> 받은메일함 <c:if test="${count != 0 && count ne null}">
 								<span class="badge bg-primary float-right"> ${count } </span>
 							</c:if>
 					</a></li>
-					<li class="nav-item"><a href="${contextPath }/sendlist.mail" class="nav-link sendlist"> <i class="far fa-paper-plane mail-icon"></i>
-							보낸메일함
-											<span class="float-right"><button class="susin-Btn btn btn-sm btn-default">수신확인</button></span>
+					<li class="nav-item"><a id="sendlist-li" href="#" class="nav-link sendlist"> <span
+							onclick="location.href='${contextPath }/sendlist.mail'"
+						> <i class="far fa-paper-plane mail-icon"></i> 보낸메일함
+						</span> <span class="float-right"><button id="checkRead-btn" onclick="location.href='${contextPath}/checkReadTime.mail'"
+									class="susin-Btn btn btn-sm btn-default"
+								>수신확인</button></span>
 					</a></li>
 					<li class="nav-item"><a href="${contextPath}/templist.mail" class="nav-link templist"><i class="far fa-file-alt mail-icon"></i> 임시보관함 </a></li>
 					<li class="nav-item"><a href="${contextPath }/favoriteslist.mail" class="nav-link favoriteslist"> <i class="far fa-star favorites"
 							id="favorites-icon"
-						></i>즐겨찾기
-<!-- 						<span class="badge bg-warning float-right mail-icon">65</span> -->
+						></i>즐겨찾기 <!-- 						<span class="badge bg-warning float-right mail-icon">65</span> -->
 					</a></li>
 					<li class="nav-item"><a href="${contextPath }/deletelist.mail" class="deletelist nav-link"> <i class="far fa-trash-alt mail-icon"></i>
 							휴지통
@@ -98,7 +100,8 @@
 					"color" : "#007BFF",
 					"font-weight" : "bold"
 				});
-			} else if (url.includes('receivemaillist') || url.includes('receivelist')) {
+			} else if (url.includes('receivemaillist')
+					|| url.includes('receivelist')) {
 				$('.receivelist').css({
 					"color" : "#007BFF",
 					"font-weight" : "bold"
@@ -113,29 +116,52 @@
 					"color" : "#007BFF",
 					"font-weight" : "bold"
 				});
-			} else if (url.includes('deletemaillist') || url.includes('deletelist')) {
+			} else if (url.includes('deletemaillist')
+					|| url.includes('deletelist')) {
 				$('.deletelist').css({
 					"color" : "#007BFF",
 					"font-weight" : "bold"
 				});
-			} else if (url.includes('favoritesmaillist') || url.includes('favoriteslist')) {
+			} else if (url.includes('favoritesmaillist')
+					|| url.includes('favoriteslist')) {
 				$('.favoriteslist').css({
 					"color" : "#007BFF",
 					"font-weight" : "bold"
 				});
 			} else if (url.includes('readmail')) {
 				$('#writeOrBack').text('돌아가기');
-				$('#writeOrBack').removeClass('btn-primary').addClass('btn-secondary')
-				$('#writeOrBack').on('click', function() {
-					$('#writeOrBack').attr("href", "javascript:window.history.back();");
-				});
+				$('#writeOrBack').removeClass('btn-primary').addClass(
+						'btn-secondary')
+				$('#writeOrBack').on(
+						'click',
+						function() {
+							$('#writeOrBack').attr("href",
+									"javascript:window.history.back();");
+						});
 			} else if (url.includes('readtemp')) {
 				$('#writeOrBack').text('돌아가기');
-				$('#writeOrBack').removeClass('btn-primary').addClass('btn-secondary')
-				$('#writeOrBack').on('click', function() {
-					$('#writeOrBack').attr("href", "javascript:window.history.back();");
-				});
+				$('#writeOrBack').removeClass('btn-primary').addClass(
+						'btn-secondary')
+				$('#writeOrBack').on(
+						'click',
+						function() {
+							$('#writeOrBack').attr("href",
+									"javascript:window.history.back();");
+						});
+			}else if (url.includes('send.mail')) {
+				$('#writeOrBack').text('돌아가기');
+				$('#writeOrBack').removeClass('btn-primary').addClass(
+						'btn-secondary')
+				$('#writeOrBack').on(
+						'click',
+						function() {
+							$('#writeOrBack').attr("href",
+									"javascript:window.history.back();");
+						});
 			}
+
+			var v = $("#sendlist-li:not(button)");
+			console.log(v);
 		}
 	</script>
 </body>

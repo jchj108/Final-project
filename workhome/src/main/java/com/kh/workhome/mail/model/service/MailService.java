@@ -72,4 +72,6 @@ public interface MailService {
 
 	ArrayList<Mail> searchList(PageInfo pi, Map<String, Object> map);
 
+	ArrayList<Mail> selectCheckList(String empNo);
+
 }
