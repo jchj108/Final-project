@@ -18,8 +18,8 @@
 	<update id="goHome" parameterType="map">
 		<![CDATA[
  		update attendance 
- 		set GOHOME = to_date(replace(#{date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss') 
-		where empNo =#{empNo} and (ATTEND between TO_DATE(replace(#{start},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss') and to_date( replace(#{date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss')) 
+ 		set GOHOME = to_date(replace(#{Date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss') 
+		where empNo =#{empNo} and (ATTEND between TO_DATE(replace(#{start},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss') and to_date( replace(#{Date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss')) 
  		]]> 
 	</update>
 	
@@ -29,10 +29,15 @@
 	</select>
 	
 	<select id="selectList" resultMap="AttendanceResultSet">
-	select *
-	from attendance
-		join employee on(employee.empno=attendance.empno)
-	order by attend desc
+	select
+    ATT.ADATE,
+    TO_CHAR(ATT.ATTEND, 'YYYY-MM-DD HH:MI:SS') AS ATTEND,
+    TO_CHAR(ATT.GOHOME, 'YYYY-MM-DD HH:MI:SS') AS GOHOME,
+    SUBSTR(TO_CHAR(GOHOME - ATTEND, 'YYYY-MM-DD HH:MI:SS'), 12, 8) AS WORK_TIME, 
+    EMP.EMPNAME
+	FROM attendance ATT
+	JOIN employee EMP on EMP.empno=ATT.empno
+	order by ATT.attend desc
 	</select>
 	
 	<resultMap type="Attendance" id="AttendanceResultSet">
@@ -40,6 +45,7 @@
 		<result column="EMPNO" property="empNo"></result>
 		<result column="ATTEND" property="attend"></result>
 		<result column="GOHOME" property="goHome"></result>
+		<result column="WORK_TIME" property="workTime"></result>
 	</resultMap>
 	
 	
