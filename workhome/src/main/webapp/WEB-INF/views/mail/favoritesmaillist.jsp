@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,10 +19,10 @@
 <link rel="stylesheet" href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
-
 .mailSR-info {
 	font-size: 14px;
 	color: gray;
+/* 	vertical-align: middle; */
 }
 
 #favorites-icon {
@@ -66,12 +67,12 @@
 }
 
 .table td:nth-child(5) {
- 	text-align: right; 
+	text-align: right;
 }
 
 .table td:nth-child(6) {
- 	width: 12%; 
- 	text-align: right; 
+	width: 12%;
+	text-align: right;
 }
 
 .fa-star {
@@ -96,10 +97,10 @@ td {
 	margin-bottom: 10px;
 }
 
-.mailNo-hidden { 
-  	display: none;  
-  	width: 0px;
-}  
+.mailNo-hidden {
+	display: none;
+	width: 0px;
+}
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -144,9 +145,9 @@ td {
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm">
-											<input type="text" class="form-control" placeholder="메일 검색">
+											<input type="text" class="form-control" id="searchValue" value="${searchValue }" placeholder="메일 검색">
 											<div class="input-group-append">
-												<div class="btn btn-primary">
+												<div onclick="searchMail();" class="btn btn-primary">
 													<i class="fas fa-search"></i>
 												</div>
 											</div>
@@ -191,9 +192,10 @@ td {
 									</div>
 									<div class="table-responsive mailbox-messages">
 										<table class="table table-hover table-striped">
-											<form id=favoritesManage method="post">
+											<form id="allManage" method="post">
+												<!-- value에 반환할 페이지 넣기 -->
 												<input type="hidden" value="favoriteslist" name="command">
-												<c:forEach var="m" items="${favoritesList }" varStatus="idCount">
+												<c:forEach var="m" items="${list }" varStatus="idCount">
 													<c:forEach var="mF" items="${m.mailFileList}">
 														<c:if test="${mF.mStatus == 'Y'}">
 															<c:set var="attachment" value="on" />
@@ -202,15 +204,18 @@ td {
 															<c:set var="attachment" value="off" />
 														</c:if>
 													</c:forEach>
-													<c:forEach var = "mSR" items="${m.mailSRList }">
-														<c:if test="${mSR.favorites == 'Y' }">
-															<c:set var = "fav" value = "y"></c:set>
-														</c:if>
+													<c:forEach var="mSR" items="${m.mailSRList }">
 														<c:if test="${empty mSR.RDate }">
-															<c:set var ="read" value = "n" />
+															<c:set var="read" value="n" />
 														</c:if>
 														<c:if test="${not empty mSR.RDate }">
-															<c:set var ="read" value = "y" />
+															<c:set var="read" value="y" />
+														</c:if>
+														<c:if test="${mSR.favorites eq null || mSR.favorites eq 'N' }">
+															<c:set var="star" value="n"/>
+														</c:if>
+														<c:if test="${mSR.favorites eq 'Y' }">
+															<c:set var="star" value="y"/>
 														</c:if>
 													</c:forEach>
 													<c:url var="mdetail" value="readmail.mail">
@@ -224,35 +229,67 @@ td {
 																<label for="check${idCount.count }"></label>
 															</div>
 														</td>
-														<td class="mailbox-star"><a href="#">
-														<c:if test="${fav != 'y' }">
-														<i class="far fa-star text-warning"></i>
+														<td class="mailbox-star">
+														<c:if test="${star == 'n'}">
+															<a href="#">
+																<i class="far fa-star text-warning"></i>
+															</a>
 														</c:if>
-														<c:if test="${fav == 'y' }">
-														<i class="fas fa-star text-warning"></i>
+														<c:if test="${star  == 'y'}">
+															<a href="#">
+																<i class="fas fa-star text-warning"></i>
+															</a>
 														</c:if>
-														</a> 
-															<c:if test="${read == 'y' }">
+														 <c:if test="${read == 'y' }">
 																<i id="readmail" class="far fa-envelope-open text-primary"></i>
-															</c:if>
-															<c:if test="${read != 'y' }">
+															</c:if> <c:if test="${read != 'y' }">
 																<i id="readmail" class="fas fa-envelope text-primary"></i>
-															</c:if>
-														 	<c:if test="${attachment == 'on' }">
+															</c:if> <c:if test="${attachment == 'on' }">
 																<i class="fas fa-paperclip"></i>
 															</c:if></td>
-														<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
-<%-- 														${m.mailSRList.get(0).sRStatus } --%>
+														<%-- 														${m.mailSRList.get(0).sRStatus } --%>
 														<c:if test="${ m.mailSRList.get(0).sRStatus == 'R'}">
-														<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[받은메일함]</span> ${m.etitle }</td>
+															<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
+															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[받은메일함]</span>
+																${m.etitle }</td>
 														</c:if>
 														<c:if test="${ m.mailSRList.get(0).sRStatus == 'S'}">
-														<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[보낸메일함]</span> ${m.etitle }</td>
+															<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
+															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[보낸메일함]</span>
+																${m.etitle }</td>
 														</c:if>
 														<td class="mailNo-hidden">${m.mailNo }</td>
-														<td class="mailbox-date">
-														<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${m.sDate }"/>
-														</td>
+
+														<c:set var="d" value="<%=new java.util.Date()%>" />
+														<!-- 날짜 연산 -->
+														<fmt:formatDate value="${d }" var="sysdate" pattern="yyyyMMdd" />
+														<fmt:formatDate value="${m.sDate }" pattern="yyyyMMdd" var="compDate" />
+														<!-- 시간 연산 -->
+														<fmt:formatDate value="${d }" var="currentTime" pattern="HHmm" />
+														<fmt:formatDate value="${m.sDate }" pattern="HHmm" var="compTime" />
+														<c:set var="ago" value="${(currentTime - compTime) / 60 }" />
+														<!-- Integer로 바꾸기 -->
+														<fmt:parseNumber var="fmtNumber" value="${ago }" integerOnly="true" />
+														<c:if test="${sysdate eq compDate }">
+															<c:if test="${ fmtNumber <= 0}">
+																<td class="mailbox-date">
+																	<span class="mailSR-info">
+																		<fmt:formatDate value="${d }" var="currentMinutues" pattern="mm" />
+																		<fmt:formatDate value="${m.sDate }" pattern="mm" var="compMinutes" />
+																		[${currentMinutues - compMinutes }분 전]
+																	</span>
+																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" /></td>
+															</c:if>
+															<c:if test="${ fmtNumber > 0}">
+																<fmt:parseNumber var="fmtHoursAgo" value="${(currentTime - compTime) / 60 }" integerOnly="true"/>
+																<td class="mailbox-date"><span class="mailSR-info">[${fmtHoursAgo}시간 전]</span>
+																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" /></td>
+															</c:if>
+														</c:if>
+														<!-- 오늘 날짜가 아닐 때 -->
+														<c:if test="${sysdate ne compDate }">
+															<td class="mailbox-date"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${m.sDate }" /></td>
+														</c:if>
 													</tr>
 												</c:forEach>
 												<!-- </tbody> -->
@@ -266,21 +303,38 @@ td {
 								<div class="card-footer p-0" style="height: 51px;">
 									<div class="pagination justify-content-center">
 										<div class="btn-group" style="border-radius: 0px;">
+											<!-- 이전버튼 비활성화 -->
 											<c:if test="${pi.currentPage <= 1 }">
 												<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
 													<i class="fas fa-chevron-left" style="color: lightgrey"></i>
 												</button>
 											</c:if>
+											<!-- 이전버튼 -->
 											<c:if test="${ pi.currentPage > 1 }">
-												<c:url var="before" value="templist.mail">
-													<c:param name="page" value="${ pi.currentPage - 1 }" />
-												</c:url>
-												<a href="${before }">
-													<button type="button" class="btn btn-default btn-sm " style="border-radius: 0px;">
-														<i class="fas fa-chevron-left"></i>
-													</button>
-												</a>
+												<c:if test="${ searchValue ne null}">
+													<c:url value="search.mail" var="searchBack">
+														<c:param name="searchValue" value="${ searchValue}" />
+														<c:param name="command" value="favoriteslist" />
+														<c:param name="page" value="${pi.currentPage - 1 }" />
+													</c:url>
+													<a href="${searchBack }">
+														<button type="button" class="btn btn-default btn-sm " style="border-radius: 0px;">
+															<i class="fas fa-chevron-left"></i>
+														</button>
+													</a>
+												</c:if>
+												<c:if test="${ searchValue eq null}">
+													<c:url var="before" value="favoriteslist.mail">
+														<c:param name="page" value="${ pi.currentPage - 1 }" />
+													</c:url>
+													<a href="${before }">
+														<button type="button" class="btn btn-default btn-sm " style="border-radius: 0px;">
+															<i class="fas fa-chevron-left"></i>
+														</button>
+													</a>
+												</c:if>
 											</c:if>
+											<!-- 숫자 버튼 -->
 											<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 												<c:if test="${ p eq pi.currentPage }">
 													<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
@@ -288,28 +342,56 @@ td {
 													</button>
 												</c:if>
 												<c:if test="${ p ne pi.currentPage }">
-													<c:url var="pagination" value="templist.mail">
-														<c:param name="page" value="${ p }" />
-													</c:url>
-													<a href="${ pagination }">
-														<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">${p }</button>
-													</a>
+													<c:if test="${searchValue ne null }">
+														<c:url value="search.mail" var="searchPagination">
+															<c:param name="searchValue" value="${ searchValue}" />
+															<c:param name="command" value="favoriteslist" />
+															<c:param name="page" value="${ p }" />
+														</c:url>
+														<a href="${ searchPagination }">
+															<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">${p }</button>
+														</a>
+													</c:if>
+													<c:if test="${searchValue eq null }">
+														<c:url var="pagination" value="favoriteslist.mail">
+															<c:param name="page" value="${ p }" />
+														</c:url>
+														<a href="${ pagination }">
+															<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">${p }</button>
+														</a>
+													</c:if>
 												</c:if>
 											</c:forEach>
+											<!-- 다음 버튼 비활성화 -->
 											<c:if test="${pi.currentPage >= pi.maxPage }">
 												<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
 													<i class="fas fa-chevron-right" style="color: lightgrey"></i>
 												</button>
 											</c:if>
+											<!-- 다음 -->
 											<c:if test="${ pi.currentPage < pi.maxPage }">
-												<c:url var="before" value="templist.mail">
-													<c:param name="page" value="${ pi.currentPage + 1 }" />
-												</c:url>
-												<a href="${before }">
-													<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
-														<i class="fas fa-chevron-right"></i>
-													</button>
-												</a>
+												<c:if test="${searchValue ne null }">
+													<c:url var="searchNext" value="search.mail">
+														<c:param name="page" value="${ pi.currentPage + 1 }" />
+														<c:param name="searchValue" value="${ searchValue}" />
+														<c:param name="command" value="favoriteslist" />
+													</c:url>
+													<a href="${searchNext }">
+														<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
+															<i class="fas fa-chevron-right"></i>
+														</button>
+													</a>
+												</c:if>
+												<c:if test="${searchValue eq null }">
+													<c:url var="next" value="alllist.mail">
+														<c:param name="page" value="${ pi.currentPage + 1 }" />
+													</c:url>
+													<a href="${next }">
+														<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
+															<i class="fas fa-chevron-right"></i>
+														</button>
+													</a>
+												</c:if>
 											</c:if>
 										</div>
 									</div>
@@ -340,7 +422,7 @@ td {
 	</aside>
 	<!-- /.control-sidebar -->
 	</div>
-	
+
 	<!-- ./wrapper -->
 
 	<!-- jQuery -->
@@ -374,7 +456,6 @@ td {
 						}
 						$(this).data('clicks', !clicks)
 					});
-			
 
 			//Handle starring for font awesome
 			$('.mailbox-star').click(function(e) {
@@ -384,7 +465,7 @@ td {
 				var fa = $this.hasClass('fa-star')
 				var mailNo = $(this).parent().find('.mailNo-hidden').text();
 				updateFavorites(mailNo);
-				
+
 				//Switch states
 				if (fa) {
 					$this.toggleClass('far')
@@ -407,14 +488,30 @@ td {
 				} else {
 					var bool = confirm('정말 삭제하시겠습니까?');
 					if (bool) {
-						$('#favoritesManage').attr('action', 'deletemail.mail');
-						$('#favoritesManage').submit();
+						$('#allManage').attr('action', 'deletemail.mail');
+						$('#allManage').submit();
 					}
 				}
 			});
 		});
+
+		function searchMail() {
+			var searchValue = $('#searchValue').val();
+			var command = 'favoriteslist';
+
+			location.href = "search.mail?searchValue=" + searchValue
+					+ "&command=" + command;
+		}
 		
-		
+		function updateFavorites(mNo) {
+			$.ajax({
+				url: "updateFavorites.mail",
+				data: {mNo : mNo},
+				success:function(data) {
+					console.log(data);
+				}
+			});
+		}
 	</script>
 </body>
 </html>

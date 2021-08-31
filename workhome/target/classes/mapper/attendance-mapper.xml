@@ -6,7 +6,7 @@
  		select * 
  		from attendance 
  		where empNo =#{empNo} and (ATTEND between TO_DATE(replace(#{start},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss') 
- 		and to_date( replace(#{date},' 24:',' 00:') , 'yyyy-mm-dd hh24:mi:ss'))
+ 		and TO_date( replace(#{date},' 24:',' 00:') , 'yyyy-mm-dd hh24:mi:ss'))
  		]]> 
 	</select>
 	
@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="selectList" resultMap="AttendanceResultSet">
-	select * 
+	select *
 	from attendance
 		join employee on(employee.empno=attendance.empno)
 	order by attend desc

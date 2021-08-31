@@ -28,7 +28,8 @@
 			and empno=#{empNo}
 		</if>
 		<if test='command.equals("templist")'>
-			delete from mail
+			update mail
+			set estatus='D'
 			where mailno=#{mNo}
 			and empno=#{empNo}
 			and estatus='T'
@@ -103,7 +104,7 @@
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
 		        AND (S_R_STATUS = 'R' or s_r_status = 'S')
-		        AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -121,7 +122,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-		        AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -141,7 +142,7 @@
 		        AND mail_s_r.empno = #{empNo}
 		        AND (S_R_STATUS = 'R' or s_r_status = 'S')
 		        AND FAVORITES = 'Y'
-		        AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC	
@@ -159,7 +160,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-     		    AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -177,12 +178,12 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-    		    AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
 		</if>
-		<if test='command == tempmaillist"'>
+		<if test='command == "tempmaillist"'>
 		select count(distinct mailno)
 		from(
 		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
@@ -193,7 +194,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		    where estatus='T'
 		    and employee.empNo = #{empNo}
-		    AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -217,7 +218,7 @@
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
                 AND (S_R_STATUS = 'R' or s_r_status = 'S')
-                AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -237,7 +238,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-		        AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -259,7 +260,7 @@
 		        AND mail_s_r.empno = #{empNo}
 		        AND (S_R_STATUS = 'R' or s_r_status = 'S')
 		        AND FAVORITES = 'Y'
-     		    AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -279,7 +280,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-         		AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -299,13 +300,13 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-		        AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		        
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
 		</if>
-		<if test='command == tempmaillist"'>
+		<if test='command == "tempmaillist"'>
 		select distinct MAILNO, RECEIVEEMP, ETYPE, ETITLE,
 		    ECONTENT, ESTATUS, EMPNO, S_DATE, EMPNAME
 		    , M_STATUS
@@ -318,7 +319,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		    where estatus='T'
 		    and employee.empNo = #{empNo}
-			AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -393,10 +394,23 @@
 	</select>
 	
 	<select id="getFavoritesListCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM MAIL_S_R
-		WHERE EMPNO = #{empNo}
-		AND FAVORITES = 'Y'	
+		select count(distinct MAILNO)
+		from(
+		    select MAIL.MAILNO, MAIL.RECEIVEEMP, MAIL.ETYPE, MAIL.ETITLE,
+		           MAIL.ECONTENT, MAIL.ESTATUS, MAIL.EMPNO, MAIL.S_DATE, EMPLOYEE.EMPNAME,
+		           MAIL_FILE.M_FILE_NO, MAIL_FILE.M_CHANGE_NAME, MAIL_FILE.M_STATUS,
+		           S_R_STATUS, FAVORITES, MAIL_S_R.R_DATE
+		    from mail
+		        join employee ON(MAIL.EMPNO = EMPLOYEE.EMPNO)
+		        join mail_s_r on(mail.mailno = mail_s_r.mailno)
+		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
+		        WHERE ESTATUS='Y'
+		        AND mail_s_r.empno = #{empNo}
+		        AND (S_R_STATUS = 'R' or s_r_status = 'S')
+		        AND FAVORITES = 'Y'
+		    order by MAILNO DESC
+		)
+		ORDER BY MAILNO DESC	
 	</select>
 	
 	<select id="selectFavoritesList" resultMap="mailResultSet">
