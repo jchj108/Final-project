@@ -33,7 +33,6 @@ public interface MailService {
 
 	ArrayList<Mail> selectSendList(PageInfo pi, String empNo);
 
-	Mail selectMail(int id);
 
 	Employee getMId(String mId);
 
@@ -64,5 +63,13 @@ public interface MailService {
 	ArrayList<Mail> selectAllList(PageInfo pi, String empNo);
 
 	int selectCountNotRead(String empNo);
+
+	int getFavoritesListCount(String empNo);
+
+	ArrayList<Mail> selectFavoritesList(PageInfo pi, String empNo);
+
+	int getSearchListCount(Map<String, Object> map);
+
+	ArrayList<Mail> searchList(PageInfo pi, Map<String, Object> map);
 
 }
