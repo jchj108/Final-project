@@ -104,6 +104,10 @@ td {
 	display: none;
 	width: 0px;
 }
+
+.mailbox-read-message {
+	min-height: 500px;
+}
 </style>
 
 </head>
@@ -224,17 +228,17 @@ td {
 								<div class="card-footer">
 									<div class="float-right">
 										<button type="button" class="btn btn-default">
-											<i class="fas fa-reply"></i> Reply
+											<i class="fas fa-reply"></i> 답장
 										</button>
 										<button type="button" class="btn btn-default">
-											<i class="fas fa-share"></i> Forward
+											<i class="fas fa-share"></i> 전달
 										</button>
 									</div>
 									<button type="button" class="btn btn-default">
-										<i class="far fa-trash-alt"></i> Delete
+										<i class="far fa-trash-alt"></i> 삭제
 									</button>
 									<button type="button" class="btn btn-default">
-										<i class="fas fa-print"></i> Print
+										<i class="fas fa-print"></i> 인쇄
 									</button>
 								</div>
 								<!-- /.card-footer -->
@@ -275,5 +279,10 @@ td {
 	<script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="${contextPath}/resources/dist/js/demo.js"></script>
+	<script>
+// 		$('.fa-trash-alt').empty();
+	
+	</script>
+	
 </body>
 </html>
