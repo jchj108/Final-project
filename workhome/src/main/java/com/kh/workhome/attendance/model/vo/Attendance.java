@@ -5,19 +5,20 @@ import java.sql.Date;
 public class Attendance {
 	private Date aDate;
 	private String empNo;
-	private Date attend;
-	private Date goHome;
+	private String attend;
+	private String goHome;
+	private String workTime;
 	
 	public Attendance() {}
 
-	public Attendance(Date aDate, String empNo, Date attend, Date goHome) {
+	public Attendance(Date aDate, String empNo, String attend, String goHome, String workTime) {
 		super();
 		this.aDate = aDate;
 		this.empNo = empNo;
 		this.attend = attend;
 		this.goHome = goHome;
+		this.workTime = workTime;
 	}
-
 
 
 	public Date getaDate() {
@@ -36,26 +37,40 @@ public class Attendance {
 		this.empNo = empNo;
 	}
 
-	public Date getAttend() {
+	public String getAttend() {
 		return attend;
 	}
 
-	public void setAttend(Date attend) {
+	public void setAttend(String attend) {
 		this.attend = attend;
 	}
 
-	public Date getGoHome() {
+	public String getGoHome() {
 		return goHome;
 	}
 
-	public void setGoHome(Date goHome) {
+	public void setGoHome(String goHome) {
 		this.goHome = goHome;
+	}
+	
+	public String getWorkTime() {
+		return workTime;
+	}
+
+	public void setWorkTime(String workTime) {
+		this.workTime = workTime;
 	}
 
 	@Override
 	public String toString() {
-		return "Attendance [aDate=" + aDate + ", empNo=" + empNo + ", attend=" + attend + ", goHome=" + goHome + "]";
+		return "Attendance [aDate=" + aDate + ", empNo=" + empNo + ", attend=" + attend + ", goHome=" + goHome
+				+ ", workTime=" + workTime + "]";
 	}
+
+	
+
+
+	
 
 	
 	

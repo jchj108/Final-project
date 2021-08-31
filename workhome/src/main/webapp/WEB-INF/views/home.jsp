@@ -243,7 +243,7 @@
 				console.log(data);
 				if (data.result == "success") {
 					$(".goHome").hide();
-					$('.zipgalle').text("퇴근 : " + data.map.GOHOME);
+					$('.zipgalle').text("퇴근 : " + data.time);
 				}
 			}
 		})
