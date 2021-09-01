@@ -97,12 +97,8 @@
 									<c:if test="${!empty map.ATTEND &&  empty map.GOHOME}">
 										<a id="off" class="btn btn-success btn-user btn-block goHome" style="color: white;"> 퇴근하기 </a>
 									</c:if>
-<<<<<<< HEAD
-									<a id="off" class="btn btn-success btn-user btn-block goHome" style="color: white; display: none;"> 퇴근하기 </a>
-=======
 									<a class="btn btn-success btn-user btn-block goHome"
 										style="color: white; display: none;"> 퇴근하기 </a>
->>>>>>> 997eb421c215821b25c9887db80b3d7a08cbb156
 								</div>
 							</div>
 
@@ -245,7 +241,7 @@
 				console.log(data);
 				if (data.result == "success") {
 					$(".goHome").hide();
-					$('.zipgalle').text("퇴근 : " + data.time);
+					$('.zipgalle').text("퇴근 : " + data.map.GOHOME);
 				}
 			}
 		})
