@@ -107,7 +107,7 @@ public class HomeController {
 			
 			HashMap<String,String> keys = new HashMap<>();
 			keys.put("empNo", EmpNo);
-			keys.put("date", strDate);
+			keys.put("Date", strDate);
 			keys.put("start", startOfDate);
 			int result = atService.goHome(keys);
 			

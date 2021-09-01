@@ -69,5 +69,40 @@
   	 	 where rownum <=3
   	 	 ]]>
 	</select>
+	
+	<select id="getSearchResultListCount" parameterType="hashmap" resultType="_int">
+		select count(*)
+		from notice n
+			join employee e on(n.noticewriter = e.empname)
+		where noticestatus='Y'
+		<if test="condition == 'writer'">
+			and noticewriter=#{value}
+		</if>
+		<if test="condition == 'title'">
+			and noticetitle like '%' || #{value} || '%'
+		</if>
+		<if test="condition == 'content'">
+			and noticecontent like '%' || #{value} || '%'
+		</if>
+	</select>
+	
+	<select id="selectSearchResultList" parameterType="hashMap" resultMap="noticeResultSet">
+		select *
+		from notice
+			join employee on(noticewriter = empname)
+		where noticestatus='Y'
+		<choose>
+			<when test="condition =='writer'">
+				and noticewriter = #{value}
+			</when>
+			<when test="condition == 'title'">
+				and noticetitle like '%' || #{value} || '%'
+			</when>
+			<otherwise>
+				and noticecontent like '%' || #{value}	|| '%'
+			</otherwise>
+			</choose>
+			order by noticeno desc
+	</select>
 
 </mapper>

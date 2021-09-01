@@ -60,13 +60,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="" items="">
+						<c:forEach var="a" items="${list}">
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td>${loginUser.empName}</td>
+							<td>${a.aDate}</td>
+							<td>${a.attend}</td>
+							<td>${a.goHome}</td>
+							<td>${a.workTime}</td>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -143,36 +143,6 @@
 	<script src="dist/js/demo.js"></script>
 	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 	<script src="dist/js/pages/dashboard3.js"></script>
-	
-	<script>
-// 		function timeList(){
-
-// 			$.ajax({
-// 				url:'alist.ao',
-// 				success: function(data){
-// 					 console.log(data);
-// 					var $tableBody = $('#userInfoTable tbody');
-// 					if(data.result == "success"){
-// 					for(var i in data){
-						
-// 						var $tr = $('<tr>');
-// 						var $nameTd = $('<td>').text(data[i].empNo);
-// 						var $startTd = $('<td>').text(data[i].attend);
-// 						var $startTd = $('<td>').text(data[i].attend);
-// 						var $endTd = $('<td>').text(data[i].goHome);
-						
-// 						$tr.append($nameTd);
-// 						$tr.append($startTd);
-// 						$tr.append($startTd);
-// 						$tr.append($endTd);
-// 						$tableBody.append($tr);
-// 					}
-// 				}
-// 				}
-// 			});
-// 		}
-		
-	</script>
 	
 </body>
 </html>

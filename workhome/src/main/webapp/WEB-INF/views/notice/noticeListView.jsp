@@ -138,8 +138,30 @@
 		               <li class="page-item"><a class="page-link" href="${ after }">다음</a></li>
 		            </c:if>
 				</ul>
+		<!---------------- 3. 게시물 검색 ------------------>
+	<div id="searchArea" align="center">
+		<label>검색 조건</label>
+		<select id="searchCondition" name="searchCondition">
+			<option>-------</option>
+			<option value="writer">작성자</option>
+			<option value="title">제목</option>
+			<option value="content">내용</option>
+		</select>
+		
+		<input id="searchValue" type="search">
+		<button onclick="searchNotice();">검색하기</button>
+	</div>
 			</div>
 		</div>
+		
+	<script type="text/javascript">
+		function searchNotice(){
+			var searchCondition = $("#searchCondition").val(); // 작성자, 제목, 내용 받아오는거
+			var searchValue = $("#searchValue").val(); // 뭐라고 검색할지 
+			
+			location.href="search.no?searchCondition="+searchCondition+"&searchValue="+searchValue;
+		}
+	</script>
 		<!-- /메인 컨텐츠 -->
 
 		<!-- footer -->

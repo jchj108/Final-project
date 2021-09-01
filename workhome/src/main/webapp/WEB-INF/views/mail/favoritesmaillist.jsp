@@ -116,7 +116,7 @@ td {
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>휴지통</h1>
+							<h1>즐겨찾기</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -141,7 +141,7 @@ td {
 						<div class="col-md-9">
 							<div class="card card-primary card-outline">
 								<div class="card-header">
-									<h3 class="card-title">휴지통</h3>
+									<h3 class="card-title">즐겨찾기</h3>
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm">
@@ -174,7 +174,7 @@ td {
 											</button>
 										</div>
 										<!-- /.btn-group -->
-										<button type="button" onclick="location.href='deletelist.mail'" class="btn btn-default btn-sm">
+										<button type="button" onclick="location.href='alllist.mail'" class="btn btn-default btn-sm">
 											<i class="fas fa-sync-alt"></i>
 										</button>
 										<div class="float-right">
@@ -194,7 +194,7 @@ td {
 										<table class="table table-hover table-striped">
 											<form id="allManage" method="post">
 												<!-- value에 반환할 페이지 넣기 -->
-												<input type="hidden" value="deletelist" name="command">
+												<input type="hidden" value="favoriteslist" name="command">
 												<c:forEach var="m" items="${list }" varStatus="idCount">
 													<c:forEach var="mF" items="${m.mailFileList}">
 														<c:if test="${mF.mStatus == 'Y'}">
@@ -240,24 +240,20 @@ td {
 																<i class="fas fa-star text-warning"></i>
 															</a>
 														</c:if>
-														<c:if test="${read == 'y' }">
+														 <c:if test="${read == 'y' }">
 																<i id="readmail" class="far fa-envelope-open text-primary"></i>
-															</c:if> 
-															<c:if test="${read != 'y' }">
+															</c:if> <c:if test="${read != 'y' }">
 																<i id="readmail" class="fas fa-envelope text-primary"></i>
-															</c:if> 
-															
-															
-															<c:if test="${attachment == 'on' }">
+															</c:if> <c:if test="${attachment == 'on' }">
 																<i class="fas fa-paperclip"></i>
 															</c:if></td>
 														<%-- 														${m.mailSRList.get(0).sRStatus } --%>
-														<c:if test="${ m.mailSRList.get(0).empNo != loginUser.empNo}">
+														<c:if test="${ m.mailSRList.get(0).sRStatus == 'R'}">
 															<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[받은메일함]</span>
 																${m.etitle }</td>
 														</c:if>
-														<c:if test="${ m.mailSRList.get(0).empNo == loginUser.empNo}">
+														<c:if test="${ m.mailSRList.get(0).sRStatus == 'S'}">
 															<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[보낸메일함]</span>
 																${m.etitle }</td>
@@ -318,7 +314,7 @@ td {
 												<c:if test="${ searchValue ne null}">
 													<c:url value="search.mail" var="searchBack">
 														<c:param name="searchValue" value="${ searchValue}" />
-														<c:param name="command" value="deletemaillist" />
+														<c:param name="command" value="favoriteslist" />
 														<c:param name="page" value="${pi.currentPage - 1 }" />
 													</c:url>
 													<a href="${searchBack }">
@@ -328,7 +324,7 @@ td {
 													</a>
 												</c:if>
 												<c:if test="${ searchValue eq null}">
-													<c:url var="before" value="deletemaillist.mail">
+													<c:url var="before" value="favoriteslist.mail">
 														<c:param name="page" value="${ pi.currentPage - 1 }" />
 													</c:url>
 													<a href="${before }">
@@ -349,7 +345,7 @@ td {
 													<c:if test="${searchValue ne null }">
 														<c:url value="search.mail" var="searchPagination">
 															<c:param name="searchValue" value="${ searchValue}" />
-															<c:param name="command" value="deletemaillist" />
+															<c:param name="command" value="favoriteslist" />
 															<c:param name="page" value="${ p }" />
 														</c:url>
 														<a href="${ searchPagination }">
@@ -357,7 +353,7 @@ td {
 														</a>
 													</c:if>
 													<c:if test="${searchValue eq null }">
-														<c:url var="pagination" value="deletelist.mail">
+														<c:url var="pagination" value="favoriteslist.mail">
 															<c:param name="page" value="${ p }" />
 														</c:url>
 														<a href="${ pagination }">
@@ -378,7 +374,7 @@ td {
 													<c:url var="searchNext" value="search.mail">
 														<c:param name="page" value="${ pi.currentPage + 1 }" />
 														<c:param name="searchValue" value="${ searchValue}" />
-														<c:param name="command" value="deletemaillist" />
+														<c:param name="command" value="favoriteslist" />
 													</c:url>
 													<a href="${searchNext }">
 														<button type="button" class="btn btn-default btn-sm" style="border-radius: 0px;">
@@ -387,7 +383,7 @@ td {
 													</a>
 												</c:if>
 												<c:if test="${searchValue eq null }">
-													<c:url var="next" value="deletelist.mail">
+													<c:url var="next" value="alllist.mail">
 														<c:param name="page" value="${ pi.currentPage + 1 }" />
 													</c:url>
 													<a href="${next }">
@@ -501,10 +497,20 @@ td {
 
 		function searchMail() {
 			var searchValue = $('#searchValue').val();
-			var command = 'deletemaillist';
+			var command = 'favoriteslist';
 
 			location.href = "search.mail?searchValue=" + searchValue
 					+ "&command=" + command;
+		}
+		
+		function updateFavorites(mNo) {
+			$.ajax({
+				url: "updateFavorites.mail",
+				data: {mNo : mNo},
+				success:function(data) {
+					console.log(data);
+				}
+			});
 		}
 	</script>
 </body>

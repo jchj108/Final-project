@@ -44,46 +44,12 @@ public class AttendanceController {
 		
 		//날짜만 가져옴 + 페이징처리
 		ArrayList<Attendance> list = atService.selectList(pi);
-		System.out.println("?????????" +list);
+		System.out.println("출퇴근 기록 : "+list);
 		if(list != null) {
 			mv.addObject("list",list).addObject("pi",pi);
 			mv.setViewName("attendanceView");
-		} 
+		}
 		return mv;
-		
-		
-//		Employee loginUser = (Employee) session.getAttribute("loginUser");
-//		String empNo = loginUser.getEmpNo();
-		
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss"); 
-//		String strDate = dateFormat.format(Calendar.getInstance().getTime()); 
-//		String[] temp = strDate.split(" ");
-//		String startOfDate = temp[0]+" "+"00:00:00";
-//
-//		HashMap<String,String> keys = new HashMap<>();
-//		keys.put("empNo", empNo);
-//		keys.put("date", strDate);
-//		keys.put("start", startOfDate);
-//		int result = atService.goHome(keys);
-		
-//		HashMap<String,String> map = atService.selectCommute(keys);
-//		System.out.println("keys : " + keys); // {date=2021-08-26 17:37:04, start=2021-08-26 00:00:00, empNo=BSC0010}
-		
-		
-//		HashMap<String, Object> rMap = new HashMap<String, Object>();
-		
-//		if(result > 0) {
-//			rMap.put("result","success");
-//			rMap.put("time", strDate);
-//			rMap.put("map", map);
-//		} 	else {
-//			rMap.put("result","fail");
-//		}
-		
-//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd kk:mm:ss").create();
-//		gson.toJson(rMap,response.getWriter());
-		
-		
 	}
 	
 	
