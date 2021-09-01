@@ -40,10 +40,10 @@ public class MeetingController {
 	
 
 	// 회의 예약하기 페이지 호출
-	@RequestMapping("meetReserv5.meet")
-	public String meetingReserv5() {
+	@RequestMapping("meetReserv.meet")
+	public String meetingReserv() {
 		
-		return "meetingReservation6";		
+		return "meetingReservation";		
 	}
 
 
