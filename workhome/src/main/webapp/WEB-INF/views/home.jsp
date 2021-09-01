@@ -92,12 +92,10 @@
 										<!-- 										<p id="resultArea"></p> -->
 									</div>
 									<c:if test="${empty map.ATTEND}">
-										<a id="commute" class="btn btn-primary btn-user btn-block"
-											style="color: white;"> 출근하기 </a>
+										<a id="commute" class="btn btn-primary btn-user btn-block" style="color: white;"> 출근하기 </a>
 									</c:if>
 									<c:if test="${!empty map.ATTEND &&  empty map.GOHOME}">
-										<a id="off" class="btn btn-success btn-user btn-block goHome"
-											style="color: white;"> 퇴근하기 </a>
+										<a id="off" class="btn btn-success btn-user btn-block goHome" style="color: white;"> 퇴근하기 </a>
 									</c:if>
 									<a class="btn btn-success btn-user btn-block goHome"
 										style="color: white; display: none;"> 퇴근하기 </a>
@@ -243,7 +241,7 @@
 				console.log(data);
 				if (data.result == "success") {
 					$(".goHome").hide();
-					$('.zipgalle').text("퇴근 : " + data.time);
+					$('.zipgalle').text("퇴근 : " + data.map.GOHOME);
 				}
 			}
 		})
