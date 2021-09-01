@@ -8,6 +8,7 @@ public class Attendance {
 	private String attend;
 	private String goHome;
 	private String workTime;
+	private String empName;
 	
 	public Attendance() {}
 
@@ -19,7 +20,19 @@ public class Attendance {
 		this.goHome = goHome;
 		this.workTime = workTime;
 	}
+	
+	
 
+
+	public Attendance(Date aDate, String empNo, String attend, String goHome, String workTime, String empName) {
+		super();
+		this.aDate = aDate;
+		this.empNo = empNo;
+		this.attend = attend;
+		this.goHome = goHome;
+		this.workTime = workTime;
+		this.empName = empName;
+	}
 
 	public Date getaDate() {
 		return aDate;
@@ -60,11 +73,21 @@ public class Attendance {
 	public void setWorkTime(String workTime) {
 		this.workTime = workTime;
 	}
+	
+	
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 
 	@Override
 	public String toString() {
 		return "Attendance [aDate=" + aDate + ", empNo=" + empNo + ", attend=" + attend + ", goHome=" + goHome
-				+ ", workTime=" + workTime + "]";
+				+ ", workTime=" + workTime + ", empName=" + empName + "]";
 	}
 
 	
