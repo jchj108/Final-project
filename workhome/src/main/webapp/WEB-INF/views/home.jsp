@@ -73,7 +73,7 @@
 									<h4 style="margin-bottom: 1rem;">출퇴근</h4>
 									<div style="padding: 1.5rem; font-size: 1.3rem;">
 										<p id="pClock"></p>
-										<p class="chulgun">
+										<p class="startwork">
 											<c:if test="${!empty map.ATTEND}">
 								출근 : ${map.ATTEND}
 								</c:if>
@@ -81,7 +81,7 @@
 								출근 : 아직 출근 시간이 기록되지 않았어요!
 								</c:if>
 										</p>
-										<p class="zipgalle">
+										<p class="finishwork">
 											<c:if test="${!empty map.ATTEND && empty map.GOHOME}">
 								퇴근 : 아직 퇴근 시간이 기록되지 않았어요!
 								</c:if>
@@ -89,15 +89,16 @@
 								퇴근 : ${map.GOHOME}
 								</c:if>
 										</p>
-										<!-- 										<p id="resultArea"></p> -->
 									</div>
 									<c:if test="${empty map.ATTEND}">
-										<a id="commute" class="btn btn-primary btn-user btn-block" style="color: white;"> 출근하기 </a>
+										<a id="startbtn" class="btn btn-primary btn-user btn-block"
+											style="color: white;"> 출근하기 </a>
 									</c:if>
 									<c:if test="${!empty map.ATTEND &&  empty map.GOHOME}">
-										<a id="off" class="btn btn-success btn-user btn-block goHome" style="color: white;"> 퇴근하기 </a>
+										<a id="off" class="btn btn-success btn-user btn-block finishbtn"
+											style="color: white;"> 퇴근하기 </a>
 									</c:if>
-									<a class="btn btn-success btn-user btn-block goHome"
+									<a class="btn btn-success btn-user btn-block finishbtn"
 										style="color: white; display: none;"> 퇴근하기 </a>
 								</div>
 							</div>
@@ -116,8 +117,6 @@
 											</thead>
 											<tbody>
 												<tr>
-<!-- 													<td><i class="fa fa-picture-o" aria-hidden="false"></i> -->
-<!-- 														<i class="fa fa-video-camera" aria-hidden="true"></i></td> -->
 													<td></td>
 													<td></td>
 												</tr>
@@ -217,31 +216,30 @@
 	})
 </script>
 <script>
-	$(document).on('click', '#commute', function() {
+	$(document).on('click', '#startbtn', function() {
 		$.ajax({
 			url : "workstart.do",
 			success : function(data) {
 				if (data == "fail") {
 					alert("출근 등록 실패");
 				} else {
-					$("#commute").hide();
-					$(".goHome").fadeIn(1000);
-					$(".chulgun").text("출근 : " + data);
-					$(".zipgalle").text("퇴근 : 아직 퇴근 시간이 기록되지 않았어요!");
-					clock.start();
+					$("#startbtn").hide();
+					$(".finishbtn").fadeIn(1000);
+					$(".startwork").text("출근 : " + data);
+					$(".finishwork").text("퇴근 : 아직 퇴근 시간이 기록되지 않았어요!");
 				}
 			}
 		});
 	});
-	$(document).on('click', '.goHome', function() {
+	$(document).on('click', '.finishbtn', function() {
 		$.ajax({
 			url : "goHome.do",
 			dataType : "json",
 			success : function(data) {
 				console.log(data);
 				if (data.result == "success") {
-					$(".goHome").hide();
-					$('.zipgalle').text("퇴근 : " + data.map.GOHOME);
+					$(".finishbtn").hide();
+					$('.finishwork').text("퇴근 : " + data.time);
 				}
 			}
 		})

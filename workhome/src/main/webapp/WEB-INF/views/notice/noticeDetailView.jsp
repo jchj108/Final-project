@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,8 +44,7 @@
 
 		<!-- 메인 컨텐츠 -->
 		<div class="content-wrapper" align="center">
-			<br>
-			<br>
+			<br> <br>
 			<!-- 공지사항 -->
 			<div class="container"
 				style="background: white; padding: 30px 30px 30px; margin: 30px">
@@ -69,39 +68,43 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						<% pageContext.setAttribute("newLineChar", "\r\n"); %>
+						<%
+							pageContext.setAttribute("newLineChar", "\r\n");
+						%>
 						<td>${ fn:replace(notice.noticeContent, newLineChar, "<br>") }</td>
 					</tr>
-					
+
 					<c:if test="${ !empty notice.originFileName }">
-					<tr>
-						<th>첨부파일</th>
-						<td><a href="${ contextPath }/resources/nuploadFiles/${ notice.renameFileName }" download="${ notice.originFileName }">${ notice.originFileName }</a></td>
-					</tr>
+						<tr>
+							<th>첨부파일</th>
+							<td><a
+								href="${ contextPath }/resources/nuploadFiles/${ notice.renameFileName }"
+								download="${ notice.originFileName }">${ notice.originFileName }</a></td>
+						</tr>
 					</c:if>
-					
-				<c:url var="nupView" value="nupView.no">
-					<c:param name="nId" value="${ notice.noticeNo }"/>
-					<c:param name="page" value="${ page }"/>
-				</c:url>
-				<c:url var="ndelete" value="ndelete.no">
-					<c:param name="nId" value="${ notice.noticeNo }"/>
-				</c:url>
-				<c:url var="nlist" value="nlist.no">
-					<c:param name="page" value="${ page }"/>
-				</c:url>
-				
-				<c:if test="${ loginUser.empName eq notice.noticeWriter }">
-					<tr>
-						<td colspan="2" align="center">
-							<button onclick="location.href='${ nupView }'">수정하기</button>
-							<button onclick="location.href='${ ndelete}'">삭제하기</button>
-							<button onclick="location.href='${ nlist}'">목록보기</button>
-						</td>
-					</tr>
-				</c:if>
+
+					<c:url var="nupView" value="nupView.no">
+						<c:param name="nId" value="${ notice.noticeNo }" />
+						<c:param name="page" value="${ page }" />
+					</c:url>
+					<c:url var="ndelete" value="ndelete.no">
+						<c:param name="nId" value="${ notice.noticeNo }" />
+					</c:url>
+					<c:url var="nlist" value="nlist.no">
+						<c:param name="page" value="${ page }" />
+					</c:url>
+
+					<c:if test="${ loginUser.empName eq notice.noticeWriter }">
+						<tr>
+							<td colspan="2" align="center">
+								<button onclick="location.href='${ nupView }'">수정하기</button>
+								<button onclick="location.href='${ ndelete}'">삭제하기</button>
+								<button onclick="location.href='${ nlist}'">목록보기</button>
+							</td>
+						</tr>
+					</c:if>
 				</table>
-				
+
 				<br>
 			</div>
 		</div>

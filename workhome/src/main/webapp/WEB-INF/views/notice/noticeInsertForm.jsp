@@ -20,6 +20,8 @@
 <!-- Theme style -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
+<!-- summer note -->
+ <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
 </head>
 <!--
    `body` tag options:
@@ -64,8 +66,9 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td><textarea rows="10" cols="130" name="noticeContent"
-								style="resize: none;"></textarea></td>
+<!-- 						<td><textarea rows="10" cols="130" name="noticeContent" id="summernote" -->
+<!-- 								style="resize: none;"></textarea></td> -->
+						<td><textarea name="noticeContent" id="summernote"></textarea></td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
@@ -92,17 +95,39 @@
 	<!-- REQUIRED SCRIPTS -->
 
 	<!-- jQuery -->
-	<script src="plugins/jquery/jquery.min.js"></script>
+<!-- 	<script src="plugins/jquery/jquery.min.js"></script> -->
+	<script src="${contextPath}/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap -->
-	<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- 	<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+	<script	src="${contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE -->
-	<script src="dist/js/adminlte.js"></script>
+<!-- 	<script src="dist/js/adminlte.js"></script> -->
+	<script src="${contextPath}/resources/dist/js/adminlte.js"></script>
 
 	<!-- OPTIONAL SCRIPTS -->
-	<script src="plugins/chart.js/Chart.min.js"></script>
+<!-- 	<script src="plugins/chart.js/Chart.min.js"></script> -->
+	<script src="${contextPath}/resources/plugins/chart.js/Chart.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
-	<script src="dist/js/demo.js"></script>
+<!-- 	<script src="dist/js/demo.js"></script> -->
+	<script src="${contextPath}/resources/dist/js/demo.js"></script>
+	
 	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-	<script src="dist/js/pages/dashboard3.js"></script>
+<!-- 	<script src="dist/js/pages/dashboard3.js"></script> -->
+	<script src="${contextPath}/resources/dist/js/pages/dashboard3.js"></script>
+	<!-- Summernote -->
+	<script
+		src="${contextPath}/resources/plugins/summernote/summernote-bs4.min.js"></script>
+	<script
+		src="${contextPath}/resources/plugins/summernote/lang/summernote-ko-KR.js"></script>
+	
+	<script>
+
+        $('#summernote').summernote({
+        	placeholder:'내용을 입력하세요',
+        	height:450
+        });
+
+  </script>
+	
 </body>
 </html>
