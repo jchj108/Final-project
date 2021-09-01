@@ -1,12 +1,12 @@
 package com.kh.workhome.meeting.model.vo;
 
-import java.sql.Date;
 
 public class MeetingReservation {
 
 	private String rDate;
 	private String rTime;
 	private String mNo; // 회의실 번호
+	private String mName; // 회의실 이름
 	private String joinEmp; // 참가인
 	private String mTitle; // 제목
 	private String mContent; // 내용
@@ -15,12 +15,13 @@ public class MeetingReservation {
 	
 	public MeetingReservation() {}
 
-	public MeetingReservation(String rDate, String rTime, String mNo, String joinEmp, String mTitle, String mContent,
-			String rStatus, String empNo) {
+	public MeetingReservation(String rDate, String rTime, String mNo, String mName, String joinEmp, String mTitle,
+			String mContent, String rStatus, String empNo) {
 		super();
 		this.rDate = rDate;
 		this.rTime = rTime;
 		this.mNo = mNo;
+		this.mName = mName;
 		this.joinEmp = joinEmp;
 		this.mTitle = mTitle;
 		this.mContent = mContent;
@@ -50,6 +51,14 @@ public class MeetingReservation {
 
 	public void setmNo(String mNo) {
 		this.mNo = mNo;
+	}
+
+	public String getmName() {
+		return mName;
+	}
+
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
 
 	public String getJoinEmp() {
@@ -94,9 +103,11 @@ public class MeetingReservation {
 
 	@Override
 	public String toString() {
-		return "MeetingReservation [rDate=" + rDate + ", rTime=" + rTime + ", mNo=" + mNo + ", joinEmp=" + joinEmp
-				+ ", mTitle=" + mTitle + ", mContent=" + mContent + ", rStatus=" + rStatus + ", empNo=" + empNo + "]";
+		return "MeetingReservation [rDate=" + rDate + ", rTime=" + rTime + ", mNo=" + mNo + ", mName=" + mName
+				+ ", joinEmp=" + joinEmp + ", mTitle=" + mTitle + ", mContent=" + mContent + ", rStatus=" + rStatus
+				+ ", empNo=" + empNo + "]";
 	}
+
 
 
 

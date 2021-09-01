@@ -149,11 +149,11 @@ public class MeetingController {
 	public ModelAndView rList(ModelAndView mv, HttpSession session, HttpServletRequest request) {
 		Employee loginEmp = ((Employee) request.getSession().getAttribute("loginUser"));
 		
-		System.out.println("loginEmp : " + loginEmp);
+//		System.out.println("loginEmp : " + loginEmp);
 		
 		ArrayList<MeetingReservation> list =  meService.selectAllReservation("%"+loginEmp.getEmpNo()+"%");
 		
-		System.out.println("list : " + list);
+//		System.out.println("list : " + list);
 		
 		ArrayList<MeetingReservation> mine = new ArrayList<>();// 내가 예약한 회의
 		ArrayList<MeetingReservation> join = new ArrayList<>();// 내가 참여할 회의 
@@ -163,7 +163,7 @@ public class MeetingController {
 			Employee e = new Employee();
 			e.setEmpNo(r.getEmpNo());
 			Employee getEmp = eService.selectEmp(e);
-			r.setEmpNo("("+getEmp.getEmpNo()+") " + getEmp.getEmpName()+" - "+getEmp.getDeptName());
+			r.setEmpNo("["+getEmp.getEmpNo()+"] " + getEmp.getEmpName()+" - "+getEmp.getDeptName());
 			
 //			System.out.println("getrDate : " + r.getrDate());
 			
@@ -174,10 +174,10 @@ public class MeetingController {
 			
 			if(r.getEmpNo().contains(loginEmp.getEmpNo())){
 				mine.add(r);
-				System.out.println("내가 예약한 회의 : " + mine);
+//				System.out.println("내가 예약한 회의 : " + mine);
 			}else {
 				join.add(r);
-				System.out.println("내가 참여할 회의 : " + join);
+//				System.out.println("내가 참여할 회의 : " + join);
 			}
 									
 		}
@@ -186,6 +186,30 @@ public class MeetingController {
 		mv.addObject("join",join);// 내가 참여할 회의 
 		mv.setViewName("meetingReservationList");
 		return mv;
+	}
+	
+	
+	// 회의 취소 또는 불참
+	
+	@RequestMapping("rCancle.meet")
+	@ResponseBody
+	public String rUpdate(@RequestParam("id") String id, @RequestParam("rStatus") String rStatus, @RequestParam("joinEmp") String joinEmp) {
+		
+		MeetingReservation r = new MeetingReservation();
+		String[] array = id.split(";");
+		
+		r.setrDate(array[0]+";"+array[1]);
+		r.setmNo((array[2]));
+		r.setrStatus(rStatus);
+		r.setJoinEmp(joinEmp);
+		
+		int result = meService.rCancle(r);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 }

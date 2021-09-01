@@ -171,6 +171,8 @@
 </div>
 
 
+
+
 	<div class="wrapper">
 		<!-- header -->
 		<jsp:include page="../common/header.jsp"></jsp:include>
@@ -256,7 +258,7 @@
 										<div class="form-group">
 											<label for="inputName">회의 제목</label>
 											<input type="text" id="mTitle" class="form-control"
-												placeholder="회의 제목을 입력하세요."
+												placeholder="회의 제목을 입력하세요." maxlength="20"
 											>
 										</div>
 										<div class="form-group">
@@ -563,14 +565,12 @@
 					var empName = "${loginUser.empName}";
 
 					if (mNo == "") {
-						//						  						alert("날짜를 선택해 주세요.");
 						$('.modal-body').text("회의실을 선택해 주세요.");
 						$('#exampleModal').modal('show');
 						return;
 					}
 
 					if (date == "") {
-						//						  						alert("날짜를 선택해 주세요.");
 						$('.modal-body').text("날짜를 선택해 주세요.");
 						$('#exampleModal').modal('show');
 						return;
@@ -605,7 +605,7 @@
 						return;
 					}
 
-					SelectTime = SelectTime.substr(0, SelectTime.length - 1);
+					SelectTime = SelectTime.substr(0, SelectTime.length - 1);							
 
 					if (confirm("날짜 : " + date + "\n시간 : " + SelectTime
 							+ "\n제목 : \'" + mTitle + "\n참가인 : \'" + joinEmp
@@ -629,10 +629,30 @@
 							type : "post",
 							success : function(data) {
 								if (data == "success") {
-									$('.modal-body').text("성공적으로 예약하였습니다.");
-									$('#exampleModal').modal('show');
 									
-									location.href="rList.meet";
+									var time = 5;
+									
+									if(!time == '0') {
+										
+										setInterval(function() {
+											 $('.modal-body').text("성공적으로 예약하였습니다. (" + time + "초 후 예약 현황으로 이동합니다.)");
+											 $('#exampleModal').modal('show');
+											 
+											 time--;
+											 console.log(time);
+											 
+											 if(time == '0') {
+												 location.href = "rList.meet";
+											 }											 
+										}, 1000);
+										
+									} else{
+										location.href = "rList.meet";										
+									}								
+									
+//									 setTimeout(function() {
+//									 	location.href = "rList.meet";
+//									 }, 3000);										 
 
 								} else {
 									console.log(date, mTitle, joinEmp);
