@@ -92,15 +92,17 @@
 										<!-- 										<p id="resultArea"></p> -->
 									</div>
 									<c:if test="${empty map.ATTEND}">
-										<a id="commute" class="btn btn-primary btn-user btn-block"
-											style="color: white;"> 출근하기 </a>
+										<a id="commute" class="btn btn-primary btn-user btn-block" style="color: white;"> 출근하기 </a>
 									</c:if>
 									<c:if test="${!empty map.ATTEND &&  empty map.GOHOME}">
-										<a id="off" class="btn btn-success btn-user btn-block goHome"
-											style="color: white;"> 퇴근하기 </a>
+										<a id="off" class="btn btn-success btn-user btn-block goHome" style="color: white;"> 퇴근하기 </a>
 									</c:if>
+<<<<<<< HEAD
+									<a id="off" class="btn btn-success btn-user btn-block goHome" style="color: white; display: none;"> 퇴근하기 </a>
+=======
 									<a class="btn btn-success btn-user btn-block goHome"
 										style="color: white; display: none;"> 퇴근하기 </a>
+>>>>>>> 997eb421c215821b25c9887db80b3d7a08cbb156
 								</div>
 							</div>
 
