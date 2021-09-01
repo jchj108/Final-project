@@ -10,7 +10,7 @@ public interface AttendanceService{
 
 	HashMap<String, String> selectCommute(HashMap<String, String> keys);
 
-	int chulgun(HashMap<String, String> map);
+	int startwork(HashMap<String, String> map);
 
 	int goHome(HashMap<String, String> keys);
 

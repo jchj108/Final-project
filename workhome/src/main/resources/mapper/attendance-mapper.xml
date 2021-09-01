@@ -4,42 +4,43 @@
 	<select id="selectCommute" parameterType="map" resultType="map">
 		<![CDATA[
  		select * 
- 		from attendance 
- 		where empNo =#{empNo} and (ATTEND between TO_DATE(replace(#{start},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss') 
- 		and TO_date( replace(#{date},' 24:',' 00:') , 'yyyy-mm-dd hh24:mi:ss'))
- 		]]> 
+ 		from ATTENDANCE 
+ 		where EMPNO =#{empNo} and (ATTEND between TO_DATE(replace(#{start},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss') 
+ 		and TO_DATE( replace(#{date},' 24:',' 00:') , 'yyyy-mm-dd hh24:mi:ss'))
+ 		]]>
 	</select>
-	
-	<insert id="chulgun" parameterType="map">
-	insert into attendance 
-	values(TO_DATE(replace(#{Date},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss'), #{empNo}, TO_DATE(replace(#{Date},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss'), null)
+
+	<insert id="startwork" parameterType="map">
+		insert into ATTENDANCE
+		values(TO_DATE(replace(#{Date},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss'), #{empNo},
+		TO_DATE(replace(#{Date},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss'), null)
 	</insert>
 
 	<update id="goHome" parameterType="map">
 		<![CDATA[
- 		update attendance 
+ 		update ATTENDANCE 
  		set GOHOME = to_date(replace(#{Date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss') 
 		where empNo =#{empNo} and (ATTEND between TO_DATE(replace(#{start},' 24:',' 00:'),'yyyy-mm-dd hh24:mi:ss') and to_date( replace(#{Date},' 24:',' 00:'), 'yyyy-mm-dd hh24:mi:ss')) 
- 		]]> 
+ 		]]>
 	</update>
-	
+
 	<select id="getListCount" resultType="_int">
-	select count(*)
-	from attendance
+		select count(*)
+		from ATTENDANCE
 	</select>
-	
+
 	<select id="selectList" resultMap="AttendanceResultSet">
-	select
-    ATT.ADATE,
-    TO_CHAR(ATT.ATTEND, 'YYYY-MM-DD HH:MI:SS') AS ATTEND,
-    TO_CHAR(ATT.GOHOME, 'YYYY-MM-DD HH:MI:SS') AS GOHOME,
-    SUBSTR(TO_CHAR(GOHOME - ATTEND, 'YYYY-MM-DD HH:MI:SS'), 12, 8) AS WORK_TIME, 
-    EMP.EMPNAME
-	FROM attendance ATT
-	JOIN employee EMP on EMP.empno=ATT.empno
-	order by ATT.attend desc
+		select
+		ATT.ADATE,
+		TO_CHAR(ATT.ATTEND, 'YYYY-MM-DD HH24:MI:SS') AS ATTEND,
+		TO_CHAR(ATT.GOHOME, 'YYYY-MM-DD HH24:MI:SS') AS GOHOME,
+		SUBSTR(TO_CHAR(GOHOME - ATTEND, 'YYYY-MM-DD HH24:MI:SS'), 12, 8) AS WORK_TIME,
+		EMP.EMPNAME
+		FROM ATTENDANCE ATT
+		JOIN EMPLOYEE EMP on EMP.EMPNO=ATT.EMPNO
+		order by ATT.ATTEND desc
 	</select>
-	
+
 	<resultMap type="Attendance" id="AttendanceResultSet">
 		<id column="ADATE" property="aDate"></id>
 		<result column="EMPNO" property="empNo"></result>
@@ -47,8 +48,4 @@
 		<result column="GOHOME" property="goHome"></result>
 		<result column="WORK_TIME" property="workTime"></result>
 	</resultMap>
-	
-	
-	
-	
 </mapper>
