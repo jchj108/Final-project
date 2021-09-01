@@ -32,5 +32,9 @@ public class MeetingDAO {
 		return (ArrayList)sqlSession.selectList("meetingMapper.rSelectDate", map);
 	}
 
+	public ArrayList<MeetingReservation> selectAllReservation(String empNo, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("meetingMapper.selectAllReservation", empNo);
+	}
+
 
 }

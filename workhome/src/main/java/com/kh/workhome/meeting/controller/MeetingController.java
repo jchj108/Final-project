@@ -38,6 +38,9 @@ public class MeetingController {
 	@Autowired
 	private MeetingService meService;
 	
+	@Autowired
+	private EmployeeService eService;
+	
 
 	// 회의 예약하기 페이지 호출
 	@RequestMapping("meetReserv.meet")
@@ -139,6 +142,50 @@ public class MeetingController {
 		}
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(result,response.getWriter());
+	}
+	
+	
+	@RequestMapping("rList.meet")
+	public ModelAndView rList(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		Employee loginEmp = ((Employee) request.getSession().getAttribute("loginUser"));
+		
+		System.out.println("loginEmp : " + loginEmp);
+		
+		ArrayList<MeetingReservation> list =  meService.selectAllReservation("%"+loginEmp.getEmpNo()+"%");
+		
+		System.out.println("list : " + list);
+		
+		ArrayList<MeetingReservation> mine = new ArrayList<>();// 내가 예약한 회의
+		ArrayList<MeetingReservation> join = new ArrayList<>();// 내가 참여할 회의 
+
+
+		for(MeetingReservation r : list) {
+			Employee e = new Employee();
+			e.setEmpNo(r.getEmpNo());
+			Employee getEmp = eService.selectEmp(e);
+			r.setEmpNo("("+getEmp.getEmpNo()+") " + getEmp.getEmpName()+" - "+getEmp.getDeptName());
+			
+//			System.out.println("getrDate : " + r.getrDate());
+			
+			String[] temp = r.getrDate().split(";");
+
+			r.setrDate(temp[0]);
+			r.setrTime(temp[1]);
+			
+			if(r.getEmpNo().contains(loginEmp.getEmpNo())){
+				mine.add(r);
+				System.out.println("내가 예약한 회의 : " + mine);
+			}else {
+				join.add(r);
+				System.out.println("내가 참여할 회의 : " + join);
+			}
+									
+		}
+		
+		mv.addObject("mine",mine);// 내가 예약한 회의
+		mv.addObject("join",join);// 내가 참여할 회의 
+		mv.setViewName("meetingReservationList");
+		return mv;
 	}
 	
 }

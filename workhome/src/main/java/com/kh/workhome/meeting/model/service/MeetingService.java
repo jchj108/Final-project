@@ -18,4 +18,6 @@ public interface MeetingService {
 
 	ArrayList<String> rSelectDate(HashMap<String, Object> map);
 
+	ArrayList<MeetingReservation> selectAllReservation(String empNo);
+
 }
