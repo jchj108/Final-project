@@ -20,4 +20,6 @@ public interface MeetingService {
 
 	ArrayList<MeetingReservation> selectAllReservation(String empNo);
 
+	int rCancle(MeetingReservation r);
+
 }

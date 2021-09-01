@@ -36,5 +36,9 @@ public class MeetingDAO {
 		return (ArrayList)sqlSession.selectList("meetingMapper.selectAllReservation", empNo);
 	}
 
+	public int rCancle(MeetingReservation r, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("meetingMapper.rCancle", r);
+	}
+
 
 }

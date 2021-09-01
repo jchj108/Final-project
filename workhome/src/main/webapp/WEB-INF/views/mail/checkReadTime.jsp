@@ -121,7 +121,7 @@ td {
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>보낸메일함</h1>
+							<h1>수신확인</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -146,7 +146,7 @@ td {
 						<div class="col-md-9">
 							<div class="card card-primary card-outline">
 								<div class="card-header">
-									<h3 class="card-title">보낸메일함</h3>
+									<h3 class="card-title">수신확인</h3>
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm">

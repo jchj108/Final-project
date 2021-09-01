@@ -183,6 +183,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="${contextPath }/favoriteslist.mail" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>즐겨찾기</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="${contextPath }/deletelist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>휴지통</p>

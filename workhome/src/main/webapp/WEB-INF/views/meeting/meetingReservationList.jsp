@@ -53,21 +53,7 @@
 		background: lightgray;
 		border: 2px solid rgb(150,150,150);
 	}
-	.fc-day:hover{
-		background: lightblue;
-	}
-	#joinEmp{
-		display:inline-block;
-		border: none;
-		margin: 5px;
-		padding: 5px;
-		clear: both;
-		width: 30%;		
-	}
-	#joinEmp:focus{
-	outline: none;
-	}
-	
+
 	.calssArea{
 		zoom: 0.9;
 		float:left;
@@ -90,7 +76,6 @@
 	.buttonArea{
 		text-align: center;
 		margin-top: 2rem;
-		margin-bottom: 2rem;
 	}
 	.notFcards{
 		display:inline-block;
@@ -135,6 +120,9 @@
 		zoom: 1.3;
 	}
 	
+	.fc-title{
+		cursor: pointer;
+	}
 
 </style>
 
@@ -171,6 +159,8 @@
 </div>
 
 
+
+
 	<div class="wrapper">
 		<!-- header -->
 		<jsp:include page="../common/header.jsp"></jsp:include>
@@ -188,7 +178,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-8">
-							<h1>회의실 예약</h1>
+							<h1>예약 현황</h1>
 						</div>
 						<div class="col-sm-4"></div>
 					</div>
@@ -210,7 +200,7 @@
 								<!-- 회의실 예약 바 -->
 								<div class="card card-primary">
 									<div class="card-header">
-										<h3 class="card-title">회의실 예약</h3>
+										<h3 class="card-title">예약 현황</h3>
 
 										<div class="card-tools">
 											<button type="button" class="btn btn-tool"
@@ -222,61 +212,41 @@
 									</div>
 									<div class="card-body">
 
+			                			<input type="hidden" id="id">
+			                			<input type="hidden" id="joinEmp_hidden">
 
-
-
-										<div class="form-group">
-											<label for="inputName">회의실 선택</label><br>
-											<div class="form-group">
-												<select class="form-control" id="roomSelect">
-													<option value="" disabled selected hidden>회의실을 선택해 주세요</option>
-													<option value="ROOM01">중앙 회의실</option>
-													<option value="ROOM02">회의실 A</option>
-													<option value="ROOM03">회의실 B</option>
-													<option value="ROOM04">회의실 C</option>
-													<option value="ROOM05">회의실 D</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label for="inputName">선택 날짜</label><br> <span
-												class="dateResult"
-											></span>
-										</div>
-
-										<div class="form-group">
-											<label for="inputName">예약 가능 시간</label>
-											<div id="timearea" style="margin: auto; min-height: 2rem;">
-												회의실 및 날짜를 선택해 주세요.</div>
-
-											<!-- 시간 -->
-
-										</div>
 										<div class="form-group">
 											<label for="inputName">회의 제목</label>
-											<input type="text" id="mTitle" class="form-control"
-												placeholder="회의 제목을 입력하세요."
-											>
+											<input type="text" id="mTitle" class="form-control" readonly>
 										</div>
-										<div class="form-group">
-											<label for="inputDescription">회의 상세 설명</label>
-											<textarea id="mContent" class="form-control" rows="4"
-												placeholder="회의  상세 설명을 입력하세요."
-											></textarea>
-										</div>
-										<div class="form-group">
-											<label for="inputClientCompany">총 참여 사원</label>
-											<input class="inputModal" type="text" id="joinEmp"
-												placeholder="참가인 추가"
-											>
-											<div class="extraArea"></div>
 
-											<button type="button"
-												class="btn btn-block btn-primary reserv-button" id="commit"
-											>예약하기</button>
-
+										<div class="form-group">
+											<label for="inputName">회의 일시</label>
+											<input type="text" id="rDate" class="form-control" readonly>
 										</div>
+
+										<div class="form-group">
+											<label for="inputName">회의실</label>
+											<input type="text" id="mName" class="form-control" readonly>
+										</div>
+										
+										<div class="form-group">
+											<label for="inputName">신청자</label>
+											<input type="text" id="empNo" class="form-control" readonly>
+										</div>
+										
+										<div class="form-group">
+											<label for="inputDescription">회의 상세 내용</label>
+											<textarea id="mContent" class="form-control" rows="4" readonly></textarea>
+										</div>
+										
+										<div class="form-group">
+											<label for="inputDescription">참여자</label>
+											<textarea id="joinEmp" class="form-control" rows="4" readonly></textarea>
+										</div>
+																				
+										<div class="form-group buttonArea"></div>
+										
 									</div>
 									<!-- /.card-body -->
 								</div>
@@ -335,320 +305,192 @@
 
 
 
-	<!-- 회의실 선택 -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#roomSelect").val("");
-		});
 
-		$("#roomSelect").change(function() {
-			mNo = $("#roomSelect option:selected").val();
-			$(".fc-today-button").trigger('click');
-
-			SelectTime = "";
-
-			console.log("mNo : " + mNo);
-
-			if (date != "") {
-				rSelectDateFun(date);
-			}
-		});
-	</script>
-
-
-	<!-- 캘린더로 날짜 선택 -->
+	<!-- 캘린더로 날짜 선택 후 예약 내역 불러오기 -->
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			var calendarEl = document.getElementById('calendar');
-			var today = new Date();
-			var firstDayOfMonth = new Date(today.getFullYear(), today
-					.getMonth(), 1);
-			var lastMonth = new Date(firstDayOfMonth.setDate(firstDayOfMonth
-					.getDate() - 1));
-			var yesterDate = today.getTime() - (1 * 24 * 60 * 60 * 1000);
-
-//			console.log("firstDayOfMonth" + firstDayOfMonth);
-//			console.log("lastMonth" + lastMonth);
-//			console.log("today" + today);
-
-			var calendar = new FullCalendar.Calendar(calendarEl, {
-				plugins : [ 'interaction', 'dayGrid' ],
-				defaultDate : today,
-				editable : false,
-				eventLimit : true,
-				dateClick : function(info) {
-
-					//날짜 받아옴!
-					if (yesterDate > info.date) {
-						//						alert("이미 지난 날짜는 선택할 수 없습니다.");
-						$('.modal-body').text("이미 지난 날짜는 선택 불가능합니다.");
-						$('#exampleModal').modal('show');
-					} else {
-						date = info.dateStr;
-						$(".fc-day").css('background', 'none');
-						info.dayEl.style.backgroundColor = '#B2EBF4';
-						//			            console.log(info.dateStr);
-						$(".dateResult").text(info.dateStr);
-						
-						if(mNo != "") {
-							rSelectDateFun(date);
-							SelectTime = "";														
-						}
-						
-
-					}
-				}
-			});
-
-			calendar.render();
-		});
-	</script>
-
-
-	<!-- 시간 선택 -->
-	<script>
-		function rSelectDateFun(date){
-			$.ajax({
-				url:"rSelectDate.meet",
-				data:{date:date, mNo:mNo},
-				dataType:"json",
-				success:function(data) {
-					savedTime = data;
+  	 document.addEventListener('DOMContentLoaded', function() {
+    		var today = new Date();
+    	  var calendarEl = document.getElementById('calendar');
+        	var calendar = new FullCalendar.Calendar(calendarEl, {
+		        plugins: [ 'interaction', 'dayGrid' ],
+		        defaultDate: today,
+		        editable: false,
+		        views: {
+		            dayGrid: {
+		               eventLimit: 3
+		            }
+		         },
+		        eventLimit: true,// allow "more" link when too many events
+		        dateClick: function(info) {
+		            /* alert('Clicked on: ' + info.dateStr); */
+		          },
+	          eventClick: function(info) {
+//	        	 	 $(".hidearea").hide();
+//	        	  	$(".hidearea").fadeIn(1000);
+					var id = info.event.id;
+					var temp = id.split(";");
+					var rDate = temp[0];
+					var rTime = temp[1];
+					var mNo = temp[2];
 					
-					console.log(savedTime);
+					var input_mTitle = "";
+					var input_rDate ="날짜 : " + rDate+ " " + "/ 시간 : "+rTime+"시";
+					var input_mName ="";
+					var input_empNo="";
+					var input_mContent="";
+					var input_joinEmp="";
 					
-					var $timearea = $("#timearea");
-					$timearea.html("");
-					for(var i = 10 ; i < 19 ; i++) {
-						if(savedTime.includes(i)) {
-							console.log("if문 진입 O : 포함된 시간이 있다");
-							var $div1 = $('<button type="button" class="btn btn-danger btn-sm closed-time" style="margin:3px;">'); // 빨간 카드
-						} else {
-							console.log("if문 진입 X : 포함된 시간이 없다");
-							var $div1 = $('<button type="button" class="btn btn-default btn-sm open-time" style="margin:3px;">'); // 기본 카드
-						}
-						var $span = $('<span class="time">').text(i);
-						var $span2 = $('<span>').text("시");
-						
-						$div1.append($span);
-						$timearea.append($div1);
-					}
-				}
-			});
-		}
-	</script>
-
-	
-	<script>	
-		$(document).on('click', ".open-time", function() {
-			var time=$(this).find(".time").text();
-			console.log("time : " + time);
-			SelectTime += time+",";
-			console.log("SelectTime : " + SelectTime);
-			
-			$(this).attr("class", "btn btn-primary btn-sm select-time");
-		});
-		
-		$(document).on('click', ".select-time", function(){
-			$(this).attr("class", "btn btn-default btn-sm open-time");
-			var time = $(this).find(".time").text();
-			var array = SelectTime.split(",");
-			console.log("선택 해제 후 time : " + time);
-			console.log("array : " + array);
-			
-			SelectTime = "";
-			
-			for(var i in array) {
-				if(array[i] == time) {
-					array[i] = "";
-				} else {
-					array[i] += ",";
-				}
-				SelectTime += array[i];
-			}
-			
-			SelectTime = SelectTime.substr(0,SelectTime.length-1);
-			console.log("최종 SelectTime : " + SelectTime);
-			
-		});
-		
-		$(document).on('click', ".closed-time", function() {
-			 $('.modal-body').text("마감된 시간입니다. 다른 시간을 선택해 주세요.");
-			 $('#exampleModal').modal('show');		
-		})	
-	</script>
-
-
-
-
-	<!-- 참가인 추가 -->
-	<script type="text/javascript">
-		$(document).on('keyup','#joinEmp',function(){
-				var search = $(this).val();
-				$.ajax({
-				url:"searchEmpList.meet",
-				data:{search:search},
-				dataType:"json",
-				success : function(data){
-					var list = [];
-					if(data.length > 0){
-						for(var i in data){
-							var inputText = decodeURIComponent(data[i].replace(/\+/g," "));
-							if(!joinEmp.includes(inputText)){
-								list.push(inputText);
-								console.log("list : " + list);
-							}
-						}
-						$("#joinEmp").autocomplete({
-							source:list,
-							select: function(event, ui) {
-//								console.log(ui.item);
-								/* $(this).attr('readonly',true); */
-								addFun(ui.item.value);
-								return false;
-					        },
-					        focus: function(event, ui) {
-					            return false;
-					        }
-						});
-					}
-				}
-			});
-	});
-		
-
-		function addFun(value) {
-			var $div = $(".extraArea");
-			var $span = $("<span class='calssArea'>").text(value);
-			if (joinEmp.includes(value)) {
-				alert("이미 추가한 사원입니다.");
-			} else {
-				joinEmp += value + ";";
-				$div.append($span);
-			}
-			$("#joinEmp").val("");
-		}
-
-		$(document).on('click', '.calssArea', function() {
-			var text = $(this).text();
-			if (confirm(text + " 사원을 정말로 삭제하시겠습니까?")) {
-				$(this).fadeOut(500);
-				var array = joinEmp.split(";");
-				joinEmp = "";
-				for ( var i in array) {
-					if (array[i] == text) {
-						array[i] = "";
-					} else {
-						array[i] += ";";
-					}
-					joinEmp += array[i];
-				}
-				joinEmp = joinEmp.substr(0, joinEmp.length - 1);
-				console.log(joinEmp);
-			}
-		});
-	</script>
-
-
-
-
-<!-- 예약 확인 -->
-	<script type="text/javascript">
-		$(document).on('click','#commit',function() {
-					var mTitle = $("#mTitle").val();
-					var mContent = $("#mContent").val();
-					var date = $(".dateResult").text();
-					var room = $("#roomSelect").val();
-					var count = false;
-					var empName = "${loginUser.empName}";
-
-					if (mNo == "") {
-						//						  						alert("날짜를 선택해 주세요.");
-						$('.modal-body').text("회의실을 선택해 주세요.");
-						$('#exampleModal').modal('show');
-						return;
-					}
-
-					if (date == "") {
-						//						  						alert("날짜를 선택해 주세요.");
-						$('.modal-body').text("날짜를 선택해 주세요.");
-						$('#exampleModal').modal('show');
-						return;
-					}
-
-					if (SelectTime == "") {
-						$('.modal-body').text("시간을 선택해 주세요.");
-						$('#exampleModal').modal('show');
-						return;
-					}
-
-					if (mTitle == "") {
-						$('.modal-body').text("회의 제목을 입력해 주세요.");
-						$('#exampleModal').modal('show');
-						$("#mTitle").focus();
-						return;
-					}
-					if (mContent == "") {
-						$('.modal-body').text("회의 상세 설명을 입력해 주세요.");
-						$('#exampleModal').modal('show');
-						$("#mContent").focus();
-						return;
-					}
-					if (joinEmp != "") {
-						var array = joinEmp.match(/;/g);
-						count = array.length >= 1 ? true : false;
-					}
-					if (!count) {
-						$('.modal-body').text("참가인을 한 명 이상 등록해 주세요.");
-						$('#exampleModal').modal('show');
-						$("#joinEmp").focus();
-						return;
-					}
-
-					SelectTime = SelectTime.substr(0, SelectTime.length - 1);
-
-					if (confirm("날짜 : " + date + "\n시간 : " + SelectTime
-							+ "\n제목 : \'" + mTitle + "\n참가인 : \'" + joinEmp
-							+ "\n회의 등록인 : \'" + empName + "\'\n예약이 맞습니까?")) {
-
-						var rDate = date + ";" + SelectTime;
-						var empNo = "${loginUser.empNo}";
-
-						console.log("rDate : " + rDate);
-
-						$.ajax({
-							url : "reInsert.meet",
-							data : {
-								rDate : rDate,
-								joinEmp : joinEmp,
-								mTitle : mTitle,
-								mContent : mContent,
-								empNo : empNo,
-								mNo : mNo
-							},
-							type : "post",
-							success : function(data) {
-								if (data == "success") {
-									$('.modal-body').text("성공적으로 예약하였습니다.");
-									$('#exampleModal').modal('show');
-
-								} else {
-									console.log(date, mTitle, joinEmp);
-									$('.modal-body').text("예약에 실패하였습니다.");
-									$('#exampleModal').modal('show');
+					<c:forEach var="i" items="${mine}">
+						var temp = "${i.rDate}";
+						if(rDate==temp){
+							temp="${i.rTime}"
+							if(temp==rTime){
+								temp="${i.mNo}"
+								if(mNo==temp){
+									input_mTitle = "${i.mTitle}";
+			        	    		input_mName = "${i.mName}";
+			        	    		input_mContent = "${i.mContent}";
+			        	    		input_joinEmp = "${i.joinEmp}";
+			        	    		input_empNo="${i.empNo}";
 								}
 							}
-						});
-
-					} else {
-						SelectTime += ",";
-						$('.modal-body').text("예약을 취소하였습니다.");
-						$('#exampleModal').modal('show');
+						}
+						
+					</c:forEach>
+					<c:forEach var="i" items="${join}">
+					var temp = "${i.rDate}";
+					if(rDate==temp){
+						temp="${i.rTime}"
+						if(temp==rTime){
+							temp="${i.mNo}"
+							if(mNo==temp){
+								input_mTitle = "${i.mTitle}";
+		        	    		input_mName = "${i.mName}";
+		        	    		input_mContent = "${i.mContent}";
+		        	    		input_joinEmp = "${i.joinEmp}";
+		        	    		input_empNo="${i.empNo}";
+							}
+						}
 					}
-
-				})
+					
+				</c:forEach>
+					$("#joinEmp_hidden").val(input_joinEmp);
+					input_joinEmp = input_joinEmp.replace(/;/gi,"\n")
+					$("#mTitle").val(input_mTitle);
+					$("#rDate").val(input_rDate);
+					$("#mName").val(input_mName);
+					$("#mContent").val(input_mContent);
+					$("#joinEmp").val(input_joinEmp);
+					$("#empNo").val(input_empNo);
+					$("#id").val(id);
+	        	    
+	        	    var $button = $("<button class='btn btn-primary updateBtn'>");
+	        	    if(input_empNo.includes("${loginUser.empNo}")){
+	        	    	$button.text("예약 취소");
+	        	    }else{
+	        	    	$button.text("불참 신청");
+	        	    }
+	        	    $(".buttonArea").html("");
+	        	    $(".buttonArea").append($button);
+	        	  }
+		      });
+         <c:forEach var ='i' items='${mine}'>
+        		calendar.addEvent({'id':'${i.rDate};${i.rTime};${i.mNo}',
+        							'title': '${i.mTitle}',
+        							'start':'${i.rDate}',
+        							'color':'#FAED7D',
+        							'textColor':'black'
+        							});
+    		</c:forEach>
+    		<c:forEach var ='i' items='${join}'>
+    		calendar.addEvent({'id':'${i.rDate};${i.rTime};${i.mNo}',
+    							'title': '${i.mTitle}',
+    							'start':'${i.rDate}',
+    							'color':'#4ABFD3',
+    							'textColor':'white'
+    							});
+			</c:forEach>
+        	calendar.render();
+        	
+    	 });
+    	 
 	</script>
 
+
+	<!-- 예약 취소 또는 불참 신청 -->
+	<script type="text/javascript">
+		$(document).on('click', '.updateBtn', function() {
+			var text = $(this).text();
+			var id = $("#id").val();
+			var rStatus = "Y";
+			var joinEmp = $("#joinEmp_hidden").val();
+			
+			console.log("id :" + id);
+			console.log("joinEmp : " + joinEmp);
+
+			if (text == "예약 취소") {
+				if (confirm("'" + $("#mTitle").val() + "'를 정말로 취소하시겠습니까?")) {
+					rStatus = "N";
+
+					updateRes(id, rStatus, joinEmp);
+				}
+			} else if (text == "불참 신청") {
+				if (confirm("'" + $("#mTitle").val() + "'에 정말로 불참하시겠습니까?")) {
+					joinEmp = joinEmp.substring(0, joinEmp.length - 1);
+					var myEmpno = "${loginUser.empNo}";
+					var result = joinEmp.match(/;/g);
+					if (result < 2) {
+						 $('.modal-body').text("불가능합니다. 참여자는 1명 이상이어야 합니다.");
+						 $('#exampleModal').modal('show');	
+						return;
+					}
+					var temp = joinEmp.split(";");
+					joinEmp = "";
+					for ( var i in temp) {
+						if (!temp[i].includes(myEmpno)) {
+							joinEmp += temp[i] + ";";
+						}
+					}
+					updateRes(id, rStatus, joinEmp);
+				}
+			}
+		});
+
+		function updateRes(id, rStatus, joinEmp) {
+			$.ajax({
+				url : "rCancle.meet",
+				data : {
+					id : id,
+					rStatus : rStatus,
+					joinEmp : joinEmp
+				},
+				type : "post",
+				success : function(data) {
+						
+					var time = 3;
+						
+					if(!time == '0') {
+							
+						setInterval(function() {
+							 $('.modal-body').text("성공적으로 취소하였습니다. (" + time + "초 후 자동으로 닫힙니다.)");
+							 $('#exampleModal').modal('show');
+								 
+							 time--;
+							 console.log(time);
+								 
+							 if(time == '0') {
+								 location.href = "rList.meet";
+							 }											 
+						}, 1000);
+							
+					} else{
+						location.href = "rList.meet";										
+					}						 
+					 
+				}
+			});
+		}
+	</script>
 
 </body>
 </html>
