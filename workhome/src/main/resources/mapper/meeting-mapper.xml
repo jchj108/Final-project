@@ -24,6 +24,12 @@
 		from RESERVATION
 		where (RDATE like #{date} and mNo = #{mNo})and RSTATUS='Y'
 	</select>
+	
+	<select id="selectAllReservation" parameterType="string" resultType="MeetingReservation">
+		select *
+		from RESERVATION JOIN MEETINGROOM USING (MNO)
+		where (EMPNO like #{empNo} or JOINEMP like #{empNo})and RSTATUS='Y'
+	</select>
 
 	<resultMap type="MeetingReservation" id="meetingResultSet">
 		<id column="MNO" property="mNo" />

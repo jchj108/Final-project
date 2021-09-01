@@ -631,6 +631,8 @@
 								if (data == "success") {
 									$('.modal-body').text("성공적으로 예약하였습니다.");
 									$('#exampleModal').modal('show');
+									
+									location.href="rList.meet";
 
 								} else {
 									console.log(date, mTitle, joinEmp);

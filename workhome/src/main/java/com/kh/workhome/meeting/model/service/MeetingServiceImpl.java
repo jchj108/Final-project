@@ -42,8 +42,12 @@ public class MeetingServiceImpl implements MeetingService {
 
 	@Override
 	public ArrayList<String> rSelectDate(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		return meDAO.rSelectDate(map, sqlSession);
+	}
+
+	@Override
+	public ArrayList<MeetingReservation> selectAllReservation(String empNo) {
+		return meDAO.selectAllReservation(empNo, sqlSession);
 	}
 
 }

@@ -219,7 +219,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="rList.meet" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>예약 내역</p>
                 </a>
