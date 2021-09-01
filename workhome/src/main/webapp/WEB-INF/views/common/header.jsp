@@ -107,14 +107,13 @@
   <!-- /.navbar -->
 
 <script>
-
 /******************** 알림 *******************/
 	$(function() {
 		alertList();
 	
-// 		setInterval(function() {
-// 			alertList();
-// 		}, 10000);
+		setInterval(function() {
+			alertList();
+		}, 10000);
 	});
 	
 	function alertList() {
@@ -130,7 +129,6 @@
 				var mCount = 0;
 
 				for(var i in data){
-				console.log(data[i].DOCNO);
 				var $area;
 				var $a = $('<a class="dropdown-item d-flex align-items-center oneAlert" style="clear: both;">');
 				var $input = $('<input type="hidden" class="link">');
@@ -145,7 +143,7 @@
 					$input1.val(data[i].ALERTNO);
 					if(data[i].ATYPE == "mail"){
 						$area = $(".mailA_area");
-						$input.val("inbox.mail?mailNo="+data[i].DOCNO);
+						$input.val("readmail.mail?mId="+data[i].DOCNO);
 						$i = '<i class="fas fa-envelope"></i>';
 						mCount++;
 					}else if(data[i].ATYPE != "mail"){

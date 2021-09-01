@@ -81,7 +81,6 @@ li {
 					var hEmp = "";
 					var gEmp = "";
 					var cEmp = "";
-					var sEmp = "";
 					var tEmp = "";
 				</script>
 					<br>
@@ -111,37 +110,34 @@ li {
 											<c:forEach var="dl" items="${deptlist}">  
 												<c:set var="dDeptNo" value="${dl.deptNo}" />
 												<% int i = 0; %>
-												<tr> 
-													<!-- 부서명  -->
-													<td><b>${dl.deptName}</b></td>   
-													
-													<!-- 팀명  -->
 													<c:forEach var="tl" items="${teamlist}">
 														<c:set var="tDeptNo" value="${tl.deptNo}" />
 														<c:if test="${fn:startsWith(tDeptNo,dDeptNo)}">
 															<c:choose>
 																<c:when test="<%= i == 0 %>">
-																	<td>
-																		<a class="getEmp">
-																			<input type="hidden" class="tDeptNo" value="${tDeptNo}"> ${tl.deptName}( ${tDeptNo} )
-																		</a>
-																	</td>
+																	<tr> 
+																		<td><b>${dl.deptName}</b></td>   
+																		<td>
+																			<a class="getEmp">
+																				<input type="hidden" class="tDeptNo" value="${tDeptNo}"> ${tl.deptName}( ${tDeptNo} )
+																			</a>
+																		</td>
+																	</tr>
 																</c:when>
 																<c:otherwise>
-																	</tr>
 																	<tr>
-																	<td></td>
-																	<td>
-																		<a class="getEmp">
-																			<input type="hidden" class="tDeptNo" value="${tDeptNo}"> ${tl.deptName}( ${tDeptNo} )
-																		</a>
-																	</td>
+																		<td></td>
+																		<td>
+																			<a class="getEmp">
+																				<input type="hidden" class="tDeptNo" value="${tDeptNo}"> ${tl.deptName}( ${tDeptNo} )
+																			</a>
+																		</td>
+																	</tr> 
 																</c:otherwise>
 															</c:choose>
 															<% i++; %>
 														</c:if>
 													</c:forEach>
-												</tr> 
 											</c:forEach>
 										</tbody>
 									</table>
@@ -158,10 +154,9 @@ li {
 							success:function(data){
 								$tableBody = $('#empList tbody');
 								$tableBody.html('');
-								
 								if(data==""){
 									var $tr = $('<tr>');
-									var $td = $('<td colspan="3">').text("아직 사원이 없네요!");
+									var $td = $('<td colspan="3">').text("사원이 존재하지 않습니다");
 									
 									$tr.append($td);
 									$tableBody.append($tr);
@@ -169,7 +164,6 @@ li {
 								
 								for(var i in data){
 									if(!tEmp.includes(data[i].empNo) && (data[i].empNo!="${loginUser.empNo}")){
-										console.log(data[i].empNo);
 										var $tr = $('<tr class="selectTr" style="cursor:pointer">');
 										var $deptName = $('<td>').text("(" + data[i].deptNo+") "+decodeURIComponent(data[i].deptName.replace(/\+/g, " ")) );
 										var $empPosition = $('<td>').text("lv." + data[i].empPosition);
@@ -247,33 +241,25 @@ li {
 					                    </span>
 					                    <span class="text" style="color: white;">참조</span>
 					                  </a>
-<!-- 					                  <a style="cursor: pointer;" class="btn btn-secondary btn-icon-split" id="s"> -->
-<!-- 					                    <span class="icon text-white-50"> -->
-<!-- 					                      <i class="fa fa-arrow-down"></i> -->
-<!-- 					                    </span> -->
-<!-- 					                    <span class="text" style="color: white;">시행</span> -->
-<!-- 					                  </a> -->
 				                  </div>
 				                  
-				                  
-				                  
 				                  <script type="text/javascript">
-				                  //합의-list에 추가
-						              	$(document).on('click','#h',function(){
+				                    //합의-list에 추가
+						          	$(document).on('click','#h',function(){
 						              		addList('realH','#hlist');
-										});
+									});
 				                  
-				                //list 클릭시 클래스 추가
+				                	//list 클릭시 클래스 추가
 				                	$(document).on('click','.realH',function(){
 				                		addbgClass(this);
 									});
 				                  
-								//list 더블클릭시 제거
+									//list 더블클릭시 제거
 									$(document).on('dblclick','.realH',function(){
 										removeLi(this,hEmp);
 									});
 								
-								//결재
+									//결재
 									$(document).on('click','#g',function(){
 										addList('realG','#glist');
 									});
@@ -288,11 +274,11 @@ li {
 										
 									});
 								
-								//참조
+									//참조
 									$(document).on('click','#c',function(){
 										addList('realC','#clist');
 									});
-								 //list 클릭시 클래스 추가
+									 //list 클릭시 클래스 추가
 				                	$(document).on('click','.realC',function(){
 				                		addbgClass(this);
 									});
@@ -302,21 +288,6 @@ li {
 										removeLi(this,cEmp);
 										
 									});
-				                	
-				                	
-// 									//시행
-// 									$(document).on('click','#s',function(){
-// 										addList('realS','#slist');
-// 									});
-// 								 	//list 클릭시 클래스 추가
-// 				                	$(document).on('click','.realS',function(){
-// 				                		addbgClass(this);
-// 									});
-// 				                	//list 더블클릭시 제거
-// 									$(document).on('dblclick','.realS',function(){
-// 										removeLi(this,sEmp);
-// 									});
-										
 				                	
 				                	//지정 list 에 append 하는 function
 				                	function addList(realClass,listId){
@@ -341,9 +312,7 @@ li {
 						              		$li.append($input3);
 						              		$ul.append($li);
 						              		
-						              		if(listId == '#slist'){
-						              			sEmp += empNo +', ';
-						              		}else if(listId == '#hlist'){
+						              		if(listId == '#hlist'){
 						              			hEmp += empNo +', ';
 						              		}else if(listId == '#clist'){
 						              			cEmp += empNo +', ';
@@ -353,6 +322,7 @@ li {
 						              		
 						              		tEmp += empNo +', ';
 				                		}
+				                		console.log(tEmp);
 				                	}
 				                	
 				                	//클래스 추가하는function
@@ -388,11 +358,7 @@ li {
 										}else if(class_name.includes('realC')){
 											cEmp = empV;
 											console.log(cEmp);
-										}else if(class_name.includes('realS')){
-											sEmp = empV;
-											console.log(sEmp);
 										}
-										
 										
 										array = tEmp.split(', ');
 										tEmp="";
@@ -443,9 +409,6 @@ li {
 								<ul class="empList" id="clist" style="text-align: center;">
 									<li style="margin-top:5px;margin-bottom:5px"><h5>참조자</h5></li>
 								</ul>
-<!-- 								<ul class="empList" id="slist" style="text-align: center;"> -->
-<!-- 									<li style="margin-top:5px;margin-bottom:5px"><h5>시행자</h5></li> -->
-<!-- 								</ul> -->
 							</div>
 							<div class="row">
 								<div style="display: inline-block; margin : 5rem; margin-left: auto; margin-right: auto;">
@@ -476,14 +439,12 @@ li {
 				var $input1 =$('<input name="hEmp" type="hidden">').val(hEmp);
 				var $input2 =$('<input name="gEmp" type="hidden">').val(gEmp);
 				var $input3 =$('<input name="cEmp" type="hidden">').val(cEmp);
-				var $input4 =$('<input name="sEmp" type="hidden">').val(sEmp);
-				var $input5 =$('<input name="tag" type="hidden">').val(tag);
+				var $input4 =$('<input name="tag" type="hidden">').val(tag);
 				
 				$hiddenform.append($input1);
 				$hiddenform.append($input2);
 				$hiddenform.append($input3);
 				$hiddenform.append($input4);
-				$hiddenform.append($input5);
 				
 				$('#hiddenform').submit();
 				

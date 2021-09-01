@@ -2,15 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="meetingMapper">
 
+	<select id="selectRoom" resultType="map">
+		select *
+		from meetingRoom
+	</select>
+	
+	<select id="searchEmpList" parameterType="string" resultType="Employee">
+		select *
+		from EMPLOYEE
+		JOIN DEPARTMENT USING (DEPTNO)
+		where EMPSTATUS!='N' AND (EMPNO LIKE #{string} or EMPNAME LIKE #{string} or EMPNAME LIKE #{string})
+	</select>
+
+	<insert id="reInsert" parameterType="MeetingReservation">
+		insert into RESERVATION
+		values(#{mNo}, #{joinEmp}, #{mTitle}, #{mContent}, 'Y', null, #{rDate}, #{empNo})
+	</insert>
+
+	<select id="rSelectDate" parameterType="map" resultType="string">
+		select RDATE
+		from RESERVATION
+		where (RDATE like #{date} and mNo = #{mNo})and RSTATUS='Y'
+	</select>
+	
+	<select id="selectAllReservation" parameterType="string" resultType="MeetingReservation">
+		select *
+		from RESERVATION JOIN MEETINGROOM USING (MNO)
+		where (EMPNO like #{empNo} or JOINEMP like #{empNo})and RSTATUS='Y'
+	</select>
+
 	<resultMap type="MeetingReservation" id="meetingResultSet">
 		<id column="MNO" property="mNo" />
-		<result column="STARTTIME" property="startTime" />
 		<result column="JOINEMP" property="joinEmp" />
 		<result column="MTITLE" property="mTitle" />
 		<result column="MCONTENT" property="mContent" />
 		<result column="RSTATUS" property="rStatus" />
+		<result column="RTIME" property="rTime" />
+		<result column="RDATE" property="rDate" />		
 		<result column="EMPNO" property="empNo" />
-		<result column="ENDTIME" property="endTime" />
 	</resultMap>
 	
+	<resultMap type="Employee" id="employeeResultSet">
+		<id column="EMPNO" property="empNo"/>
+		<result column="EMPNAME" property="empName"/>
+		<result column="EMPPOSITION" property="empPosition"/>
+		<result column="JOINDATE" property="joinDate"/>
+		<result column="PHONE" property="phone"/>
+		<result column="EMPPHONE" property="empPhone"/>
+		<result column="EMAIL" property="email"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="EMPSTATUS" property="empStatus"/>
+		<result column="EMPAUTO" property="empAuto"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="DEPTNO" property="deptNo"/>
+		<result column="EMPID" property="empId"/>
+	</resultMap>
+	
+	<resultMap type="Department" id="departmentResultSet">
+		<id column="DEPTNO" property="deptNo"/>
+		<result column="DEPTNAME" property="deptName"/>
+	</resultMap>
+		
 </mapper>

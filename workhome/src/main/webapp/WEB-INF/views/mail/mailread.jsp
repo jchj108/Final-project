@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -20,10 +22,15 @@
 	href="${contextPath}/resources/dist/css/adminlte.min.css">
 
 <style>
-.mailbox-read-message {
-	min-height: 200px;
+.mailSR-info {
+	font-size: 14px;
+	color: gray;
+/* 	vertical-align: middle; */
 }
 
+#favorites-icon {
+	font-size: 14px;
+}
 
 .mail-icon {
 	width: 20px;
@@ -51,11 +58,11 @@
 }
 
 .table td:nth-child(2) {
-	width: 10%;
+	width: 8%;
 }
 
 .table td:nth-child(3) {
-	width: 20%;
+	width: 18%;
 }
 
 .table td:nth-child(4) {
@@ -93,8 +100,13 @@ td {
 	margin-bottom: 10px;
 }
 
-.table-hover tbody tr:hover {
-	
+.mailNo-hidden {
+	display: none;
+	width: 0px;
+}
+
+.mailbox-read-message {
+	min-height: 500px;
 }
 </style>
 
@@ -129,76 +141,7 @@ td {
 			<section class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-3">
-							<a href="mailbox.html" class="btn btn-primary btn-block mb-3">메일함으로
-								돌아가기</a>
-
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">폴더</h3>
-
-									<div class="card-tools">
-										<button type="button" class="btn btn-tool"
-											data-card-widget="collapse">
-											<i class="fas fa-minus"></i>
-										</button>
-									</div>
-								</div>
-								<div class="card-body p-0">
-									<ul class="nav nav-pills flex-column">
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="fas fa-envelope mail-icon"></i> 전체메일
-										</a></li>
-										<li class="nav-item active"><a
-											href="${contextPath }/receivelist.mail" class="nav-link">
-												<i class="far fa-envelope-open mail-icon"></i> 받은메일함
-												<span class="badge bg-primary float-right">12</span>
-										</a></li>
-										<li class="nav-item"><a
-											href="${contextPath }/sendlist.mail" class="nav-link"> <i
-												class="far fa-paper-plane mail-icon"></i> 보낸메일함
-										</a></li>
-										<li class="nav-item"><a
-											href="${contextPath}/templist.mail" class="nav-link"><i
-												class="far fa-file-alt mail-icon"></i> 임시보관함 </a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="fas fa-filter mail-icon"></i> 스팸메일함 <span
-												class="badge bg-warning float-right mail-icon">65</span>
-										</a></li>
-										<li class="nav-item"><a href="#" class="nav-link"> <i
-												class="far fa-trash-alt mail-icon"></i> 휴지통
-										</a></li>
-									</ul>
-								</div>
-								<!-- /.card-body -->
-							</div>
-							<!-- /.card -->
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title">긴급도</h3>
-
-									<div class="card-tools">
-										<button type="button" class="btn btn-tool"
-											data-card-widget="collapse">
-											<i class="fas fa-minus"></i>
-										</button>
-									</div>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body p-0">
-									<ul class="nav nav-pills flex-column">
-										<li class="nav-item"><a class="nav-link" href="#"><i
-												class="far fa-circle text-danger"></i> Important</a></li>
-										<li class="nav-item"><a class="nav-link" href="#"><i
-												class="far fa-circle text-warning"></i> Promotions</a></li>
-										<li class="nav-item"><a class="nav-link" href="#"><i
-												class="far fa-circle text-primary"></i> Social</a></li>
-									</ul>
-								</div>
-								<!-- /.card-body -->
-							</div>
-							<!-- /.card -->
-						</div>
+						<jsp:include page="mailsidemenu.jsp"></jsp:include>
 						<!-- /.col -->
 						<div class="col-md-9">
 							<div class="card card-primary card-outline">
@@ -222,7 +165,9 @@ td {
 												받는 사람 :
 												<c:if test="${mail.receiverName != null }">&lt;${mail.receiverName }&gt;</c:if>
 												${mail.receiveEmp} <span
-													class="mailbox-read-time float-right">${mail.sDate }</span>
+													class="mailbox-read-time float-right">
+														<fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${mail.sDate }"/>
+													</span>
 											</h6>
 									</div>
 									<!-- /.mailbox-read-info -->
@@ -261,10 +206,15 @@ td {
 														class="far fa-file-pdf"></i></span>
 
 													<div class="mailbox-attachment-info">
-														<a href="#" class="mailbox-attachment-name"><i
+														<a 
+														href="${contextPath }/resources/mailUploadFiles/${mF.mChangeName}" 
+														download="${mF.mOriginalName }"
+														class="mailbox-attachment-name"><i
 															class="fas fa-paperclip"></i> ${mF.mOriginalName }</a> <span
 															class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-																KB</span> <a href="#"
+																KB</span> <a 
+																href="${contextPath }/resources/mailUploadFiles/${mF.mChangeName}" 
+																download="${mF.mOriginalName }"
 															class="btn btn-default btn-sm float-right"><i
 																class="fas fa-cloud-download-alt"></i></a>
 														</span>
@@ -278,17 +228,17 @@ td {
 								<div class="card-footer">
 									<div class="float-right">
 										<button type="button" class="btn btn-default">
-											<i class="fas fa-reply"></i> Reply
+											<i class="fas fa-reply"></i> 답장
 										</button>
 										<button type="button" class="btn btn-default">
-											<i class="fas fa-share"></i> Forward
+											<i class="fas fa-share"></i> 전달
 										</button>
 									</div>
 									<button type="button" class="btn btn-default">
-										<i class="far fa-trash-alt"></i> Delete
+										<i class="far fa-trash-alt"></i> 삭제
 									</button>
 									<button type="button" class="btn btn-default">
-										<i class="fas fa-print"></i> Print
+										<i class="fas fa-print"></i> 인쇄
 									</button>
 								</div>
 								<!-- /.card-footer -->
@@ -329,5 +279,10 @@ td {
 	<script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="${contextPath}/resources/dist/js/demo.js"></script>
+	<script>
+// 		$('.fa-trash-alt').empty();
+	
+	</script>
+	
 </body>
 </html>

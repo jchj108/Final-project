@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +49,7 @@
 			<div class="container"
 				style="background: white; padding: 30px 30px 30px; margin: 30px">
 				<h3 align="left">출퇴근 기록</h3>
-				<table class="table table-bordered" style="text-align: center">
+				<table id="userInfoTable" class="table table-bordered" style="text-align: center">
 					<thead>
 						<tr>
 							<th>이름</th>
@@ -56,67 +57,62 @@
 							<th>출근시간</th>
 							<th>퇴근시간</th>
 							<th>총 근무시간</th>
-							<th>근무시간 상세</th>
 						</tr>
 					</thead>
 					<tbody>
+						<c:forEach var="a" items="${list}">
 						<tr>
-							<td>강건강</td>
-							<td>2021-08-10</td>
-							<td>08:59:01</td>
-							<td>18:00:15</td>
-							<td>07:38:44</td>
-							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
+							<td>${a.empName}</td>
+							<td>${a.aDate}</td>
+							<td>${a.attend}</td>
+							<td>${a.goHome}</td>
+							<td>${a.workTime}</td>
 						</tr>
-						<tr>
-							<td>강건강</td>
-							<td>2021-08-10</td>
-							<td>08:59:01</td>
-							<td>18:00:15</td>
-							<td>07:38:44</td>
-							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
-						</tr>
-						<tr>
-							<td>강건강</td>
-							<td>2021-08-10</td>
-							<td>08:59:01</td>
-							<td>18:00:15</td>
-							<td>07:38:44</td>
-							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
-						</tr>
-						<tr>
-							<td>강건강</td>
-							<td>2021-08-10</td>
-							<td>08:59:01</td>
-							<td>18:00:15</td>
-							<td>07:38:44</td>
-							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
-						</tr>
-						<tr>
-							<td>강건강</td>
-							<td>2021-08-10</td>
-							<td>08:59:01</td>
-							<td>18:00:15</td>
-							<td>07:38:44</td>
-							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
-						</tr>
-						<tr>
-							<td>강건강</td>
-							<td>2021-08-10</td>
-							<td>08:59:01</td>
-							<td>18:00:15</td>
-							<td>07:38:44</td>
-							<td>업무 07:38:44 / 휴식 01:00:00 / 식사 01:15:43</td>
-						</tr>
+						</c:forEach>
 					</tbody>
 					<tr>
 						<td colspan="6" align="center">
+							<!-- 이전 -->
 							<ul class="pagination justify-content-center">
-								<li class="page-item"><a class="page-link" href="#">이전</a></li>
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">다음</a></li>
+								<c:if test="${ pi.currentPage <= 1 }">
+									<li class="page-item"><a class="page-link" href="#">이전</a></li>
+								</c:if>
+								<c:if test="${ pi.currentPage > 1 }">
+									<c:url var="before" value="alist.ao">
+										<c:param name="page" value="${ pi.currentPage -1 }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ before }">이전</a></li>
+								</c:if>
+
+								<!-- 페이지 -->
+								<c:forEach var="p" begin="${ pi.startPage }"
+									end="${ pi.endPage }">
+									<c:if test="${ p eq pi.currentPage }">
+										<li class="page-item"><a class="page-link" href="#"><b>${ p }</b></a></li>
+									</c:if>
+
+									<c:if test="${ p ne pi.currentPage }">
+										<c:url var="pagination" value="alist.ao">
+											<c:param name="page" value="${ p }" />
+										</c:url>
+										<li class="page-item"><a class="page-link"
+											href="${ pagination }">${ p }</a></li>
+									</c:if>
+								</c:forEach>
+
+								<!-- [다음] -->
+								<c:if test="${ pi.currentPage >= pi.maxPage }">
+									<li class="page-item"><a class="page-link" href="#">다음</a></li>
+								</c:if>
+								<c:if test="${ pi.currentPage < pi.maxPage }">
+									<c:url var="after" value="alist.ao">
+										<c:param name="page" value="${ pi.currentPage + 1 }" />
+									</c:url>
+									<%-- 		               <a href="${ after }">[다음]</a> --%>
+									<li class="page-item"><a class="page-link"
+										href="${ after }">다음</a></li>
+								</c:if>
 							</ul>
 						</td>
 					</tr>
@@ -147,5 +143,6 @@
 	<script src="dist/js/demo.js"></script>
 	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 	<script src="dist/js/pages/dashboard3.js"></script>
+	
 </body>
 </html>

@@ -68,6 +68,9 @@
 		 <if test="aType == 'ap'">
          SEQ_APNO.currval
          </if>
+         <if test="aType == 'mail'">
+         MAIL_TEMP_SEQ.CURRVAL
+         </if>
 	     )
 	</insert>
 	

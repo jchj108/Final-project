@@ -1,6 +1,7 @@
 package com.kh.workhome.mail.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,9 +82,10 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public Mail selectMail(int id) {
-		return mDAO.selectMail(sqlSession, id);
+	public Mail selectMail(Map<String, Object> map) {
+		return mDAO.selectMail(sqlSession, map);
 	}
+	
 
 	@Override
 	public Employee getMId(String mId) {
@@ -98,5 +100,85 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> selectReceiveList(PageInfo pi, String email) {
 		return mDAO.selectReceiveList(sqlSession, pi, email);
+	}
+
+	@Override
+	public int deleteMail(Map<String, Object> map) {
+		return mDAO.deleteMail(sqlSession, map);
+	}
+
+	@Override
+	public int insertMailSRReceiver(String mId) {
+		return mDAO.insertMailSRReceiver(sqlSession, mId);
+	}
+
+	@Override
+	public int insertMailSRSender(String empNo) {
+		return mDAO.insertMailSRSender(sqlSession, empNo);
+	}
+
+	@Override
+	public int getDeleteListCount(String empNo) {
+		return mDAO.getDeleteListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectDeleteList(PageInfo pi, String empNo) {
+		return mDAO.selectDeleteList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public ArrayList<Employee> searchEmp(String keyword) {
+		return mDAO.searchEmp(sqlSession, keyword);
+	}
+
+	@Override
+	public int updateRDate(Map<String, Object> map) {
+		return mDAO.updateRDate(sqlSession, map);
+	}
+
+	@Override
+	public int updateFavorites(Map<String, Object> map) {
+		return mDAO.updateFavorites(sqlSession, map);
+	}
+
+	@Override
+	public int getAllListCount(String empNo) {
+		return mDAO.getAllListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectAllList(PageInfo pi, String empNo) {
+		return mDAO.selectAllList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public int selectCountNotRead(String empNo) {
+		return mDAO.selectCountNotRead(sqlSession, empNo);
+	}
+
+	@Override
+	public int getFavoritesListCount(String empNo) {
+		return mDAO.getFavoritesListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Mail> selectFavoritesList(PageInfo pi, String empNo) {
+		return mDAO.selectFavoritesList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public int getSearchListCount(Map<String, Object> map) {
+		return mDAO.getSearchListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Mail> searchList(PageInfo pi, Map<String, Object> map) {
+		return mDAO.searchList(sqlSession, pi, map);
+	}
+
+	@Override
+	public ArrayList<Mail> selectCheckList(String empNo) {
+		return mDAO.selectCheckList(sqlSession, empNo);
 	}
 }

@@ -153,19 +153,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="mail.mail" class="nav-link">
+                <a href="${contextPath }/alllist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>전체메일</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="send.mail" class="nav-link">
+                <a href="${contextPath }/send.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>메일 쓰기</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
+                <a href="${contextPath }/receivelist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>받은메일함</p>
                 </a>
@@ -177,13 +177,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="templist.mail" class="nav-link">
+                <a href="${contextPath }/templist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>임시보관함</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/read-mail.html" class="nav-link">
+                <a href="${contextPath }/deletelist.mail" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>휴지통</p>
                 </a>
@@ -219,13 +219,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="meetReserv2.meet" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>회의실 예약2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="rList.meet" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>예약 내역</p>
                 </a>
@@ -271,6 +265,18 @@
             </ul>
           </li>
           <li class="nav-header">기타</li>
+          
+          <li class="nav-item">
+<!--             <a href="pages/widgets.html" class="nav-link"> -->
+            <a href="alist.ao" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                출퇴근 기록
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle"></i>

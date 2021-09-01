@@ -48,9 +48,6 @@
 						   <div class="form-group col-lg-6">
 						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${hEmp}" name="hEmp" readonly>
 						   </div>
-<!-- 						   <div class="form-group col-lg-6"> -->
-<%-- 						    	<strong>시행자 : </strong><input type="text" class="form-control" value="${sEmp}" name="runEmp" readonly> --%>
-<!-- 						    </div> -->
 						    <div class="form-group col-lg-6">
 						    	<strong>참조자 : </strong><input type="text" class="form-control" value="${cEmp}" name="refEmp" readonly>
 					    </div>
@@ -127,7 +124,7 @@
 			      	$.ajax({
 			        	data: form_data,
 			        	type: "POST",
-			        	url: 'getchagePhoto.ap',
+			        	url: 'saveFile.ap',
 			        	cache: false,
 			        	contentType: false,
 			        	enctype: 'multipart/form-data',

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.workhome.attendance.model.service.AttendanceService;
 import com.kh.workhome.employee.model.vo.Employee;
 
@@ -65,7 +66,6 @@ public class HomeController {
 		
 		HashMap<String,String> map = atService.selectCommute(keys);
 		mv.addObject("map",map);
-		System.out.println(map);
 
 		mv.setViewName("home");
 		return mv;
@@ -95,22 +95,34 @@ public class HomeController {
 	
 	//퇴근
 		@RequestMapping("goHome.do")
-		public String goHome(HttpSession session) {
+		@ResponseBody
+		public void goHome(HttpSession session, HttpServletResponse response) throws JsonIOException, IOException {
 			Employee loginUser = (Employee) session.getAttribute("loginUser");
 			String EmpNo = loginUser.getEmpNo();
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 			String strDate = dateFormat.format(Calendar.getInstance().getTime());
+			String[] temp = strDate.split(" ");
+			String startOfDate = temp[0]+" "+"00:00:00";
 			
-			HashMap<String,String> map = new HashMap<>();
-			map.put("empNo", EmpNo);
-			map.put("Date", strDate);
-			int result = atService.goHome(map);
+			HashMap<String,String> keys = new HashMap<>();
+			keys.put("empNo", EmpNo);
+			keys.put("Date", strDate);
+			keys.put("start", startOfDate);
+			int result = atService.goHome(keys);
+			
+			HashMap<String,String> map = atService.selectCommute(keys);
 		
-			if(result>0) {
-				return "Date";
+			HashMap<String, Object> rMap = new HashMap<String, Object>();
+			if(result > 0) {
+				rMap.put("result","success");
+				rMap.put("time", strDate);
+				rMap.put("map", map);
 			}else {
-				return "fail";
+				rMap.put("result", "fail");
 			}
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd kk:mm:ss").create();
+			gson.toJson(rMap,response.getWriter());
 		}
 	}

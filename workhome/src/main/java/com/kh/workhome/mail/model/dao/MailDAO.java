@@ -1,6 +1,7 @@
 package com.kh.workhome.mail.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +18,10 @@ import com.kh.workhome.mail.model.vo.MailFile;
 public class MailDAO {
 
 	public int insertMailFile(SqlSessionTemplate sqlSession, List<MailFile> mailFileList) {
-		
+
 		int result = 0;
-		
-		for(MailFile mf : mailFileList) {
+
+		for (MailFile mf : mailFileList) {
 			result += sqlSession.insert("mailMapper.insertMailFile", mf);
 		}
 		return result;
@@ -29,18 +30,19 @@ public class MailDAO {
 	public int insertMail(SqlSessionTemplate sqlSession, Mail m) {
 		return sqlSession.insert("mailMapper.insertMail", m);
 	}
-	
+
 	public int getTempListCount(SqlSessionTemplate sqlSession, String empNo) {
 		return sqlSession.selectOne("mailMapper.getTempListCount", empNo);
 	}
 
 	public ArrayList<Mail> selectTempList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
-		
-		int offset = pi.getBoardLimit() * (pi.getCurrentPage()-1);
-		// offSet : cp가 10일 때 15 * 9 = 125, 125개 게시물 건너뛰기, cp가 1일 떄는 15 * 0이므로 0개 게시물 건너뛰기
+
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
+		// offSet : cp가 10일 때 15 * 9 = 125, 125개 게시물 건너뛰기, cp가 1일 떄는 15 * 0이므로 0개 게시물
+		// 건너뛰기
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
-		return (ArrayList)sqlSession.selectList("mailMapper.selectTempList", empNo, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("mailMapper.selectTempList", empNo, rowBounds);
 	}
 
 	public Mail selectTempMail(SqlSessionTemplate sqlSession, int id) {
@@ -72,10 +74,10 @@ public class MailDAO {
 	}
 
 	public ArrayList<Mail> selectSendList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
-		int offset = pi.getBoardLimit() * (pi.getCurrentPage()-1);
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
-		return (ArrayList)sqlSession.selectList("mailMapper.selectSendList", empNo, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("mailMapper.selectSendList", empNo, rowBounds);
 	}
 
 	public Mail selectMail(SqlSessionTemplate sqlSession, int id) {
@@ -87,6 +89,93 @@ public class MailDAO {
 	}
 
 	public ArrayList<Mail> selectReceiveList(SqlSessionTemplate sqlSession, PageInfo pi, String email) {
-		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveList", email);
+
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList) sqlSession.selectList("mailMapper.selectReceiveList", email, rowBounds);
+	}
+
+	public int deleteMail(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.update("mailMapper.deleteMail", map);
+	}
+
+	public int insertMailSRReceiver(SqlSessionTemplate sqlSession, String mId) {
+		return sqlSession.insert("mailMapper.insertMailSRReceiver", mId);
+	}
+
+	public int insertMailSRSender(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.insert("mailMapper.insertMailSRSender", empNo);
+	}
+
+	public int getDeleteListCount(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.getDeleteListCount", empNo);
+	}
+
+	public ArrayList<Mail> selectDeleteList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
+
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList) sqlSession.selectList("mailMapper.selectDeleteList", empNo, rowBounds);
+	}
+
+	public ArrayList<Employee> searchEmp(SqlSessionTemplate sqlSession, String keyword) {
+		return (ArrayList) sqlSession.selectList("mailMapper.searchEmp", keyword);
+	}
+
+	public int updateRDate(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.update("mailMapper.updateRDate", map);
+	}
+
+	public int updateFavorites(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.update("mailMapper.updateFavorites", map);
+	}
+
+	public Mail selectMail(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.selectOne("mailMapper.selectMailByMap", map);
+	}
+
+	public int getAllListCount(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.getAllListCount", empNo);
+	}
+
+	public ArrayList<Mail> selectAllList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList) sqlSession.selectList("mailMapper.selectAllList", empNo, rowBounds);
+	}
+
+	public int selectCountNotRead(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.selectCountNotRead", empNo);
+	}
+
+	public int getFavoritesListCount(SqlSessionTemplate sqlSession, String empNo) {
+		return sqlSession.selectOne("mailMapper.getFavoritesListCount", empNo);
+	}
+
+	public ArrayList<Mail> selectFavoritesList(SqlSessionTemplate sqlSession, PageInfo pi, String empNo) {
+
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("mailMapper.selectFavoritesList", empNo, rowBounds);
+	}
+
+	public int getSearchListCount(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return sqlSession.selectOne("mailMapper.getSearchListCount", map);
+	}
+
+	public ArrayList<Mail> searchList(SqlSessionTemplate sqlSession, PageInfo pi, Map<String, Object> map) {
+		
+		int offset = pi.getBoardLimit() * (pi.getCurrentPage() - 1);
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("mailMapper.searchList", map, rowBounds);
+	}
+
+	public ArrayList<Mail> selectCheckList(SqlSessionTemplate sqlSession, String empNo) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectCheckList", empNo);
 	}
 }

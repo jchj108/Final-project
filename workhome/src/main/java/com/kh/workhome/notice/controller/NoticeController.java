@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -186,7 +187,7 @@ public class NoticeController {
 	@RequestMapping("topList.no")
 	public void selectTopList(HttpServletResponse response) {
 		ArrayList<Notice> list = nService.selectTopList();
-		System.out.println(list);
+//		System.out.println(list);
 		
 		Gson gson = new GsonBuilder().create();
 		response.setContentType("application/json; charset=UTF-8");
@@ -198,5 +199,40 @@ public class NoticeController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("search.no")
+	public ModelAndView searchNotice(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+				// 검색어 받아오기
+				String condition = request.getParameter("searchCondition");
+				String value = request.getParameter("searchValue");
+				
+				int currentPage = 1; 
+				if(request.getParameter("currentPage") != null) {
+					currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				}
+				//전체갯수 가져오기
+				HashMap<String, String> map = new HashMap<>();
+				map.put("condition",condition);
+				map.put("value",value);
+				
+				int listCount = nService.getSearchResultListCount(map);
+				PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+				
+				ArrayList<Notice> list = nService.selectSearchResultList(map,pi);
+				if(list != null) {
+					mv.addObject("list", list);
+					mv.addObject("pi", pi);
+					mv.addObject("searchCondition", condition);
+					mv.addObject("searchValue", value);
+					mv.setViewName("noticeListView");
+				} else {
+					throw new NoticeException("공지사항 검색에 실패했습니다.");
+				}
+				
+				return mv;
+				
+	}
+	
+	
 	
 }
