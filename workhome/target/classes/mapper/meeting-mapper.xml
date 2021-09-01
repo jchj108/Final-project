@@ -30,6 +30,12 @@
 		from RESERVATION JOIN MEETINGROOM USING (MNO)
 		where (EMPNO like #{empNo} or JOINEMP like #{empNo})and RSTATUS='Y'
 	</select>
+	
+	<update id="rCancle">
+		update RESERVATION
+		set JOINEMP =#{joinEmp}, RSTATUS=#{rStatus}
+		where RDATE=#{rDate} and MNO=#{mNo}
+	</update>
 
 	<resultMap type="MeetingReservation" id="meetingResultSet">
 		<id column="MNO" property="mNo" />
@@ -40,6 +46,7 @@
 		<result column="RTIME" property="rTime" />
 		<result column="RDATE" property="rDate" />		
 		<result column="EMPNO" property="empNo" />
+		<result column="MNAME" property="mName" />
 	</resultMap>
 	
 	<resultMap type="Employee" id="employeeResultSet">

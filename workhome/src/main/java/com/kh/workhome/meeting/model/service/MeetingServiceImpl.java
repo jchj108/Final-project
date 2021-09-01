@@ -50,4 +50,9 @@ public class MeetingServiceImpl implements MeetingService {
 		return meDAO.selectAllReservation(empNo, sqlSession);
 	}
 
+	@Override
+	public int rCancle(MeetingReservation r) {
+		return meDAO.rCancle(r, sqlSession);
+	}
+
 }
