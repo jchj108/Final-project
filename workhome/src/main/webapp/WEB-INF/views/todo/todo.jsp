@@ -12,12 +12,19 @@
 <!-- Theme style -->
 <link rel="stylesheet" href="${contextPath }/resources/dist/css/adminlte.min.css" />
 <!-- myFullCalendar -->
-<link rel="stylesheet" href='${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/select2.min.css' />
-<link rel="stylesheet" href='${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/bootstrap-datetimepicker.min.css' />
+<link rel="stylesheet" href='${contextPath }/resources/FullCalendar-Example-master/vendor/css/select2.min.css' />
+<link rel="stylesheet" href='${contextPath }/resources/FullCalendar-Example-master/vendor/css/bootstrap-datetimepicker.min.css' />
 <!-- myFullCalendar end -->
-<link rel="stylesheet" href="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/bootstrap.min.css?a" />
-<link rel="stylesheet" href="${contextPath }/resources/plugins/FullCalendar-Example-master/css/main.css">
-<link rel="stylesheet" href="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/css/fullcalendar.min.css" />
+<link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/vendor/css/bootstrap.min.css?sb" />
+<link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/css/main.css">
+<link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/vendor/css/fullcalendar.min.css" />
+
+<style>
+.btn-tool {
+	position: relative;
+	top: 12px;
+}
+</style>
 
 
 </head>
@@ -29,27 +36,79 @@
 		<!-- sidebar -->
 		<jsp:include page="../common/sidebar.jsp"></jsp:include>
 		<!-- /sidebar -->
+
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
 					<div class="row mb-2">
-						<div class="col-sm-6">
+						<div class="col-sm-8">
 							<h1>일정 관리</h1>
 						</div>
-						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Calendar</li>
-							</ol>
-						</div>
+						<div class="col-sm-4"></div>
 					</div>
 				</div>
 				<!-- /.container-fluid -->
 			</section>
+			<!-- /.container-fluid -->
+			<!-- 			</section> -->
 
 			<!-- Main content -->
 			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card card-primary">
+
+								<div class="card-header">
+									<h3 class="card-title">필터</h3>
+
+									<div class="card-tools">
+										<button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+											<i class="fas fa-minus"></i>
+										</button>
+									</div>
+								</div>
+								<div class="card-body">
+									<label for="calendar_view">구분별</label>
+									<div class="form-group">
+										<!-- 									<div class="col-lg-6"> -->
+										<div class="input-group">
+											<select class="filter" id="type_filter" multiple="multiple">
+												<option value="카테고리1">카테고리1</option>
+												<option value="카테고리2">카테고리2</option>
+												<option value="카테고리3">카테고리3</option>
+												<option value="카테고리4">카테고리4</option>
+											</select>
+										</div>
+									</div>
+									<!-- 									</div> -->
+									<div class="form-group">
+
+										<!-- 									<div class="col-lg-6"> -->
+										<label for="calendar_view">등록자별</label>
+										<div class="input-group">
+											<label class="checkbox-inline"><input class='filter' type="checkbox" value="정연" checked>1</label> <label class="checkbox-inline"><input
+													class='filter' type="checkbox" value="다현" checked
+												>2</label> <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나" checked>3</label> <label
+												class="checkbox-inline"
+											><input class='filter' type="checkbox" value="나연" checked>4</label> <label class="checkbox-inline"><input class='filter'
+													type="checkbox" value="지효" checked
+												>5</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="card card-primary">
+								<div id="calendar"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.filter panel -->
+
 				<div class="container">
 					<!-- 일자 클릭시 메뉴오픈 -->
 					<div id="contextMenu" class="dropdown clearfix">
@@ -65,9 +124,6 @@
 
 					<!-- 					<div id="wrapper"> -->
 					<!-- 						<div id="loading"></div> -->
-					<div class="card shadow mb-5">
-						<div id="calendar"></div>
-					</div>
 					<!-- 					</div> -->
 
 
@@ -157,48 +213,15 @@
 					</div>
 					<!-- /.modal -->
 
-					<div class="panel panel-default">
 
-						<div class="panel-heading">
-							<h3 class="panel-title">필터</h3>
-						</div>
-
-						<div class="panel-body">
-
-							<div class="col-lg-6">
-								<label for="calendar_view">구분별</label>
-								<div class="input-group">
-									<select class="filter" id="type_filter" multiple="multiple">
-										<option value="카테고리1">카테고리1</option>
-										<option value="카테고리2">카테고리2</option>
-										<option value="카테고리3">카테고리3</option>
-										<option value="카테고리4">카테고리4</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="col-lg-6">
-								<label for="calendar_view">등록자별</label>
-								<div class="input-group">
-									<label class="checkbox-inline"><input class='filter' type="checkbox" value="정연" checked>1</label> <label class="checkbox-inline"><input
-											class='filter' type="checkbox" value="다현" checked
-										>2</label> <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나" checked>3</label> <label
-										class="checkbox-inline"
-									><input class='filter' type="checkbox" value="나연" checked>4</label> <label class="checkbox-inline"><input class='filter'
-											type="checkbox" value="지효" checked
-										>5</label>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /.filter panel -->
 				</div>
 			</section>
 			<!-- /.content -->
 		</div>
 
 		<!--       </footer> -->
-		<%-- 		<jsp:include page="../../../footer.jsp"></jsp:include> --%>
+		<jsp:include page="../common/footer.jsp"></jsp:include>
+
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
@@ -216,22 +239,22 @@
 	<!-- AdminLTE App -->
 	<script src="${contextPath }/resources/dist/js/adminlte.min.js"></script>
 	<!-- fullCalendar 2.2.5 -->
-<%-- 		<script src="${contextPath }/resources/plugins/moment/moment.min.js"></script> --%>
-<%-- 		<script src="${contextPath }/resources/plugins/fullcalendar/main.js"></script> --%>
+	<%-- 		<script src="${contextPath }/resources/plugins/moment/moment.min.js"></script> --%>
+	<%-- 		<script src="${contextPath }/resources/plugins/fullcalendar/main.js"></script> --%>
 	<!-- AdminLTE for demo purposes -->
 	<script src="${contextPath }/resources/dist/js/demo.js"></script>
 	<!-- Page specific script -->
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/jquery.min.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/jquery.min.js"></script>
 	<!--  -->
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/moment.min.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/fullcalendar.min.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/ko.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/select2.min.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/vendor/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/main.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/addEvent.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/editEvent.js"></script>
-	<script src="${contextPath }/resources/plugins/FullCalendar-Example-master/js/etcSetting.js"></script>
-	<script src="${contextPath}/resources/plugins/FullCalendar-Example-master/vendor/js/bootstrap.min.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/moment.min.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/fullcalendar.min.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/ko.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/select2.min.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/js/main.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/js/addEvent.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/js/editEvent.js"></script>
+	<script src="${contextPath }/resources/FullCalendar-Example-master/js/etcSetting.js"></script>
+	<script src="${contextPath}/resources/FullCalendar-Example-master/vendor/js/bootstrap.min.js"></script>
 </body>
 </html>
