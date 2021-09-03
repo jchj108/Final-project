@@ -9,12 +9,16 @@
 <title>AdminLTE 3 | Calendar</title>
 
 <!-- Google Font: Source Sans Pro -->
-<!-- <link rel="stylesheet" -->
-<!-- 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" /> -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="${contextPath }/resources/plugins/fontawesome-free/css/all.min.css" />
 <!-- fullCalendar -->
+<!-- Theme style -->
+<link rel="stylesheet"
+	href="${contextPath }/resources/dist/css/adminlte.min.css" />
+	
 <link rel="stylesheet"
 	href="${contextPath}/resources/plugins/fullcalendar/main.css" />
 <link
@@ -30,9 +34,6 @@
 <script
 	src="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/daygrid/main.js"></script>
 
-<!-- Theme style -->
-<link rel="stylesheet"
-	href="${contextPath }/resources/dist/css/adminlte.min.css" />
 
 <style>
 .chulgun {
@@ -181,8 +182,8 @@
 		<script src="${contextPath }/resources/plugins/jquery/jquery.min.js"></script>
 
 		<!-- Bootstrap -->
-		<!-- 		<script -->
-		<%-- 			src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --%>
+		<!-- 		<script -->	
+		<script src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<!-- jQuery UI -->
 		<script
 			src="${contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
