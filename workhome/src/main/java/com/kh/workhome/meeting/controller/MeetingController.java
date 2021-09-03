@@ -115,7 +115,19 @@ public class MeetingController {
 			// 알람 추가하기
 			Employee loginEmp = ((Employee) request.getSession().getAttribute("loginUser"));
 			HashMap<String, Object> map = new HashMap<>();
-			map.put("aContents", loginEmp.getEmpName()+"님이  '" + mTitle + "' 미팅을 공유하였습니다.");
+			
+			int countMTitle = mTitle.length();
+			
+			if(countMTitle > 5) {
+				String editTitle = mTitle.substring(0, 4);
+				mTitle = editTitle + "…";
+				
+				System.out.println("수정된 mTitle : " + mTitle);
+			} 
+			
+			
+			
+			map.put("aContents", loginEmp.getEmpName()+"님이  '" + mTitle + "' 미팅을 공유했습니다.");
 			map.put("aType", "meeting");
 			
 			ArrayList<String> emp = new ArrayList<>();
