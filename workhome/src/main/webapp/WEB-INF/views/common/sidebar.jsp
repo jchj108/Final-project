@@ -21,7 +21,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link" style="margin-left:20px;">
+    <a href="./home.do" class="brand-link" style="margin-left:20px;">
 	  <i class="fas fa-laptop-house"></i>
       <span class="brand-text font-weight-bold" style="margin-left:5px;">WorkHome</span>
     </a>
@@ -71,13 +71,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="./home.do" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>+@</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.html" class="nav-link active">
+                <a href="./home.do" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>+@</p>
                 </a>

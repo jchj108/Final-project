@@ -63,4 +63,5 @@ public class EmployeeService {
 	public int deletAllAlerts(HashMap<String, String> map) {
 		return eDao.deletAllAlerts(sqlSession, map);
 	}
+
 }

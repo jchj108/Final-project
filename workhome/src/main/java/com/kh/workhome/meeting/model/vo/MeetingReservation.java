@@ -12,11 +12,12 @@ public class MeetingReservation {
 	private String mContent; // 내용
 	private String rStatus; // 상태
 	private String empNo; // 신청인
+	private String rNo; // 시퀀스
 	
 	public MeetingReservation() {}
 
 	public MeetingReservation(String rDate, String rTime, String mNo, String mName, String joinEmp, String mTitle,
-			String mContent, String rStatus, String empNo) {
+			String mContent, String rStatus, String empNo, String rNo) {
 		super();
 		this.rDate = rDate;
 		this.rTime = rTime;
@@ -27,6 +28,7 @@ public class MeetingReservation {
 		this.mContent = mContent;
 		this.rStatus = rStatus;
 		this.empNo = empNo;
+		this.rNo = rNo;
 	}
 
 	public String getrDate() {
@@ -101,14 +103,22 @@ public class MeetingReservation {
 		this.empNo = empNo;
 	}
 
+	public String getrNo() {
+		return rNo;
+	}
+
+	public void setrNo(String rNo) {
+		this.rNo = rNo;
+	}
+
 	@Override
 	public String toString() {
 		return "MeetingReservation [rDate=" + rDate + ", rTime=" + rTime + ", mNo=" + mNo + ", mName=" + mName
 				+ ", joinEmp=" + joinEmp + ", mTitle=" + mTitle + ", mContent=" + mContent + ", rStatus=" + rStatus
-				+ ", empNo=" + empNo + "]";
+				+ ", empNo=" + empNo + ", rNo=" + rNo + "]";
 	}
 
-
+	
 
 
 }	

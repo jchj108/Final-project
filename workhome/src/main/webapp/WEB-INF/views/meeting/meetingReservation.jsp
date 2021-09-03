@@ -629,10 +629,26 @@
 							type : "post",
 							success : function(data) {
 								if (data == "success") {
-									$('.modal-body').text("성공적으로 예약하였습니다.");
-									$('#exampleModal').modal('show');
-									
-									location.href="rList.meet";
+																		
+									var time = 3;
+										
+									if(!time == '0') {
+											
+										setInterval(function() {
+											 $('.modal-body').text("성공적으로 예약하였습니다. (" + time + "초 후 자동으로 닫힙니다.)");
+											 $('#exampleModal').modal('show');
+												 
+											 time--;
+											 console.log(time);
+												 
+											 if(time == '0') {
+												 location.href = "rList.meet";
+											 }											 
+										}, 1000);
+											
+									} else{
+										location.href = "rList.meet";										
+									}	
 
 								} else {
 									console.log(date, mTitle, joinEmp);

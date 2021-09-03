@@ -49,6 +49,9 @@ public class MeetingController {
 		return "meetingReservation";		
 	}
 
+	
+	
+	
 
 	// 자동 완성 참여 사원 검색하기
 	@RequestMapping("searchEmpList.meet")
@@ -83,10 +86,13 @@ public class MeetingController {
 		gson.toJson(resultList,response.getWriter());
 	}
 
+	
+	
+	
 	// 예약하기
 	@RequestMapping("reInsert.meet")
 	@ResponseBody
-	public String reInsert(
+	public String reInsert(HttpSession session, HttpServletRequest request,
 			  @RequestParam(value="rDate", required=false) String rDate,
 			  @RequestParam("joinEmp") String joinEmp,
 			  @RequestParam("mTitle") String mTitle,
@@ -105,15 +111,55 @@ public class MeetingController {
 	
 //		System.out.println(m);
 		
+		
+			// 알람 추가하기
+			Employee loginEmp = ((Employee) request.getSession().getAttribute("loginUser"));
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("aContents", loginEmp.getEmpName()+"님이  '" + mTitle + "' 미팅을 공유하였습니다.");
+			map.put("aType", "meeting");
+			
+			ArrayList<String> emp = new ArrayList<>();
+			String sepaEmp = joinEmp.substring(0, joinEmp.length()-1); // 제일 뒤에 붙는 ; 없애기
+			
+			System.out.println("sepaEmp : " + sepaEmp); 
+			System.out.println("map : " + map);
+			
+			
+			//사번만 뽑아내기
+			if(sepaEmp.contains(";")) { 
+				String[] tempEmp = sepaEmp.split(";");
+				System.out.println("tempEmp : " + tempEmp);
+				for(int i = 0 ; i < tempEmp.length ; i++) {
+					emp.add(tempEmp[i].substring(tempEmp[i].indexOf("[")+1, tempEmp[i].indexOf("]")).trim());
+
+				}
+			} else {
+				emp.add(sepaEmp.substring(sepaEmp.indexOf("[")+1, sepaEmp.indexOf("]")).trim());
+
+			}
+			map.put("empNo", emp);
+			
+			System.out.println("emp : " + emp);
+		
+		
+			
+		
 		int result = meService.reInsert(m);
+		
+		eService.insertAlert(map);
 		
 		if(result > 0) {
 			return "success";
+
 		}else {
 			return "fail";
 		}
 		
 	}
+	
+	
+	
+	
 	
 	// 날짜와 회의실을 받아 예약 가능 시간 비교하기
 	@RequestMapping("rSelectDate.meet")
@@ -145,6 +191,9 @@ public class MeetingController {
 	}
 	
 	
+	
+	
+	// 회의 내역 불러오기	
 	@RequestMapping("rList.meet")
 	public ModelAndView rList(ModelAndView mv, HttpSession session, HttpServletRequest request) {
 		Employee loginEmp = ((Employee) request.getSession().getAttribute("loginUser"));
@@ -189,8 +238,10 @@ public class MeetingController {
 	}
 	
 	
-	// 회의 취소 또는 불참
 	
+	
+	
+	// 회의 취소 또는 불참	
 	@RequestMapping("rCancle.meet")
 	@ResponseBody
 	public String rUpdate(@RequestParam("id") String id, @RequestParam("rStatus") String rStatus, @RequestParam("joinEmp") String joinEmp) {
