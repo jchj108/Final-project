@@ -16,7 +16,7 @@
 
 	<insert id="reInsert" parameterType="MeetingReservation">
 		insert into RESERVATION
-		values(#{mNo}, #{joinEmp}, #{mTitle}, #{mContent}, 'Y', null, #{rDate}, #{empNo})
+		values(#{mNo}, #{joinEmp}, #{mTitle}, #{mContent}, 'Y', null, #{rDate}, #{empNo}, MEETING_AL_SEQ.nextval)
 	</insert>
 
 	<select id="rSelectDate" parameterType="map" resultType="string">
@@ -46,6 +46,7 @@
 		<result column="RTIME" property="rTime" />
 		<result column="RDATE" property="rDate" />		
 		<result column="EMPNO" property="empNo" />
+		<result column="RNO" property="rNo" />
 		<result column="MNAME" property="mName" />
 	</resultMap>
 	

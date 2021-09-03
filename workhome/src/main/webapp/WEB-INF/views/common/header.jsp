@@ -152,7 +152,12 @@
 						if(data[i].ATYPE == 'ap'){
 							$input.val("apDetail.ap?apNo="+data[i].DOCNO);
 							$i = '<i class="fas fa-flag"></i>'
-						}else if(data[i].ATYPE == 'no'){
+							
+						} else if(data[i].ATYPE == 'meeting') {
+							$input.val("rList.meet");
+							$i = '<i class="fas fa-handshake"></i>'
+							
+						} else if(data[i].ATYPE == 'no'){
 							$input.val("ndetail.no");
 							$i = '<i class="fas fa-flag"></i>'
 						}
