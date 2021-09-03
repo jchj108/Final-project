@@ -30,74 +30,73 @@ import com.kh.workhome.notice.model.vo.Notice;
 
 @Controller
 public class NoticeController {
-	
+
 	@Autowired
 	private NoticeService nService;
-	
+
 	@RequestMapping("nlist.no")
-	public ModelAndView noticeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
-		
+	public ModelAndView noticeList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
+
+		// 페이징
 		int currentPage = 1;
-		if(page != null) {
+		if (page != null) {
 			currentPage = page;
 		}
-		
+
 		int listCount = nService.getListCount();
-//		System.out.println(listCount);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		
+
+		// 게시글 전체 조회
 		ArrayList<Notice> list = nService.selectList(pi);
-//		System.out.println(list);
-		if(list != null) {
-			mv.addObject("list",list).addObject("pi", pi);
+		if (list != null) {
+			mv.addObject("list", list).addObject("pi", pi);
 			mv.setViewName("noticeListView");
 		} else {
 			throw new NoticeException("게시글 전체 조회에 실패했습니다.");
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping("ninsertView.no")
 	public String noticeInsertForm() {
 		return "noticeInsertForm";
 	}
-	
+
 	@RequestMapping("ninsert.no")
-	public String insertNotice(@ModelAttribute Notice n, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request ) {
-//		System.out.println(uploadFile.getOriginalFilename());
-		
-		if(uploadFile != null && !uploadFile.isEmpty()) {
+	public String insertNotice(@ModelAttribute Notice n, @RequestParam("uploadFile") MultipartFile uploadFile,
+			HttpServletRequest request) {
+		if (uploadFile != null && !uploadFile.isEmpty()) {
 			String renameFileName = saveFile(uploadFile, request);
-			if(renameFileName != null) {
+			if (renameFileName != null) {
 				n.setOriginFileName(uploadFile.getOriginalFilename());
 				n.setRenameFileName(renameFileName);
 			}
 		}
 		int result = nService.insertNotice(n);
-		if(result > 0) {
+		if (result > 0) {
 			return "redirect:nlist.no";
 		} else {
 			throw new NoticeException("공지사항 등록 실패");
 		}
-		
+
 	}
-	
+
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "/nuploadFiles";
-		
+
 		File folder = new File(savePath);
-		
-		if(!folder.exists()) {
+
+		if (!folder.exists()) {
 			folder.mkdirs();
 		}
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String originFileName = file.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "."
-						+originFileName.substring(originFileName.lastIndexOf(".")+1);
+				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 		String renamePath = folder + "\\" + renameFileName;
-		
+
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (Exception e) {
@@ -106,89 +105,88 @@ public class NoticeController {
 		}
 		return renameFileName;
 	}
-	
+
 	@RequestMapping("ndetail.no")
 	public ModelAndView selectNotice(@RequestParam("nId") int nId, @RequestParam("page") int page, ModelAndView mv) {
-		Notice notice = nService.selectNotice(nId,true);
-		
-		if(notice != null) {
-			mv.addObject("notice",notice);
-			mv.addObject("page",page);
+		Notice notice = nService.selectNotice(nId, true);
+
+		if (notice != null) {
+			mv.addObject("notice", notice);
+			mv.addObject("page", page);
 			mv.setViewName("noticeDetailView");
 		} else {
 			throw new NoticeException("공지사항 상세보기 실패");
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping("nupView.no")
 	public String noticeUpdateForm(@RequestParam("nId") int nId, @RequestParam("page") int page, Model model) {
 		Notice notice = nService.selectNotice(nId, false);
-	
-		model.addAttribute("notice",notice).addAttribute("page",page);
+
+		model.addAttribute("notice", notice).addAttribute("page", page);
 		return "noticeUpdateForm";
 	}
-	
+
 	@RequestMapping("nupdate.no")
 	public ModelAndView updateNotice(@ModelAttribute Notice n, @RequestParam("page") int page,
-						@RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request, ModelAndView mv) {
-		
-		if(reloadFile != null && !reloadFile.isEmpty()) {
-			if(n.getRenameFileName() != null) {
+			@RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request, ModelAndView mv) {
+
+		if (reloadFile != null && !reloadFile.isEmpty()) {
+			if (n.getRenameFileName() != null) {
 				deleteFile(request, n);
 			}
-			
+
 			String renameFileName = saveFile(reloadFile, request);
-			if(renameFileName != null) {
+			if (renameFileName != null) {
 				n.setOriginFileName(reloadFile.getOriginalFilename());
 				n.setRenameFileName(renameFileName);
 			}
 		}
-		
+
 		int result = nService.updateNotice(n);
-		if(result > 0) {
+		if (result > 0) {
 			Notice notice = nService.selectNotice(n.getNoticeNo(), false);
-			mv.addObject("notice",notice);
-			mv.addObject("page",page);
+			mv.addObject("notice", notice);
+			mv.addObject("page", page);
 			mv.setViewName("noticeDetailView");
 		} else {
 			throw new NoticeException("공지사항 수정에 실패했습니다.");
 		}
-		
+
 		return mv;
 	}
-	
+
 	public void deleteFile(HttpServletRequest request, Notice n) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\nuploadFile";
-		
+
 		File f = new File(savePath + "\\" + n.getRenameFileName());
-		if(f.exists()) {
+		if (f.exists()) {
 			f.delete();
 		}
 	}
-	
+
 	@RequestMapping("ndelete.no")
-		public String deleteNotice(@RequestParam("nId") int nId, HttpServletRequest request) {
-			Notice notice = nService.selectNotice(nId, false);
-			if(notice.getOriginFileName() != null) {
-				deleteFile(request, notice);
-			}
-			
-			int result = nService.deleteNotice(nId);
-			if(result > 0) {
-				return "redirect:nlist.no";
-			} else {
-				throw new NoticeException("공지사항 삭제에 실패했습니다.");
-			}
-			
+	public String deleteNotice(@RequestParam("nId") int nId, HttpServletRequest request) {
+		Notice notice = nService.selectNotice(nId, false);
+		if (notice.getOriginFileName() != null) {
+			deleteFile(request, notice);
 		}
-	
+
+		int result = nService.deleteNotice(nId);
+		if (result > 0) {
+			return "redirect:nlist.no";
+		} else {
+			throw new NoticeException("공지사항 삭제에 실패했습니다.");
+		}
+
+	}
+
 	@RequestMapping("topList.no")
 	public void selectTopList(HttpServletResponse response) {
 		ArrayList<Notice> list = nService.selectTopList();
-//		System.out.println(list);
-		
+
 		Gson gson = new GsonBuilder().create();
 		response.setContentType("application/json; charset=UTF-8");
 		try {
@@ -199,40 +197,36 @@ public class NoticeController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@RequestMapping("search.no")
-	public ModelAndView searchNotice(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
-				// 검색어 받아오기
-				String condition = request.getParameter("searchCondition");
-				String value = request.getParameter("searchValue");
-				
-				int currentPage = 1; 
-				if(request.getParameter("currentPage") != null) {
-					currentPage = Integer.parseInt(request.getParameter("currentPage"));
-				}
-				//전체갯수 가져오기
-				HashMap<String, String> map = new HashMap<>();
-				map.put("condition",condition);
-				map.put("value",value);
-				
-				int listCount = nService.getSearchResultListCount(map);
-				PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-				
-				ArrayList<Notice> list = nService.selectSearchResultList(map,pi);
-				if(list != null) {
-					mv.addObject("list", list);
-					mv.addObject("pi", pi);
-					mv.addObject("searchCondition", condition);
-					mv.addObject("searchValue", value);
-					mv.setViewName("noticeListView");
-				} else {
-					throw new NoticeException("공지사항 검색에 실패했습니다.");
-				}
-				
-				return mv;
-				
+	public ModelAndView searchNotice(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
+		// 검색어 받아오기
+		String condition = request.getParameter("searchCondition");
+		String value = request.getParameter("searchValue");
+
+		int currentPage = 1;
+		if (request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		// 전체갯수 가져오기
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("value", value);
+
+		int listCount = nService.getSearchResultListCount(map);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+
+		ArrayList<Notice> list = nService.selectSearchResultList(map, pi);
+		if (list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.addObject("searchCondition", condition);
+			mv.addObject("searchValue", value);
+			mv.setViewName("noticeListView");
+		} else {
+			throw new NoticeException("공지사항 검색에 실패했습니다.");
+		}
+		return mv;
 	}
-	
-	
-	
 }

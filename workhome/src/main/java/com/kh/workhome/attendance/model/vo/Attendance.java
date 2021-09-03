@@ -21,9 +21,6 @@ public class Attendance {
 		this.workTime = workTime;
 	}
 	
-	
-
-
 	public Attendance(Date aDate, String empNo, String attend, String goHome, String workTime, String empName) {
 		super();
 		this.aDate = aDate;
@@ -89,12 +86,5 @@ public class Attendance {
 		return "Attendance [aDate=" + aDate + ", empNo=" + empNo + ", attend=" + attend + ", goHome=" + goHome
 				+ ", workTime=" + workTime + ", empName=" + empName + "]";
 	}
-
-	
-
-
-	
-
-	
 	
 }

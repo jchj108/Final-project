@@ -18,8 +18,8 @@ public class AttendanceDAO {
 		return sqlSession.selectOne("attendanceMapper.selectCommute",keys);
 	}
 
-	public int chulgun(HashMap<String, String> map, SqlSession sqlSession) {
-		return sqlSession.insert("attendanceMapper.chulgun",map);
+	public int startwork(HashMap<String, String> map, SqlSession sqlSession) {
+		return sqlSession.insert("attendanceMapper.startwork",map);
 	}
 
 	public int goHome(HashMap<String, String> keys, SqlSession sqlSession) {

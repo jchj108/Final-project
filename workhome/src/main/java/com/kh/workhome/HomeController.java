@@ -74,7 +74,7 @@ public class HomeController {
 	//출근
 	@RequestMapping(value="workstart.do")
 	@ResponseBody
-	public String chulgun(HttpSession session) {
+	public String startwork(HttpSession session) {
 		Employee loginUser = (Employee) session.getAttribute("loginUser");
 		String EmpNo = loginUser.getEmpNo();
 
@@ -85,7 +85,7 @@ public class HomeController {
 		map.put("empNo", EmpNo);
 		map.put("Date", strDate);
 		
-		int result = atService.chulgun(map);
+		int result = atService.startwork(map);
 		if(result>0) {
 			return strDate;
 		}else {
