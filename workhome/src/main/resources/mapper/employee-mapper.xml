@@ -71,8 +71,12 @@
          <if test="aType == 'mail'">
          MAIL_TEMP_SEQ.CURRVAL
          </if>
+         <if test="aType == 'meeting'">
+         MEETING_AL_SEQ.currval
+         </if>         
 	     )
 	</insert>
+
 	
 	<select id="selectAlertList" resultType="map">
 		select * from ALERT where EMPNO = #{empNo} and ASTATUS ='Y' order by createdate desc
