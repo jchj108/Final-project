@@ -38,7 +38,7 @@
 	
 	<select id="searchEmp" resultMap="employeeResultSet">
 		select * from employee
-		where empno like '%' || #{keyword} || '%'
+		where empno like '%' || upper(#{keyword}) || '%'
 		OR EMPNAME LIKE '%' || #{keyword} || '%'
 	</select>
 	
@@ -104,7 +104,7 @@
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
 		        AND (S_R_STATUS = 'R' or s_r_status = 'S')
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -122,7 +122,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -142,7 +142,7 @@
 		        AND mail_s_r.empno = #{empNo}
 		        AND (S_R_STATUS = 'R' or s_r_status = 'S')
 		        AND FAVORITES = 'Y'
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC	
@@ -160,7 +160,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -178,7 +178,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -194,7 +194,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		    where estatus='T'
 		    and employee.empNo = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -218,7 +218,7 @@
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
                 AND (S_R_STATUS = 'R' or s_r_status = 'S')
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -238,7 +238,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -260,7 +260,7 @@
 		        AND mail_s_r.empno = #{empNo}
 		        AND (S_R_STATUS = 'R' or s_r_status = 'S')
 		        AND FAVORITES = 'Y'
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -280,7 +280,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -300,8 +300,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		        WHERE ESTATUS='Y'
 		        AND mail_s_r.empno = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
-		        
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
@@ -319,7 +318,7 @@
 		        LEFT JOIN MAIL_FILE ON (MAIL.MAILNO = MAIL_FILE.MAILNO AND M_STATUS='Y')
 		    where estatus='T'
 		    and employee.empNo = #{empNo}
-				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || #{searchValue} || '%' OR employee.empname LIKE '%' || #{searchValue} || '%')
+				AND (ETITLE LIKE '%' || #{searchValue} || '%' OR RECEIVEEMP LIKE '%' || upper(#{searchValue}) || '%' OR employee.empname LIKE '%' || upper(#{searchValue}) || '%')
 		    order by MAILNO DESC
 		)
 		ORDER BY MAILNO DESC
