@@ -139,7 +139,7 @@
 				var $i;
 				var $div2 = $("<div>");
 				var $div2_1 = $('<div class="small text-gray-500">');
-				var $span = $('<span class="goDetail" style="font-weight:bold; font-size:14px">');
+				var $span = $('<span class="goDetail" style="font-weight:bold; font-size:12px">');
 					$input1.val(data[i].ALERTNO);
 					if(data[i].ATYPE == "mail"){
 						$area = $(".mailA_area");
