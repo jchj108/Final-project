@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="toDoMapper">
+	<insert id="insertToDo">
+		insert into todo
+		values(TODO_SEQ.nextval, #{tStartDate}, #{tContent}, #{tEndDate}, #{empNo}, #{tTitle},
+			   #{tType}, #{bgColor}, #{allDay}, #{textColor})
+	</insert>
+	
+	<select id="getAllList" resultMap="toDoResultSet">
+		select *
+		from todo
+		where empno = #{empNo}
+	</select>
+	
+	<resultMap type="Todo" id="toDoResultSet">
+		<id column="TNO" property="tNo"/>
+		<result column="TSTARTDATE" property="start"/>
+		<result column="TCONTENT" property="tContent"/>
+		<result column="TENDDATE" property="end"/>
+		<result column="EMPNO" property="empNo"/>
+		<result column="TTITLE" property="tTitle"/>
+		<result column="TTYPE" property="tType"/>
+		<result column="BGCOLOR" property="bgColor"/>
+		<result column="ALLDAY" property="allDay"/>
+		<result column="TEXTCOLOR" property="textColor"/>
+	</resultMap>
+	
 </mapper>
