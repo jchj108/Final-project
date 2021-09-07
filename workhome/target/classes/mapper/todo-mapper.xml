@@ -3,7 +3,7 @@
 <mapper namespace="toDoMapper">
 	<insert id="insertToDo">
 		insert into todo
-		values(TODO_SEQ.nextval, #{tStartDate}, #{tContent}, #{tEndDate}, #{empNo}, #{tTitle},
+		values(TODO_SEQ.nextval, #{start}, #{tContent}, #{end}, #{empNo}, #{tTitle},
 			   #{tType}, #{bgColor}, #{allDay}, #{textColor})
 	</insert>
 	
@@ -16,12 +16,12 @@
 	<resultMap type="Todo" id="toDoResultSet">
 		<id column="TNO" property="tNo"/>
 		<result column="TSTARTDATE" property="start"/>
-		<result column="TCONTENT" property="tContent"/>
+		<result column="TCONTENT" property="description"/>
 		<result column="TENDDATE" property="end"/>
 		<result column="EMPNO" property="empNo"/>
-		<result column="TTITLE" property="tTitle"/>
-		<result column="TTYPE" property="tType"/>
-		<result column="BGCOLOR" property="bgColor"/>
+		<result column="TTITLE" property="title"/>
+		<result column="TTYPE" property="type"/>
+		<result column="BGCOLOR" property="backgroundColor"/>
 		<result column="ALLDAY" property="allDay"/>
 		<result column="TEXTCOLOR" property="textColor"/>
 	</resultMap>

@@ -81,14 +81,14 @@ var newEvent = function(start, end, eventType) {
 				var json = {
 //					tStartDate : eventData.start,
 //					tEndDate : eventData.end
-					tContent : eventData.description
-					, tTitle : eventData.title
-					, tStartDate : moment(eventData.start).format() // moment를 이용해 date 타입으로 변환
-					, tEndDate : moment(eventData.end).format()
-					, bgColor : eventData.backgroundColor
+					description : eventData.description
+					, title : eventData.title
+					, start : moment(eventData.start).format() // moment를 이용해 date 타입으로 변환
+					, end : moment(eventData.end).format()
+					, backgroundColor : eventData.backgroundColor
 					, allDay : eventData.allDay
-					, textcolor : eventData.textColor
-					, tType : eventData.type
+					, textColor : eventData.textColor
+					, type : eventData.type
 				}
 
 				// 새로운 일정 저장

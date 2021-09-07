@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,8 +64,7 @@ public class ToDoController {
 		System.out.println(list);
 		response.setContentType("application/json; charset=UTF-8");
 
-		Gson gson = new GsonBuilder().setDateFormat("YYYY-MM-dd'T'HH:mm").create();
-//		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("YYYY-MM-dd HH:mm").create();
 		if(list != null) {
 			try {
 				gson.toJson(list, response.getWriter());
@@ -74,13 +72,5 @@ public class ToDoController {
 				e.printStackTrace();
 			}
 		}
-		
-//		response.setContentType("application/json; charset=UTF-8");
-//		Gson gson = new Gson();
-//		try {
-//			gson.toJson(rList, response.getWriter());
-//		} catch (JsonIOException | IOException e) {
-//			e.printStackTrace();
-//		}
 	}
 }

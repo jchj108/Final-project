@@ -5,36 +5,39 @@ import java.sql.Timestamp;
 public class ToDo {
 	private String tNo;
 	private Timestamp start;
-	private String tContent;
+	private String description;
 	private Timestamp end;
 	private String empNo;
-	private String tTitle;
-	private String tType;
-	private String bgColor;
+	private String title;
+	private String type;
+	private String backgroundColor;
 	private String allDay;
 	private String textColor;
 
 	public ToDo() {}
-	
+
 	public String gettNo() {
 		return tNo;
+	}
+
+	public void settNo(String tNo) {
+		this.tNo = tNo;
 	}
 
 	public Timestamp getStart() {
 		return start;
 	}
 
-	
 	public void setStart(Timestamp start) {
 		this.start = start;
 	}
 
-	public String gettContent() {
-		return tContent;
+	public String getDescription() {
+		return description;
 	}
 
-	public void settContent(String tContent) {
-		this.tContent = tContent;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Timestamp getEnd() {
@@ -53,28 +56,28 @@ public class ToDo {
 		this.empNo = empNo;
 	}
 
-	public String gettTitle() {
-		return tTitle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void settTitle(String tTitle) {
-		this.tTitle = tTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String gettType() {
-		return tType;
+	public String getType() {
+		return type;
 	}
 
-	public void settType(String tType) {
-		this.tType = tType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getBgColor() {
-		return bgColor;
+	public String getBackgroundColor() {
+		return backgroundColor;
 	}
 
-	public void setBgColor(String bgColor) {
-		this.bgColor = bgColor;
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
 
 	public String getAllDay() {
@@ -93,31 +96,28 @@ public class ToDo {
 		this.textColor = textColor;
 	}
 
-	public void settNo(String tNo) {
-		this.tNo = tNo;
-	}
-
 	@Override
 	public String toString() {
-		return "ToDo [tNo=" + tNo + ", start=" + start + ", tContent=" + tContent + ", end=" + end + ", empNo=" + empNo
-				+ ", tTitle=" + tTitle + ", tType=" + tType + ", bgColor=" + bgColor + ", allDay=" + allDay
-				+ ", textColor=" + textColor + "]";
+		return "ToDo [tNo=" + tNo + ", start=" + start + ", description=" + description + ", end=" + end + ", empNo="
+				+ empNo + ", title=" + title + ", type=" + type + ", backgroundColor=" + backgroundColor + ", allDay="
+				+ allDay + ", textColor=" + textColor + "]";
 	}
 
-	public ToDo(String tNo, Timestamp start, String tContent, Timestamp end, String empNo, String tTitle, String tType,
-			String bgColor, String allDay, String textColor) {
+	public ToDo(String tNo, Timestamp start, String description, Timestamp end, String empNo, String title, String type,
+			String backgroundColor, String allDay, String textColor) {
 		super();
 		this.tNo = tNo;
 		this.start = start;
-		this.tContent = tContent;
+		this.description = description;
 		this.end = end;
 		this.empNo = empNo;
-		this.tTitle = tTitle;
-		this.tType = tType;
-		this.bgColor = bgColor;
+		this.title = title;
+		this.type = type;
+		this.backgroundColor = backgroundColor;
 		this.allDay = allDay;
 		this.textColor = textColor;
 	}
+	
 
 
 }
