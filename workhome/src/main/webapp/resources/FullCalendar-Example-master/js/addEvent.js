@@ -12,87 +12,99 @@ var editDesc = $('#edit-desc');
 var addBtnContainer = $('.modalBtnContainer-addEvent');
 var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 
+/*******************************************************************************
+ * 새로운 일정 생성 **************
+ */
+var newEvent = function(start, end, eventType) {
 
-/* ****************
- *  새로운 일정 생성
- * ************** */
-var newEvent = function (start, end, eventType) {
+	$("#contextMenu").hide(); // 메뉴 숨김
 
-    $("#contextMenu").hide(); //메뉴 숨김
+	modalTitle.html('새로운 일정');
+	editType.val(eventType).prop('selected', true);
+	editTitle.val('');
+	editStart.val(start);
+	editEnd.val(end);
+	editDesc.val('');
 
-    modalTitle.html('새로운 일정');
-    editType.val(eventType).prop('selected', true);
-    editTitle.val('');
-    editStart.val(start);
-    editEnd.val(end);
-    editDesc.val('');
-    
-    addBtnContainer.show();
-    modifyBtnContainer.hide();
-    eventModal.modal('show');
+	addBtnContainer.show();
+	modifyBtnContainer.hide();
+	eventModal.modal('show');
 
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-    var eventId = 1 + Math.floor(Math.random() * 1000);
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
 
-    //새로운 일정 저장버튼 클릭
-    $('#save-event').unbind();
-    $('#save-event').on('click', function () {
+	// 새로운 일정 저장버튼 클릭
+	$('#save-event').unbind();
+	$('#save-event').on(
+			'click',
+			function() {
 
-        var eventData = {
-            _id: eventId,
-            title: editTitle.val(),
-            start: editStart.val(),
-            end: editEnd.val(),
-            description: editDesc.val(),
-            type: editType.val(),
-            username: '사나',
-            backgroundColor: editColor.val(),
-            textColor: '#ffffff',
-            allDay: false
-        };
+				var eventData = {
+					title : editTitle.val(),
+					start : editStart.val(),
+					end : editEnd.val(),
+					description : editDesc.val(),
+					type : editType.val(),
+//					username : '사나',
+					backgroundColor : editColor.val(),
+					textColor : '#ffffff',
+					allDay : false
+				};
 
-        if (eventData.start > eventData.end) {
-            alert('끝나는 날짜가 앞설 수 없습니다.');
-            return false;
-        }
+				if (eventData.start > eventData.end) {
+					alert('끝나는 날짜가 앞설 수 없습니다.');
+					return false;
+				}
 
-        if (eventData.title === '') {
-            alert('일정명은 필수입니다.');
-            return false;
-        }
+				if (eventData.title === '') {
+					alert('일정명은 필수입니다.');
+					return false;
+				}
 
-        var realEndDay;
+				var realEndDay;
 
-        if (editAllDay.is(':checked')) {
-            eventData.start = moment(eventData.start).format('YYYY-MM-DD');
-            //render시 날짜표기수정
-            eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
-            //DB에 넣을때(선택)
-            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
+				if (editAllDay.is(':checked')) {
+					eventData.start = moment(eventData.start).format(
+							'YYYY-MM-DD');
+					// render시 날짜표기수정
+					eventData.end = moment(eventData.end).add(1, 'days')
+							.format('YYYY-MM-DD');
+					// DB에 넣을때(선택)
+					realEndDay = moment(eventData.end).format('YYYY-MM-DD');
 
-            eventData.allDay = true;
-        }
+					eventData.allDay = true;
+				}
 
-        $("#calendar").fullCalendar('renderEvent', eventData, true);
-        eventModal.find('input, textarea').val('');
-        editAllDay.prop('checked', false);
-        eventModal.modal('hide');
+				$("#calendar").fullCalendar('renderEvent', eventData, true);
+				eventModal.find('input, textarea').val('');
+				editAllDay.prop('checked', false);
+				eventModal.modal('hide');
 
-        //새로운 일정 저장
-        $.ajax({
-            
-            url: "meInsert.meet",
-            dataType: "json",
-            data: {
-            	startDate: moment(start).format('YYYY-MM-DD')
-            	, endDate: moment(end).format('YYYY-MM-DD')
-            },
-            success: function (response) {
-                //DB연동시 중복이벤트 방지를 위한
-                //$('#calendar').fullCalendar('removeEvents');
-                //$('#calendar').fullCalendar('refetchEvents');
-            }
-        });
-    });
+				var json = {
+//					tStartDate : eventData.start,
+//					tEndDate : eventData.end
+					tContent : eventData.description
+					, tTitle : eventData.title
+					, tStartDate : moment(eventData.start).format() // moment를 이용해 date 타입으로 변환
+					, tEndDate : moment(eventData.end).format()
+					, bgColor : eventData.backgroundColor
+					, allDay : eventData.allDay
+					, textcolor : eventData.textColor
+					, tType : eventData.type
+				}
+
+				// 새로운 일정 저장
+				$.ajax({
+
+					url : "insertTodo.to",
+					type : 'POST',
+					data : JSON.stringify(json),
+			        contentType: "application/json",
+					success : function(response) {
+						// DB연동시 중복이벤트 방지를 위한
+						console.log(response);
+						
+//						$('#calendar').fullCalendar('removeEvents');
+//						$('#calendar').fullCalendar('refetchEvents');
+					}
+				});
+			});
 };
