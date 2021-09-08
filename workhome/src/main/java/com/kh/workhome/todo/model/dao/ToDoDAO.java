@@ -1,6 +1,7 @@
 package com.kh.workhome.todo.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,13 @@ public class ToDoDAO {
 
 	public ArrayList<ToDo> getAllList(SqlSessionTemplate sqlSession, String empNo) {
 		return (ArrayList)sqlSession.selectList("toDoMapper.getAllList", empNo);
+	}
+
+	public int deleteToDo(SqlSessionTemplate sqlSession, Map map) {
+		return sqlSession.delete("toDoMapper.deleteToDo", map);
+	}
+
+	public int updateToDo(SqlSessionTemplate sqlSession, ToDo toDo) {
+		return sqlSession.update("toDoMapper.updateToDo", toDo);
 	}
 }

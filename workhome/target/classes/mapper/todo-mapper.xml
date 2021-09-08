@@ -3,8 +3,8 @@
 <mapper namespace="toDoMapper">
 	<insert id="insertToDo">
 		insert into todo
-		values(TODO_SEQ.nextval, #{tStartDate}, #{tContent}, #{tEndDate}, #{empNo}, #{tTitle},
-			   #{tType}, #{bgColor}, #{allDay}, #{textColor})
+		values(TODO_SEQ.nextval, #{start}, #{description}, #{end}, #{empNo}, #{title},
+			   #{type}, #{backgroundColor}, #{allDay}, #{textColor})
 	</insert>
 	
 	<select id="getAllList" resultMap="toDoResultSet">
@@ -13,15 +13,35 @@
 		where empno = #{empNo}
 	</select>
 	
+	<delete id="deleteToDo">
+		delete from todo
+		where empno = #{empNo}
+		and tNo = #{tNo}
+	</delete>
+	
+	<update id="updateToDo">
+		update todo
+		set 
+			tstartdate = #{start},
+			tenddate = #{end},
+			ttitle = #{title},
+			ttype = #{type},
+			bgcolor = #{backgroundColor},
+			allday = #{allDay},
+			TCONTENT = #{description}
+		where tno = #{tNo}
+		and empno = #{empNo}
+	</update>
+	
 	<resultMap type="Todo" id="toDoResultSet">
 		<id column="TNO" property="tNo"/>
 		<result column="TSTARTDATE" property="start"/>
-		<result column="TCONTENT" property="tContent"/>
+		<result column="TCONTENT" property="description"/>
 		<result column="TENDDATE" property="end"/>
 		<result column="EMPNO" property="empNo"/>
-		<result column="TTITLE" property="tTitle"/>
-		<result column="TTYPE" property="tType"/>
-		<result column="BGCOLOR" property="bgColor"/>
+		<result column="TTITLE" property="title"/>
+		<result column="TTYPE" property="type"/>
+		<result column="BGCOLOR" property="backgroundColor"/>
 		<result column="ALLDAY" property="allDay"/>
 		<result column="TEXTCOLOR" property="textColor"/>
 	</resultMap>

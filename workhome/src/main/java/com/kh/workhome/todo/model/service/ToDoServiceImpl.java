@@ -1,6 +1,7 @@
 package com.kh.workhome.todo.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,15 @@ private SqlSessionTemplate sqlSession;
 	@Override
 	public ArrayList<ToDo> getAllList(String empNo) {
 		return tDAO.getAllList(sqlSession, empNo);
+	}
+
+	@Override
+	public int deleteToDo(Map map) {
+		return tDAO.deleteToDo(sqlSession, map);
+	}
+
+	@Override
+	public int updateToDo(ToDo toDo) {
+		return tDAO.updateToDo(sqlSession, toDo);
 	}
 }
