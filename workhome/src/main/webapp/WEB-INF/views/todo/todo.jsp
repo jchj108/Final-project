@@ -24,6 +24,41 @@
 	position: relative;
 	top: 12px;
 }
+
+.modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    opacity: .5;
+}
+/* 모달 가운데 */
+.modal {
+        text-align: center;
+}
+
+.fc-title, .fc-time {
+	font-size: 11.9px;
+}
+
+#eventModal {
+	padding-bottom: 50px;
+	padding-right: 0px;
+}
+@media screen and (min-width: 768px) { 
+        .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+        }
+}
+ 
+.modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+}
+/* 모달 가운데 */
+
 </style>
 
 
@@ -132,10 +167,10 @@
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
+									<h4 class="modal-title"></h4>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
-									<h4 class="modal-title"></h4>
 								</div>
 								<div class="modal-body">
 

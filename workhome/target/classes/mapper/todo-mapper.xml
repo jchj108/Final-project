@@ -3,8 +3,8 @@
 <mapper namespace="toDoMapper">
 	<insert id="insertToDo">
 		insert into todo
-		values(TODO_SEQ.nextval, #{start}, #{tContent}, #{end}, #{empNo}, #{tTitle},
-			   #{tType}, #{bgColor}, #{allDay}, #{textColor})
+		values(TODO_SEQ.nextval, #{start}, #{description}, #{end}, #{empNo}, #{title},
+			   #{type}, #{backgroundColor}, #{allDay}, #{textColor})
 	</insert>
 	
 	<select id="getAllList" resultMap="toDoResultSet">
@@ -12,6 +12,26 @@
 		from todo
 		where empno = #{empNo}
 	</select>
+	
+	<delete id="deleteToDo">
+		delete from todo
+		where empno = #{empNo}
+		and tNo = #{tNo}
+	</delete>
+	
+	<update id="updateToDo">
+		update todo
+		set 
+			tstartdate = #{start},
+			tenddate = #{end},
+			ttitle = #{title},
+			ttype = #{type},
+			bgcolor = #{backgroundColor},
+			allday = #{allDay},
+			TCONTENT = #{description}
+		where tno = #{tNo}
+		and empno = #{empNo}
+	</update>
 	
 	<resultMap type="Todo" id="toDoResultSet">
 		<id column="TNO" property="tNo"/>

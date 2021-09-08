@@ -62,13 +62,12 @@ var newEvent = function(start, end, eventType) {
 				var realEndDay;
 
 				if (editAllDay.is(':checked')) {
-					eventData.start = moment(eventData.start).format(
-							'YYYY-MM-DD');
+					eventData.start = moment(eventData.start).format('YYYY-MM-DD');
 					// render시 날짜표기수정
 					eventData.end = moment(eventData.end).add(1, 'days')
 							.format('YYYY-MM-DD');
 					// DB에 넣을때(선택)
-					realEndDay = moment(eventData.end).format('YYYY-MM-DD');
+//					realEndDay = moment(eventData.end).format('YYYY-MM-DD');
 
 					eventData.allDay = true;
 				}
@@ -93,7 +92,6 @@ var newEvent = function(start, end, eventType) {
 
 				// 새로운 일정 저장
 				$.ajax({
-
 					url : "insertTodo.to",
 					type : 'POST',
 					data : JSON.stringify(json),
