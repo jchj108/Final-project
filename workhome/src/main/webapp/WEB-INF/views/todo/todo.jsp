@@ -25,14 +25,23 @@
 	top: 12px;
 }
 
+#space {
+ 	height:100px; 
+ 	background-color:#f4f6f9;
+}
+
+#eventModal {
+	padding-right: 0px !important;
+}
+
 .modal-header .close {
-    padding: 1rem;
-    margin: -1rem -1rem -1rem auto;
-    opacity: .5;
+	padding: 1rem;
+	margin: -1rem -1rem -1rem auto;
+	opacity: .5;
 }
 /* 모달 가운데 */
 .modal {
-        text-align: center;
+	text-align: center;
 }
 
 .fc-title, .fc-time {
@@ -40,25 +49,25 @@
 }
 
 #eventModal {
-	padding-bottom: 50px;
+	padding-bottom: 80px;
 	padding-right: 0px;
 }
-@media screen and (min-width: 768px) { 
-        .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-        }
+
+@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
 }
- 
+
 .modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }
 /* 모달 가운데 */
-
 </style>
 
 
@@ -92,7 +101,7 @@
 			<section class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-xs-3">
 							<div class="card card-primary">
 
 								<div class="card-header">
@@ -135,9 +144,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-8">
+						<div class="col-xs-9">
 							<div class="card card-primary">
-								<div id="calendar"></div>
+					            <div id="loading"></div>
+								<div id="calendar" class="fc fc-unthemed fc-ltr"></div>
 							</div>
 						</div>
 					</div>
@@ -253,16 +263,13 @@
 			</section>
 			<!-- /.content -->
 		</div>
+		<div id="space">
+		</div>
 
 		<!--       </footer> -->
 		<jsp:include page="../common/footer.jsp"></jsp:include>
-
-		<!-- Control Sidebar -->
-		<aside class="control-sidebar control-sidebar-dark">
-			<!-- Control sidebar content goes here -->
-		</aside>
-		<!-- /.control-sidebar -->
 	</div>
+
 	<!-- ./wrapper -->
 
 	<!-- jQuery -->
