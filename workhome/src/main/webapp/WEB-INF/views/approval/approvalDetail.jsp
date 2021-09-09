@@ -45,24 +45,22 @@
 					   </div>
 					   <div class="row">
 						   <div class="form-group col-lg-6">
-						   		<c:set var="str1" value="${ap.approvalEmp}"/>
-								<c:set var="str2" value="${fn:replace(str1, ',N', '-미결')}" />
-								<c:set var="str3" value="${fn:replace(str2, ',R', '-반려')}" />
-								<c:set var="str4" value="${fn:replace(str3, ',Y', '-승인완료')}" />
-								<c:set var="str5" value="${fn:replace(str4, ';', ', ')}" />
-						    	<strong>결재자 : </strong><input type="text" class="form-control" value="${str5}" readonly>
+						   		<c:set var="str01" value="${ap.hEmp}"/>
+								<c:set var="str02" value="${fn:replace(str01, '-N', '-미결')}" />
+								<c:set var="str03" value="${fn:replace(str02, '-R', '-거부')}" />
+								<c:set var="str04" value="${fn:replace(str03, 'Y', '-합의')}" />
+						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${str04}" readonly>
 						   </div>
 						   <div class="form-group col-lg-6">
-						   		<c:set var="str01" value="${ap.hEmp}"/>
-								<c:set var="str02" value="${fn:replace(str01, ',N', '-미결')}" />
-								<c:set var="str03" value="${fn:replace(str02, ',R', '-거부')}" />
-								<c:set var="str04" value="${fn:replace(str03, ',Y', '-합의')}" />
-								<c:set var="str05" value="${fn:replace(str04, ';', ', ')}" />
-						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${str05}" readonly>
+						   		<c:set var="str1" value="${ap.approvalEmp}"/>
+								<c:set var="str2" value="${fn:replace(str1, '-N', '-미결')}" />
+								<c:set var="str3" value="${fn:replace(str2, '-R', '-반려')}" />
+								<c:set var="str4" value="${fn:replace(str3, '-Y', '-승인완료')}" />
+						    	<strong>결재자 : </strong><input type="text" class="form-control" value="${str4}" readonly>
 						   </div>
 						    <div class="form-group col-lg-6">
 						    	<strong>참조자 : </strong><input type="text" class="form-control" value="${ap.refEmp}" readonly>
-					    </div>
+					    	</div>
 					    </div>
 				   		<c:if test="${empty ap.a_v_first}">
 					   	<div class="form-group">

@@ -72,33 +72,33 @@
 										<tr>
 											<th>미결재 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="g">
-												<input type="hidden" class="map" value="${map['g']}">
-												${fn:length(glist)} 건
+												<input type="hidden" class="tag" value="draft">
+												<input type="hidden" class="map" value="${map['draft']}">
+												${fn:length(draftList)} 건
 											</td>
 										</tr>
 										<tr>
 											<th>결재 완료 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="f">
-												<input type="hidden" class="map" value="${map['f']}">
-												${fn:length(flist)} 건
+												<input type="hidden" class="tag" value="approved">
+												<input type="hidden" class="map" value="${map['approved']}">
+												${fn:length(approvedList)} 건
 											</td>
 										</tr>
 										<tr>
 											<th>반려 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="r">
-												<input type="hidden" class="map" value="${map['r']}">
-												${fn:length(rlist)} 건
+												<input type="hidden" class="tag" value="rejected">
+												<input type="hidden" class="map" value="${map['rejected']}">
+												${fn:length(rejectedList)} 건
 											</td>
 										</tr>
 										<tr>
 											<th>종결 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="end">
-												<input type="hidden" class="map" value="${map['end']}">
-												${fn:length(endlist)} 건
+												<input type="hidden" class="tag" value="fin">
+												<input type="hidden" class="map" value="${map['fin']}">
+												${fn:length(finList)} 건
 											</td>
 										</tr>
 									</table>
@@ -111,32 +111,32 @@
 										<tr>
 											<th>상신 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="m">
-												<input type="hidden" class="map" value="${map['m']}">
-												${fn:length(mlist)}  건
+												<input type="hidden" class="tag" value="myDraft">
+												<input type="hidden" class="map" value="${map['myDraft']}">
+												${fn:length(myDraftList)}  건
 											</td>
 										<tr>	
 											<th>참조문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="c">
-												<input type="hidden" class="map" value="${map['c']}">
-												${fn:length(clist)} 건
+												<input type="hidden" class="tag" value="ref">
+												<input type="hidden" class="map" value="${map['ref']}">
+												${fn:length(refList)} 건
 											</td>
 										</tr>
 										<tr>	
 											<th>결재 완료 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="mf">
-												<input type="hidden" class="map" value="${map['mf']}">
-												${fn:length(mflist)}  건
+												<input type="hidden" class="tag" value="myFinAp">
+												<input type="hidden" class="map" value="${map['myFinAp']}">
+												${fn:length(myFinApList)}  건
 											</td>
 										</tr>
 										<tr>
 											<th>반려 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="mr">
-												<input type="hidden" class="map" value="${map['mr']}">
-												${fn:length(mrlist)} 건
+												<input type="hidden" class="tag" value="myRejected">
+												<input type="hidden" class="map" value="${map['myRejected']}">
+												${fn:length(myRejectedDraftList)} 건
 											</td>
 										</tr>
 										<tr>
@@ -171,9 +171,9 @@
 												
 												if(tag=='m'){
 													$caption.text("● 기안문서 > 진행 문서");
-												}else if(tag=='mf'){
+												}else if(tag=='myFinAp'){
 													$caption.text("● 기안문서 > 종결 문서");
-												}else if(tag=='mr'){
+												}else if(tag=='myRejected'){
 													$caption.text("● 기안문서 > 중지(반려)문서");
 												}else if(tag=='g'){
 													$caption.text("● 결재문서 > 결재문서");
@@ -291,13 +291,13 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${empty glist}">
+										<c:if test="${empty draftList}">
 											<tr>
 												<td colspan="6">데이터가 없습니다.</td>
 											</tr>
 										</c:if>
-										<c:if test="${!empty glist}">
-											<c:forEach var="ap" items="${glist}">
+										<c:if test="${!empty draftList}">
+											<c:forEach var="ap" items="${draftList}">
 												<tr>
 													<td>${ap.apNo}</td>
 													<c:if test="${empty ap.a_v_first}">
@@ -316,8 +316,8 @@
 													<td>${ap.empNo}</td>
 													<td>${ap.apDate}</td>
 													<c:if test="${ap.apStatus eq 'Y'}">
-														<c:set var="approvalEmp" value="${ap.approvalEmpstatus}"/>
-														<c:set var="hEmp" value="${ap.hEmpstatus}"/>
+														<c:set var="approvalEmp" value="${ap.approvalEmpStatus}"/>
+														<c:set var="hEmp" value="${ap.hEmpStatus}"/>
 														
 														<c:if test="${fn:contains(hEmp, ',Y') or fn:contains(approvalEmp, ',Y')}">
 															<td>진행</td>
@@ -354,13 +354,13 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${empty clist}">
+										<c:if test="${empty refList}">
 											<tr>
 												<td colspan="6">데이터가 없습니다.</td>
 											</tr>
 										</c:if>
-										<c:if test="${!empty clist}">
-											<c:forEach var="ap" items="${clist}">
+										<c:if test="${!empty refList}">
+											<c:forEach var="ap" items="${refList}">
 												<tr>
 													<td>${ap.apNo}</td>
 													<c:if test="${empty ap.a_v_first}">
@@ -379,8 +379,8 @@
 													<td>${ap.empNo}</td>
 													<td>${ap.apDate}</td>
 													<c:if test="${ap.apStatus eq 'Y'}">
-														<c:set var="approvalEmp" value="${ap.approvalEmpstatus}"/>
-														<c:set var="hEmp" value="${ap.hEmpstatus}"/>
+														<c:set var="approvalEmp" value="${ap.approvalEmpStatus}"/>
+														<c:set var="hEmp" value="${ap.hEmpStatus}"/>
 														
 														<c:if test="${fn:contains(hEmp, ',Y') or fn:contains(approvalEmp, ',Y')}">
 															<td>진행</td>

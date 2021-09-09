@@ -29,7 +29,7 @@
           <input type="text" id="empNo" name="empNo" class="form-control" placeholder="사원번호">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-envelope" style="width:18px"></span>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
           <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+              <span class="fas fa-lock" style="width:18px"></span>
             </div>
           </div>
         </div>

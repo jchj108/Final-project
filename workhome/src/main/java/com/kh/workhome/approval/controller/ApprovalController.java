@@ -31,7 +31,7 @@ import com.kh.workhome.employee.model.vo.Employee;
 @Controller
 public class ApprovalController {
 	@Autowired
-	ApprovalService aService;
+	ApprovalService apService;
 	
 	@Autowired
 	private EmployeeService eService;
@@ -41,32 +41,32 @@ public class ApprovalController {
 	public ModelAndView approvalView(HttpSession session, ModelAndView mv) {
 		Employee loginUser = (Employee) session.getAttribute("loginUser");
 		String loginUserNo = loginUser.getEmpNo();
-		ArrayList<Approval> list = aService.selectApprovalList("%"+loginUserNo+"%");
+		ArrayList<Approval> list = apService.selectApprovalList("%"+loginUserNo+"%");
 		
 		//기안문서-내가 올린문서 중 진행중 혹은 상신중인 문서
-		ArrayList<Approval> mlist = new ArrayList<Approval>();
+		ArrayList<Approval> myDraftList = new ArrayList<Approval>();
 		//기안문서인데 결재완료됨
-		ArrayList<Approval> mflist = new ArrayList<Approval>();
+		ArrayList<Approval> myFinApList = new ArrayList<Approval>();
 		//기안문서인데 중지
-		ArrayList<Approval> mrlist = new ArrayList<Approval>();
+		ArrayList<Approval> myRejectedDraftList = new ArrayList<Approval>();
 		
 		//결재할문서 
-		ArrayList<Approval> glist = new ArrayList<Approval>();
+		ArrayList<Approval> draftList = new ArrayList<Approval>();
 		//결재한문서 
-		ArrayList<Approval> flist = new ArrayList<Approval>();
+		ArrayList<Approval> approvedList = new ArrayList<Approval>();
 		//(중지)반려문서(결재거절)
-		ArrayList<Approval> rlist = new ArrayList<Approval>();
+		ArrayList<Approval> rejectedList = new ArrayList<Approval>();
 		// 종결문서
-		ArrayList<Approval> endlist = new ArrayList<Approval>();
+		ArrayList<Approval> finList = new ArrayList<Approval>();
 		//참조문서
-		ArrayList<Approval> clist = new ArrayList<Approval>();
+		ArrayList<Approval> refList = new ArrayList<Approval>();
 		
 		//각 list 기안번호(apNo)를 담을 map
 		HashMap<String,ArrayList<String>> map = new HashMap<String,ArrayList<String>>();
 		
 		for(Approval ap : list) {
-			ap.sethEmpstatus(ap.gethEmp());
-			ap.setApprovalEmpstatus(ap.getApprovalEmp());
+			ap.sethEmpStatus(ap.gethEmp());
+			ap.setApprovalEmpStatus(ap.getApprovalEmp());
 			if(ap.gethEmp()!= null) {
 				ap.sethEmp(deleteStatus(ap.gethEmp()));
 			}
@@ -84,70 +84,69 @@ public class ApprovalController {
 				ap.setRefEmp("");
 			}
 			
-			//기안문서 - 로그인 empno와 기안자와 사번이 일치한다면 기안문서로
+			// 기안문서 - 로그인 empno와 기안자와 사번이 일치한다면 기안문서로
 			if(ap.getEmpNo().contains(loginUserNo)) {
 				if(ap.getApStatus().contentEquals("R")) {
 					//기안문서중 반려됨
-					mrlist.add(ap);
+					myRejectedDraftList.add(ap);
 				}else if(ap.getApStatus().contentEquals("D")) {
 					//기안문서중 종결됨
-					mflist.add(ap);
+					myFinApList.add(ap);
 				}else {
 					//진행중임
-					mlist.add(ap);
+					myDraftList.add(ap);
 				}
 				
-			//결재문서&& 합의문서
+			// 결재문서 && 합의문서
 			}else if(ap.getApprovalEmp().contains(loginUserNo)||(ap.gethEmp().contains(loginUserNo))) {
 				//1. 중지문서인가?
 				if(ap.getApStatus().equals("R")) {
 				//중지문서라면 중지문서에 넣음
-					rlist.add(ap);
+					rejectedList.add(ap);
 				}else if(ap.getApStatus().equals("D")){
 				//2. 종결문서인가?
-					endlist.add(ap);
+					finList.add(ap);
 				}else{
 				//3. 진행 혹은 상신문서 일 때 내가 결재를 했는가?
 					boolean check = false;
-					check = checkFile(check,ap.getApprovalEmpstatus(),loginUserNo);
-					if(ap.gethEmpstatus()!=null) {
-						check = checkFile(check,ap.gethEmpstatus(),loginUserNo);
+					check = checkFile(ap.getApprovalEmpStatus(),loginUserNo);
+					if(ap.gethEmpStatus()!=null) {
+						check = checkFile(ap.gethEmpStatus(),loginUserNo);
 					}
 					if(check) {
 						//결재를 해줬다면 결재한 문서에 추가
-						flist.add(ap);
+						approvedList.add(ap);
 					}else {
 						//아직 안해줬다면 결재 할 문서에 추가
-						glist.add(ap);
+						draftList.add(ap);
 					}
 				}
 			//참조문서 - 참조자에 내 이름이 들어잇을때
 			}else if(ap.getRefEmp().contains(loginUserNo)) {
-				clist.add(ap);
+				refList.add(ap);
 			} 
 		}
 		
 		//각 문서들 map에 담음
-		map.put("m", putIntheMap(mlist));
-		map.put("mf", putIntheMap(mflist));
-		map.put("mr", putIntheMap(mrlist));
-		map.put("g", putIntheMap(glist));
-		map.put("f", putIntheMap(flist));
-		map.put("r", putIntheMap(rlist));
-		map.put("end", putIntheMap(endlist));
-		map.put("c", putIntheMap(clist));
-		
+		map.put("myDraft", putIntheMap(myDraftList));
+		map.put("myFinAp", putIntheMap(myFinApList));
+		map.put("myRejectedDraft", putIntheMap(myRejectedDraftList));
+		map.put("draft", putIntheMap(draftList));
+		map.put("approved", putIntheMap(approvedList));
+		map.put("rejected", putIntheMap(rejectedList));
+		map.put("fin", putIntheMap(finList));
+		map.put("ref", putIntheMap(refList));
 		
 		mv.addObject("map",map);
-		mv.addObject("mlist", mlist);//기안문서-내가 올린문서 중 진행중 혹은 상신중인 문서
-		mv.addObject("mflist", mflist);//기안문서인데 결재완료됨
-		mv.addObject("mrlist", mrlist);//기안문서인데 중지(반려됨)
+		mv.addObject("myDraftList", myDraftList);//기안문서-내가 올린문서 중 진행중 혹은 상신중인 문서
+		mv.addObject("myFinApList", myFinApList);//기안문서인데 결재완료됨
+		mv.addObject("myRejectedDraftList", myRejectedDraftList);//기안문서인데 중지(반려됨)
 		
-		mv.addObject("glist", glist);//결재할 문서(합의, 결재 통합)
-		mv.addObject("flist", flist);//결재한 문서(합의, 결재 통합)
-		mv.addObject("rlist", rlist);//중지문서
-		mv.addObject("endlist", endlist);//종결문서
-		mv.addObject("clist", clist);//참조문서 (내가 시행자인 문서
+		mv.addObject("draftList", draftList);//결재할 문서(합의, 결재 통합)
+		mv.addObject("approvedList", approvedList);//결재한 문서(합의, 결재 통합)
+		mv.addObject("rejectedList", rejectedList);//중지문서
+		mv.addObject("finList", finList);//종결문서
+		mv.addObject("refList", refList);//참조문서 (내가 시행자인 문서
 		mv.setViewName("approval");
 		return mv;
 	}
@@ -157,7 +156,7 @@ public class ApprovalController {
 	public void apList(HttpServletResponse response, @RequestParam("map") String map) throws IOException {
 		map = map.substring(1, map.length() - 1);
 		String array[] = map.split(", ");
-		ArrayList<Approval> list = aService.selectApListByAr(array);
+		ArrayList<Approval> list = apService.selectApListByAr(array);
 
 		for (Approval ap : list) {
 			Employee e = new Employee();
@@ -193,26 +192,21 @@ public class ApprovalController {
 		return emp;
 	}
 
-	// 내가 결재를 해줬을까?
-	public boolean checkFile(boolean check, String emp, String loginUserNo) {
+	// 결재 처리 여부
+	public boolean checkFile(String emp, String loginUserNo) {
+		boolean check = false;
 		// 결재를 해줬다면 바로 종결
 		if (!check) {
-			if (emp.contains(";")) {
-				String array[] = emp.split(";");
+			if (emp.contains(",")) {        
+				String array[] = emp.split(",");
 				for (int i = 0; i < array.length; i++) {
-					String array2[] = array[i].split(",");
+					String array2[] = array[i].split("-");
 					if (array2[0].contains(loginUserNo) && !array2[1].equals("N")) {
 						// 내 사번에, 승인 또는 거절을 했다면
 						check = true;
 					}
 				}
-			} else {
-				String array2[] = emp.split(",");
-				if (array2[0].contains(loginUserNo) && !array2[1].equals("N")) {
-					// 내 사번에, 승인 또는 거절을 했다면
-					check = true;
-				}
-			}
+			}  
 		}
 		return check;
 	}
@@ -249,7 +243,6 @@ public class ApprovalController {
 		return mv;
 	}
 
-	// 기안할때 전역변수를 다음페이지로 넘겨줌
 	@RequestMapping("nextPage.ap")
 	public ModelAndView apporvalWriteView(ModelAndView mv,
 						@RequestParam("hEmp") String hEmp, @RequestParam("gEmp") String gEmp,
@@ -257,7 +250,7 @@ public class ApprovalController {
 		hEmp = cuttingFun(hEmp);
 		gEmp = cuttingFun(gEmp);
 		cEmp = cuttingFun(cEmp);
-
+		
 		mv.addObject("hEmp", hEmp);
 		mv.addObject("gEmp", gEmp);
 		mv.addObject("cEmp", cEmp);
@@ -266,7 +259,7 @@ public class ApprovalController {
 		return mv;
 	}
 
-	// 마지막 ', '구분자 없애는 메소드
+	// 마지막 ', '구분자 제거 메소드
 	public String cuttingFun(String str) {
 		if (!str.equals("")) {
 			str = str.substring(0, str.length() - 2);
@@ -278,12 +271,15 @@ public class ApprovalController {
 	@ResponseBody
 	public ModelAndView insertApproval(@ModelAttribute Approval ap, @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
 										HttpServletRequest request, HttpSession session, ModelAndView mv) {
-		ap.setApprovalEmp(insertMethod(ap.getApprovalEmp()));
-		if (!ap.gethEmp().equals("")) {
-			ap.sethEmp(insertMethod(ap.gethEmp()));
-		}
-		Employee loginUser = (Employee) session.getAttribute("loginUser");
-		ap.setEmpNo(loginUser.getEmpNo());
+		// 기안자 
+        Employee loginUser = (Employee)session.getAttribute("loginUser");
+        ap.setEmpNo(loginUser.getEmpNo());
+
+       // 합의자와 결재자 상태 초기화
+        if (!ap.gethEmp().equals("")) {                                   
+        	ap.sethEmp(initApStatus(ap.gethEmp()));    
+	    } 
+        ap.setApprovalEmp(initApStatus(ap.getApprovalEmp()));         
 
 		if (uploadFile != null && !uploadFile.isEmpty()) {
 			String renameFileName = saveFile(uploadFile, request);
@@ -293,7 +289,7 @@ public class ApprovalController {
 			}
 		}
 		
-		aService.insertApproval(ap);
+		apService.insertApproval(ap);
 		
 		// 알림 전송
 		HashMap<String, Object> map = new HashMap<>();
@@ -303,7 +299,7 @@ public class ApprovalController {
 		ArrayList<String> emp = new ArrayList<String>();
 		emp = splitEmp1(ap.gethEmp(), emp);
 		emp = splitEmp1(ap.getApprovalEmp(), emp);
-		emp = splitEmp2(ap.getRefEmp(), emp);
+		emp = splitEmp1(ap.getRefEmp(), emp);
 		map.put("empNo", emp);
 		eService.insertAlert(map);
 
@@ -311,18 +307,18 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	// DB에 보낼 때 결재 혹은 합의가 되지 않았음을 보내줌 - 기본 삽입이므로!
-	public String insertMethod(String empStr) {
-		String array[] = empStr.split(", ");
-		empStr = "";
+	// 사원별 결재상태 초기화
+	public String initApStatus(String emps) {
+		String array[] = emps.split(", ");
+		emps = "";
 		for (int i = 0; i < array.length; i++) {
 			if (i != array.length - 1) {
-				empStr += array[i] + ",N;";
+				emps += array[i] + "-N, ";
 			} else {
-				empStr += array[i] + ",N";
+				emps += array[i] + "-N";
 			}
 		}
-		return empStr;
+		return emps;
 	}
 	
 	// 파일 rename
@@ -350,23 +346,8 @@ public class ApprovalController {
 		return renameFileName;
 	}
 	
-	// 알람 insert용 사원 다시 끊기 
+	// 알람 insert용 사원 끊기 
 	public ArrayList<String> splitEmp1(String str, ArrayList<String> emp) {
-		if (!str.equals("")) {
-			if (str.contains(";")) {
-				String[] temp = str.split(";");
-				for (int i = 0; i < temp.length; i++) {
-					emp.add(temp[i].substring(temp[i].indexOf("(") + 1, temp[i].indexOf(")")));
-				}
-			} else {
-				emp.add(str.substring(str.indexOf("(") + 1, str.indexOf(")")));
-			}
-		}
-		return emp;
-	}
-
-	// 구분자가 다르기때문에 메소드 2
-	public ArrayList<String> splitEmp2(String str, ArrayList<String> emp) {
 		if (!str.equals("")) {
 			if (str.contains(",")) {
 				String[] temp = str.split(",");
@@ -382,7 +363,7 @@ public class ApprovalController {
 
 	@RequestMapping("apDetail.ap")
 	public ModelAndView apDetail(ModelAndView mv, @RequestParam("apNo") String apNo, @RequestParam(value="tag", required=false) String tag) {
-		Approval ap = aService.selectApprovalDetail(apNo);
+		Approval ap = apService.selectApprovalDetail(apNo);
 		// 출력용 기안자 만들기- 이름붙이기
 		Employee e = new Employee();
 		e.setEmpNo(ap.getEmpNo());
@@ -420,7 +401,7 @@ public class ApprovalController {
 			ap.setApStatus("D");
 		}
 
-		int result = aService.updateAp(ap);
+		int result = apService.updateAp(ap);
 
 		if (result > 0) {
 			return "success";
@@ -449,7 +430,7 @@ public class ApprovalController {
 	@RequestMapping("deleteAp.ap")
 	@ResponseBody
 	public String deleteAp(@RequestParam("apNo") String apNo) {
-		int result = aService.deleteAp(apNo);
+		int result = apService.deleteAp(apNo);
 		if (result > 0) {
 			return "success";
 		} else {

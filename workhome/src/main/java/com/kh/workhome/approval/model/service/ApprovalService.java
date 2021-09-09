@@ -9,41 +9,41 @@ import org.springframework.stereotype.Service;
 import com.kh.workhome.approval.model.dao.ApprovalDAO;
 import com.kh.workhome.approval.model.vo.Approval;
 
-@Service("aService")
+@Service("apService")
 public class ApprovalService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
 	@Autowired
-	ApprovalDAO aDAO;
+	ApprovalDAO apDAO;
 
 	public int insertApproval(Approval ap) {
-		return aDAO.insertApproval(sqlSession, ap);
+		return apDAO.insertApproval(sqlSession, ap);
 	}
 
 	public ArrayList<Approval> selectApprovalList(String empNo) {
-		return aDAO.selectApprovalList(sqlSession, empNo);
+		return apDAO.selectApprovalList(sqlSession, empNo);
 	}
 
 	public Approval selectApprovalDetail(String apNo) {
-		return aDAO.selectApprovalDetail(sqlSession, apNo);
+		return apDAO.selectApprovalDetail(sqlSession, apNo);
 	}
 
 	public int updateAp(Approval ap) {
-		return aDAO.updateAp(sqlSession, ap);
+		return apDAO.updateAp(sqlSession, ap);
 	}
 
 	public ArrayList<Approval> selectApListByAr(String[] array) {
-		return aDAO.selectApListByAr(sqlSession, array);
+		return apDAO.selectApListByAr(sqlSession, array);
 	}
 
 	public int deleteAp(String apNo) {
-		return aDAO.deleteAp(sqlSession, apNo);
+		return apDAO.deleteAp(sqlSession, apNo);
 	}
 
 	public ArrayList<Approval> selectDeptVacation(ArrayList<String> emp) {
-		return aDAO.selectDeptVacation(sqlSession, emp);
+		return apDAO.selectDeptVacation(sqlSession, emp);
 	}
 
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.workhome.approval.model.vo.Approval;
 
-@Repository("aDAO")
+@Repository("apDAO")
 public class ApprovalDAO {
 
 	public int insertApproval(SqlSessionTemplate sqlSession, Approval ap) {
