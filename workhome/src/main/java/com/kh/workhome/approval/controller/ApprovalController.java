@@ -245,15 +245,15 @@ public class ApprovalController {
 
 	@RequestMapping("nextPage.ap")
 	public ModelAndView apporvalWriteView(ModelAndView mv,
-						@RequestParam("hEmp") String hEmp, @RequestParam("gEmp") String gEmp,
-						@RequestParam("cEmp") String cEmp, @RequestParam("tag") String tag) {
+						@RequestParam("hEmp") String hEmp, @RequestParam("approvalEmp") String approvalEmp,
+						@RequestParam("refEmp") String refEmp, @RequestParam("tag") String tag) {
 		hEmp = cuttingFun(hEmp);
-		gEmp = cuttingFun(gEmp);
-		cEmp = cuttingFun(cEmp);
+		approvalEmp = cuttingFun(approvalEmp);
+		refEmp = cuttingFun(refEmp);
 		
 		mv.addObject("hEmp", hEmp);
-		mv.addObject("gEmp", gEmp);
-		mv.addObject("cEmp", cEmp);
+		mv.addObject("approvalEmp", approvalEmp);
+		mv.addObject("refEmp", refEmp);
 		mv.addObject("tag", tag);
 		mv.setViewName("approvalWrite");
 		return mv;

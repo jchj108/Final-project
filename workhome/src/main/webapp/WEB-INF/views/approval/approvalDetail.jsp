@@ -91,11 +91,11 @@
 						  	  <c:set var="tag" value="${tag}"/>
 						  	  <!--결재 할 문서일때  -->
 						  	 <c:set var="empNo" value="${loginUser.empNo}"/>
-							  <c:if test="${tag eq 'g'}">
+							  <c:if test="${tag eq 'draft'}">
 							  	 <c:set var="approvalEmp" value="${ap.approvalEmp}"/>
 							  	 <c:if test="${fn:contains(approvalEmp, empNo)}">
 								 	 <button type="button" id="agreeFun" class="btn btn-success">결재</button>
-								 	 <button type="button" id="disareeFun" class="btn btn-danger">반려</button>
+								 	 <button type="button" id="disagreeFun" class="btn btn-danger">반려</button>
 							  	 </c:if>
 							  	 <c:set var="hEmp" value="${ap.hEmp}" />
 							  	 <c:if test="${fn:contains(hEmp,empNo)}">
@@ -103,8 +103,8 @@
 								 	 <button type="button" id="nopeFun" class="btn btn-danger">거절</button>
 							  	 </c:if>
 							 </c:if>
-							  <c:set var="gEmp" value="${ap.empNo}"/>
-							  <c:if test="${fn:contains(gEmp,empNo)}">
+							  <c:set var="drafter" value="${ap.empNo}"/>
+							  <c:if test="${fn:contains(drafter,empNo)}">
 								 	<button id="deleteBtn" class="btn btn-danger">삭제하기</button>
 							 </c:if>
 							  <button type="button" onclick="javascript:location.href='approvalView.ap';" class="btn btn-secondary">목록으로</button>
@@ -121,7 +121,7 @@
 						}
 					});
 					
-					$(document).on('click','#disareeFun',function(){
+					$(document).on('click','#disagreeFun',function(){
 						if(confirm("'${ap.apTitle}'를 정말로 반려 하시겠습니까?")){
 							var cate = "g";
 							var agree = "R";

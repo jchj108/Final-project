@@ -46,10 +46,10 @@
 						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${hEmp}" name="hEmp" readonly>
 						   </div>
 						   <div class="form-group col-lg-6">
-						    	<strong>결재자 : </strong><input type="text" class="form-control" value="${gEmp}" name="approvalEmp" readonly>
+						    	<strong>결재자 : </strong><input type="text" class="form-control" value="${approvalEmp}" name="approvalEmp" readonly>
 						   </div>
 						    <div class="form-group col-lg-6">
-						    	<strong>참조자 : </strong><input type="text" class="form-control" value="${cEmp}" name="refEmp" readonly>
+						    	<strong>참조자 : </strong><input type="text" class="form-control" value="${refEmp}" name="refEmp" readonly>
 					    </div>
 					    </div>
 					  <div class="form-group">

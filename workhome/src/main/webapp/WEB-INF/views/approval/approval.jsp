@@ -134,8 +134,8 @@
 										<tr>
 											<th>반려 문서</th>
 											<td class="aplist">
-												<input type="hidden" class="tag" value="myRejected">
-												<input type="hidden" class="map" value="${map['myRejected']}">
+												<input type="hidden" class="tag" value="myRejectedDraft">
+												<input type="hidden" class="map" value="${map['myRejectedDraft']}">
 												${fn:length(myRejectedDraftList)} 건
 											</td>
 										</tr>
@@ -169,23 +169,21 @@
 												var $tbody = $("<tbody>");
 												var $caption = $("<caption>");
 												
-												if(tag=='m'){
+												if(tag=='myDraft'){
 													$caption.text("● 기안문서 > 진행 문서");
 												}else if(tag=='myFinAp'){
 													$caption.text("● 기안문서 > 종결 문서");
-												}else if(tag=='myRejected'){
+												}else if(tag=='myRejectedDraft'){
 													$caption.text("● 기안문서 > 중지(반려)문서");
-												}else if(tag=='g'){
+												}else if(tag=='draft'){
 													$caption.text("● 결재문서 > 결재문서");
-												}else if(tag=='f'){
+												}else if(tag=='approved'){
 													$caption.text("● 결재문서 > 결재완료");
-												}else if(tag=='r'){
+												}else if(tag=='rejected'){
 													$caption.text("● 결재문서 > 중단문서");
-												}else if(tag=='end'){
+												}else if(tag=='fin'){
 													$caption.text("● 결재문서 > 종결문서");
-												}else if(tag=='s'){
-													$caption.text("● 결재문서 > 시행문서");
-												}else if(tag=='c'){
+												}else if(tag=='ref'){
 													$caption.text("● 결재문서 > 참조문서");
 												}
 												
@@ -206,13 +204,13 @@
 														var $td6 = $("<td>");
 															if(data[i].apStatus=="Y"){
 																if((data[i].hEmp)== null || (data[i].hEmp)==""){
-																	if((data[i].approvalEmp).includes(",Y") ){
+																	if((data[i].approvalEmp).includes("-Y") ){
 																		$td6.text("진행");
 																	}else{
 																		$td6.text("상신");
 																	}
 																}else{
-																	if((data[i].hEmp).includes(",Y") || (data[i].approvalEmp).includes(",Y") ){
+																	if((data[i].hEmp).includes("-Y") || (data[i].approvalEmp).includes("-Y") ){
 																		$td6.text("진행");
 																	}else{
 																		$td6.text("상신");
@@ -309,7 +307,7 @@
 													<td>
 														<c:url var="apDetail" value="apDetail.ap">
 															<c:param name="apNo" value="${ap.apNo}"/>
-															<c:param name="tag" value="g"/>
+															<c:param name="tag" value="draft"/>
 														</c:url>
 														<a href="${apDetail}">${ap.apTitle}</a>
 													</td>
@@ -319,10 +317,10 @@
 														<c:set var="approvalEmp" value="${ap.approvalEmpStatus}"/>
 														<c:set var="hEmp" value="${ap.hEmpStatus}"/>
 														
-														<c:if test="${fn:contains(hEmp, ',Y') or fn:contains(approvalEmp, ',Y')}">
+														<c:if test="${fn:contains(hEmp, '-Y') or fn:contains(approvalEmp, '-Y')}">
 															<td>진행</td>
 														</c:if>
-														<c:if test="${!fn:contains(hEmp, ',Y') and !fn:contains(approvalEmp, ',Y')}">
+														<c:if test="${!fn:contains(hEmp, '-Y') and !fn:contains(approvalEmp, '-Y')}">
 															<td>상신</td>
 														</c:if>
 													</c:if>
@@ -372,7 +370,7 @@
 													<td>
 														<c:url var="apDetail" value="apDetail.ap">
 															<c:param name="apNo" value="${ap.apNo}"/>
-															<c:param name="tag" value="c"/>
+															<c:param name="tag" value="ref"/>
 														</c:url>
 														<a href="${apDetail}">${ap.apTitle}</a>
 													</td>
@@ -382,10 +380,10 @@
 														<c:set var="approvalEmp" value="${ap.approvalEmpStatus}"/>
 														<c:set var="hEmp" value="${ap.hEmpStatus}"/>
 														
-														<c:if test="${fn:contains(hEmp, ',Y') or fn:contains(approvalEmp, ',Y')}">
+														<c:if test="${fn:contains(hEmp, '-Y') or fn:contains(approvalEmp, '-Y')}">
 															<td>진행</td>
 														</c:if>
-														<c:if test="${!fn:contains(hEmp, ',Y') and !fn:contains(approvalEmp, ',Y')}">
+														<c:if test="${!fn:contains(hEmp, '-Y') and !fn:contains(approvalEmp, '-Y')}">
 															<td>상신</td>
 														</c:if>
 													</c:if>
