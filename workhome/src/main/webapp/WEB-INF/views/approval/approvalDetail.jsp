@@ -48,7 +48,7 @@
 						   		<c:set var="str01" value="${ap.hEmp}"/>
 								<c:set var="str02" value="${fn:replace(str01, '-N', '-미결')}" />
 								<c:set var="str03" value="${fn:replace(str02, '-R', '-거부')}" />
-								<c:set var="str04" value="${fn:replace(str03, 'Y', '-합의')}" />
+								<c:set var="str04" value="${fn:replace(str03, '-Y', '-합의')}" />
 						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${str04}" readonly>
 						   </div>
 						   <div class="form-group col-lg-6">
