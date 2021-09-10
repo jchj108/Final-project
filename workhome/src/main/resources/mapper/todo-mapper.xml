@@ -20,17 +20,27 @@
 	</delete>
 	
 	<update id="updateToDo">
+		<if test="title==null or title.equals('null') or title.equals('')">
 		update todo
 		set 
 			tstartdate = #{start},
-			tenddate = #{end},
-			ttitle = #{title},
-			ttype = #{type},
-			bgcolor = #{backgroundColor},
-			allday = #{allDay},
-			TCONTENT = #{description}
+			tenddate = #{end}
 		where tno = #{tNo}
 		and empno = #{empNo}
+		</if>
+		<if test="title!=null">
+			update todo
+			set 
+				tstartdate = #{start},
+				tenddate = #{end},
+				ttitle = #{title},
+				ttype = #{type},
+				bgcolor = #{backgroundColor},
+				allday = #{allDay},
+				TCONTENT = #{description}
+			where tno = #{tNo}
+			and empno = #{empNo}
+		</if>
 	</update>
 	
 	<resultMap type="Todo" id="toDoResultSet">

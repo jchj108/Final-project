@@ -23,7 +23,7 @@ private SqlSessionTemplate sqlSession;
 	public int insertToDo(ToDo toDo) {
 		return tDAO.insertToDo(sqlSession, toDo);
 	}
-
+	
 	@Override
 	public ArrayList<ToDo> getAllList(String empNo) {
 		return tDAO.getAllList(sqlSession, empNo);
