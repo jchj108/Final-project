@@ -45,24 +45,22 @@
 					   </div>
 					   <div class="row">
 						   <div class="form-group col-lg-6">
-						   		<c:set var="str1" value="${ap.approvalEmp}"/>
-								<c:set var="str2" value="${fn:replace(str1, ',N', '-미결')}" />
-								<c:set var="str3" value="${fn:replace(str2, ',R', '-반려')}" />
-								<c:set var="str4" value="${fn:replace(str3, ',Y', '-승인완료')}" />
-								<c:set var="str5" value="${fn:replace(str4, ';', ', ')}" />
-						    	<strong>결재자 : </strong><input type="text" class="form-control" value="${str5}" readonly>
+						   		<c:set var="str01" value="${ap.hEmp}"/>
+								<c:set var="str02" value="${fn:replace(str01, '-N', '-미결')}" />
+								<c:set var="str03" value="${fn:replace(str02, '-R', '-거부')}" />
+								<c:set var="str04" value="${fn:replace(str03, '-Y', '-합의')}" />
+						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${str04}" readonly>
 						   </div>
 						   <div class="form-group col-lg-6">
-						   		<c:set var="str01" value="${ap.hEmp}"/>
-								<c:set var="str02" value="${fn:replace(str01, ',N', '-미결')}" />
-								<c:set var="str03" value="${fn:replace(str02, ',R', '-거부')}" />
-								<c:set var="str04" value="${fn:replace(str03, ',Y', '-합의')}" />
-								<c:set var="str05" value="${fn:replace(str04, ';', ', ')}" />
-						    	<strong>합의자 : </strong><input type="text" class="form-control" value="${str05}" readonly>
+						   		<c:set var="str1" value="${ap.approvalEmp}"/>
+								<c:set var="str2" value="${fn:replace(str1, '-N', '-미결')}" />
+								<c:set var="str3" value="${fn:replace(str2, '-R', '-반려')}" />
+								<c:set var="str4" value="${fn:replace(str3, '-Y', '-승인완료')}" />
+						    	<strong>결재자 : </strong><input type="text" class="form-control" value="${str4}" readonly>
 						   </div>
 						    <div class="form-group col-lg-6">
 						    	<strong>참조자 : </strong><input type="text" class="form-control" value="${ap.refEmp}" readonly>
-					    </div>
+					    	</div>
 					    </div>
 				   		<c:if test="${empty ap.a_v_first}">
 					   	<div class="form-group">
@@ -93,11 +91,11 @@
 						  	  <c:set var="tag" value="${tag}"/>
 						  	  <!--결재 할 문서일때  -->
 						  	 <c:set var="empNo" value="${loginUser.empNo}"/>
-							  <c:if test="${tag eq 'g'}">
+							  <c:if test="${tag eq 'draft'}">
 							  	 <c:set var="approvalEmp" value="${ap.approvalEmp}"/>
 							  	 <c:if test="${fn:contains(approvalEmp, empNo)}">
 								 	 <button type="button" id="agreeFun" class="btn btn-success">결재</button>
-								 	 <button type="button" id="disareeFun" class="btn btn-danger">반려</button>
+								 	 <button type="button" id="disagreeFun" class="btn btn-danger">반려</button>
 							  	 </c:if>
 							  	 <c:set var="hEmp" value="${ap.hEmp}" />
 							  	 <c:if test="${fn:contains(hEmp,empNo)}">
@@ -105,8 +103,8 @@
 								 	 <button type="button" id="nopeFun" class="btn btn-danger">거절</button>
 							  	 </c:if>
 							 </c:if>
-							  <c:set var="gEmp" value="${ap.empNo}"/>
-							  <c:if test="${fn:contains(gEmp,empNo)}">
+							  <c:set var="drafter" value="${ap.empNo}"/>
+							  <c:if test="${fn:contains(drafter,empNo)}">
 								 	<button id="deleteBtn" class="btn btn-danger">삭제하기</button>
 							 </c:if>
 							  <button type="button" onclick="javascript:location.href='approvalView.ap';" class="btn btn-secondary">목록으로</button>
@@ -123,7 +121,7 @@
 						}
 					});
 					
-					$(document).on('click','#disareeFun',function(){
+					$(document).on('click','#disagreeFun',function(){
 						if(confirm("'${ap.apTitle}'를 정말로 반려 하시겠습니까?")){
 							var cate = "g";
 							var agree = "R";

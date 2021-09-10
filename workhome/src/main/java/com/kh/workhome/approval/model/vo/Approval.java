@@ -8,15 +8,14 @@ public class Approval {
 	private String apTitle;// 제목
 	private String apContent;// 내용
 	private String approvalEmp;// 결재자
-	private String runEmp;// 시행자
-	private String refEmp;// 참조자 - 수신자
+	private String refEmp;// 참조자 
 	private String hEmp;// 합의자
 	private Date apDate;// 상신일
 	private Date fiDate;// 결재일
 	private Date dDate;// 마감일
-	private String apStatus;//진행상태 --합의 거부일 때 R로 변경 N은 삭제, Y는 정상노출, D - 종결문서, R-중단문서
-	private String approvalEmpstatus;// 결재상태
-	private String hEmpstatus;// 합의 여부 ???
+	private String apStatus;//진행상태 -- 합의 거부일 때 R로 변경 N은 삭제, Y는 정상노출, D - 종결문서, R-중단문서
+	private String approvalEmpStatus;// 결재상태
+	private String hEmpStatus;// 합의 여부 
 	private Date a_v_first;// 휴가 시작일
 	private Date a_v_last;// 휴가 종료작일
 	private String originalFile;// 첨부파일 원래이름
@@ -24,24 +23,23 @@ public class Approval {
 
 	public Approval() {}
 	
-	public Approval(String apNo, String empNo, String apTitle, String apContent, String approvalEmp, String runEmp,
-			String refEmp, String hEmp, Date apDate, Date fiDate, Date dDate, String apStatus, String approvalEmpstatus,
-			String hEmpstatus, Date a_v_first, Date a_v_last, String originalFile, String renameFile) {
+	public Approval(String apNo, String empNo, String apTitle, String apContent, String approvalEmp,  
+			String refEmp, String hEmp, Date apDate, Date fiDate, Date dDate, String apStatus, String approvalEmpStatus,
+			String hEmpStatus, Date a_v_first, Date a_v_last, String originalFile, String renameFile) {
 		super();
 		this.apNo = apNo;
 		this.empNo = empNo;
 		this.apTitle = apTitle;
 		this.apContent = apContent;
 		this.approvalEmp = approvalEmp;
-		this.runEmp = runEmp;
 		this.refEmp = refEmp;
 		this.hEmp = hEmp;
 		this.apDate = apDate;
 		this.fiDate = fiDate;
 		this.dDate = dDate;
 		this.apStatus = apStatus;
-		this.approvalEmpstatus = approvalEmpstatus;
-		this.hEmpstatus = hEmpstatus;
+		this.approvalEmpStatus = approvalEmpStatus;
+		this.hEmpStatus = hEmpStatus;
 		this.a_v_first = a_v_first;
 		this.a_v_last = a_v_last;
 		this.originalFile = originalFile;
@@ -88,13 +86,6 @@ public class Approval {
 		this.approvalEmp = approvalEmp;
 	}
 
-	public String getRunEmp() {
-		return runEmp;
-	}
-
-	public void setRunEmp(String runEmp) {
-		this.runEmp = runEmp;
-	}
 
 	public String getRefEmp() {
 		return refEmp;
@@ -144,20 +135,20 @@ public class Approval {
 		this.apStatus = apStatus;
 	}
 
-	public String getApprovalEmpstatus() {
-		return approvalEmpstatus;
+	public String getApprovalEmpStatus() {
+		return approvalEmpStatus;
 	}
 
-	public void setApprovalEmpstatus(String approvalEmpstatus) {
-		this.approvalEmpstatus = approvalEmpstatus;
+	public void setApprovalEmpStatus(String approvalEmpStatus) {
+		this.approvalEmpStatus = approvalEmpStatus;
 	}
 
-	public String gethEmpstatus() {
-		return hEmpstatus;
+	public String gethEmpStatus() {
+		return hEmpStatus;
 	}
 
-	public void sethEmpstatus(String hEmpstatus) {
-		this.hEmpstatus = hEmpstatus;
+	public void sethEmpStatus(String hEmpStatus) {
+		this.hEmpStatus = hEmpStatus;
 	}
 
 	public Date getA_v_first() {
@@ -195,8 +186,8 @@ public class Approval {
 	@Override
 	public String toString() {
 		return "Approval [apNo=" + apNo + ", empNo=" + empNo + ", apTitle=" + apTitle + ", apContent=" + apContent
-				+ ", approvalEmp=" + approvalEmp + ", approvalEmpstatus=" + approvalEmpstatus + ", runEmp=" + runEmp
-				+ ", refEmp=" + refEmp + ", hEmp=" + hEmp + ", hEmpstatus=" + hEmpstatus + ", apDate=" + apDate
+				+ ", approvalEmp=" + approvalEmp + ", approvalEmpStatus=" + approvalEmpStatus 
+				+ ", refEmp=" + refEmp + ", hEmp=" + hEmp + ", hEmpStatus=" + hEmpStatus + ", apDate=" + apDate
 				+ ", fiDate=" + fiDate + ", dDate=" + dDate + ", apStatus=" + apStatus + ", a_v_first=" + a_v_first
 				+ ", a_v_last=" + a_v_last + ", originalFile=" + originalFile + ", renameFile=" + renameFile + "]";
 	}
