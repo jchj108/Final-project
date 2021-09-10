@@ -79,8 +79,8 @@ li {
 				<div class="container-fluid">
 				<script type="text/javascript">
 					var hEmp = "";
-					var gEmp = "";
-					var cEmp = "";
+					var approvalEmp = "";
+					var refEmp = "";
 					var tEmp = "";
 				</script>
 					<br>
@@ -270,7 +270,7 @@ li {
 								 
 				                	//list 더블클릭시 제거
 									$(document).on('dblclick','.realG',function(){
-										removeLi(this,gEmp);
+										removeLi(this,approvalEmp);
 										
 									});
 								
@@ -285,7 +285,7 @@ li {
 								 
 				                	//list 더블클릭시 제거
 									$(document).on('dblclick','.realC',function(){
-										removeLi(this,cEmp);
+										removeLi(this,refEmp);
 										
 									});
 				                	
@@ -315,9 +315,9 @@ li {
 						              		if(listId == '#hlist'){
 						              			hEmp += empNo +', ';
 						              		}else if(listId == '#clist'){
-						              			cEmp += empNo +', ';
+						              			refEmp += empNo +', ';
 						              		}else if(listId == '#glist'){
-						              			gEmp += empNo +', ';
+						              			approvalEmp += empNo +', ';
 						              		}
 						              		
 						              		tEmp += empNo +', ';
@@ -353,11 +353,11 @@ li {
 											hEmp = empV;
 											console.log(hEmp);
 										}else if(class_name.includes('realG')){
-											gEmp = empV;
-											console.log(gEmp);
+											approvalEmp = empV;
+											console.log(approvalEmp);
 										}else if(class_name.includes('realC')){
-											cEmp = empV;
-											console.log(cEmp);
+											refEmp = empV;
+											console.log(refEmp);
 										}
 										
 										array = tEmp.split(', ');
@@ -432,13 +432,13 @@ li {
 	</div>
 		<script>
 			function nextFun(){
-				if(gEmp!=''){
+				if(approvalEmp!=''){
 				var tag = "${tag}";
 				$hiddenform =$('#hiddenform');
 				$hiddenform.html('');
 				var $input1 =$('<input name="hEmp" type="hidden">').val(hEmp);
-				var $input2 =$('<input name="gEmp" type="hidden">').val(gEmp);
-				var $input3 =$('<input name="cEmp" type="hidden">').val(cEmp);
+				var $input2 =$('<input name="approvalEmp" type="hidden">').val(approvalEmp);
+				var $input3 =$('<input name="refEmp" type="hidden">').val(refEmp);
 				var $input4 =$('<input name="tag" type="hidden">').val(tag);
 				
 				$hiddenform.append($input1);

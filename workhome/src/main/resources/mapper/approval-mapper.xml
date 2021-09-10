@@ -6,7 +6,6 @@
 		from APPROVAL
 		where (EMPNO like #{empno}
 		or APPROVALEMP like #{empno}
-		or RUNEMP like #{empno}
 		or REFEMP like #{empno}
 		or HEMP like #{empno}
 		)and APSTATUS!='N'
@@ -19,7 +18,6 @@
 				#{apTitle}, 
 				#{apContent}, 
 				#{approvalEmp}, 
-				#{runEmp},
 				#{refEmp}, 
 				#{hEmp},
 				sysdate, 
@@ -38,7 +36,6 @@
 		<result column="APTITLE" property="apTitle"/>
 		<result column="APCONTENT" property="apContent"/>
 		<result column="APPROVALEMP" property="approvalEmp"/>
-		<result column="RUNEMP" property="runEmp"/>
 		<result column="REFEMP" property="refEmp"/>
 		<result column="HEMP" property="hEmp"/>
 		<result column="APDATE" property="apDate"/>
