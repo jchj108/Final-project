@@ -228,7 +228,7 @@
 					$(".finishbtn").fadeIn(1000);
 					$(".startwork").text("출근 : " + data);
 					$(".finishwork").text("퇴근 : 아직 퇴근 시간이 기록되지 않았어요!");
-					clock.start():
+					clock.start();
 				}
 			}
 		});
