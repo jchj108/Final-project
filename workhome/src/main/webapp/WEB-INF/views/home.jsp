@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,40 +8,78 @@
 <title>AdminLTE 3 | Calendar</title>
 
 <!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
 <!-- Font Awesome -->
-<link rel="stylesheet"
-	href="${contextPath }/resources/plugins/fontawesome-free/css/all.min.css" />
-<!-- fullCalendar -->
+<link rel="stylesheet" href="${contextPath }/resources/plugins/fontawesome-free/css/all.min.css" />
 <!-- Theme style -->
-<link rel="stylesheet"
-	href="${contextPath }/resources/dist/css/adminlte.min.css" />
-	
-<link rel="stylesheet"
-	href="${contextPath}/resources/plugins/fullcalendar/main.css" />
-<link
-	href="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/core/main.css"
-	rel="stylesheet" />
-<link
-	href="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/daygrid/main.css"
-	rel="stylesheet" />
-<script
-	src="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/core/main.js"></script>
-<script
-	src="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/interaction/main.js"></script>
-<script
-	src="${contextPath }/resources/plugins/fullcalendar-4.4.0/packages/daygrid/main.js"></script>
+<link rel="stylesheet" href="${contextPath }/resources/dist/css/adminlte.min.css" />
+<!-- fullCalendar -->
+<link rel="stylesheet" href='${contextPath }/resources/FullCalendar-Example-master/vendor/css/select2.min.css' />
+<link rel="stylesheet" href='${contextPath }/resources/FullCalendar-Example-master/vendor/css/bootstrap-datetimepicker.min.css' />
+<link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/vendor/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/css/main.css">
+<link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/vendor/css/fullcalendar.min.css" />
+<!-- fullCalendar -->
 
 
 <style>
 .chulgun {
 	transition: .8s;
 }
+
+<
+style>.btn-tool {
+	position: relative;
+	top: 12px;
+}
+
+#space {
+	height: 100px;
+	background-color: #f4f6f9;
+}
+
+#eventModal {
+	padding-right: 0px !important;
+}
+
+.modal-header .close {
+	padding: 1rem;
+	margin: -1rem -1rem -1rem auto;
+	opacity: .5;
+}
+/* 모달 가운데 */
+.modal {
+	text-align: center;
+}
+
+.fc-title, .fc-time {
+	font-size: 11.9px;
+}
+
+#eventModal {
+	padding-bottom: 80px;
+	padding-right: 0px;
+}
+
+@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
+/* 모달 가운데 */
+</style>
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
-	<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 	<div class="wrapper">
 		<!-- header -->
 		<jsp:include page="common/header.jsp"></jsp:include>
@@ -52,20 +89,17 @@
 		<jsp:include page="common/sidebar.jsp"></jsp:include>
 		<!-- /sidebar -->
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<div id="wrapper">
+		<div class="wrapper">
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
 				<div class="container-fluid">
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Home</h1>
 					</div>
 					<div class="row">
 						<div class="col-lg-7">
-							<div class="card shadow mb-4">
-								<div class="card-body">
-									<div id="calendar"></div>
-								</div>
+							<div class="card card-primary">
+								<div id="calendar" class="fc fc-unthemed fc-ltr"></div>
 							</div>
 						</div>
 						<div class="col-lg-5">
@@ -92,22 +126,18 @@
 										</p>
 									</div>
 									<c:if test="${empty map.ATTEND}">
-										<a id="startbtn" class="btn btn-primary btn-user btn-block"
-											style="color: white;"> 출근하기 </a>
+										<a id="startbtn" class="btn btn-primary btn-user btn-block" style="color: white;"> 출근하기 </a>
 									</c:if>
 									<c:if test="${!empty map.ATTEND &&  empty map.GOHOME}">
-										<a id="off" class="btn btn-success btn-user btn-block finishbtn"
-											style="color: white;"> 퇴근하기 </a>
+										<a id="off" class="btn btn-success btn-user btn-block finishbtn" style="color: white;"> 퇴근하기 </a>
 									</c:if>
-									<a class="btn btn-success btn-user btn-block finishbtn"
-										style="color: white; display: none;"> 퇴근하기 </a>
+									<a class="btn btn-success btn-user btn-block finishbtn" style="color: white; display: none;"> 퇴근하기 </a>
 								</div>
 							</div>
 
 							<div class="card shadow mb-4">
 								<div class="card-body">
-									<h4 id="board" style="margin-bottom: 1rem; cursor: pointer">
-										최신 공지</h4>
+									<h4 id="board" style="margin-bottom: 1rem; cursor: pointer">최신 공지</h4>
 									<div class="table-responsive">
 										<table class="table table-bordered" id="tb">
 											<thead>
@@ -128,24 +158,17 @@
 							</div>
 							<div class="card shadow mb-4">
 								<div class="card-body">
-									<h4 style="margin-bottom: 1rem; cursor: pointer" id="go_todo">
-										할일</h4>
+									<h4 style="margin-bottom: 1rem; cursor: pointer" id="go_todo">할일</h4>
 									<div class="table-responsive">
 										<table class="table table-bordered">
 											<tr class="todo_tr">
-												<td><i class="fa fa-check todo_check"
-													aria-hidden="true" style="float: right; margin-right: 1rem"></i>
-												</td>
+												<td><i class="fa fa-check todo_check" aria-hidden="true" style="float: right; margin-right: 1rem"></i></td>
 											</tr>
 											<tr id="hideTr">
-												<td class="empty_todo"
-													style="text-align: center; cursor: pointer">아직 등록된 할
-													일이 없습니다!</td>
+												<td class="empty_todo" style="text-align: center; cursor: pointer">아직 등록된 할 일이 없습니다!</td>
 											</tr>
 											<tr>
-												<td class="empty_todo"
-													style="text-align: center; cursor: pointer">아직 등록된 할
-													일이 없습니다!</td>
+												<td class="empty_todo" style="text-align: center; cursor: pointer">아직 등록된 할 일이 없습니다!</td>
 											</tr>
 										</table>
 									</div>
@@ -166,31 +189,37 @@
 			<!--         > -->
 			<!--         All rights reserved. -->
 			<!--       </footer> -->
+
 			<jsp:include page="common/footer.jsp"></jsp:include>
-
-
-			<!-- Control Sidebar -->
-			<aside class="control-sidebar control-sidebar-dark">
-				<!-- Control sidebar content goes here -->
-			</aside>
-			<!-- /.control-sidebar -->
 		</div>
 		<!-- ./wrapper -->
 
-		<!-- jQuery -->
-
-		<script src="${contextPath }/resources/plugins/jquery/jquery.min.js"></script>
 
 		<!-- Bootstrap -->
-		<!-- 		<script -->	
+		<script src="${contextPath }/resources/plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap -->
 		<script src="${contextPath }/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<!-- jQuery UI -->
-		<script
-			src="${contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
-		<%-- 			src="${contextPath }/resources/plugins/js/jquery-3.6.0.min.js"></script> --%>
+		<script src="${contextPath }/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
 		<!-- AdminLTE App -->
 		<script src="${contextPath }/resources/dist/js/adminlte.min.js"></script>
+		<!-- fullCalendar 2.2.5 -->
+		<%-- 		<script src="${contextPath }/resources/plugins/moment/moment.min.js"></script> --%>
+		<%-- 		<script src="${contextPath }/resources/plugins/fullcalendar/main.js"></script> --%>
+		<!-- AdminLTE for demo purposes -->
 		<!-- Page specific script -->
+		<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/jquery.min.js"></script>
+		<!--  -->
+		<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/moment.min.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/fullcalendar.min.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/ko.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/select2.min.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/vendor/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/js/main.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/js/addEvent.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/js/editEvent.js"></script>
+		<script src="${contextPath }/resources/FullCalendar-Example-master/js/etcSetting.js"></script>
+		<script src="${contextPath}/resources/FullCalendar-Example-master/vendor/js/bootstrap.min.js"></script>
 </body>
 <script type="text/javascript">
 	function showClock() {
@@ -247,26 +276,6 @@
 			}
 		})
 	});
-</script>
-
-<script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function() {
-		var calendarEl = document.getElementById('calendar')
-		var today = new Date()
-
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			plugins : [ 'interaction', 'dayGrid' ],
-			defaultDate : today,
-			editable : false,
-			eventLimit : true,
-			views : {
-				dayGrid : {
-					eventLimit : 3,
-				},
-			},
-		})
-		calendar.render()
-	})
 </script>
 
 <!-- 공지사항 top n -->

@@ -11,8 +11,10 @@ public class ToDo {
 	private String title;
 	private String type;
 	private String backgroundColor;
-	private String allDay;
+	private boolean allDay;
 	private String textColor;
+	private String username;
+	private String share;
 
 	public ToDo() {}
 
@@ -80,11 +82,11 @@ public class ToDo {
 		this.backgroundColor = backgroundColor;
 	}
 
-	public String getAllDay() {
+	public boolean isAllDay() {
 		return allDay;
 	}
 
-	public void setAllDay(String allDay) {
+	public void setAllDay(boolean allDay) {
 		this.allDay = allDay;
 	}
 
@@ -96,15 +98,24 @@ public class ToDo {
 		this.textColor = textColor;
 	}
 
-	@Override
-	public String toString() {
-		return "ToDo [tNo=" + tNo + ", start=" + start + ", description=" + description + ", end=" + end + ", empNo="
-				+ empNo + ", title=" + title + ", type=" + type + ", backgroundColor=" + backgroundColor + ", allDay="
-				+ allDay + ", textColor=" + textColor + "]";
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getshare() {
+		return share;
+	}
+
+	public void setshare(String share) {
+		this.share = share;
 	}
 
 	public ToDo(String tNo, Timestamp start, String description, Timestamp end, String empNo, String title, String type,
-			String backgroundColor, String allDay, String textColor) {
+			String backgroundColor, boolean allDay, String textColor, String username, String share) {
 		super();
 		this.tNo = tNo;
 		this.start = start;
@@ -116,8 +127,15 @@ public class ToDo {
 		this.backgroundColor = backgroundColor;
 		this.allDay = allDay;
 		this.textColor = textColor;
+		this.username = username;
+		this.share = share;
+	}
+
+	@Override
+	public String toString() {
+		return "ToDo [tNo=" + tNo + ", start=" + start + ", description=" + description + ", end=" + end + ", empNo="
+				+ empNo + ", title=" + title + ", type=" + type + ", backgroundColor=" + backgroundColor + ", allDay="
+				+ allDay + ", textColor=" + textColor + ", username=" + username + ", share=" + share + "]";
 	}
 	
-
-
 }

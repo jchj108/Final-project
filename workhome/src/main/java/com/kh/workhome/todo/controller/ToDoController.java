@@ -89,7 +89,7 @@ public class ToDoController {
 
 		ArrayList<ToDo> list = tService.getAllList(empNo);
 		
-//		System.out.println(list);
+		System.out.println(list);
 		response.setContentType("application/json; charset=UTF-8");
 
 		Gson gson = new GsonBuilder().setDateFormat("YYYY-MM-dd HH:mm").create();

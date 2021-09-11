@@ -104,16 +104,14 @@ var calendar = $('#calendar').fullCalendar({
       container: 'body',
     })
 
-// return filtering(event)
-      return true;
+ return filtering(event)
+//      return true;
   },
 
   /***************************************************************************
 	 * 일정 받아옴 **************
 	 */
   events: function (start, end, timezone, callback) {
-	  
-	  console.log(start)
 	  
     $.ajax({
       type: 'get',
@@ -124,13 +122,12 @@ var calendar = $('#calendar').fullCalendar({
         endDate   : moment(end).format('YYYY-MM-DD')
       },
       success: function (response) {
-	    console.log(response);
         var fixedDate = response.map(function (array) {
-        	console.log(array);
-// if (array.allDay === 'true' && array.start !== array.end) {
-// array.end = moment(array.end).add(1, 'days') // 이틀 이상 AllDay 일정인 경우 달력에 표기시
-// 하루를 더해야 정상출력
-// }
+//		 if (array.allDay === true && array.start !== array.end) {
+////		 array.end = moment(array.end).add(1, 'days') 
+//		 // 이틀 이상 AllDay 일정인 경우 달력에 표기 하루를 더해야 정상출력
+//
+//		 }
           return array
         })
         callback(fixedDate)
@@ -182,7 +179,6 @@ var calendar = $('#calendar').fullCalendar({
     		start : moment(newDates.startDate).format(),
     		end : moment(newDates.endDate).format(),
     }
-
     // 주,일 view일때 종일 <-> 시간 변경불가
     if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
       if (draggedEventIsAllDay !== event.allDay) {
@@ -266,31 +262,43 @@ var calendar = $('#calendar').fullCalendar({
 
 function getDisplayEventDate(event) {
   var displayEventDate
-
-  if (event.allDay == false) {
-    var startTimeEventInfo = moment(event.start).format('HH:mm')
-    var endTimeEventInfo = moment(event.end).format('HH:mm')
-    displayEventDate = startTimeEventInfo + ' - ' + endTimeEventInfo
+  
+  if (event.allDay == true) {
+	displayEventDate = '하루종일'
   } else {
-    displayEventDate = '하루종일'
+	  var startTimeEventInfo = moment(event.start).format('HH:mm')
+	  var endTimeEventInfo = moment(event.end).format('HH:mm')
+	  displayEventDate = startTimeEventInfo + ' - ' + endTimeEventInfo
   }
-
   return displayEventDate
 }
-
 function filtering(event) {
   var show_username = true
   var show_type = true
-
+  console.log(event);
   var username = $('input:checkbox.filter:checked')
     .map(function () {
       return $(this).val()
     })
     .get()
   var types = $('#type_filter').val()
-
-  show_username = username.indexOf(event.username) >= 0
-
+  
+  console.log(username);
+  console.log(event.share);
+  
+  console.log("username.length : " + username.length);
+  
+  if(username.length <= 1 && event.share == 'true') {
+	  show_username = false;
+  }
+  
+//  if(username[0] == event.empNo) {
+//	  show_username = true;
+//  } else if (username[1] == event.share) {
+//	  show_username = true;
+//  }
+  
+  console.log(show_username);
   if (types && types.length > 0) {
     if (types[0] == 'all') {
       show_type = true
@@ -308,7 +316,7 @@ function calDateWhenResize(event) {
     endDate: '',
   }
 
-  if (event.allDay) {
+  if (event.allDay == true) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD')
     newDates.endDate = moment(event.end._d)
       .subtract(1, 'days')
@@ -334,14 +342,13 @@ function calDateWhenDragnDrop(event) {
   }
 
   // 하루짜리 all day
-  if (event.allDay && event.end === event.start) {
-    console.log('1111')
+  if (event.allDay == true && event.end === event.start) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD')
     newDates.endDate = newDates.startDate
   }
 
   // 2일이상 all day
-  else if (event.allDay && event.end !== null) {
+  else if (event.allDay == true && event.end !== null) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD')
     newDates.endDate = moment(event.end._d)
       .subtract(1, 'days')
@@ -349,7 +356,7 @@ function calDateWhenDragnDrop(event) {
   }
 
   // all day가 아님
-  else if (!event.allDay) {
+  else if (event.allDay == false) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm')
     newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm')
   }

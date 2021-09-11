@@ -8,6 +8,7 @@ var editEnd = $('#edit-end');
 var editType = $('#edit-type');
 var editColor = $('#edit-color');
 var editDesc = $('#edit-desc');
+var editShare = $('#edit-share');
 
 var addBtnContainer = $('.modalBtnContainer-addEvent');
 var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
@@ -25,6 +26,7 @@ var newEvent = function(start, end, eventType) {
 	editStart.val(start);
 	editEnd.val(end);
 	editDesc.val('');
+	
 
 	addBtnContainer.show();
 	modifyBtnContainer.hide();
@@ -43,10 +45,11 @@ var newEvent = function(start, end, eventType) {
 					end : editEnd.val(),
 					description : editDesc.val(),
 					type : editType.val(),
-//					username : '사나',
 					backgroundColor : editColor.val(),
 					textColor : '#ffffff',
-					allDay : false
+					allDay : false,
+					share : false
+					
 				};
 
 				if (eventData.start > eventData.end) {
@@ -71,10 +74,15 @@ var newEvent = function(start, end, eventType) {
 
 					eventData.allDay = true;
 				}
+				
+				if(editShare.is(':checked')) {
+					eventData.share = true;
+				}
 
 				$("#calendar").fullCalendar('renderEvent', eventData, true);
 				eventModal.find('input, textarea').val('');
 				editAllDay.prop('checked', false);
+				editShare.prop('checked', false);
 				eventModal.modal('hide');
 
 				var json = {
@@ -88,6 +96,7 @@ var newEvent = function(start, end, eventType) {
 					, allDay : eventData.allDay
 					, textColor : eventData.textColor
 					, type : eventData.type
+					, share : eventData.share
 				}
 
 				// 새로운 일정 저장
