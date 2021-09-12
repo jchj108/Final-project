@@ -502,8 +502,6 @@
 						$("#joinEmp").autocomplete({
 							source:list,
 							select: function(event, ui) {
-//								console.log(ui.item);
-								/* $(this).attr('readonly',true); */
 								addFun(ui.item.value);
 								return false;
 					        },
