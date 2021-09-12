@@ -56,11 +56,13 @@ public class ToDoController {
 		out.close();
 	}
 	
-	@RequestMapping(value = "updateToDo.to", method = RequestMethod.POST)
+	@RequestMapping(value = "updateToDo.to", method = RequestMethod.POST) // 모달 + 리사이즈
 	public void updateToDo(@RequestBody ToDo toDo, HttpSession session, HttpServletResponse response) {
 		
 		String empNo = ((Employee) session.getAttribute("loginUser")).getEmpNo();
 		toDo.setEmpNo(empNo);
+		
+		System.out.println(toDo);
 		
 		int result = tService.updateToDo(toDo);
 		System.out.println(result);
@@ -87,7 +89,7 @@ public class ToDoController {
 
 		ArrayList<ToDo> list = tService.getAllList(empNo);
 		
-//		System.out.println(list);
+		System.out.println(list);
 		response.setContentType("application/json; charset=UTF-8");
 
 		Gson gson = new GsonBuilder().setDateFormat("YYYY-MM-dd HH:mm").create();
