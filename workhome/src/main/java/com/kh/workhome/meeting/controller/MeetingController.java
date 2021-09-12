@@ -175,7 +175,8 @@ public class MeetingController {
 	
 	// 날짜와 회의실을 받아 예약 가능 시간 비교하기
 	@RequestMapping("rSelectDate.meet")
-	public void rSelectDate(HttpServletResponse response, @RequestParam("date")String date,@RequestParam("mNo") String mNo) throws IOException {
+	public void rSelectDate(HttpServletResponse response, @RequestParam("date")String date,
+							@RequestParam("mNo") String mNo) throws IOException {
 		HashMap<String,Object> map= new HashMap<>();
 		map.put("date", date+"%");
 		map.put("mNo", mNo);
@@ -183,21 +184,28 @@ public class MeetingController {
 		String result = "";
 		
 //		System.out.println("selectDateList : " + list); // 그 날짜의 그 회의실에 회의가 있으면 list에 담긴다
-		
+
+
 		if(list!=null) { // list {[2021-07-07;3,4,5], [2021-07-07;6,7]
 			for(String str : list ) {
 				String resultStr = str.substring(str.indexOf(";")+1, str.length()); // ;이후부터 가져와서 저장하기 ex) 6,7
+				System.out.println("[" + str + "] resultStr : " + resultStr);
 				if(resultStr.contains(",")) {
 					String[] resultArr = resultStr.split(","); // ,로 쪼개서 배열로 담기 [6], [7]
+					System.out.println("if문 내 resultStr : " + resultStr);
 					for(int i = 0 ; i <resultArr.length; i++) {
 						result += resultArr[i]+","; // result에 String으로 담기 6,7,
+						System.out.println("for문 내 result : " + result);
 					}
 				}else { // 7만 있으면
 					result += str+","; //7,
 				}
-//				System.out.println("result : " + result);
+				System.out.println("최종 result : " + result + "\n");
 			}
 		}
+
+
+		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(result,response.getWriter());
 	}
