@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -94,7 +96,7 @@ style>.btn-tool {
 				<!-- Content Header (Page header) -->
 				<div class="container-fluid">
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Home</h1>
+						<h1 class="h3 mb-0 text-gray-800"></h1>
 					</div>
 					<div class="row">
 						<div class="col-lg-7">
@@ -158,18 +160,24 @@ style>.btn-tool {
 							</div>
 							<div class="card shadow mb-4">
 								<div class="card-body">
-									<h4 style="margin-bottom: 1rem; cursor: pointer" id="go_todo">할일</h4>
+									<h4 style="margin-bottom: 1rem; cursor: pointer" id="go_todo">Today</h4>
 									<div class="table-responsive">
 										<table class="table table-bordered">
-											<tr class="todo_tr">
-												<td><i class="fa fa-check todo_check" aria-hidden="true" style="float: right; margin-right: 1rem"></i></td>
-											</tr>
-											<tr id="hideTr">
-												<td class="empty_todo" style="text-align: center; cursor: pointer">아직 등록된 할 일이 없습니다!</td>
-											</tr>
-											<tr>
-												<td class="empty_todo" style="text-align: center; cursor: pointer">아직 등록된 할 일이 없습니다!</td>
-											</tr>
+											<c:if test="${ list.size() == 0}">
+												<tr>
+													<td class="empty_todo" style="text-align: center">등록된 일정이 없습니다</td>
+												</tr>
+											</c:if>
+											<c:forEach var="toDo" items="${list }">
+												<tr>
+													<fmt:formatDate value="${toDo.start }" pattern="HH:mm" var="start" />
+													<fmt:formatDate value="${toDo.end }" pattern="HH:mm" var="end" />
+													<td style="width: 20%;" >${start } - ${end }</td>
+													<td style="width: 20%;">${toDo.type }
+													<td style="width: 55%">${toDo.title }</td>
+													<td><i class="fa fa-check todo_check" aria-hidden="true" style="width:5%;"></i></td>
+												</tr>
+											</c:forEach>
 										</table>
 									</div>
 								</div>

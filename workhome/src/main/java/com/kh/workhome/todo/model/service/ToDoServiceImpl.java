@@ -38,4 +38,9 @@ private SqlSessionTemplate sqlSession;
 	public int updateToDo(ToDo toDo) {
 		return tDAO.updateToDo(sqlSession, toDo);
 	}
+
+	@Override
+	public ArrayList<ToDo> getTodayScehdule(String empNo) {
+		return tDAO.getTodaySchedule(sqlSession, empNo);
+	}
 }

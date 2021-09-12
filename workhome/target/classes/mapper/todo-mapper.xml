@@ -49,6 +49,14 @@
 		</if>
 	</update>
 	
+	<select id="getTodaySchedule" resultMap="toDoResultSet">
+        select *
+        from todo
+        where tstartdate like sysdate || '%'
+        and empno = #{empNo}
+        order by tstartdate desc
+	</select>
+	
 	<resultMap type="Todo" id="toDoResultSet">
 		<id column="TNO" property="tNo"/>
 		<result column="TSTARTDATE" property="start"/>
