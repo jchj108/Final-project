@@ -43,7 +43,8 @@
 				ttype = #{type},
 				bgcolor = #{backgroundColor},
 				allday = #{allDay},
-				TCONTENT = #{description}
+				TCONTENT = #{description},
+				t_share = #{share}
 			where tno = #{tNo}
 			and empno = #{empNo}
 		</if>
