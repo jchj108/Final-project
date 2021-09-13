@@ -535,13 +535,19 @@ public class MailController {
 				
 		// 메일에 mailNo가 있을 경우 임시메일 삭제 (임시메일에서 메일전송시 임시보관함에서 메일 삭제)
 		if(m.getMailNo() != 0) {
+			boolean flag = true;
 			m = mService.selectTempMail(m.getMailNo());
 			System.out.println("임시보관함 메일파일 : " + m);
 			for(MailFile mf : m.getMailFileList()) {
 				mf.setMailNo(0);
+				if(mf.getmOriginalName() == null) {
+					flag = false;
+				}
 			}
 			mService.insertMail(m);
-			mService.insertMailFile(m.getMailFileList());
+			if(flag) {
+				mService.insertMailFile(m.getMailFileList());
+			}
 			
 //			Map map = new HashMap<String, Object>();
 //			map.put("empNo", empNo);

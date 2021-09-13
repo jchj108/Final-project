@@ -7,7 +7,7 @@
 		values (mail_file_seq.nextval, #{mOriginalName}, #{mChangeName}, 
 				#{mFilePath}, sysdate, 'Y', MAIL_TEMP_SEQ.CURRVAL)
 		</if>
-		<if test="mailNo != 0"> <!-- 수정 -->
+		<if test="mailNo != 0"> <!-- tempupdate시 -->
 		insert into mail_file 
 		values (mail_file_seq.nextval, #{mOriginalName}, #{mChangeName}, 
 				#{mFilePath}, sysdate, 'Y', #{mailNo})
