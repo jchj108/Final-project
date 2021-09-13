@@ -11,7 +11,7 @@
 		select *
 		from EMPLOYEE
 		JOIN DEPARTMENT USING (DEPTNO)
-		where EMPSTATUS!='N' AND (EMPNO LIKE #{string} or EMPNAME LIKE #{string} or EMPNAME LIKE #{string})
+		where EMPSTATUS!='N' AND (EMPNO LIKE #{string} or EMPNAME LIKE #{string} or DEPTNAME LIKE #{string})
 	</select>
 
 	<insert id="reInsert" parameterType="MeetingReservation">

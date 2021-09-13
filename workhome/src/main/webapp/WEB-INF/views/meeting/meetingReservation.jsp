@@ -262,19 +262,16 @@
 										<div class="form-group">
 											<label for="inputDescription">회의 상세 설명</label>
 											<textarea id="mContent" class="form-control" rows="4"
-												placeholder="회의  상세 설명을 입력하세요."
-											></textarea>
+												placeholder="회의  상세 설명을 입력하세요.">
+											</textarea>
 										</div>
 										<div class="form-group">
 											<label for="inputClientCompany">총 참여 사원</label>
 											<input class="inputModal" type="text" id="joinEmp"
-												placeholder="참가인 추가"
-											>
+												placeholder="참가인 추가">
 											<div class="extraArea"></div>
 
-											<button type="button"
-												class="btn btn-block btn-primary reserv-button" id="commit"
-											>예약하기</button>
+											<button type="button" class="btn btn-block btn-primary reserv-button" id="commit">예약하기</button>
 
 										</div>
 									</div>
@@ -328,7 +325,7 @@
 	<script src="${contextPath}/resources/dist/js/demo.js"></script>
 	<!-- Page specific script -->
 
-  <!--자동완성  -->
+    <!--자동완성  -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
                 
 
@@ -415,7 +412,7 @@
 				success:function(data) {
 					savedTime = data;
 					
-					console.log(savedTime);
+					console.log("savedTime : " + savedTime);
 					
 					var $timearea = $("#timearea");
 					$timearea.html("");
@@ -502,8 +499,6 @@
 						$("#joinEmp").autocomplete({
 							source:list,
 							select: function(event, ui) {
-//								console.log(ui.item);
-								/* $(this).attr('readonly',true); */
 								addFun(ui.item.value);
 								return false;
 					        },
@@ -552,7 +547,7 @@
 
 
 
-<!-- 예약 확인 -->
+	<!-- 예약 확인 -->
 	<script type="text/javascript">
 		$(document).on('click','#commit',function() {
 					var mTitle = $("#mTitle").val();
