@@ -295,17 +295,9 @@ function filtering(event) {
     .get()
   var types = $('#type_filter').val()
   
-  
-  
   if(username.length <= 1 && event.share == 'true') {
 	  show_username = false;
   }
-  
-//  if(username[0] == event.empNo) {
-//	  show_username = true;
-//  } else if (username[1] == event.share) {
-//	  show_username = true;
-//  }
   
   if (types && types.length > 0) {
     if (types[0] == 'all') {

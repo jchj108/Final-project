@@ -275,7 +275,6 @@ public class MailController {
 		if (request.getSession().getAttribute("loginUser") == null) {
 			throw new MailException("로그인이 필요합니다.");
 		}
-
 		String empNo = ((Employee) request.getSession().getAttribute("loginUser")).getEmpNo();
 
 		int currentPage = 1;
@@ -286,11 +285,8 @@ public class MailController {
 		int listCount = mService.getsendListCount(empNo);
 
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, boardLimit);
-		System.out.println(Pagination.getPageInfo(currentPage, listCount, boardLimit));
-
 		ArrayList<Mail> list = mService.selectSendList(pi, empNo);
 		ArrayList<Mail> rList = mService.selectCheckList(empNo);
-		
 		for(Mail m : list) {
 			for(int i = 0; i < rList.size(); i++) {
 				if(rList.get(i).getMailNo() == m.getMailNo()) {
@@ -298,21 +294,13 @@ public class MailController {
 				}
 			}
 		}
-		
-		System.out.println("추가 후 메일리스트 : " + list);
-		
 		int count = mService.selectCountNotRead(empNo);
-
-		System.out.println(list);
-		System.out.println(rList);
-
 		if (list != null) {
 			mv.addObject("list", list).addObject("pi", pi).addObject("count", count);
 			mv.setViewName("checkReadTime");
 		} else {
 			throw new MailException("받은 메일함 조회에 실패했습니다.");
 		}
-
 		return mv;
 	}
 	
@@ -529,15 +517,12 @@ public class MailController {
 		MultipartFile uploadFile = mtpRequest.getFile("uploadFile");
 		List<MailFile> mailFileList = new ArrayList<MailFile>();
 		int result1 = 0;
-		
 		Employee e = (Employee) mtpRequest.getSession().getAttribute("loginUser");
 		String empNo = e.getEmpNo();
-				
-		// 메일에 mailNo가 있을 경우 임시메일 삭제 (임시메일에서 메일전송시 임시보관함에서 메일 삭제)
 		if(m.getMailNo() != 0) {
 			boolean flag = true;
-			m = mService.selectTempMail(m.getMailNo());
-			System.out.println("임시보관함 메일파일 : " + m);
+			m.setEmpNo(empNo);
+			m.setMailFileList(mService.selectTempMail(m.getMailNo()).getMailFileList());
 			for(MailFile mf : m.getMailFileList()) {
 				mf.setMailNo(0);
 				if(mf.getmOriginalName() == null) {
@@ -548,18 +533,10 @@ public class MailController {
 			if(flag) {
 				mService.insertMailFile(m.getMailFileList());
 			}
-			
-//			Map map = new HashMap<String, Object>();
-//			map.put("empNo", empNo);
-//			map.put("mNo", m.getMailNo());
-//			map.put("command", "templist");
-//			
-//			mService.deleteMail(map);
 		} else {
 			m.setEmpNo(empNo);
 			mService.insertMail(m);
 		}
-
 		if (!uploadFile.isEmpty()) { // 받아온 파일이 있을 때만 MAIL과 MAIL_FILE CURRVAL로 연결
 			System.out.println("업로드된 파일 수 : " + fileList.size());
 			for (MultipartFile mf : fileList) {

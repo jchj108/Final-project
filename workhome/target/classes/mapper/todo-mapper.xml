@@ -3,74 +3,83 @@
 <mapper namespace="toDoMapper">
 	<insert id="insertToDo">
 		insert into todo
-		values(TODO_SEQ.nextval, #{start}, #{description}, #{end}, #{empNo}, #{title},
-			   #{type}, #{backgroundColor}, #{allDay}, #{textColor}, #{share})
+		values(TODO_SEQ.nextval, #{start},
+		#{description}, #{end}, #{empNo}, #{title},
+		#{type}, #{backgroundColor}, #{allDay}, #{textColor}, #{share})
 	</insert>
-	
+
 	<select id="getAllList" resultMap="toDoResultSet">
-		select todo.tno, todo.tstartdate, todo.tcontent, todo.tenddate, todo.empno, todo.ttitle, todo.ttype, todo.bgcolor, todo.allday, todo.textcolor, todo.t_share, employee.empname
+		select todo.tno,
+		todo.tstartdate, todo.tcontent, todo.tenddate, todo.empno,
+		todo.ttitle, todo.ttype, todo.bgcolor, todo.allday, todo.textcolor,
+		todo.t_share, employee.empname
 		from todo
-		join employee on(todo.empno = employee.empno)
+		join employee on(todo.empno =
+		employee.empno)
 		where todo.empno = #{empNo}
-			union
-		select todo.tno, todo.tstartdate, todo.tcontent, todo.tenddate, todo.empno, todo.ttitle, todo.ttype, todo.bgcolor, todo.allday, todo.textcolor, todo.t_share, employee.empname
+		union
+		select todo.tno, todo.tstartdate, todo.tcontent, todo.tenddate,
+		todo.empno, todo.ttitle, todo.ttype, todo.bgcolor, todo.allday,
+		todo.textcolor, todo.t_share, employee.empname
 		from todo
-		join employee on(todo.empno = employee.empno)
-		where t_share='true'		
+		join employee
+		on(todo.empno = employee.empno)
+		where t_share='true'
 	</select>
-	
+
 	<delete id="deleteToDo">
 		delete from todo
 		where empno = #{empNo}
-		and tNo = #{tNo}
+		and tNo =
+		#{tNo}
 	</delete>
-	
+
 	<update id="updateToDo">
 		<if test="title==null or title.equals('null') or title.equals('')">
-		update todo
-		set 
+			update todo
+			set
 			tstartdate = #{start},
 			tenddate = #{end}
-		where tno = #{tNo}
-		and empno = #{empNo}
+			where tno = #{tNo}
+			and empno = #{empNo}
 		</if>
 		<if test="title!=null">
 			update todo
-			set 
-				tstartdate = #{start},
-				tenddate = #{end},
-				ttitle = #{title},
-				ttype = #{type},
-				bgcolor = #{backgroundColor},
-				allday = #{allDay},
-				TCONTENT = #{description},
-				t_share = #{share}
+			set
+			tstartdate = #{start},
+			tenddate = #{end},
+			ttitle = #{title},
+			ttype = #{type},
+			bgcolor = #{backgroundColor},
+			allday = #{allDay},
+			TCONTENT = #{description},
+			t_share = #{share}
 			where tno = #{tNo}
 			and empno = #{empNo}
 		</if>
 	</update>
-	
+
 	<select id="getTodaySchedule" resultMap="toDoResultSet">
-        select *
-        from todo
-        where tstartdate like sysdate || '%'
-        and empno = #{empNo}
-        order by tstartdate desc
+		select *
+		from todo
+		where tstartdate like sysdate || '%'
+		and empno = #{empNo}
+		order by tstartdate desc
 	</select>
-	
+
 	<resultMap type="Todo" id="toDoResultSet">
-		<id column="TNO" property="tNo"/>
-		<result column="TSTARTDATE" property="start"/>
-		<result column="TCONTENT" property="description"/>
-		<result column="TENDDATE" property="end"/>
-		<result column="EMPNO" property="empNo"/>
-		<result column="TTITLE" property="title"/>
-		<result column="TTYPE" property="type"/>
-		<result column="BGCOLOR" property="backgroundColor"/>
-		<result column="ALLDAY" property="allDay"/>
-		<result column="TEXTCOLOR" property="textColor"/>
-		<result column="empname" property="username"/>
-		<result column="t_share" property="share"/>
+		<id column="TNO" property="tNo" />
+		<result column="TSTARTDATE" property="start" />
+		<result column="TCONTENT" property="description" />
+		<result column="TENDDATE" property="end" />
+		<result column="EMPNO" property="empNo" />
+		<result column="TTITLE" property="title" />
+		<result column="TTYPE" property="type" />
+		<result column="BGCOLOR" property="backgroundColor" />
+		<result column="ALLDAY" property="allDay" />
+		<result column="TEXTCOLOR" property="textColor" />
+		<result column="empname" property="username" />
+		<result column="t_share" property="share" />
 	</resultMap>
-	
+
 </mapper>
