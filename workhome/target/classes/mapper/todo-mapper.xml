@@ -4,13 +4,19 @@
 	<insert id="insertToDo">
 		insert into todo
 		values(TODO_SEQ.nextval, #{start}, #{description}, #{end}, #{empNo}, #{title},
-			   #{type}, #{backgroundColor}, #{allDay}, #{textColor})
+			   #{type}, #{backgroundColor}, #{allDay}, #{textColor}, #{share})
 	</insert>
 	
 	<select id="getAllList" resultMap="toDoResultSet">
-		select *
+		select todo.tno, todo.tstartdate, todo.tcontent, todo.tenddate, todo.empno, todo.ttitle, todo.ttype, todo.bgcolor, todo.allday, todo.textcolor, todo.t_share, employee.empname
 		from todo
-		where empno = #{empNo}
+		join employee on(todo.empno = employee.empno)
+		where todo.empno = #{empNo}
+			union
+		select todo.tno, todo.tstartdate, todo.tcontent, todo.tenddate, todo.empno, todo.ttitle, todo.ttype, todo.bgcolor, todo.allday, todo.textcolor, todo.t_share, employee.empname
+		from todo
+		join employee on(todo.empno = employee.empno)
+		where t_share='true'		
 	</select>
 	
 	<delete id="deleteToDo">
@@ -43,6 +49,14 @@
 		</if>
 	</update>
 	
+	<select id="getTodaySchedule" resultMap="toDoResultSet">
+        select *
+        from todo
+        where tstartdate like sysdate || '%'
+        and empno = #{empNo}
+        order by tstartdate desc
+	</select>
+	
 	<resultMap type="Todo" id="toDoResultSet">
 		<id column="TNO" property="tNo"/>
 		<result column="TSTARTDATE" property="start"/>
@@ -54,6 +68,8 @@
 		<result column="BGCOLOR" property="backgroundColor"/>
 		<result column="ALLDAY" property="allDay"/>
 		<result column="TEXTCOLOR" property="textColor"/>
+		<result column="empname" property="username"/>
+		<result column="t_share" property="share"/>
 	</resultMap>
 	
 </mapper>
