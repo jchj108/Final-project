@@ -436,7 +436,6 @@ td {
                                     $.map(data, function(item) {    //json[i] 번째 에 있는게 item .
                                         return {
                                             value: item.empName +" (" + item.empPosition +")",    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
-<%-- 											gNo: "<%= request.getContextPath() %>/detail.do?gNo=" + item.G_NO --%>
 											test: item.empNo + "@workhome.com"
                                         }
                                     })
@@ -506,7 +505,6 @@ td {
 				return false;
 			}
 		}
-		
 	</script>
 </body>
 </html>

@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AdminLTE 3 | Calendar</title>
-
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
 <!-- Font Awesome -->
@@ -14,20 +15,44 @@
 <!-- myFullCalendar -->
 <link rel="stylesheet" href='${contextPath }/resources/FullCalendar-Example-master/vendor/css/select2.min.css' />
 <link rel="stylesheet" href='${contextPath }/resources/FullCalendar-Example-master/vendor/css/bootstrap-datetimepicker.min.css' />
-<!-- myFullCalendar end -->
 <link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/vendor/css/bootstrap.min.css?sb" />
 <link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/css/main.css">
 <link rel="stylesheet" href="${contextPath }/resources/FullCalendar-Example-master/vendor/css/fullcalendar.min.css" />
+<!-- myFullCalendar -->
+
 
 <style>
+/* select2 */
+.select2-container--default .select2-selection--multiple .select2-selection__rendered .select2-search.select2-search--inline .select2-search__field
+	{
+	margin-top: 4px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice
+	{
+	background-color: limegreen;
+	border: none;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove
+	{
+	color: black;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected]
+	{
+	background-color: #0074f0;
+	color: #fff;
+}
+
 .btn-tool {
 	position: relative;
 	top: 12px;
 }
-
+/* select2 */
 #space {
- 	height:100px; 
- 	background-color:#f4f6f9;
+	height: 100px;
+	background-color: #f4f6f9;
 }
 
 #eventModal {
@@ -119,10 +144,10 @@
 										<!-- 									<div class="col-lg-6"> -->
 										<div class="input-group">
 											<select class="filter" id="type_filter" multiple="multiple">
-												<option value="카테고리1">카테고리1</option>
-												<option value="카테고리2">카테고리2</option>
-												<option value="카테고리3">카테고리3</option>
-												<option value="카테고리4">카테고리4</option>
+												<option value="카테고리1">업무</option>
+												<option value="카테고리2">개인</option>
+												<option value="카테고리3">출장</option>
+												<option value="카테고리4">회의</option>
 											</select>
 										</div>
 									</div>
@@ -130,15 +155,11 @@
 									<div class="form-group">
 
 										<!-- 									<div class="col-lg-6"> -->
-										<label for="calendar_view">등록자별</label>
+										<label for="calendar_view">일정별 </label>
 										<div class="input-group">
-											<label class="checkbox-inline"><input class='filter' type="checkbox" value="정연" checked>1</label> <label class="checkbox-inline"><input
-													class='filter' type="checkbox" value="다현" checked
-												>2</label> <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나" checked>3</label> <label
-												class="checkbox-inline"
-											><input class='filter' type="checkbox" value="나연" checked>4</label> <label class="checkbox-inline"><input class='filter'
-													type="checkbox" value="지효" checked
-												>5</label>
+											<input style="display:none;" class='filter' type="checkbox" value="${loginUser.empNo }" checked>
+											<label class="checkbox-inline">
+											<input class='filter' type="checkbox" value="true" checked>공유된 일정 보기</label> 
 										</div>
 									</div>
 								</div>
@@ -146,7 +167,7 @@
 						</div>
 						<div class="col-xs-9">
 							<div class="card card-primary">
-					            <div id="loading"></div>
+								<div id="loading"></div>
 								<div id="calendar" class="fc fc-unthemed fc-ltr"></div>
 							</div>
 						</div>
@@ -191,6 +212,14 @@
 											</label>
 										</div>
 									</div>
+									
+									<div class="row">
+										<div class="col-xs-12">
+											<label class="col-xs-4" for="edit-allDay">일정 공유</label>
+											<input class='allDayNewEvent' id="edit-share" type="checkbox">
+											</label>
+										</div>
+									</div>
 
 									<div class="row">
 										<div class="col-xs-12">
@@ -213,10 +242,10 @@
 									<div class="row">
 										<div class="col-xs-12">
 											<label class="col-xs-4" for="edit-type">구분</label> <select class="inputModal" type="text" name="edit-type" id="edit-type">
-												<option value="카테고리1">카테고리1</option>
-												<option value="카테고리2">카테고리2</option>
-												<option value="카테고리3">카테고리3</option>
-												<option value="카테고리4">카테고리4</option>
+												<option value="카테고리1">업무</option>
+												<option value="카테고리2">개인</option>
+												<option value="카테고리3">출장</option>
+												<option value="카테고리4">회의</option>
 											</select>
 										</div>
 									</div>
@@ -263,8 +292,7 @@
 			</section>
 			<!-- /.content -->
 		</div>
-		<div id="space">
-		</div>
+		<div id="space"></div>
 
 		<!--       </footer> -->
 		<jsp:include page="../common/footer.jsp"></jsp:include>

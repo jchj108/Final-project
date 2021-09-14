@@ -1,7 +1,8 @@
-package com.kh.workhome;
+   package com.kh.workhome;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -24,6 +25,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.workhome.attendance.model.service.AttendanceService;
 import com.kh.workhome.employee.model.vo.Employee;
+import com.kh.workhome.todo.model.service.ToDoService;
+import com.kh.workhome.todo.model.vo.ToDo;
 
 /**
  * Handles requests for the application home page.
@@ -34,6 +37,9 @@ public class HomeController {
 	@Autowired
 	private AttendanceService atService;
 	
+	@Autowired
+	private ToDoService tService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -41,31 +47,28 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, Model model, HttpSession session, ModelAndView mv) {
-//		logger.info("Welcome home! The client locale is {}.", locale);
-//		
-//		Date date = new Date();
-//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-//		
-//		String formattedDate = dateFormat.format(date);
-//		
-//		model.addAttribute("serverTime", formattedDate );
-		
-//		return "home";
-		
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 		String strDate = dateFormat.format(Calendar.getInstance().getTime());
 		String[] temp = strDate.split(" ");
 		String startOfDate = temp[0]+" "+"00:00:00";
 		
+		
 		HashMap<String,String> keys = new HashMap<>();
 		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		
+		String empNo = loginUser.getEmpNo();
+		
+		ArrayList<ToDo> list = tService.getTodayScehdule(empNo);
+		System.out.println(list);
+		
 		keys.put("empNo", loginUser.getEmpNo());
 		keys.put("date", strDate);
 		keys.put("start", startOfDate);
 		
 		HashMap<String,String> map = atService.selectCommute(keys);
 		mv.addObject("map",map);
+		mv.addObject("list", list);
 
 		mv.setViewName("home");
 		return mv;
