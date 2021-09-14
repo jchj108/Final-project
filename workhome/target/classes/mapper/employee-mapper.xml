@@ -55,7 +55,7 @@
 		order by deptname
 	</select>
 	
-	<select id="getEmployee" resultType="Employee">
+	<select id="selectEmpList" resultType="Employee">
 		select *
 		from EMPLOYEE
 		JOIN DEPARTMENT USING (DEPTNO)

@@ -73,6 +73,12 @@ var calendar = $('#calendar').fullCalendar({
 
   eventRender: function (event, element, view) {
     // 일정에 hover시 요약
+	  var flag = false;
+	  
+	  if(event.description == null) {
+		  event.description = '';
+	  }
+	  
     element.popover({
       title: $('<div />', {
         class: 'popoverTitleCalendar',
@@ -103,8 +109,15 @@ var calendar = $('#calendar').fullCalendar({
       html: true,
       container: 'body',
     })
+    
+    var url = window.location.href;
+    console.log(url);
+    if(url.includes('home.do')) { // url 메인페이지 포함
+    	return true;
+    } else {
+    	return filtering(event)
+    }
 
- return filtering(event)
 //      return true;
   },
 
@@ -275,7 +288,6 @@ function getDisplayEventDate(event) {
 function filtering(event) {
   var show_username = true
   var show_type = true
-  console.log(event);
   var username = $('input:checkbox.filter:checked')
     .map(function () {
       return $(this).val()
@@ -283,22 +295,10 @@ function filtering(event) {
     .get()
   var types = $('#type_filter').val()
   
-  console.log(username);
-  console.log(event.share);
-  
-  console.log("username.length : " + username.length);
-  
   if(username.length <= 1 && event.share == 'true') {
 	  show_username = false;
   }
   
-//  if(username[0] == event.empNo) {
-//	  show_username = true;
-//  } else if (username[1] == event.share) {
-//	  show_username = true;
-//  }
-  
-  console.log(show_username);
   if (types && types.length > 0) {
     if (types[0] == 'all') {
       show_type = true

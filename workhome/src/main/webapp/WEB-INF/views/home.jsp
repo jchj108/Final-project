@@ -174,8 +174,7 @@ style>.btn-tool {
 													<fmt:formatDate value="${toDo.end }" pattern="HH:mm" var="end" />
 													<td style="width: 20%;" >${start } - ${end }</td>
 													<td style="width: 20%;">${toDo.type }
-													<td style="width: 55%">${toDo.title }</td>
-													<td><i class="fa fa-check todo_check" aria-hidden="true" style="width:5%;"></i></td>
+													<td style="width: 60%">${toDo.title }</td>
 												</tr>
 											</c:forEach>
 										</table>

@@ -15,9 +15,15 @@ var editEvent = function(event, element, view) {
 	} else {
 		editAllDay.prop('checked', false);
 	}
-
+	
 	if (event.end === null) {
 		event.end = event.start;
+	}
+	
+	if(event.share == 'true') {
+		editShare.prop('checked', true);
+	} else {
+		editShare.prop('checked', false);
 	}
 
 	if (event.allDay === true && event.end !== event.start) {
@@ -55,6 +61,7 @@ var editEvent = function(event, element, view) {
 				}
 
 				var statusAllDay;
+				var statusShare;
 				var startDate;
 				var endDate;
 				var displayDate;
@@ -71,10 +78,20 @@ var editEvent = function(event, element, view) {
 					endDate = editEnd.val();
 					displayDate = endDate;
 				}
-
+				
+				if(editShare.is(':checked')) {
+					console.log('체크되었음');
+					statusShare = true;
+				} else {
+					statusShare = false;
+				}
+				
+				
+				console.log(event.share);
 				eventModal.modal('hide');
-
+				
 				event.allDay = statusAllDay;
+				event.share = statusShare;
 				event.title = editTitle.val();
 				event.start = startDate;
 				event.end = displayDate;
@@ -82,6 +99,8 @@ var editEvent = function(event, element, view) {
 				event.backgroundColor = editColor.val();
 				event.description = editDesc.val();
 
+				console.log(event.share);
+				
 				$("#calendar").fullCalendar('updateEvent', event);
 				
 				var json = {
@@ -92,7 +111,8 @@ var editEvent = function(event, element, view) {
 					backgroundColor : event.backgroundColor,
 					description : event.description,
 					title : event.title,
-					tNo : $(this).data('tNo')
+					tNo : $(this).data('tNo'),
+					share : event.share
 				}
 				
 				// 일정 업데이트

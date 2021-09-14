@@ -148,7 +148,7 @@ li {
 						$(this).closest("tbody").children("tr").removeClass("bgclss");
 						$(this).closest("tr").addClass('bgclss');
 						$.ajax({
-							url:'getEmployee.emp',
+							url:'selectEmpList.emp',
 							data:{deptNo:deptNo},
 							dataType:'json',
 							success:function(data){

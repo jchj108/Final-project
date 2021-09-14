@@ -211,8 +211,9 @@ td {
 														download="${mF.mOriginalName }"
 														class="mailbox-attachment-name"><i
 															class="fas fa-paperclip"></i> ${mF.mOriginalName }</a> <span
-															class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-																KB</span> <a 
+															class="mailbox-attachment-size clearfix mt-1"> 
+<!-- 															<span>1,245KB</span>  -->
+															<a 
 																href="${contextPath }/resources/mailUploadFiles/${mF.mChangeName}" 
 																download="${mF.mOriginalName }"
 															class="btn btn-default btn-sm float-right"><i
