@@ -36,9 +36,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
     </ul>
-      <button type="button" class="btn btn-primary " onclick="location.href='logout.emp'">
-        	로그아웃
-        </button>    
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
