@@ -36,8 +36,8 @@ public class EmployeeDAO {
 		return (ArrayList) sqlSession.selectList("employeeMapper.selectDeptList");
 	}
 
-	public ArrayList<Employee> selectEmpList(SqlSessionTemplate sqlSession, String deptNo) {
-		return (ArrayList)sqlSession.selectList("employeeMapper.selectEmpList", deptNo);
+	public ArrayList<Employee> getEmployee(SqlSessionTemplate sqlSession, String deptNo) {
+		return (ArrayList)sqlSession.selectList("employeeMapper.getEmployee", deptNo);
 	}
 
 	public int insertAlert(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
