@@ -224,13 +224,9 @@ public class EmployeeController {
 	}
 	
 	// 부서별 사원 목록 
-	@RequestMapping("getEmployee.emp")
-	public void getEmployee(HttpServletResponse response, @RequestParam("deptNo") String deptNo) throws IOException {
-		ArrayList<Employee> eList = eService.getEmployee(deptNo);
-//		for (Employee e : eList) {
-//			e.setEmpName(URLEncoder.encode(e.getEmpName(), "utf-8"));
-//			e.setDeptName(URLEncoder.encode(e.getDeptName(), "utf-8"));
-//		}
+	@RequestMapping("selectEmpList.emp")
+	public void selectEmpList(HttpServletResponse response, @RequestParam("deptNo") String deptNo) throws IOException {
+		ArrayList<Employee> eList = eService.selectEmpList(deptNo);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		response.setContentType("application/json; charset=UTF-8");
 		gson.toJson(eList, response.getWriter());

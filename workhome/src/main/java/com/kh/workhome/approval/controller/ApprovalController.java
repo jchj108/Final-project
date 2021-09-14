@@ -206,7 +206,7 @@ public class ApprovalController {
 		return check;
 	}
 
-	// 맵에 담기위해 ApNo만 list로 만듬
+	// 맵에 담기위해 ApNo만 list로 만듦
 	public ArrayList<String> putIntheMap(ArrayList<Approval> inputlist) {
 		ArrayList<String> outputlist = new ArrayList<String>();
 		for (Approval ap : inputlist) {

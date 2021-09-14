@@ -12,7 +12,7 @@ import com.kh.workhome.approval.model.vo.Approval;
 public class ApprovalDAO {
 
 	public int insertApproval(SqlSessionTemplate sqlSession, Approval ap) {
-		return sqlSession.update("approvalMapper.insertApproval", ap);
+		return sqlSession.insert("approvalMapper.insertApproval", ap);
 	}
 
 	public ArrayList<Approval> selectApprovalList(SqlSessionTemplate sqlSession, String empNo) {
