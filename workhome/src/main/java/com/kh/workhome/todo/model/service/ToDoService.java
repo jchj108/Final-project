@@ -15,4 +15,6 @@ public interface ToDoService {
 
 	int updateToDo(ToDo toDo);
 
+	ArrayList<ToDo> getTodayScehdule(String empNo);
+
 }

@@ -23,7 +23,7 @@ private SqlSessionTemplate sqlSession;
 	public int insertToDo(ToDo toDo) {
 		return tDAO.insertToDo(sqlSession, toDo);
 	}
-
+	
 	@Override
 	public ArrayList<ToDo> getAllList(String empNo) {
 		return tDAO.getAllList(sqlSession, empNo);
@@ -37,5 +37,10 @@ private SqlSessionTemplate sqlSession;
 	@Override
 	public int updateToDo(ToDo toDo) {
 		return tDAO.updateToDo(sqlSession, toDo);
+	}
+
+	@Override
+	public ArrayList<ToDo> getTodayScehdule(String empNo) {
+		return tDAO.getTodaySchedule(sqlSession, empNo);
 	}
 }

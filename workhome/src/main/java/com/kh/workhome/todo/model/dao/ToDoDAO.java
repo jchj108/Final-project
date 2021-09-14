@@ -26,4 +26,8 @@ public class ToDoDAO {
 	public int updateToDo(SqlSessionTemplate sqlSession, ToDo toDo) {
 		return sqlSession.update("toDoMapper.updateToDo", toDo);
 	}
+
+	public ArrayList<ToDo> getTodaySchedule(SqlSessionTemplate sqlSession, String empNo) {
+		return (ArrayList)sqlSession.selectList("toDoMapper.getTodaySchedule", empNo);
+	}
 }
