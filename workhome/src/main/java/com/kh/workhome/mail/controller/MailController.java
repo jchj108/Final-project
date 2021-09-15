@@ -66,6 +66,8 @@ public class MailController {
 	public ModelAndView searchMail(@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam("command") String command, @RequestParam("searchValue") String searchValue,
 			HttpSession session, ModelAndView mv) {
+		
+		System.out.println("메일 검색 커맨드 : " + command);
 
 		String empNo = ((Employee) session.getAttribute("loginUser")).getEmpNo();
 

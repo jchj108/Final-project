@@ -497,7 +497,7 @@ td {
 
 		function searchMail() {
 			var searchValue = $('#searchValue').val();
-			var command = 'favoriteslist';
+			var command = 'favoritesmaillist';
 
 			location.href = "search.mail?searchValue=" + searchValue
 					+ "&command=" + command;
