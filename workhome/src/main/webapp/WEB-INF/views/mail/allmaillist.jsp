@@ -119,10 +119,10 @@ td {
 							<h1>전체메일</h1>
 						</div>
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Inbox</li>
-							</ol>
+<!-- 							<ol class="breadcrumb float-sm-right"> -->
+<!-- 								<li class="breadcrumb-item"><a href="#">Home</a></li> -->
+<!-- 								<li class="breadcrumb-item active">Inbox</li> -->
+<!-- 							</ol> -->
 						</div>
 					</div>
 				</div>

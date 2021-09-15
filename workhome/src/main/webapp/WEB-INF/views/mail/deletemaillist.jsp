@@ -119,10 +119,10 @@ td {
 							<h1>휴지통</h1>
 						</div>
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Inbox</li>
-							</ol>
+<!-- 							<ol class="breadcrumb float-sm-right"> -->
+<!-- 								<li class="breadcrumb-item"><a href="#">Home</a></li> -->
+<!-- 								<li class="breadcrumb-item active">Inbox</li> -->
+<!-- 							</ol> -->
 						</div>
 					</div>
 				</div>
@@ -328,7 +328,7 @@ td {
 													</a>
 												</c:if>
 												<c:if test="${ searchValue eq null}">
-													<c:url var="before" value="deletemaillist.mail">
+													<c:url var="before" value="deletelist.mail">
 														<c:param name="page" value="${ pi.currentPage - 1 }" />
 													</c:url>
 													<a href="${before }">
