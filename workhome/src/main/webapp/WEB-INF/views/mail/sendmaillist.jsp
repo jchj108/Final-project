@@ -248,7 +248,7 @@ td {
 																<i class="fas fa-paperclip"></i>
 															</c:if></td>
 														<%-- 														${m.mailSRList.get(0).sRStatus } --%>
-															<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
+															<td class="mailbox-name"><a href=#>${m.receiveEmp }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject">
 																${m.etitle }</td>
 														<td class="mailNo-hidden">${m.mailNo }</td>

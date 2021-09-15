@@ -253,12 +253,12 @@ td {
 															</c:if></td>
 														<%-- 														${m.mailSRList.get(0).sRStatus } --%>
 														<c:if test="${ m.mailSRList.get(0).empNo != loginUser.empNo}">
-															<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
+															<td class="mailbox-name"><a href=#>${m.senderName }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[받은메일함]</span>
 																${m.etitle }</td>
 														</c:if>
 														<c:if test="${ m.mailSRList.get(0).empNo == loginUser.empNo}">
-															<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
+															<td class="mailbox-name"><a href=#>${m.receiveEmp }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[보낸메일함]</span>
 																${m.etitle }</td>
 														</c:if>
