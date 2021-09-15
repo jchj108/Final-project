@@ -16,6 +16,14 @@
 	bottom: 2px;
 	position: relative;
 }
+
+.table td:nth-child(3) {
+	font-size: 14px;
+}
+.table td:nth-child(4) {
+	font-size: 14px;
+}
+
 </style>
 </head>
 <body>

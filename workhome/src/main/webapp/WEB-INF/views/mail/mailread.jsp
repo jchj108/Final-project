@@ -106,7 +106,7 @@ td {
 }
 
 .mailbox-read-message {
-	min-height: 500px;
+	min-height: 400px;
 }
 </style>
 

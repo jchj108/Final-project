@@ -396,7 +396,7 @@ td {
 			//Add text editor
 			$('#compose-textarea').summernote({
 				lang : "ko-KR",
-				height : 550,
+				height : 400,
 			});
 
 			$('.close').click(function() {
