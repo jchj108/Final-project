@@ -283,8 +283,8 @@ td {
 															<c:if test="${ fmtNumber <= 0}">
 																<td class="mailbox-date">
 																	<span class="mailSR-info">
-																		<fmt:formatDate value="${d }" var="currentMinutues" pattern="mm" />
-																		<fmt:formatDate value="${m.sDate }" pattern="mm" var="compMinutes" />
+																		<fmt:formatDate value="${d }" var="currentMinutues" pattern="HHmm" />
+																		<fmt:formatDate value="${m.sDate }" pattern="HHmm" var="compMinutes" />
 																		[${currentMinutues - compMinutes }분 전]
 																	</span>
 																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" /></td>
@@ -292,7 +292,8 @@ td {
 															<c:if test="${ fmtNumber > 0}">
 																<fmt:parseNumber var="fmtHoursAgo" value="${(currentTime - compTime) / 60 }" integerOnly="true"/>
 																<td class="mailbox-date"><span class="mailSR-info">[${fmtHoursAgo}시간 전]</span>
-																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" /></td>
+																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" />
+																</td>
 															</c:if>
 														</c:if>
 														<!-- 오늘 날짜가 아닐 때 -->
