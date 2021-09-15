@@ -139,15 +139,15 @@
 									</div>
 								</div>
 								<div class="card-body">
-									<label for="calendar_view">구분별</label>
+									<label for="calendar_view">카테고리</label>
 									<div class="form-group">
 										<!-- 									<div class="col-lg-6"> -->
 										<div class="input-group">
 											<select class="filter" id="type_filter" multiple="multiple">
-												<option value="카테고리1">업무</option>
-												<option value="카테고리2">개인</option>
-												<option value="카테고리3">출장</option>
-												<option value="카테고리4">회의</option>
+												<option value="업무">업무</option>
+												<option value="개인">개인</option>
+												<option value="출장">출장</option>
+												<option value="회의">회의</option>
 											</select>
 										</div>
 									</div>
@@ -155,7 +155,7 @@
 									<div class="form-group">
 
 										<!-- 									<div class="col-lg-6"> -->
-										<label for="calendar_view">일정별 </label>
+<!-- 										<label for="calendar_view">일정별 </label> -->
 										<div class="input-group">
 											<input style="display:none;" class='filter' type="checkbox" value="${loginUser.empNo }" checked>
 											<label class="checkbox-inline">
@@ -179,10 +179,10 @@
 					<!-- 일자 클릭시 메뉴오픈 -->
 					<div id="contextMenu" class="dropdown clearfix">
 						<ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px;">
-							<li><a tabindex="-1" href="#">카테고리1</a></li>
-							<li><a tabindex="-1" href="#">카테고리2</a></li>
-							<li><a tabindex="-1" href="#">카테고리3</a></li>
-							<li><a tabindex="-1" href="#">카테고리4</a></li>
+							<li><a tabindex="-1" href="#">업무</a></li>
+							<li><a tabindex="-1" href="#">개인</a></li>
+							<li><a tabindex="-1" href="#">출장</a></li>
+							<li><a tabindex="-1" href="#">회의</a></li>
 							<li class="divider"></li>
 							<li><a tabindex="-1" href="#" data-role="close">Close</a></li>
 						</ul>
@@ -242,10 +242,10 @@
 									<div class="row">
 										<div class="col-xs-12">
 											<label class="col-xs-4" for="edit-type">구분</label> <select class="inputModal" type="text" name="edit-type" id="edit-type">
-												<option value="카테고리1">업무</option>
-												<option value="카테고리2">개인</option>
-												<option value="카테고리3">출장</option>
-												<option value="카테고리4">회의</option>
+												<option value="업무">업무</option>
+												<option value="개인">개인</option>
+												<option value="출장">출장</option>
+												<option value="회의">회의</option>
 											</select>
 										</div>
 									</div>

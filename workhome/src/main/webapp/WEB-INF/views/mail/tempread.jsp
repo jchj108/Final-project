@@ -241,10 +241,10 @@ td {
 							<h1>메일 보내기</h1>
 						</div>
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Compose</li>
-							</ol>
+<!-- 							<ol class="breadcrumb float-sm-right"> -->
+<!-- 								<li class="breadcrumb-item"><a href="#">Home</a></li> -->
+<!-- 								<li class="breadcrumb-item active">Compose</li> -->
+<!-- 							</ol> -->
 						</div>
 					</div>
 				</div>

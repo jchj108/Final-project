@@ -13,6 +13,7 @@ var editShare = $('#edit-share');
 var addBtnContainer = $('.modalBtnContainer-addEvent');
 var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 
+
 /*******************************************************************************
  * 새로운 일정 생성 **************
  */
@@ -106,6 +107,7 @@ var newEvent = function(start, end, eventType) {
 					data : JSON.stringify(json),
 			        contentType: "application/json",
 					success : function(response) {
+						console.log(response);
 						// DB연동시 중복이벤트 방지를 위한
 //						$('#calendar').fullCalendar('removeEvents');
 //						$('#calendar').fullCalendar('refetchEvents');

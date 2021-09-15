@@ -48,10 +48,8 @@ public class ToDoController {
 		
 		PrintWriter out = response.getWriter();
 		if(result >= 1) {
-			out.write("success");
-		} else {
-			out.write("fail");
-		}
+			out.write(empNo);
+		} 
 		out.flush();
 		out.close();
 	}

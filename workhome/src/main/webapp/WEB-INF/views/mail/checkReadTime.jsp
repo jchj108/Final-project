@@ -124,10 +124,10 @@ td {
 							<h1>수신확인</h1>
 						</div>
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Inbox</li>
-							</ol>
+<!-- 							<ol class="breadcrumb float-sm-right"> -->
+<!-- 								<li class="breadcrumb-item"><a href="#">Home</a></li> -->
+<!-- 								<li class="breadcrumb-item active">Inbox</li> -->
+<!-- 							</ol> -->
 						</div>
 					</div>
 				</div>
@@ -253,7 +253,7 @@ td {
 																<i class="fas fa-paperclip"></i>
 															</c:if></td>
 														<%-- 														${m.mailSRList.get(0).sRStatus } --%>
-															<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
+															<td class="mailbox-name"><a href=#>${m.receiveEmp }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject">
 																${m.etitle }</td>
 														<td class="mailNo-hidden">${m.mailNo }</td>
@@ -283,8 +283,8 @@ td {
 															<c:if test="${ fmtNumber <= 0}">
 																<td class="mailbox-date">
 																	<span class="mailSR-info">
-																		<fmt:formatDate value="${d }" var="currentMinutues" pattern="mm" />
-																		<fmt:formatDate value="${m.sDate }" pattern="mm" var="compMinutes" />
+																		<fmt:formatDate value="${d }" var="currentMinutues" pattern="HHmm" />
+																		<fmt:formatDate value="${m.sDate }" pattern="HHmm" var="compMinutes" />
 																		[${currentMinutues - compMinutes }분 전]
 																	</span>
 																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" /></td>
@@ -292,7 +292,8 @@ td {
 															<c:if test="${ fmtNumber > 0}">
 																<fmt:parseNumber var="fmtHoursAgo" value="${(currentTime - compTime) / 60 }" integerOnly="true"/>
 																<td class="mailbox-date"><span class="mailSR-info">[${fmtHoursAgo}시간 전]</span>
-																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" /></td>
+																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" />
+																</td>
 															</c:if>
 														</c:if>
 														<!-- 오늘 날짜가 아닐 때 -->

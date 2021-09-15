@@ -1,6 +1,5 @@
 var draggedEventIsAllDay
 var activeInactiveWeekends = true
-
 var calendar = $('#calendar').fullCalendar({
   /***************************************************************************
 	 * OPTIONS
@@ -285,6 +284,7 @@ function getDisplayEventDate(event) {
   }
   return displayEventDate
 }
+
 function filtering(event) {
   var show_username = true
   var show_type = true

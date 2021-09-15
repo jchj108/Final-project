@@ -119,10 +119,10 @@ td {
 							<h1>휴지통</h1>
 						</div>
 						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Inbox</li>
-							</ol>
+<!-- 							<ol class="breadcrumb float-sm-right"> -->
+<!-- 								<li class="breadcrumb-item"><a href="#">Home</a></li> -->
+<!-- 								<li class="breadcrumb-item active">Inbox</li> -->
+<!-- 							</ol> -->
 						</div>
 					</div>
 				</div>
@@ -253,12 +253,12 @@ td {
 															</c:if></td>
 														<%-- 														${m.mailSRList.get(0).sRStatus } --%>
 														<c:if test="${ m.mailSRList.get(0).empNo != loginUser.empNo}">
-															<td class="mailbox-name"><a href="read-mail.html">${m.senderName }</a></td>
+															<td class="mailbox-name"><a href=#>${m.senderName }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[받은메일함]</span>
 																${m.etitle }</td>
 														</c:if>
 														<c:if test="${ m.mailSRList.get(0).empNo == loginUser.empNo}">
-															<td class="mailbox-name"><a href="read-mail.html">${m.receiveEmp }</a></td>
+															<td class="mailbox-name"><a href=#>${m.receiveEmp }</a></td>
 															<td onclick="location.href='${mdetail}'" style="cursor: pointer;" class="mailbox-subject"><span class="mailSR-info">[보낸메일함]</span>
 																${m.etitle }</td>
 														</c:if>
@@ -278,8 +278,8 @@ td {
 															<c:if test="${ fmtNumber <= 0}">
 																<td class="mailbox-date">
 																	<span class="mailSR-info">
-																		<fmt:formatDate value="${d }" var="currentMinutues" pattern="mm" />
-																		<fmt:formatDate value="${m.sDate }" pattern="mm" var="compMinutes" />
+																		<fmt:formatDate value="${d }" var="currentMinutues" pattern="HHmm" />
+																		<fmt:formatDate value="${m.sDate }" pattern="HHmm" var="compMinutes" />
 																		[${currentMinutues - compMinutes }분 전]
 																	</span>
 																<fmt:formatDate pattern="HH:mm" value="${m.sDate }" /></td>
@@ -328,7 +328,7 @@ td {
 													</a>
 												</c:if>
 												<c:if test="${ searchValue eq null}">
-													<c:url var="before" value="deletemaillist.mail">
+													<c:url var="before" value="deletelist.mail">
 														<c:param name="page" value="${ pi.currentPage - 1 }" />
 													</c:url>
 													<a href="${before }">
