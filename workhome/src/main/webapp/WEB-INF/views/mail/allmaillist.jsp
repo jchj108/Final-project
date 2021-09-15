@@ -324,7 +324,7 @@ td {
 													</a>
 												</c:if>
 												<c:if test="${ searchValue eq null}">
-													<c:url var="before" value="allmaillist.mail">
+													<c:url var="before" value="alllist.mail">
 														<c:param name="page" value="${ pi.currentPage - 1 }" />
 													</c:url>
 													<a href="${before }">
