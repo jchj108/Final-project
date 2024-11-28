@@ -263,7 +263,7 @@
 										$(document).on('click',".detailView",function(){
 											var apNo = $(this).find(".apNo").val();
 											var tag = $(this).find(".tag").val();
-											location.href="apDetail.ap?apNo="+apNo+"&tag="+tag;										
+											location.href="apDetail.ap?apNo="+apNo+"&tag="+tag;								
 										});
 									</script>
 								</div>

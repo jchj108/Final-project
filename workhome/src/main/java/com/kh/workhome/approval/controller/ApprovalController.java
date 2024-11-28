@@ -98,7 +98,7 @@ public class ApprovalController {
 					finList.add(ap);
 				}else{
 					// 진행 혹은 상신문서 일 때 내가 결재를 했는가?
-					boolean check = false;
+					boolean check = true;
 					check = checkFile(check,ap.getApprovalEmpStatus(),loginUserNo);
 					if(ap.gethEmpStatus()!=null) {
 						check = checkFile(check,ap.gethEmpStatus(),loginUserNo);
@@ -109,7 +109,7 @@ public class ApprovalController {
 					} else {
 						//아직 안 해줬다면 결재 할 문서에 추가
 						draftList.add(ap);
-					}
+					} 
 				}
 			//참조문서 
 			}else if(ap.getRefEmp().contains(loginUserNo)) {
